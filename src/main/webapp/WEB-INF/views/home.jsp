@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
@@ -8,8 +8,9 @@
 <head>
     <title>Title</title>
 </head>
-<link rel="stylesheet" href="<c:url value='/css/menu.css'/>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
+<%--<link rel="stylesheet" href="/resources/css/header.css">--%>
 <style>
     /* Bordered form */
     form {
@@ -110,6 +111,72 @@
     #formTest {
         z-index: 2; /* 배경보다 앞에 배치 */
     }
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+        background-color: #333;
+        overflow: hidden;
+        margin: 0 auto;
+        /*width: 70%;*/
+        text-align: center;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+        float: right;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    /* Add an active class to highlight the current page */
+    .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    /* Hide the link that should open and close the topnav on small screens */
+    .topnav .icon {
+        display: none;
+    }
+    Add media queries
+
+    Example
+    /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+    @media screen and (max-width: 600px) {
+        .topnav a:not(:first-child) {display: none;}
+        .topnav a.icon {
+            float: right;
+            display: block;
+        }
+    }
+
+    /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+    @media screen and (max-width: 600px) {
+        .topnav.responsive {position: relative;}
+        .topnav.responsive a.icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .topnav.responsive a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+    }
+    body {
+        margin: 0 300px;
+    }
 </style>
 <body>
 <div class="topnav" id="myTopnav">
@@ -117,23 +184,21 @@
     <a href="/registerForm">Sign In</a>
     <a href="/board">Board</a>
     <a href="/login" id="login">Login</a>
-    <a href="#about">About</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
 </div>
 
-<form action="/" method="post" id="loginForm">
+<form action="/login" method="post" id="loginForm">
     <div class="imgcontainer">
         <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>
-
     <div class="container">
-        <label for="userId"><b>Username</b></label>
-        <input type="text" placeholder="Enter Id" name="userId" required>
+        <label for="userId"><b>ID</b></label>
+        <input type="text" placeholder="아이디를 입력하세요" id="userId" name="userId" required>
 
         <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+        <input type="password" placeholder="패스워드를 입력하세요" id="password" name="password" required>
 
         <button type="submit">Login</button>
         <label>
@@ -149,8 +214,12 @@
 </div>
 <script>
     /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+    const x = document.querySelector("#myTopnav");
+    const form = document.querySelector("#loginForm");
+    const overlay = document.querySelector("#overlay");
+    const login = document.querySelector("#login");
+
     function myFunction() {
-        var x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
         } else {
@@ -169,10 +238,8 @@
             this.classList.add('active');
         });
     });
-    document.getElementById("login").addEventListener("click", function(event) {
+    login.addEventListener("click", function(event) {
         event.preventDefault(); // 기본 동작을 막음
-        var form = document.getElementById("loginForm");
-        var overlay = document.getElementById("overlay");
         if (form.style.display === "none" || form.style.display === "") {
             form.style.display = "block";
             overlay.style.display = "block";
@@ -181,10 +248,9 @@
             overlay.style.display = "none";
         }
     });
-
     function hideForm() {
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("overlay").style.display = "none";
+        form.style.display = "none";
+        overlay.style.display = "none";
     }
 </script>
 </body>
