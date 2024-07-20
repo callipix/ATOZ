@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.myapp.register.dao.RegisterMapper">
+
+    <select id="idCheck" resultType="int" parameterType="string">
+        SELECT EXISTS(
+                        SELECT id
+                          FROM user_info
+                         WHERE id = #{id}
+        )
+    </select>
+
+    <insert id="insertUser" parameterType="com.project.myapp.dto.UserDTO">
+        INSERT INTO user_info(id, pwd, nickname , email)
+        VALUES(#{id}, #{password},#{nickName}, #{email})
+    </insert>
+    <insert id="insertMember" parameterType="com.project.myapp.dto.MemberDTO">
+        INSERT INTO member(mem_id , name , phone)
+        VALUES(#{id}, #{name}, #{phoneNo})
+    </insert>
+
+</mapper>
