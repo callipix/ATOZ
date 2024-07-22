@@ -129,3 +129,37 @@ a {
 .paging a:hover:not(.active) {
     background-color: #ddd;
 }
+/* 부모 컨테이너가 화면 전체를 차지하도록 설정 */
+.search-container {
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 */
+}
+
+/* 검색 폼 내부 요소들을 한 줄에 배치 */
+.search-form {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.search-button, .search-option,.btn-write {
+    background-color: #74685d;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.search-form {
+    border-radius: 10px;
+    margin: 10px;
+    width: 50%;
+}
+#writeBtn{
+    width: 30%;
+    margin: 0px 30px;
+}
+.test-container{
+    display: flex;
+    align-items: center;
+}

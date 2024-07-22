@@ -6,7 +6,7 @@ import java.util.Objects;
 public class BoardDTO {
 
     private int rownum;
-    private int bno;
+    private Integer bno;
     private String title;
     private String content;
     private String writer;
@@ -28,18 +28,14 @@ public class BoardDTO {
         return Objects.hash(rownum, bno, title, content, writer);
     }
 
-    public BoardDTO() {}
+    public BoardDTO() {
+        this("","","");
+    }
 
-    public BoardDTO(int rownum, int bno, String title, String content, String writer, int view_cnt, int comment_cnt, Date reg_date, Date up_date) {
-        this.rownum = rownum;
-        this.bno = bno;
+    public BoardDTO(String title, String content, String writer) {
         this.title = title;
         this.content = content;
         this.writer = writer;
-        this.view_cnt = view_cnt;
-        this.comment_cnt = comment_cnt;
-        this.reg_date = reg_date;
-        this.up_date = up_date;
     }
 
     public int getRownum() {

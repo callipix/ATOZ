@@ -188,7 +188,6 @@
         <i class="fa fa-bars"></i>
     </a>
 </div>
-
 <form action="/login/login" method="post" id="loginForm">
     <div class="imgcontainer">
         <img src="img_avatar2.png" alt="Avatar" class="avatar">

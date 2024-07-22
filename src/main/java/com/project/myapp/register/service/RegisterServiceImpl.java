@@ -48,7 +48,7 @@ public class RegisterServiceImpl implements RegisterService {
         for(int i = 0 ; i < 6 ; i++){
             noStr += ranNo.nextInt(10);
         }
-//        certifiedPhoneNumber(phoneNo, noStr);
+        certifiedPhoneNumber(phoneNo, noStr);
         System.out.println("noStr = " + noStr);
         return noStr;
     }
