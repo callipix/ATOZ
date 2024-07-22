@@ -184,7 +184,7 @@
     function sendVerification(){
         let phoneNo = inputPhoneNo.value;
 
-        if(phoneNo == ''){
+        if(phoneNo === ''){
             alert("연락처를 입력하세요.");
             inputPhoneNo.focus();
         }
@@ -204,7 +204,7 @@
         let inputNo = inputCertiNo.value;
 
         console.log("inputNo = " + inputNo)
-        if(certiNoByServer != inputNo){
+        if(certiNoByServer !== inputNo){
             alert("인증번호가 일치하지않습니다.");
             isConfirmPhoneNo = false;
             return;

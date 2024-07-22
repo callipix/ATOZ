@@ -27,7 +27,7 @@
     </insert>
     <select id="getBoardByBno" parameterType="int" resultType="com.project.myapp.dto.BoardDTO">
         /** 특정 게시물 가져오기 */
-        <include refid="selectByAll"></include>
+        <include refid="selectByAll" />
         WHERE bno = #{bno}
     </select>
 
@@ -61,7 +61,7 @@
 
     <select id="getBoardList" resultType="com.project.myapp.dto.BoardDTO">
         /** 게시물 전체리스트 가져오기 */
-        <include refid="selectByAll"></include>
+        <include refid="selectByAll" />
     </select>
     
     <select id="getSelectPage" parameterType="map" resultType="com.project.myapp.dto.BoardDTO">

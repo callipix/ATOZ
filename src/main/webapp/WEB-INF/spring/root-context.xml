@@ -7,10 +7,10 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8"></property>
-        <property name="username" value="callipix"></property>
-        <property name="password" value="java"></property>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />
+        <property name="username" value="callipix" />
+        <property name="password" value="java" />
     </bean>
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
