@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class BoardDTO {
 
+    private int rownum;
     private int bno;
     private String title;
     private String content;
@@ -19,17 +20,18 @@ public class BoardDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardDTO boardDTO = (BoardDTO) o;
-        return bno == boardDTO.bno && Objects.equals(title, boardDTO.title) && Objects.equals(content, boardDTO.content) && Objects.equals(writer, boardDTO.writer);
+        return rownum == boardDTO.rownum && bno == boardDTO.bno && Objects.equals(title, boardDTO.title) && Objects.equals(content, boardDTO.content) && Objects.equals(writer, boardDTO.writer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bno, title, content, writer);
+        return Objects.hash(rownum, bno, title, content, writer);
     }
 
     public BoardDTO() {}
 
-    public BoardDTO(int bno, String title, String content, String writer, int view_cnt, int comment_cnt, Date reg_date, Date up_date) {
+    public BoardDTO(int rownum, int bno, String title, String content, String writer, int view_cnt, int comment_cnt, Date reg_date, Date up_date) {
+        this.rownum = rownum;
         this.bno = bno;
         this.title = title;
         this.content = content;
@@ -38,6 +40,14 @@ public class BoardDTO {
         this.comment_cnt = comment_cnt;
         this.reg_date = reg_date;
         this.up_date = up_date;
+    }
+
+    public int getRownum() {
+        return rownum;
+    }
+
+    public void setRownum(int rownum) {
+        this.rownum = rownum;
     }
 
     public int getBno() {
@@ -107,7 +117,8 @@ public class BoardDTO {
     @Override
     public String toString() {
         return "BoardDTO{" +
-                "bno=" + bno +
+                "rownum=" + rownum +
+                ", bno=" + bno +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +

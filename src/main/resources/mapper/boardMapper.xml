@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.myapp.board.dao.BoardMapper">
+
+    <sql id="selectByAll">
+        SELECT bno , title , content , writer , view_cnt , comment_cnt , reg_date , up_date
+          FROM board
+    </sql>
+
+    <select id="getBoardList" resultType="com.project.myapp.dto.BoardDTO">
+        <include refid="selectByAll"></include>
+    </select>
+    
+    <select id="getSelectPage" parameterType="map" resultType="com.project.myapp.dto.BoardDTO">
+        SELECT ROW_NUMBER() OVER(ORDER BY bno) AS rownum, bno , title , content , writer , view_cnt , comment_cnt , reg_date , up_date
+          FROM board
+         ORDER BY reg_date DESC , bno DESC
+        LIMIT #{offset} , #{pageSize}
+    </select>
+
+    <select id="getBoardCount" resultType="int">
+        SELECT count(*)
+          FROM board
+    </select>
+
+</mapper>
