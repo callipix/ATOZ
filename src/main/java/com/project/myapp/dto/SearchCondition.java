@@ -18,6 +18,7 @@ public class SearchCondition {
     }
 
     public String getQueryString(Integer page){
+
         return UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("pageSize" , pageSize)

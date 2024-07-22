@@ -29,11 +29,11 @@
 <div class="search-container">
     <form action="<c:url value="/board/boardList"/>" class="search-form" method="get">
         <select class="search-option" name="option">
-            <option value="A" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
+            (<option value="A" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
             <option value="T" ${ph.sc.option=='T' ? "selected" : ""}>제목만</option>
-            <option value="W" ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>
+            <option value="W" ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>)
         </select>
-        <input class="search-form" type="text" name="keyword" placeholder="검색어를 입력하세요." id="search" value="${ph.sc.keyword}">
+        <input type="text" name="keyword" class="search-input"  value="${ph.sc.keyword}" placeholder="검색어를 입력하세요.">
         <input type="submit" class="search-button" value="검색">
         <br>
         <br>

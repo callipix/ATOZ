@@ -76,4 +76,9 @@ public class BoardServiceImpl implements BoardService{
         return this.boardDAO.getSearchSelectPage(sc);
     }
 
+    @Override
+    public int getSearchResultCount(SearchCondition sc) {
+        return this.boardDAO.getSearchResultCount(sc);
+    }
+
 }

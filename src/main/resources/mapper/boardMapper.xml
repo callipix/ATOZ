@@ -87,7 +87,7 @@
                       and title like concat('%', #{keyword} , '%')
                   </when>
                   <when test='option=="W"'>
-                      and title like concat('%' , #{keyword} , '%')
+                      and writer like concat('%' , #{keyword} , '%')
                   </when>
                   <otherwise>
                       and (title like concat('%', #{keyword} , '%')
@@ -107,7 +107,7 @@
                     and title like concat('%', #{keyword} , '%')
                 </when>
                 <when test='option=="W"'>
-                    and title like concat('%' , #{keyword} , '%')
+                    and writer like concat('%' , #{keyword} , '%')
                 </when>
                 <otherwise>
                     and (title like concat('%', #{keyword} , '%')

@@ -69,7 +69,7 @@ public class BoardController {
     public String getBoardList(Model m, SearchCondition sc , HttpServletRequest request){
 
         try {
-            int totalCnt = this.boardService.getBoardCount();
+            int totalCnt = this.boardService.getSearchResultCount(sc);
             m.addAttribute("totalCnt", totalCnt);
 
             PageHandler pageHandler = new PageHandler(totalCnt, sc);
@@ -78,6 +78,7 @@ public class BoardController {
 
             m.addAttribute("boardList", boardList);
             m.addAttribute("ph", pageHandler);
+
             Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
             m.addAttribute("startOfToday", startOfToday.toEpochMilli());
         } catch (Exception e) {

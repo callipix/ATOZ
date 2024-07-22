@@ -88,4 +88,9 @@ public class BoardDAOImpl implements BoardDAO {
     public List<BoardDTO> getSearchSelectPage(SearchCondition sc){
         return sqlSession.selectList(namespace+"getSearchSelectPage", sc);
     }
+
+    @Override
+    public int getSearchResultCount(SearchCondition sc) {
+        return sqlSession.selectOne(namespace+"getSearchResultCount", sc);
+    }
 }

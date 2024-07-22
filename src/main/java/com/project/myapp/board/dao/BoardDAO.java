@@ -43,4 +43,6 @@ public interface BoardDAO {
     public int updateCommentCount(Integer bno, int cnt);
 
     public List<BoardDTO> getSearchSelectPage(SearchCondition sc);
+
+    public int getSearchResultCount(SearchCondition sc);
 }
