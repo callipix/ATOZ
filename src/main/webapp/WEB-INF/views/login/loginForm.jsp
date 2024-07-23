@@ -181,14 +181,16 @@
 </style>
 <body>
 <div class="topnav" id="myTopnav">
-    <a href="/" class="active">Home</a>
-    <a href="/registerForm">Sign In</a>
-    <a href="/board/boardList">Board</a>
+    <a href="<c:url value='/' />" class="active">Home</a>
+    <c:if test="${empty loginId}">
+        <a href="<c:url value='/registerForm' />">Sign In</a>
+    </c:if>
+    <a href="<c:url value='/board/boardList' />">Board</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
 </div>
-<form action="/login/login" method="post" id="loginForm">
+<form action="<c:url value='/login/login'/>" method="post" id="loginForm">
     <div class="imgcontainer">
         <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>

@@ -34,7 +34,46 @@ public class BoardController {
         m.addAttribute("mode","new");
         return "board/board";
     }
+    // 글삭제
+    @PostMapping("/remove")
+    public String remove(Integer bno, SearchCondition sc, HttpSession session, RedirectAttributes rattr){
+        String writer = (String)session.getAttribute("id");
+        String msg = "DEL_OK";
+        try {
+            int result = this.boardService.deleteByIdNBno(bno , writer);
+            System.out.println("result = " + result);
+                if(result != 1){
+                    throw new Exception("Delete failed"); 
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg = "DEL_ERR";
+        }
+        rattr.addFlashAttribute("msg",msg);
+        System.out.println("msg = " + msg);
+        return "redirect:/board/boardList"+ sc.getQueryString();
+    }
 
+    // 글수정
+    @PostMapping("/modify")
+    public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m , HttpSession session) throws Exception {
+
+        String writer = (String)session.getAttribute("id");
+        boardDTO.setWriter(writer);
+        int result = this.boardService.updateBoardByIdNBno(boardDTO);
+        try {
+            if(result != 1){
+                throw new Exception("Modify Error");
+            }
+            rattr.addFlashAttribute("msg","MOD_OK");
+            return "redirect:/board/boardList"+sc.getQueryString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            m.addAttribute(boardDTO);
+            m.addAttribute("mode","MOD_ERR");
+            return "board/board";
+        }
+    }
     @PostMapping("/write")
     public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session) throws Exception {
 
@@ -54,14 +93,14 @@ public class BoardController {
         }
     }
     @GetMapping("/read")
-    public String read(Integer bno ,RedirectAttributes rattr, Model m){
+    public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m){
         try {
             BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
             m.addAttribute(boardDTO);
         } catch (Exception e){
             e.printStackTrace();
             rattr.addAttribute("msg" , "READ_ERR");
-            return "redirect:boardList?bno="+bno;
+            return "redirect:boardList"+sc.getQueryString();
         }
         return "/board/board";
     }

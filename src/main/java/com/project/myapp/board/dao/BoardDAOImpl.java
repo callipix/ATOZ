@@ -65,7 +65,10 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public int deleteByIdNBno(Map map) {
+    public int deleteByIdNBno(Integer bno , String writer) {
+        Map map = new HashMap();
+        map.put("bno", bno);
+        map.put("writer", writer);
         int deleteBoard = sqlSession.delete(namespace+"deleteByIdNBno", map);
         return deleteBoard;
     }

@@ -1,58 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style>
-    .updateList {
-        margin: 20px 100px;
-    }
-    h3 {
-        margin: 0px 40px;
-    }
-    h4 {
-        margin: 10px 30px;
-    }
-    /* Style the buttons that are used to open and close the accordion panel */
-    /* Accordion 버튼 스타일 */
-    .accordion {
-        background-color: #eee;
-        color: #444;
-        cursor: pointer;
-        width: 100%;
-        text-align: left;
-        border: none;
-        outline: none;
-        transition: background-color 0.4s, max-height 0.4s;
-    }
-    /* 활성화된 버튼 및 호버 상태 */
-    .accordion.active, .accordion:hover {
-        background-color: #ccc;
-    }
-    /* 패널 스타일 */
-    .panel {
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin: 0px 70px;
-    }
-    /* 패널 내용 스타일 */
-    .panel h5 {
-        margin: 10px 0;
-    }
-    /* 아코디언에 아이콘 추가 */
-    .accordion:after {
-        content: '\02795'; /* Unicode character for "plus" sign (+) */
-        font-size: 13px;
-        color: #777;
-        float: right;
-        margin-left: 5px;
-    }
-    /* 활성화된 아코디언 아이콘 변경 */
-    .accordion.active:after {
-        content: "\2796"; /* Unicode character for "minus" sign (-) */
-    }
-</style>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<link rel="stylesheet" href="<c:url value='/css/updateList.css'/>"/>
 <body>
 <div class="updateList">
     <h1>업데이트 내역</h1>
@@ -96,9 +44,15 @@
     <button class="accordion"><b>2024.07.22</b></button>
     <div class="panel">
         <h5>인텔리제이 깃 연동하다가 실수로 날려먹어서 재작성</h5>
+        <h5>검색기능 추가 완료</h5>
     </div>
-    <h1>업데이트 예정</h1>
-    <h4>검색기능 </h4>
+    <button class="accordion"><b>2024.07.23</b></button>
+    <div class="panel">
+        <h5>게시글 수정/삭제기능 추가</h5>
+    </div>
+    <h1 >업데이트 예정</h1>
+    <h4>검색기능 → 2024.07.22 완료</h4>
+    <h4>게시글 수정/삭제기능 추가하기 → 2024.07.23 완료, 추후 인증 로직 고도화 예정</h4>
     <h4>댓글기능 추가</h4>
     <h4>파일 첨부 - 이미지</h4>
     <h4>아이디 비밀번호 찾기</h4>

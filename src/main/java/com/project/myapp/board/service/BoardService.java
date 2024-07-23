@@ -35,7 +35,7 @@ public interface BoardService {
     public int deleteAll() throws Exception;
 
     // 게시물 삭제(본인)
-    public int deleteByIdNBno(Map map) throws Exception;
+    public int deleteByIdNBno(Integer bno , String writer) throws Exception;
 
     // 댓글 수 업데이트
 

@@ -7,6 +7,7 @@
 <c:set var="loginOut" value="${empty loginId ? 'Login' : loginId +='님이 접속하였습니다.'}"/><html>
 <head>
     <title>홈페이지</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
 

@@ -34,7 +34,7 @@ public interface BoardDAO {
     public int deleteAll();
 
     // 게시물 삭제(본인)
-    public int deleteByIdNBno(Map map);
+    public int deleteByIdNBno(Integer bno , String writer);
 
     // 조회수 증가
     public int increaseViewCount(int bno);

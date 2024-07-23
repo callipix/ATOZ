@@ -66,8 +66,8 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public int deleteByIdNBno(Map map) throws Exception {
-        int result = boardDAO.deleteByIdNBno(map);
+    public int deleteByIdNBno(Integer bno , String writer) throws Exception {
+        int result = boardDAO.deleteByIdNBno(bno , writer);
         return result;
     }
 

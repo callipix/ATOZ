@@ -14,7 +14,7 @@
 <body>
 <br>
 <div id="formDiv" class="formDiv">
-    <form id="signUpForm" method="post" action="/register">
+    <form id="signUpForm" method="post" action="<c:url value='/register'/>">
         <div class="container">
             <h1>회원가입</h1>
             <p>아래에 있는 정보를 입력해주세요.</p>
@@ -141,7 +141,7 @@
             return;
         }
         $.ajax({
-            url : '/idCheck',
+            url : '/myApp/idCheck',
             method : 'get',
             data : {id : id},
             success : function(result){
