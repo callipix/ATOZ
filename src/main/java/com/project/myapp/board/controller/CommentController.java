@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,8 @@ public class CommentController {
     @ResponseBody
     @PatchMapping("/comments/{cno}")
     public ResponseEntity<String> modify(@PathVariable Integer cno , @RequestBody CommentDTO commentDTO , HttpSession session){
+
+        System.out.println("commentDTO = " + commentDTO);
 
         String commenter = (String) session.getAttribute("id");
 
@@ -80,13 +83,17 @@ public class CommentController {
     }
     @GetMapping("/comments")
     @ResponseBody
-    public ResponseEntity<List<CommentDTO>> commentList(Integer bno){
+    public ResponseEntity<List<CommentDTO>> commentList(Integer bno, Model m){
         // 지정된 게시물의 모든 댓글 리스트 가져오기
         List<CommentDTO> list = null;
 
         try {
             list = this.commentService.getCommentForBoard(bno);
             // 댓글 리스트를 정상적으로 가져왔을시에 http 상태코드를 200으로 설정
+            for(CommentDTO commentDTO : list){
+                System.out.println("list = " + list);
+            }
+            m.addAttribute("list", list);
             return new ResponseEntity<List<CommentDTO>>(list , HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();

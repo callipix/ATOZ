@@ -15,7 +15,7 @@
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
-    <a href="<c:url value='/suggestions' />">Suggestions</a>
+    <a href="<c:url value='/suggestions' />">Suggest</a>
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">Sign In</a>
     </c:if>

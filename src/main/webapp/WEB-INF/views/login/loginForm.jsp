@@ -189,7 +189,7 @@
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">Sign In</a>
     </c:if>
-    <a href="<c:url value='/suggestions' />">Suggestions</a>
+    <a href="<c:url value='/suggestions' />">Suggest</a>
     <a href="<c:url value='/board/boardList' />">Board</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

@@ -3,7 +3,6 @@ package com.project.myapp.board.dao;
 import com.project.myapp.dto.CommentDTO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CommentDAO {
 

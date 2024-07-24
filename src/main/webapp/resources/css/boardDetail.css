@@ -1,13 +1,14 @@
 .board-container {
     padding: 50px 200px;
 }
-textarea {
-    width: 100%; /* 필요에 따라 너비를 설정합니다 */
-    max-width: 100%; /* 최대 너비를 설정하여 부모 요소를 넘지 않도록 합니다 */
-    min-width: 300px; /* 최소 너비를 설정할 수도 있습니다 */
+#content {
+    max-width: 100%; /* 최대 너비 설정, 부모 요소를 넘지 않도록 */
+    min-width: 300px; /* 최소 너비 설정 */
+    margin: 5px 0px 10px 0px;
+    background-color: #cfcece;
 }
 * {
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     margin: 0;
     padding: 0;
     font-family: "Noto Sans KR", sans-serif;
@@ -34,17 +35,6 @@ input {
     background: #f8f8f8;
     outline-color: #e6e6e6;
 }
-
-textarea {
-    width: 100%;
-    background: #f8f8f8;
-    margin: 5px 0px 10px 0px;
-    border: 1px solid #e9e8e8;
-    resize: none;
-    padding: 8px;
-    outline-color: #e6e6e6;
-}
-
 .frm {
     width:100%;
 }

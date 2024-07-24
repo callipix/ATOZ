@@ -34,11 +34,7 @@ public class CommentDAOImpl implements CommentDAO{
         Map map = new HashMap();
         map.put("cno",cno);
         map.put("commenter",commenter);
-        System.out.println("cno = " + cno);
-        System.out.println("commenter = " + commenter);
-        System.out.println("map = " + map);
         int result = sqlSession.delete(NAMESPACE+"deleteComment",map);
-        System.out.println("result = " + result);
         return result;
     }
 

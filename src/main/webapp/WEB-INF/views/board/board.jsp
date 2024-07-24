@@ -13,63 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/boardDetail.css'/>">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Noto Sans KR", sans-serif;
-        }
-
-        .container {
-            width : 50%;
-            margin : auto;
-        }
-
-        .writing-header {
-            position: relative;
-            margin: 20px 0 0 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #323232;
-        }
-
-        input {
-            width: 100%;
-            height: 35px;
-            margin: 5px 0px 10px 0px;
-            border: 1px solid #e9e8e8;
-            padding: 8px;
-            background: #f8f8f8;
-            outline-color: #e6e6e6;
-        }
-        textarea {
-            width: 100%;
-            background: #f8f8f8;
-            margin: 5px 0px 10px 0px;
-            border: 1px solid #e9e8e8;
-            resize: none;
-            padding: 8px;
-            outline-color: #e6e6e6;
-        }
-        .form {
-            width:100%;
-        }
-        .btn {
-            background-color: rgb(236, 236, 236); /* Blue background */
-            border: none; /* Remove borders */
-            color: black; /* White text */
-            padding: 6px 12px; /* Some padding */
-            font-size: 16px; /* Set a font size */
-            cursor: pointer; /* Mouse pointer on hover */
-            border-radius: 5px;
-        }
-        .btn:hover {
-            text-decoration: underline;
-        }
-        .btnList {
-            text-align: right;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="../header.jsp" />
@@ -105,6 +48,43 @@
                 <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록하기</button>
             </c:if>
         </form>
+
+        <div id="commentList">
+            <ul>
+                <c:forEach var = "commentDTO" items="${commentList}">
+                <li class="comment-item" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}">
+                        <span class="comment-img">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </span>
+                    <div class="comment-area">
+                        <div class="commenter">${commentDTO.commenter}</div>
+                        <div class="comment-content">${commentDTO.comment}
+                        </div>
+                        <div class="comment-bottom">
+                            <span class="up_date">${commentDTO.up_date}</span>
+                            <a href="#" class="btn-write"  data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">답글쓰기</a>
+                            <a href="#" class="btn-modify" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">수정</a>
+                            <a href="#" class="btn-delete" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">삭제</a>
+                        </div>
+                    </div>
+                </li>
+                </c:forEach>
+            </ul>
+            <br>
+            <div id="comment-writebox">
+                <div class="commenter commenter-writebox">댓글인데 없네</div>
+                <div class="comment-writebox-content">
+                    <textarea name="comment-content" id="comment-content" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+                </div>
+                <div id="comment-writebox-bottom">
+                    <div class="register-box">
+                        <button type="button" class="btn" id="btn-write-comment">등록</button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <jsp:include page="comment.jsp" />
     </div>
 </div>
 
@@ -127,6 +107,29 @@ $(document).ready(function(){
         }
         return true;
     }
+    $("#btn-write-comment").on("click", function(){
+
+        let comment = document.querySelector("#comment-content");
+
+        let commentDTO = {
+            comment : comment.value
+        }
+        if(!confirm("등록하시겠습니까?")){
+            return;
+        }
+
+        $.ajax({
+            url : '/myApp/comments',
+            type : 'post',
+            dataType : "application:utf-8",
+            data : JSON.stringify(commentDTO),
+            success : function(result){
+                console.log("result = " + result);
+            }
+        })
+
+    })
+
     $("#removeBtn").on("click", function(){
         if(!confirm("정말로 삭제하시겠습니까?")){
             return;
@@ -151,7 +154,7 @@ $(document).ready(function(){
             $("#modifyBtn").html("<i class='fa fa-pencil'></i> 등록하기");
             $("#listBtn").css('display', 'none');
 
-            // ↓↓↓↓↓↓↓ 바닐라스크립트로
+            // ↓↓↓↓↓↓↓ 바닐라스크립트
             // document.querySelector(".writing-header").innerHTML = "글수정";
             // document.querySelector("input[name=title]").removeAttribute('readonly');
             // document.querySelector("textarea").removeAttribute('readonly');

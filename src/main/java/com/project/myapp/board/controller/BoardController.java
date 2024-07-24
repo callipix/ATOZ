@@ -1,7 +1,9 @@
 package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.BoardService;
+import com.project.myapp.board.service.CommentService;
 import com.project.myapp.dto.BoardDTO;
+import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,14 @@ import java.util.Map;
 @RequestMapping("/board")
 public class BoardController {
 
-    @Autowired
     BoardService boardService;
+    CommentService commentService;
+
+    @Autowired          // 생성자주입
+    BoardController (BoardService boardService, CommentService commentService){
+        this.boardService = boardService;
+        this.commentService = commentService;
+    }
 
     @GetMapping("/write")
     public String write(Model m){
@@ -96,6 +104,10 @@ public class BoardController {
     public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m){
         try {
             BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
+            List<CommentDTO> commentList = this.commentService.getCommentForBoard(bno);
+
+            System.out.println("commentList = " + commentList);
+            m.addAttribute("commentList",commentList);
             m.addAttribute(boardDTO);
         } catch (Exception e){
             e.printStackTrace();
@@ -126,7 +138,6 @@ public class BoardController {
             m.addAttribute("totalCnt" , 0);
         }
         System.out.println("sc = " + sc);
-        System.out.println("sc.getPage() = " + sc.getPage());
         return "board/boardList";
     }
 }

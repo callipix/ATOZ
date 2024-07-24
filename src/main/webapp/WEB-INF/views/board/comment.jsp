@@ -5,15 +5,8 @@
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <title>Document</title>
     <style>
         * {
             border : 0;
@@ -33,7 +26,7 @@
         }
 
         #commentList {
-            width : 50%;
+            /*width : 80%;*/
             margin : auto;
         }
 
@@ -80,11 +73,10 @@
         }
 
         #comment-writebox {
-            background-color: white;
+            background-color: #e2e2e2;
             border : 1px solid #e5e5e5;
             border-radius: 5px;
         }
-
         textarea {
             display: block;
             width: 100%;
@@ -111,7 +103,7 @@
             color : black;
             background-color: #eff0f2;
             text-decoration: none;
-            padding : 9px 10px 9px 10px;
+            /*padding : 9px 10px 9px 10px;*/
             border-radius: 5px;
             float : right;
         }
@@ -226,73 +218,11 @@
     </style>
 </head>
 <body>
-<div id="commentList">
-    <ul>
-        <li class="comment-item" data-cno="1" data-bno="1070">
-                <span class="comment-img">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>
-                </span>
-            <div class="comment-area">
-                <div class="commenter">asdf</div>
-                <div class="comment-content">테스트용
-                </div>
-                <div class="comment-bottom">
-                    <span class="up_date">2024.07.23 23:59:59</span>
-                    <a href="#" class="btn-write"  data-cno="1" data-bno="1070" data-pcno="">답글쓰기</a>
-                    <a href="#" class="btn-modify" data-cno="1" data-bno="1070" data-pcno="">수정</a>
-                    <a href="#" class="btn-delete" data-cno="1" data-bno="1070" data-pcno="">삭제</a>
-                </div>
-            </div>
-        </li>
-        <li class="comment-item" data-cno="2" data-bno="1070">
-                <span class="comment-img">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>
-                </span>
-            <div class="comment-area">
-                <div class="commenter">qwer</div>
-                <div class="comment-content">테스트용
-                </div>
-                <div class="comment-bottom">
-                    <span class="up_date">2022.07.23 23:59:59</span>
-                    <a href="#" class="btn-write"  data-cno="2" data-bno="1070" data-pcno="">답글쓰기</a>
-                    <a href="#" class="btn-modify" data-cno="2" data-bno="1070" data-pcno="">수정</a>
-                    <a href="#" class="btn-delete" data-cno="2" data-bno="1070" data-pcno="">삭제</a>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div class="paging-container">
-        <div class="paging">
-            <a class="page" href="#">&lt;</a>
-            <a class="page" href="#">1</a>
-            <a class="page" href="#">2</a>
-            <a class="page" href="#">3</a>
-            <a class="page" href="#">4</a>
-            <a class="page paging-active" href="#">5</a>
-            <a class="page" href="#">6</a>
-            <a class="page" href="#">7</a>
-            <a class="page" href="#">8</a>
-            <a class="page" href="#">9</a>
-            <a class="page" href="#">10</a>
-            <a class="page" href="#">&gt;</a>
-        </div>
-    </div>
-    <div id="comment-writebox">
-        <div class="commenter commenter-writebox">${id}</div>
-        <div class="comment-writebox-content">
-            <textarea name="" id="" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
-        </div>
-        <div id="comment-writebox-bottom">
-            <div class="register-box">
-                <a href="#" class="btn" id="btn-write-comment">등록</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div id="reply-writebox">
-    <div class="commenter commenter-writebox">${id}</div>
+    <div class="commenter commenter-writebox">여긴 답글이고</div>
     <div class="reply-writebox-content">
-        <textarea name="" id="" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+        <textarea name="" id="" cols="30" rows="3" placeholder="답글을 남겨보세요"></textarea>
     </div>
     <div id="reply-writebox-bottom">
         <div class="register-box">
@@ -306,7 +236,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>
-        <h2> | 댓글 수정</h2>
+        <h2>댓글 수정</h2>
         <div id="modify-writebox">
             <div class="commenter commenter-writebox"></div>
             <div class="modify-writebox-content">
@@ -322,7 +252,6 @@
     </div>
 </div>
 <script>
-    let id = 'asdf';
 
     let addZero = function(value=1){
         return value > 9 ? value : "0"+value;
@@ -342,12 +271,30 @@
         return yyyy+"."+mm+"."+dd+ " " + HH + ":" + MM + ":" + ss;
     }
 
+        <%--let bno = "${boardDTO.bno}";--%>
+
+        <%--let showList = function(bno){--%>
+        <%--    $.ajax({--%>
+        <%--        type : 'get',--%>
+        <%--        url : '/myApp/comments?bno='+bno,--%>
+        <%--        success : function(result){--%>
+        <%--            $("#commentList").html(toHTML(result));--%>
+        <%--        },--%>
+        <%--        error : function(){--%>
+        <%--            alert("error");--%>
+        <%--        }--%>
+        <%--    });--%>
+        <%--}--%>
     $(document).ready(function(){
-        $("a.btn-write").click(function(e){
+
+        // showList(bno);
+
+        $(document).on("click","a.btn-write", function(e){
             let target = e.target;
             let cno = target.getAttribute("data-cno")
             let bno = target.getAttribute("data-bno")
 
+            console.log("답글쓰기 버튼 클릭");
             let repForm = $("#reply-writebox");
             repForm.appendTo($("li[data-cno="+cno+"]"));
             repForm.css("display", "block");
@@ -355,11 +302,11 @@
             repForm.attr("data-bno",  bno);
         });
 
-        $("#btn-cancel-reply").click(function(e){
+        $(document).on("click","#btn-cancel-reply",function(e){
             $("#reply-writebox").css("display", "none");
         });
 
-        $("a.btn-modify").click(function(e){
+        $(document).on("click" , "a.btn-modify", function(e){
             let target = e.target;
             let cno = target.getAttribute("data-cno");
             let bno = target.getAttribute("data-bno");
@@ -367,6 +314,8 @@
             let li = $("li[data-cno="+cno+"]");
             let commenter = $(".commenter", li).first().text();
             let comment = $(".comment-content", li).first().text();
+
+            console.log("ashgdasdashdk")
 
             $("#modalWin .commenter").text(commenter);
             $("#modalWin textarea").text(comment);
@@ -378,7 +327,7 @@
             $("#modalWin").css("display","block");
         });
 
-        $("a.btn-delete").click(function(e){
+        $(document).on("click", "a.btn-delete",function(e){
             alert("delete");
         });
 
@@ -392,6 +341,37 @@
             $("#modalWin").css("display","none");
         });
     });
+
+        // let toHTML = function(comments){
+        //     let tmp = "<ul>";
+        //
+        //     comments.forEach(function(comment){
+        //         tmp += '<li class="comment-item" data-cno=' + comment.cno;
+        //         tmp += ' data-pcno=' + comment.pcno;
+        //         tmp += ' data-bno=' + comment.bno + '>';
+        //         tmp += ' <div class="comment-area">';
+        //         tmp += ' <div class="commenter">' + comment.commenter + '</div>';
+        //         tmp += ' <div class="commenter-content">' + comment.comment + '</div>';
+        //         tmp += ' <div class="comment-bottom">';
+        //         tmp += ' <span class="up_date">' + comment.up_date + '</span>';
+        //
+        //         tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
+        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        //         tmp += ' > 답글쓰기' +'</a>';
+        //
+        //         tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
+        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        //         tmp += ' > 수정' +'</a>';
+        //
+        //         tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
+        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        //         tmp += ' > 삭제' +'</a>';
+        //
+        //         tmp += ' </div>';
+        //         tmp += ' </div>';
+        //         tmp += '</li>';
+        //     })
+        //     return tmp += "</ul>";
+        // }
 </script>
 </body>
-</html>
