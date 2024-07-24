@@ -14,7 +14,7 @@
 <body>
 <br>
 <div id="formDiv" class="formDiv">
-    <form id="signUpForm" method="post" action="<c:url value='/register'/>">
+    <form id="signUpForm" method="post" action="<c:url value='/register/'/>">
         <div class="container">
             <h1>회원가입</h1>
             <p>아래에 있는 정보를 입력해주세요.</p>
@@ -76,7 +76,8 @@
         </div>
     </form>
 </div>
-<script>
+<script type="text/javascript">
+
     // 정규식 체크
     const regId = /^[a-zA-Z0-9]{8,12}$/i;                                                    // 아이디 정규식
     const regPwd = /^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,20}$/;                 // 비밀번호 정규식
@@ -141,7 +142,7 @@
             return;
         }
         $.ajax({
-            url : '/myApp/idCheck',
+            url : 'idCheck',
             method : 'get',
             data : {id : id},
             success : function(result){
@@ -189,7 +190,7 @@
             inputPhoneNo.focus();
         }
         $.ajax({
-            url : '/sendSMS',
+            url : 'sendSMS',
             method : 'post',
             data : {phoneNo : phoneNo},
             success : function(result){

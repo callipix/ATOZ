@@ -45,7 +45,6 @@ public class RegisterController {
             } else {
                 session.setAttribute("message" ,"회원가입에 실패하였습니다.");
             }
-
             return "redirect:/resultPage";
         } catch (Exception e) {
             session.setAttribute("message" ,"서버 오류: " + e.getMessage());

@@ -26,6 +26,7 @@
 </script>
 <jsp:include page="../header.jsp" />
 <br>
+<h5>로그인을 해야 글쓰기 버튼이 활성화!! -> 미리 버튼 활성화 뒤에 클릭시 로그인 요청하도록 수정 예정</h5>
 <div class="search-container">
     <form action="<c:url value='/board/boardList'/>" class="search-form" method="get">
         <select class="search-option" name="option">

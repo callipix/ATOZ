@@ -10,7 +10,7 @@
                 alert(message);
                 <% session.invalidate(); %>
             }
-            location.href="/";
+            location.href="/myApp";
         }
     </script>
 </head>

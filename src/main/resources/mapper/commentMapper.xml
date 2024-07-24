@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.myapp.board.dao.CommentMapper">
+<!-- 해당글의 전체 댓글 삭제-->
+    <delete id="deleteAllComment" parameterType="int">
+        DELETE
+          FROM comment
+         WHERE bno = #{bno}
+    </delete>
+<!-- 해당 글의 댓글 수 가져오기 -->
+    <select id="commentCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+          FROM comment
+         WHERE bno = #{bno}
+    </select>
+<!-- 댓글 삭제-->
+    <delete id="deleteComment" parameterType="map">
+        DELETE
+          FROM comment
+         WHERE commenter = #{commenter} AND cno = #{cno}
+    </delete>
+<!-- 댓글 등록-->
+    <insert id="insertComment" parameterType="com.project.myapp.dto.CommentDTO">
+        INSERT INTO
+            comment(bno , pcno, comment, commenter , reg_date , up_date)
+        VALUES
+            (#{bno}, #{pcno} , #{comment} , #{commenter} , now() , now())
+    </insert>
+<!-- 해당 글 댓글 가져오기 -->
+    <select id="getCommentForBoard" parameterType="int" resultType="com.project.myapp.dto.CommentDTO">
+        SELECT cno , bno , ifnull(pcno , cno) as pcno , comment , commenter , reg_date , up_date
+          FROM comment
+         WHERE bno = #{bno}
+        ORDER BY pcno ASC , cno ASC
+        </select>
+<!-- 해당 댓글 가져오기-->
+    <select id="getCommentByCno" parameterType="int" resultType="com.project.myapp.dto.CommentDTO">
+        SELECT cno , bno , pcno , comment , commenter , reg_date , up_date
+          FROM comment
+         WHERE cno = #{cno}
+    </select>
+<!-- 댓글 수정하기 -->
+    <update id="updateComment" parameterType="com.project.myapp.dto.CommentDTO">
+        UPDATE  comment
+           SET   comment   = #{comment}
+               , commenter = #{commenter}
+               , up_date   = now()
+         WHERE commenter   = #{commenter} AND cno = #{cno}
+    </update>
+</mapper>

@@ -102,7 +102,12 @@ span.psw {
     background-color: #333;
     overflow: hidden;
     margin: 0 auto;
-    /*width: 70%;*/
+    width: 1300px;
+    /*width: 100%;*/
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    box-sizing: border-box;
     text-align: center;
 }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 public class BoardServiceImpl implements BoardService{
 
     @Autowired
-    private BoardDAO boardDAO;
+    BoardDAO boardDAO;
 
     @Override
     public List<BoardDTO> getBoardList() {

@@ -115,13 +115,17 @@
 
     /* Add a black background color to the top navigation */
     .topnav {
-        background-color: #333;
-        overflow: hidden;
-        margin: 0 auto;
-        /*width: 70%;*/
-        text-align: center;
+            background-color: #333;
+            overflow: hidden;
+            margin: 0 auto;
+            width: 1300px;
+            /*width: 100%;*/
+            padding: 0px;
+            margin: 0px;
+            border: none;
+            box-sizing: border-box;
+            text-align: center;
     }
-
     /* Style the links inside the navigation bar */
     .topnav a {
         float: right;
@@ -185,6 +189,7 @@
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">Sign In</a>
     </c:if>
+    <a href="<c:url value='/suggestions' />">Suggestions</a>
     <a href="<c:url value='/board/boardList' />">Board</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

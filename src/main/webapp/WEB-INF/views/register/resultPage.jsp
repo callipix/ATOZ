@@ -9,7 +9,7 @@
                 alert(message);
                 <% session.removeAttribute("message"); %> // 메시지 제거
             }
-            location.href="/";
+            location.href="/myApp";
         }
     </script>
 </head>
