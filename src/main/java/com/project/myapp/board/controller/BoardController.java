@@ -78,13 +78,14 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
             m.addAttribute(boardDTO);
-            m.addAttribute("mode","MOD_ERR");
+            m.addAttribute("msg","MOD_ERR");
             return "board/board";
         }
     }
     @PostMapping("/write")
     public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session) throws Exception {
 
+        System.out.println("boardDTO = " + boardDTO);
         String writer = (String) session.getAttribute("id");
         boardDTO.setWriter(writer);
 
@@ -106,9 +107,11 @@ public class BoardController {
             BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
             List<CommentDTO> commentList = this.commentService.getCommentForBoard(bno);
 
-            System.out.println("commentList = " + commentList);
             m.addAttribute("commentList",commentList);
+            m.addAttribute("mode","mod");
             m.addAttribute(boardDTO);
+            System.out.println("boardDTO = " + boardDTO);
+            System.out.println("commentList = " + commentList);
         } catch (Exception e){
             e.printStackTrace();
             rattr.addAttribute("msg" , "READ_ERR");

@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CommentController {
@@ -44,21 +46,22 @@ public class CommentController {
     // 댓글 등록
     @ResponseBody
     @PostMapping("/comments")
-    public ResponseEntity<String> write(@RequestBody CommentDTO commentDTO,Integer bno, HttpSession session){
+    public ResponseEntity<CommentDTO> write(CommentDTO commentDTO, HttpSession session){
 
         String commenter = (String)session.getAttribute("id");
         commentDTO.setCommenter(commenter);
-
         try {
-            int result = this.commentService.insertComment(commentDTO);
-
-            if(result != 1){
+            CommentDTO result = this.commentService.insertComment(commentDTO);
+                if(result == null){
                 throw new Exception("Write failed");
             }
-            return new ResponseEntity<>("WRT_OK" , HttpStatus.OK);
+            System.out.println("Controller commentDTO = " + commentDTO);
+            System.out.println("ResponseEntity.ok(commentDTO)= "+ ResponseEntity.ok(commentDTO));
+            return ResponseEntity.ok(commentDTO);
+//            return new ResponseEntity<>(commentDTO , HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>("WRT_ERR" , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(commentDTO , HttpStatus.BAD_REQUEST);
         }
     }
 

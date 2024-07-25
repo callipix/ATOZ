@@ -6,19 +6,23 @@
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <link rel="stylesheet" href="<c:url value='/css/boardDetail.css'/>">
+    <link rel="stylesheet" href="<c:url value='/ckeditor5/style.css'/>">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
 </head>
 <body>
 <jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
 </script>
+
 <div>
     <div class="board-container">
         <div>
@@ -29,25 +33,89 @@
 <%--                </c:if>--%>
                 <div class="btnList">
                     <c:if test="${boardDTO.writer eq loginId}">
-                        <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정하기</button>
                         <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제하기</button>
+                        <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정하기</button>
                     </c:if>
                         <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로</button>
+                    <c:if test="${mode eq 'new'}">
+                        <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 글쓰기</button>
+                    </c:if>
                 </div>
             </div>
         </div>
-        <form id="form" class="form" action="<c:url value='/board/write'/>" method="post">
+
+        <input type="hidden" name="bno" value="${boardDTO.bno}">
+
+            <c:if test="${mode eq 'new'}">
+
+            <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post">
+
             <c:if test="${not empty boardDTO.bno}">
                 <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
             </c:if>
-            <input name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+            <div class="form-group">
+                <label for="newTitle">
+                    <input class="form-control" name="newTitle" id="newTitle" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+                </label>
+            </div>
 
-            <textarea id="content" name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
+            <div class="form-group">
+                <label for="board-content">
+                    <textarea id="board-content" name="board-content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
+                </label>
+            </div>
+        <script type="importmap">
+            {
+                "imports": {
+                    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
+                    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
+                }
+            }
+        </script>
 
-            <c:if test="${mode eq 'new'}">
-                <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록하기</button>
-            </c:if>
+        <script type="module" src="<c:url value='/ckeditor5/main.js'/>"></script>
         </form>
+            </c:if>
+
+        <c:if test="${mode eq 'mod'}">
+            <div id="before">
+                <input name="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+                <textarea name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
+            </div>
+
+            <div id="after" style="display: none">
+
+                <form id="modifyForm" class="form" action="<c:url value='/board/modify'/>" method="post">
+
+                <c:if test="${not empty boardDTO.bno}">
+                    <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
+                </c:if>
+                <div class="form-group">
+                    <label for="modifyTitle">
+                        <input class="form-control" name="modifyTitle" id="modifyTitle" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="board-content">
+                        <textarea id="board-content" name="board-content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
+                    </label>
+                </div>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
+                            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
+                        }
+                    }
+                </script>
+
+                <script type="module" src="<c:url value='/ckeditor5/main.js'/>"></script>
+            </form>
+        </c:if>
+            </div>
+
+        </div>
 
         <div id="commentList">
             <ul>
@@ -74,7 +142,7 @@
             <div id="comment-writebox">
                 <div class="commenter commenter-writebox">댓글인데 없네</div>
                 <div class="comment-writebox-content">
-                    <textarea name="comment-content" id="comment-content" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+                    <textarea name="comment-content" id="commentText" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
                 </div>
                 <div id="comment-writebox-bottom">
                     <div class="register-box">
@@ -87,48 +155,30 @@
         <jsp:include page="comment.jsp" />
     </div>
 </div>
-
 <script>
+    let bno = "${boardDTO.bno}";
+
 $(document).ready(function(){
 
     let formCheck = function() {
 
-        let form = document.getElementById("form");
+        let newForm = document.getElementById("newForm");
 
-        if(form.title.value ==='') {
+        let content = editor.getData();
+        console.log("tt" + content);
+
+        if(newForm.title.value ==='') {
             alert("제목을 입력해 주세요.");
             form.title.focus();
             return false;
         }
-        if(form.content.value==='') {
+        if(content.value==='') {
             alert("내용을 입력해 주세요.");
             form.content.focus();
             return false;
         }
         return true;
     }
-    $("#btn-write-comment").on("click", function(){
-
-        let comment = document.querySelector("#comment-content");
-
-        let commentDTO = {
-            comment : comment.value
-        }
-        if(!confirm("등록하시겠습니까?")){
-            return;
-        }
-
-        $.ajax({
-            url : '/myApp/comments',
-            type : 'post',
-            dataType : "application:utf-8",
-            data : JSON.stringify(commentDTO),
-            success : function(result){
-                console.log("result = " + result);
-            }
-        })
-
-    })
 
     $("#removeBtn").on("click", function(){
         if(!confirm("정말로 삭제하시겠습니까?")){
@@ -141,7 +191,8 @@ $(document).ready(function(){
     })
 
     $("#modifyBtn").on("click", function(){
-        let form = $("#form");
+        let form = $("#modifyForm");
+        let content = editor.getData();
         let isReadonly = $("input[name=title]").attr('readonly');
 
         // 1. 읽기 상태이면, 수정 상태로 변경
@@ -153,6 +204,8 @@ $(document).ready(function(){
             $("textarea").attr('readonly', false);
             $("#modifyBtn").html("<i class='fa fa-pencil'></i> 등록하기");
             $("#listBtn").css('display', 'none');
+            $("#before").css("display", "none");
+            $("#after").css("display", "block");
 
             // ↓↓↓↓↓↓↓ 바닐라스크립트
             // document.querySelector(".writing-header").innerHTML = "글수정";
@@ -181,7 +234,18 @@ $(document).ready(function(){
         listBtn.addEventListener('click', function () {
             location.href = '<c:url value="/board/boardList"/>';
         })
-})
+    })
+
+    let showList = function(bno){
+        $.ajax({
+            type:'get',       // 요청 메서드
+            url: '/ch4/comments?bno='+ bno,  // 요청 URI
+            success : function(result){
+                $("#commentList").html(toListHTML(result));
+            },
+            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        }); // $.ajax()
+    }
 </script>
 </body>
 </html>

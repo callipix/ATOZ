@@ -49,13 +49,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insertComment(CommentDTO commentDTO) throws Exception {
-        System.out.println("commentDTO = " + commentDTO);
+    public CommentDTO insertComment(CommentDTO commentDTO) throws Exception {
+
         int resultBoard  = this.boardDAO.updateCommentCount(commentDTO.getBno() , 1);
-        System.out.println("resultBoard = " + resultBoard);
+
         int result = this.commentDAO.insertComment(commentDTO);
         System.out.println("result = " + result);
-        return result;
+        System.out.println("commentDTO = " + commentDTO);
+        return commentDTO;
     }
 
     @Override

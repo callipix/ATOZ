@@ -26,7 +26,7 @@
         }
 
         #commentList {
-            /*width : 80%;*/
+            width : 70%;
             margin : auto;
         }
 
@@ -270,29 +270,32 @@
 
         return yyyy+"."+mm+"."+dd+ " " + HH + ":" + MM + ":" + ss;
     }
-
-        <%--let bno = "${boardDTO.bno}";--%>
-
-        <%--let showList = function(bno){--%>
-        <%--    $.ajax({--%>
-        <%--        type : 'get',--%>
-        <%--        url : '/myApp/comments?bno='+bno,--%>
-        <%--        success : function(result){--%>
-        <%--            $("#commentList").html(toHTML(result));--%>
-        <%--        },--%>
-        <%--        error : function(){--%>
-        <%--            alert("error");--%>
-        <%--        }--%>
-        <%--    });--%>
-        <%--}--%>
     $(document).ready(function(){
 
-        // showList(bno);
+        $("#btn-write-comment").on("click", function(){
 
+            let comment = document.querySelector("#commentText");
+            let commentDTO = {
+                "bno" : "${boardDTO.bno}",
+                "comment" : comment.value
+            }
+            if(!confirm("등록하시겠습니까?"))   return;
+            $.ajax({
+                url : '/myApp/comments',
+                type : 'post',
+                data : commentDTO,
+                success : function(comment){
+                    $("#commentList ul").append(toHTML(comment));
+                }
+            })
+        })
+        // $("#a.btn-write").on("click", function(){
         $(document).on("click","a.btn-write", function(e){
             let target = e.target;
-            let cno = target.getAttribute("data-cno")
-            let bno = target.getAttribute("data-bno")
+            let cno = target.getAttribute("data-cno");
+            let bno = target.getAttribute("data-bno");
+            // let comment = $("input[name=replyComment]").val();
+            let pcno = $("#replyForm").parent().attr("data-pcno");
 
             console.log("답글쓰기 버튼 클릭");
             let repForm = $("#reply-writebox");
@@ -300,6 +303,15 @@
             repForm.css("display", "block");
             repForm.attr("data-pcno", pcno);
             repForm.attr("data-bno",  bno);
+
+            $("btn-write-reply").on("click", function(){
+
+                $.ajax({
+                    url : "/myApp/write"
+                })
+
+            })
+
         });
 
         $(document).on("click","#btn-cancel-reply",function(e){
@@ -328,7 +340,20 @@
         });
 
         $(document).on("click", "a.btn-delete",function(e){
-            alert("delete");
+
+            let target = e.target;
+            let cno = target.getAttribute("data-cno");
+
+            if(!confirm("삭제하시겠습니까?")) return;
+
+            $.ajax({
+                url : '/myApp/comments/'+cno + '?bno=' + bno,
+                type : 'delete',
+                success : function(result){
+                    alert(result);
+                    location.href = '/myApp/board/read?bno='+bno;
+                }
+            })
         });
 
         $("#btn-write-modify").click(function(){
@@ -342,36 +367,70 @@
         });
     });
 
-        // let toHTML = function(comments){
-        //     let tmp = "<ul>";
-        //
-        //     comments.forEach(function(comment){
-        //         tmp += '<li class="comment-item" data-cno=' + comment.cno;
-        //         tmp += ' data-pcno=' + comment.pcno;
-        //         tmp += ' data-bno=' + comment.bno + '>';
-        //         tmp += ' <div class="comment-area">';
-        //         tmp += ' <div class="commenter">' + comment.commenter + '</div>';
-        //         tmp += ' <div class="commenter-content">' + comment.comment + '</div>';
-        //         tmp += ' <div class="comment-bottom">';
-        //         tmp += ' <span class="up_date">' + comment.up_date + '</span>';
-        //
-        //         tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
-        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        //         tmp += ' > 답글쓰기' +'</a>';
-        //
-        //         tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
-        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        //         tmp += ' > 수정' +'</a>';
-        //
-        //         tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
-        //         tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        //         tmp += ' > 삭제' +'</a>';
-        //
-        //         tmp += ' </div>';
-        //         tmp += ' </div>';
-        //         tmp += '</li>';
-        //     })
-        //     return tmp += "</ul>";
-        // }
+
+    let toHTML = function(comment){
+        let tmp = "<ul>";
+
+        tmp += '<li class="comment-item" data-cno=' + comment.cno;
+        tmp += ' data-pcno=' + comment.pcno;
+        tmp += ' data-bno=' + comment.bno + '>';
+        tmp += ' <div class="comment-area">';
+        tmp += ' <div class="commenter">' + comment.commenter + '</div>';
+        tmp += ' <div class="commenter-content">' + comment.comment + '</div>';
+        tmp += ' <div class="comment-bottom">';
+        tmp += ' <span class="up_date">' + comment.up_date + '</span>';
+
+        tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 답글쓰기' +'</a>';
+
+        tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 수정' +'</a>';
+
+        tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 삭제' +'</a>';
+
+        tmp += ' </div>';
+        tmp += ' </div>';
+        tmp += '</li>';
+        tmp += "</ul>";
+        return tmp;
+    }
+    let toListHTML = function(comments){
+
+        let tmp = "<ul>";
+
+        comments.forEach(function(comment){
+
+        tmp += '<li class="comment-item" data-cno=' + comment.cno;
+        tmp += ' data-pcno=' + comment.pcno;
+        tmp += ' data-bno=' + comment.bno + '>';
+        tmp += ' <div class="comment-area">';
+        tmp += ' <div class="commenter">' + comment.commenter + '</div>';
+        tmp += ' <div class="commenter-content">' + comment.comment + '</div>';
+        tmp += ' <div class="comment-bottom">';
+        tmp += ' <span class="up_date">' + comment.up_date + '</span>';
+
+        tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 답글쓰기' +'</a>';
+
+        tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 수정' +'</a>';
+
+        tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
+        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
+        tmp += ' > 삭제' +'</a>';
+
+        tmp += ' </div>';
+        tmp += ' </div>';
+        tmp += '</li>';
+        })
+        tmp += "</ul>";
+        return tmp;
+    }
 </script>
 </body>

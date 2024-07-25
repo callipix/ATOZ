@@ -11,7 +11,8 @@ public interface CommentService {
 
     public int deleteComment(Integer cno ,Integer bno, String commenter) throws Exception;
 
-    public int insertComment(CommentDTO commentDTO) throws Exception;
+//    public int insertComment(Integer bno , String content , String commenter) throws Exception;
+    public CommentDTO insertComment(CommentDTO commentDTO) throws Exception;
 
     public List<CommentDTO> getCommentForBoard(int bno) throws Exception;
 
