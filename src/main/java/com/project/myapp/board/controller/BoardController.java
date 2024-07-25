@@ -40,8 +40,20 @@ public class BoardController {
     @GetMapping("/write")
     public String write(Model m){
         m.addAttribute("mode","new");
-        return "board/board";
+        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
+        return "board/write";
     }
+    @GetMapping("/modify")
+    public String modify(Integer bno, Model m){
+
+        BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
+        m.addAttribute("boardDTO", boardDTO);
+        m.addAttribute("mode","mod");
+
+        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
+        return "board/modify";
+    }
+
     // 글삭제
     @PostMapping("/remove")
     public String remove(Integer bno, SearchCondition sc, HttpSession session, RedirectAttributes rattr){
