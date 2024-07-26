@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 @PropertySource("classpath:api-config.properties")
 public class ApiConfigProperties {
 

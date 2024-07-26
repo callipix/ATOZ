@@ -8,8 +8,8 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://43.203.228.252:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />
-<!--        <property name="url" value="jdbc:mysql://localhost:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />-->
+<!--        <property name="url" value="jdbc:mysql://:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />-->
+        <property name="url" value="jdbc:mysql://localhost:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />
         <property name="username" value="callipix" />
         <property name="password" value="java" />
     </bean>

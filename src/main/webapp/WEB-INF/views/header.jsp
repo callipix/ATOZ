@@ -27,13 +27,13 @@
 </div>
 <script>
     // Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon
-    const x = document.querySelector("#myTopnav");
+    const x1 = document.querySelector("#myTopnav");
 
     function myFunction() {
-        if (x.className === "topnav") {
-            x.className += " responsive";
+        if (x1.className === "topnav") {
+            x1.className += " responsive";
         } else {
-            x.className = "topnav";
+            x1.className = "topnav";
         }
     }
 

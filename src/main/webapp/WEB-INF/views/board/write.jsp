@@ -122,18 +122,16 @@
 
         let formCheck = function() {
 
-            let form = document.getElementById("newForm");
+            let form = document.querySelector("#newForm");
 
             let content = editor.getData();
-            console.log("title = " + form.title.value);
-            console.log("content =" + content);
 
-            if(form.title.value =="") {
+            if(form.title.value === "") {
                 alert("제목을 입력해 주세요.");
                 form.title.focus();
                 return false;
             }
-            if(content=="") {
+            if(content === "") {
                 alert("내용을 입력해 주세요.");
                 form.content.focus();
                 return false;
@@ -151,44 +149,12 @@
             form.submit();
         })
 
-        $("#modifyBtn").on("click", function(){
-
-            let form = $("#modifyForm");
-            let content = editor.getData();
-            let isReadonly = $("input[name=title]").attr('readonly');
-
-            // 1. 읽기 상태이면, 수정 상태로 변경
-            if(isReadonly === 'readonly'){
-
-                $(".writing-header").html("글수정");
-                $("input[name=title]").attr('readonly', false);
-                // ↕ 같은거 아닌가? isReadonly.attr('readonly', false);
-                $("textarea").attr('readonly', false);
-                $("#modifyBtn").html("<i class='fa fa-pencil'></i> 등록하기");
-                $("#listBtn").css('display', 'none');
-                $("#before").css("display", "none");
-                $("#after").css("display", "block");
-
-                // ↓↓↓↓↓↓↓ 바닐라스크립트
-                // document.querySelector(".writing-header").innerHTML = "글수정";
-                // document.querySelector("input[name=title]").removeAttribute('readonly');
-                // document.querySelector("textarea").removeAttribute('readonly');
-                // document.querySelector("#modifyBtn").innerHTML = "<i class='fa fa-pencil'></i> 수정하기";
-                // document.querySelector("#listBtn").style.display = 'none';  // 이 줄을 추가하여 listBtn의 display를 none으로 설정합니다.
-                return;
-            }
-            // 2. 수정 상태이면, 수정된 내용을 서버로 전송
-            form.attr("action","<c:url value='/board/modify${searchCondition.queryString}'/>");
-            form.attr("method", "post");
-            if(formCheck())
-                form.submit();
-        })
         $("#writeNewBtn").on("click", function(){
             location.href="<c:url value='/board/write'/>";
         });
         $("#writeBtn").on("click", function(){
             let form = $("#newForm");
-            form.attr("action", "<c:url value='/board/write'/>");
+            form.attr("action", "write");
             form.attr("method", "post");
             if(formCheck())
                 form.submit();
