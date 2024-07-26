@@ -47,7 +47,7 @@
         </div>
         <input type="hidden" name="bno" value="${boardDTO.bno}">
 
-            <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post">
+            <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data">
                 <c:if test="${not empty boardDTO.bno}">
                     <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
                 </c:if>

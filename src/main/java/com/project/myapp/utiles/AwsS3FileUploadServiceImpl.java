@@ -26,13 +26,8 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
     private String bucketName;
 
     @Autowired
-    public AwsS3FileUploadServiceImpl(AmazonS3 amazonS3, AwsConfig awsConfig, FileUpload fileUpload){
-        System.out.println("AwsS3FileUploadServiceImpl amazonS3 = " + amazonS3);
-        System.out.println("AwsS3FileUploadServiceImpl awsConfig = " + awsConfig);
-        System.out.println("AwsS3FileUploadServiceImpl fileUpload = " + fileUpload);
-        this.awsConfig = awsConfig;
+    public AwsS3FileUploadServiceImpl(AmazonS3 amazonS3 , AwsConfig awsConfig, FileUpload fileUpload) {
         this.amazonS3 = amazonS3;
-        this.fileUpload = fileUpload;
     }
 
     private String makeFileName(String originName){
