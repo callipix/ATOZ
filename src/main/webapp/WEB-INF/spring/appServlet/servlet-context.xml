@@ -27,6 +27,11 @@
         <beans:property name="dataSource" ref="dataSource"/>
     </beans:bean>
 
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="UTF-8" />
+        <beans:property name="maxUploadSize" value="10485760" />
+    </beans:bean>
+
     <tx:annotation-driven proxy-target-class="true"/>
 
     <view-controller path="/" view-name="/home" />
@@ -37,5 +42,7 @@
     <view-controller path="/board/boardList" view-name="/board/boardList" />
     <view-controller path="/suggestions" view-name="/suggestions" />
     <context:component-scan base-package="com.project.myapp" />
+
+
 
 </beans:beans>

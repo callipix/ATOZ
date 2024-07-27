@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<c:url value='/ckeditor5/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
+    
 </head>
 
 <body>
@@ -47,72 +48,69 @@
         </div>
         <input type="hidden" name="bno" value="${boardDTO.bno}">
 
-            <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data">
-                <c:if test="${not empty boardDTO.bno}">
-                    <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
-                </c:if>
-                <div class="form-group">
-                    <label for="title">
-                        <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
-                    </label>
-                </div>
+        <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data">
+            <c:if test="${not empty boardDTO.bno}">
+                <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
+            </c:if>
+            <div class="form-group">
+                <label for="title">
+                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+                </label>
+            </div>
 
-                <div class="form-group">
-<%--                    <label for="content">--%>
-<%--                        <textarea id="content" name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}" escapeXml="false"/></textarea><br>--%>
-<%--                    </label>--%>
-    <label for="content">
-        <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
-    </label><br>
-                </div>
-                <script type="importmap">
-                    {
-                        "imports": {
-                            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
-                            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
-                        }
+            <div class="form-group">
+                <label for="content">
+                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
+                </label><br>
+            </div>
+            <script type="importmap">
+                {
+                    "imports": {
+                        "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
+                        "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
                     }
-                </script>
-                <script type="module" src="<c:url value='/ckeditor5/main.js'/>"></script>
-            </form>
-
+                }
+            </script>
+            <script type="module" src="<c:url value='/ckeditor5/main.js'/>">
+            </script>
+        </form>
     </div>
 
-<%--    <div id="commentList">--%>
-<%--        <ul>--%>
-<%--            <c:forEach var = "commentDTO" items="${commentList}">--%>
-<%--                <li class="comment-item" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}">--%>
-<%--                        <span class="comment-img">--%>
-<%--                            <i class="fa fa-user-circle" aria-hidden="true"></i>--%>
-<%--                        </span>--%>
-<%--                    <div class="comment-area">--%>
-<%--                        <div class="commenter">${commentDTO.commenter}</div>--%>
-<%--                        <div class="comment-content">${commentDTO.comment}--%>
-<%--                        </div>--%>
-<%--                        <div class="comment-bottom">--%>
-<%--                            <span class="up_date">${commentDTO.up_date}</span>--%>
-<%--                            <a href="#" class="btn-write"  data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">답글쓰기</a>--%>
-<%--                            <a href="#" class="btn-modify" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">수정</a>--%>
-<%--                            <a href="#" class="btn-delete" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">삭제</a>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </li>--%>
-<%--            </c:forEach>--%>
-<%--        </ul>--%>
-<%--        <br>--%>
-<%--        <div id="comment-writebox">--%>
-<%--            <div class="commenter commenter-writebox">댓글인데 없네</div>--%>
-<%--            <div class="comment-writebox-content">--%>
-<%--                <textarea name="comment-content" id="commentText" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>--%>
-<%--            </div>--%>
-<%--            <div id="comment-writebox-bottom">--%>
-<%--                <div class="register-box">--%>
-<%--                    <button type="button" class="btn" id="btn-write-comment">등록</button>--%>
-<%--                    <br>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+    <%--    <div id="commentList">--%>
+    <%--        <ul>--%>
+    <%--            <c:forEach var = "commentDTO" items="${commentList}">--%>
+    <%--                <li class="comment-item" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}">--%>
+    <%--                        <span class="comment-img">--%>
+    <%--                            <i class="fa fa-user-circle" aria-hidden="true"></i>--%>
+    <%--                        </span>--%>
+    <%--                    <div class="comment-area">--%>
+    <%--                        <div class="commenter">${commentDTO.commenter}</div>--%>
+    <%--                        <div class="comment-content">${commentDTO.comment}--%>
+    <%--                        </div>--%>
+    <%--                        <div class="comment-bottom">--%>
+    <%--                            <span class="up_date">${commentDTO.up_date}</span>--%>
+    <%--                            <a href="#" class="btn-write"  data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">답글쓰기</a>--%>
+    <%--                            <a href="#" class="btn-modify" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">수정</a>--%>
+    <%--                            <a href="#" class="btn-delete" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">삭제</a>--%>
+    <%--                        </div>--%>
+    <%--                    </div>--%>
+    <%--                </li>--%>
+    <%--            </c:forEach>--%>
+    <%--        </ul>--%>
+    <%--        <br>--%>
+    <%--        <div id="comment-writebox">--%>
+    <%--            <div class="commenter commenter-writebox">댓글인데 없네</div>--%>
+    <%--            <div class="comment-writebox-content">--%>
+    <%--                <textarea name="comment-content" id="commentText" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>--%>
+    <%--            </div>--%>
+    <%--            <div id="comment-writebox-bottom">--%>
+    <%--                <div class="register-box">--%>
+    <%--                    <button type="button" class="btn" id="btn-write-comment">등록</button>--%>
+    <%--                    <br>--%>
+    <%--                </div>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
     <jsp:include page="comment.jsp" />
 </div>
 <script>

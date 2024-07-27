@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="<c:url value='/ckeditor5/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
+
 </head>
 <style>
     #contentDisplay {
         text-align: left;
+        margin-left: 20px;
     }
 </style>
 <body>
@@ -99,6 +101,7 @@
 
         let data = `${boardDTO.content}`;
         $("#contentDisplay").html(data);
+        $("#contentDisplay").children().children().css('width','500px');
 
         $("#removeBtn").on("click", function(){
             if(!confirm("정말로 삭제하시겠습니까?")){

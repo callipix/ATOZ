@@ -20,7 +20,7 @@ public class AwsS3FileUploadServiceImplTest {
 
     @Test
     public void saveFileToS3() {
-        System.out.println("key = " + awsConfig);
+        System.out.println("key = " + awsConfig.getBucketName());
         System.out.println("amazonS3 = " + amazonS3);
     }
 

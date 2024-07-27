@@ -11,8 +11,8 @@ public class FilesDTO {
     private String file_type;                   // 파일의 타입(여기선 이미지 파일 종류)
     private long file_size;                      // 파일사이즈
     private String file_path;                   // 파일 경로
-    private Timestamp uploaded_at;                 //
-    private String id;
+    private Timestamp uploaded_at;                // 업로드 날짜
+    private String id;                          // 업로드 id
     private String associated_object_id;
 
     public FilesDTO(){}

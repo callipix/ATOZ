@@ -11,7 +11,7 @@ public class FileUpload {
     @Autowired
     SqlSession sqlSession;
 
-    private static final String namespace = "com.project.myapp.utiles.FilesMapper.";
+    private static final String namespace = "com.project.myapp.utiles.FileMapper.";
 
     public int uploadFile(FilesDTO filesDTO) {
         int result = this.sqlSession.insert(namespace + "insertFileInfo" , filesDTO);

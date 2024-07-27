@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.utiles.fileMapper">
+<mapper namespace="com.project.myapp.utiles.FileMapper">
 
-<!--    <insert id="insertFileInfo" parameterType="com.project.myapp.dto.FilesDTO">-->
-<!--        INSERT INTO files-->
-<!--        ('original_name','stored_name','file_type','file_size','file_path','uploaded_at')-->
-<!--        VALUES-->
-<!--        (#{original_name},#{stored_name},#{file_type},#{file_size},#{file_path}, now())-->
-<!--    </insert>-->
+    <insert id="insertFileInfo" parameterType="com.project.myapp.dto.FilesDTO">
+        INSERT INTO files
+                    (original_name   ,  stored_name  , file_type    , file_size    , file_path    , uploaded_at , user_id)
+        VALUES
+                    (#{original_name},#{stored_name} , #{file_type} , #{file_size} , #{file_path} , now() , #{id})
+    </insert>
 
 </mapper>

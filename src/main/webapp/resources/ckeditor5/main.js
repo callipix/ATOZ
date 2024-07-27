@@ -48,9 +48,17 @@ import {
     TextPartLanguage,
     TextTransformation,
     Underline,
-    Undo
+    Undo,
+    CKFinder,
+    CKFinderUploadAdapter,
+    Image,  // 추가
+    ImageCaption,  // 추가
+    ImageStyle,  // 추가
+    ImageToolbar,  // 추가
+    ImageUpload,  // 추가
+    CodeBlockEditing,
+    CodeBlockUI
 } from 'ckeditor5';
-
 import translations from 'ckeditor5/translations/ko.js';
 
 const editorConfig = {
@@ -79,8 +87,8 @@ const editorConfig = {
             '|',
             'alignment',
             '|',
-            'outdent',
-            'indent'
+            'ckfinder',
+            'imageUpload'
         ],
         shouldNotGroupWhenFull: false
     },
@@ -133,8 +141,26 @@ const editorConfig = {
         TextPartLanguage,
         TextTransformation,
         Underline,
-        Undo
+        Undo,
+        CKFinder,
+        CKFinderUploadAdapter,
+        Image,  // 추가
+        ImageCaption,  // 추가
+        ImageStyle,  // 추가
+        ImageToolbar,  // 추가
+        ImageUpload,  // 추가
+        CodeBlockEditing,
+        CodeBlockUI
     ],
+    image: {
+        toolbar : [
+            'imageStyle:inline',
+            'imageStyle:wrapText',
+            'imageStyle:breakText', '|',
+            'toggleImageCaption',
+            'imageTextAlternative'
+            ]
+        },
     balloonToolbar: ['bold', 'italic', '|', 'link'],
     blockToolbar: [
         'fontSize',
@@ -226,9 +252,9 @@ const editorConfig = {
             }
         }
     },
-    menuBar: {
-        isVisible: true
-    },
+    // menuBar: {
+    //     isVisible: true
+    // },
     placeholder: 'Type or paste your content here!',
     style: {
         definitions: [
@@ -282,7 +308,14 @@ const editorConfig = {
     table: {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
     },
-    translations: [translations]
+    translations: [translations],
+    ckfinder :{
+        uploadUrl:'/myApp/upload/uploadCK'
+    },
+    highlight : {
+
+    }
+
 };
 
 ClassicEditor.create(document.querySelector('#content'), editorConfig)

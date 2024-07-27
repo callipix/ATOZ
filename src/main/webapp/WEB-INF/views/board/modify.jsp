@@ -45,7 +45,7 @@
 
         <input type="hidden" name="bno" value="${boardDTO.bno}">
 
-                <form id="form" class="form" action="<c:url value='/board/modify'/>" method="post">
+                <form id="form" class="form" action="<c:url value='/board/modify'/>" method="post" enctype="multipart/form-data">
                 <c:if test="${not empty boardDTO.bno}">
                     <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
                 </c:if>
@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">
-                        <textarea id="content" name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="mod" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
+                    <label for="modifyContent">
+                        <textarea id="modifyContent" name="modifyContent" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="mod" ? "" : "readonly='readonly'"}><c:out value="${boardDTO.content}"/></textarea><br>
                     </label>
                 </div>
                 <script type="importmap">
@@ -68,7 +68,6 @@
                         }
                     }
                 </script>
-
                 <script type="module" src="<c:url value='/ckeditor5/modify.js'/>"></script>
             </form>
 
@@ -125,14 +124,14 @@ $(document).ready(function(){
     let formCheck = function() {
 
         let form = document.querySelector("#form");
-        let content = editor.getData();
+        let modifyContent = editor.getData();
 
         if(form.title.value ==='') {
             alert("제목을 입력해 주세요.");
             form.title.focus();
             return false;
         }
-        if(content.value==='') {
+        if(modifyContent.value==='') {
             alert("내용을 입력해 주세요.");
             form.content.focus();
             return false;
@@ -152,13 +151,13 @@ $(document).ready(function(){
 
     $("#modifyBtn").on("click", function(){
         let form = $("#form");
-        let content = editor.getData();
 
         form.attr("action","<c:url value='/board/modify${searchCondition.queryString}'/>");
-        <%--form.attr("action","modify${searchCondition.queryString}");--%>
         form.attr("method", "post");
-        if(formCheck())
+        if(formCheck()){
+            $('#modifyContent').attr('name', 'content');
             form.submit();
+        }
     });
 
     $("#writeNewBtn").on("click", function(){
@@ -176,16 +175,6 @@ $(document).ready(function(){
         })
     })
 
-    let showList = function(bno){
-        $.ajax({
-            type:'get',       // 요청 메서드
-            url: '/ch4/comments?bno='+ bno,  // 요청 URI
-            success : function(result){
-                $("#commentList").html(toListHTML(result));
-            },
-            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-        }); // $.ajax()
-    }
 </script>
 </body>
 </html>
