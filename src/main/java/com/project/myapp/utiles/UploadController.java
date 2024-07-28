@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -53,8 +51,21 @@ public class UploadController {
 
     @ResponseBody
     @PostMapping("/delete/ckIMG")
-    public String removeImage(int bno, String[] imgAddress){
-        System.out.println("imgAddress = " + imgAddress);
+    public String removeImage(@RequestBody Map<String , List<?>> imageAddress) {
+
+        for(Object beforeImgAddress : imageAddress.get("beforeImgAddress")) {
+            System.out.println("beforeImgAddress = " +beforeImgAddress);
+        }
+        for(Object afterImgAddress : imageAddress.get("afterImgAddress")) {
+            System.out.println("afterImgAddress = " +afterImgAddress);
+        }
+
+        for(int i = 0 ; i < imageAddress.get("beforeImgAddress").size(); i++) {
+
+            if(!imageAddress.get("beforeImgAddress").get(i).equals(imageAddress.get("afterImgAddress").get(i))) {
+                System.out.println("아닌값? = " + imageAddress.get("beforeImgAddress").get(i));
+            }
+        }
 
 //        int result = Integer.valueOf(this.removeImage(imgAddress));
         return "String.valueOf(result)";

@@ -20,7 +20,7 @@
 <jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
-    const imgArr = [];
+    const beforeImgAddress = [];
 </script>
 
 <div>
@@ -158,19 +158,20 @@
 
             form.attr("action","<c:url value='/board/modify${searchCondition.queryString}'/>");
             form.attr("method", "post");
+
             if(formCheck()){
-                let imgAddress = getImageSrcFromData(editor.getData());
-                for(let i = 0 ; imgAddress.length ; i++){
-                    alert(imgAddress[i]);
-                }
-                alert(imgAddress)
+                let afterImgAddress = getImageSrcFromData(editor.getData());
+
+            let imageAddress = {
+                "beforeImgAddress" : beforeImgAddress,
+                "afterImgAddress" : afterImgAddress
+            }
                 $.ajax({
                     url : '/myApp/delete/ckIMG',
                     type : 'post',
                     contentType : 'application/json',
-                    data : JSON.stringify(imgAddress),
+                    data : JSON.stringify(imageAddress),
                     success : function(result){
-                        alert(result);
                     }
                 })
 
@@ -196,16 +197,17 @@
         })
     })
     function getImageSrcFromData(data) {
-        let imgSrcs = [];
+        // 게시물 등록시 최종 주소값
+        let afterImgAddress = [];
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
         const imgElements = doc.querySelectorAll('img');
 
         imgElements.forEach(img => {
-            imgSrcs.push(img.src);
+            afterImgAddress.push(img.src);
         });
-        return imgSrcs;
+        return afterImgAddress;
     }
 
 </script>

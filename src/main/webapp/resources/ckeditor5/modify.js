@@ -330,7 +330,7 @@ ClassicEditor.create(document.querySelector('#modifyContent'), editorConfig)
                             })
                                 .then(response => response.json())
                                 .then(responseData => {
-                                    imgArr.push(responseData.url);
+                                    beforeImgAddress.push(responseData.url);
                                     return {
                                         default: responseData.url
                                     };
