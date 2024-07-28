@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -38,14 +40,37 @@ public class UploadController {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uploaded" , true);
             map.put("url" , successURL);
-//            return new ResponseEntity<>(successURL, HttpStatus.OK);
+            map.put("HttpStatus" , ResponseEntity.ok(successURL));
             return map;
         } catch (Exception e) {
             e.printStackTrace();
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uploaded" , false);
+            map.put("HttpStatus" , new ResponseEntity<>("uploaded_ERR" , HttpStatus.BAD_REQUEST));
             return map;
-//            return new ResponseEntity<>("uploadResult", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ResponseBody
+    @PostMapping("/delete/ckIMG")
+    public String removeImage(int bno, String[] imgAddress){
+        System.out.println("imgAddress = " + imgAddress);
+
+//        int result = Integer.valueOf(this.removeImage(imgAddress));
+        return "String.valueOf(result)";
+    }
+
+    /** *
+     * 업로드 과정(DB까지)
+     * 1. 이미지 파일이 맞는지 체크
+     * 2. 확장자 명이 올바른지 체크
+     * 3. S3에 업로드
+     * 4. S3 업로드 성공시 DB에 파일정보 저장
+     * 4-1. DB에 파일정보 저장 성공시 최종 URL반환
+     * 4-2. DB에 파일정보 저장 실패시 S3에 업로드된 파일 삭제
+     *
+     * 1-1. 게시글 삭제시 AWS S3에 파일 삭제
+     * 1-2. 파일삭제 성공시 DB에 저장된 파일정보 삭제
+     * 2. 1-1,2는 트랜잭션으로 묶여야함
+     */
 }

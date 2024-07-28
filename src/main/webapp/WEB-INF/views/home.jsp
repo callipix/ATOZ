@@ -8,6 +8,8 @@
 <head>
     <title>홈페이지</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
+    <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
 <body>
 

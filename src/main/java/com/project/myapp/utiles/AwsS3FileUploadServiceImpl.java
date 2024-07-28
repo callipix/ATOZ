@@ -2,10 +2,7 @@ package com.project.myapp.utiles;
 
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.*;
 import com.project.myapp.dto.FilesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.UUID;
 
 @Service
@@ -56,7 +57,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
         String ext = getFileExtension(originName);     // 확장자
         String storedName = makeFileName(originName);                           // 새로 생성된이름 -> DB에 저장될이름
         ObjectMetadata metadata = new ObjectMetadata();                         // 파일의 메타데이터
-        metadata.setContentType("image/" + ext);                                // 이미지파일의 타입 -> 확장자
+        metadata.setContentType("image/" + ext);                                // 이미지파일의 타입 -> 확장자 이미지 업로드
         String bucketName = awsConfig.getBucketName();
 
         try{
@@ -65,7 +66,6 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
             ).withCannedAcl(CannedAccessControlList.PublicRead));
 
             FilesDTO filesDTO = new FilesDTO();
-
             filesDTO.setOriginal_name(originName);
             filesDTO.setStored_name(storedName);
             filesDTO.setFile_type(image.getContentType());
@@ -76,6 +76,8 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
             // DB에 파일 정보를 저장, 파일번호, 원본파일명, UUID파일명, 파일타입(확장자), 파일크기(사이즈), 파일경로
             int result = uploadImages(filesDTO);
             if(result == 0){
+                // DB에 저장 오류시 AWS S3에 이미 올라간 이미지는 삭제해야한다.
+                deleteImageFile(amazonS3.getUrl(bucketName, storedName).toString());
                 throw new IOException("DB 저장 오류");
             }
         } catch (IOException e){
@@ -85,12 +87,33 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
     }
     @Override
     public int uploadImages(FilesDTO filesDTO) throws IOException {
-
+        // DB에 저장하는 부분
         System.out.println("filesDTO = " + filesDTO);
         int result = this.fileUpload.uploadFile(filesDTO);
         System.out.println("result = " + result);
 
         return result;
+    }
+
+    @Override
+    public void deleteImageFile(String imageAddress){
+        String key = getKeyFromImageAddress(imageAddress);
+        try {
+            System.out.println("imageAddress = " + imageAddress);
+            amazonS3.deleteObject(awsConfig.getBucketName(), key);
+        } catch (Exception e){
+            throw new AmazonS3Exception("error image delete" , e);
+        }
+    }
+
+    private String getKeyFromImageAddress(String imageAddress){
+        try {
+            URL url = new URL(imageAddress);
+            String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
+            return decodingKey.substring(1);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            throw new AmazonS3Exception("error Image Delete");
+        }
     }
 
 }

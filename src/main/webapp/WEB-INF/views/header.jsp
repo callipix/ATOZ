@@ -11,6 +11,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
+    <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
 <body>
 <div class="topnav" id="myTopnav">

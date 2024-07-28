@@ -55,7 +55,7 @@ import {
     ImageCaption,  // 추가
     ImageStyle,  // 추가
     ImageToolbar,  // 추가
-    ImageUpload,  // 추가
+    ImageUpload  // 추가
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/ko.js';
@@ -147,7 +147,7 @@ const editorConfig = {
         ImageCaption,  // 추가
         ImageStyle,  // 추가
         ImageToolbar,  // 추가
-        ImageUpload  // 추가
+        ImageUpload,  // 추가
     ],
     image: {
         toolbar : [
@@ -313,7 +313,33 @@ const editorConfig = {
 };
 
 ClassicEditor.create(document.querySelector('#modifyContent'), editorConfig)
-    .then(editor2 => {window.editor = editor2; })
+    .then(editor => {
+        window.editor = editor;
+
+        editor.plugins.get('FileRepository').createUploadAdapter = loader => {
+            return {
+                upload() {
+                    return loader.file
+                        .then(file => {
+                            const data = new FormData();
+                            data.append('upload', file);
+
+                            return fetch('/myApp/upload/uploadCK', {
+                                method: 'POST',
+                                body: data
+                            })
+                                .then(response => response.json())
+                                .then(responseData => {
+                                    imgArr.push(responseData.url);
+                                    return {
+                                        default: responseData.url
+                                    };
+                                });
+                        });
+                }
+            };
+        };
+    })
     .catch(error => {
         console.error('There was a problem initializing CKEditor:', error);
     });

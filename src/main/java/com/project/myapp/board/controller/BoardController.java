@@ -36,7 +36,7 @@ public class BoardController {
         this.boardService = boardService;
         this.commentService = commentService;
     }
-
+    
     @GetMapping("/write")
     public String write(Model m){
         m.addAttribute("mode","new");

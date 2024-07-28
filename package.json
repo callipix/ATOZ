@@ -15,7 +15,9 @@
     "@ckeditor/ckeditor5-build-classic": "^42.0.1",
     "@ckeditor/ckeditor5-code-block": "^42.0.1",
     "@ckeditor/ckeditor5-core": "^42.0.2",
-    "@ckeditor/ckeditor5-highlight": "^42.0.2",
+    "@ckeditor/ckeditor5-editor-classic": "^42.0.2",
+    "@ckeditor/ckeditor5-essentials": "^42.0.2",
+    "@ckeditor/ckeditor5-upload": "^42.0.2",
     "ckeditor5": "^42.0.1"
   }
 }

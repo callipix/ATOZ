@@ -10,6 +10,8 @@ public interface AwsS3FileUploadService {
     String saveFileToS3(MultipartFile image, String id) throws IOException;
 //
     int uploadImages(FilesDTO filesDTO) throws IOException;
+
+    void deleteImageFile(String imgAddress) throws IOException;
 //
 //    // 사진 업로드
 //
