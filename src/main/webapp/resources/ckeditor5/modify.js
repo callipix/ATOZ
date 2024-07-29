@@ -55,7 +55,9 @@ import {
     ImageCaption,  // 추가
     ImageStyle,  // 추가
     ImageToolbar,  // 추가
-    ImageUpload  // 추가
+    ImageUpload,
+    CodeBlockEditing,
+    CodeBlockUI  // 추가
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/ko.js';
@@ -148,6 +150,8 @@ const editorConfig = {
         ImageStyle,  // 추가
         ImageToolbar,  // 추가
         ImageUpload,  // 추가
+        CodeBlockEditing,
+        CodeBlockUI
     ],
     image: {
         toolbar : [
@@ -315,7 +319,6 @@ const editorConfig = {
 ClassicEditor.create(document.querySelector('#modifyContent'), editorConfig)
     .then(editor => {
         window.editor = editor;
-
         editor.plugins.get('FileRepository').createUploadAdapter = loader => {
             return {
                 upload() {

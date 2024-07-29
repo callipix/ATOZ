@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 public class UploadController {
@@ -50,25 +47,35 @@ public class UploadController {
     }
 
     @ResponseBody
-    @PostMapping("/delete/ckIMG")
-    public String removeImage(@RequestBody Map<String , List<?>> imageAddress) {
+    @PostMapping("/contentImgCheck")
+    public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress) throws IOException {
 
-        for(Object beforeImgAddress : imageAddress.get("beforeImgAddress")) {
-            System.out.println("beforeImgAddress = " +beforeImgAddress);
+        List<String> beforeAddress = new ArrayList<>();
+        List<String> afterAddress  = new ArrayList<>();
+
+        int result = 0;
+        for(String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
+            beforeAddress.add(beforeImgAddress);
+            System.out.println("beforeImgAddress = " + beforeImgAddress);
         }
-        for(Object afterImgAddress : imageAddress.get("afterImgAddress")) {
-            System.out.println("afterImgAddress = " +afterImgAddress);
+        for(String afterImgAddress : imageAddress.get("afterImgAddress")) {
+            afterAddress.add(afterImgAddress);
+            System.out.println("afterImgAddress = " + afterImgAddress);
         }
+        if(!imageAddress.isEmpty()){
+            // 이미지 업로드 여부 -> 업로드 존재시
+            List<String> endImgList = new ArrayList<>(beforeAddress);
 
-        for(int i = 0 ; i < imageAddress.get("beforeImgAddress").size(); i++) {
+            endImgList.removeAll(afterAddress);
 
-            if(!imageAddress.get("beforeImgAddress").get(i).equals(imageAddress.get("afterImgAddress").get(i))) {
-                System.out.println("아닌값? = " + imageAddress.get("beforeImgAddress").get(i));
-            }
+            result = this.awsS3FileUploadService.deleteImageFile(endImgList);
+
+            System.out.println("deletedImg = " + endImgList);
         }
-
-//        int result = Integer.valueOf(this.removeImage(imgAddress));
-        return "String.valueOf(result)";
+        if(result != 0) {
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
+        return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
     }
 
     /** *

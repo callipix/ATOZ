@@ -55,10 +55,11 @@ import {
     ImageCaption,  // 추가
     ImageStyle,  // 추가
     ImageToolbar,  // 추가
-    ImageUpload,  // 추가
+    ImageUpload,
     CodeBlockEditing,
-    CodeBlockUI
+    CodeBlockUI  // 추가
 } from 'ckeditor5';
+
 import translations from 'ckeditor5/translations/ko.js';
 
 const editorConfig = {
@@ -159,8 +160,8 @@ const editorConfig = {
             'imageStyle:breakText', '|',
             'toggleImageCaption',
             'imageTextAlternative'
-            ]
-        },
+        ]
+    },
     balloonToolbar: ['bold', 'italic', '|', 'link'],
     blockToolbar: [
         'fontSize',
@@ -312,14 +313,37 @@ const editorConfig = {
     ckfinder :{
         uploadUrl:'/myApp/upload/uploadCK'
     },
-    highlight : {
-
-    }
 
 };
 
 ClassicEditor.create(document.querySelector('#content'), editorConfig)
-    .then(editor => {window.editor = editor; })
+    .then(editor => {
+        window.editor = editor;
+
+        editor.plugins.get('FileRepository').createUploadAdapter = loader => {
+            return {
+                upload() {
+                    return loader.file
+                        .then(file => {
+                            const data = new FormData();
+                            data.append('upload', file);
+
+                            return fetch('/myApp/upload/uploadCK', {
+                                method: 'POST',
+                                body: data
+                            })
+                                .then(response => response.json())
+                                .then(responseData => {
+                                    beforeImgAddressWrite.push(responseData.url);
+                                    return {
+                                        default: responseData.url
+                                    };
+                                });
+                        });
+                }
+            };
+        };
+    })
     .catch(error => {
         console.error('There was a problem initializing CKEditor:', error);
     });

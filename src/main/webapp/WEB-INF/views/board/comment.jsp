@@ -101,9 +101,10 @@
         .btn {
             font-size:10pt;
             color : black;
-            background-color: #eff0f2;
+            background-color: #d2d4d7;
             text-decoration: none;
-            /*padding : 9px 10px 9px 10px;*/
+            padding : 9px 10px 9px 10px;
+            margin: 10px 0px 10px 5px;
             border-radius: 5px;
             float : right;
         }

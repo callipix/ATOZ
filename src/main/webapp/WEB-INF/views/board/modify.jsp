@@ -20,7 +20,7 @@
 <jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
-    const beforeImgAddress = [];
+    let beforeImgAddress = [];
 </script>
 
 <div>
@@ -51,9 +51,10 @@
             </c:if>
             <div class="form-group">
                 <label for="title">
-                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
+                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}>
                 </label>
             </div>
+            <br>
 
             <div class="form-group">
                 <label for="modifyContent">
@@ -68,8 +69,7 @@
                     }
                 }
             </script>
-            <script type="module" src="<c:url value='/ckeditor5/modify.js'/>">
-            </script>
+            <script type="module" src="<c:url value='/ckeditor5/modify.js'/>"></script>
         </form>
 
     </div>
@@ -113,7 +113,7 @@
 </div>
 <script>
     let bno = "${boardDTO.bno}";
-
+    let listBtn = document.querySelector('#listBtn');
     let isReadonly = $("input[name=title]").attr('readonly');
 
     if(isReadonly === 'readonly'){
@@ -121,9 +121,7 @@
         $("textarea").attr('readonly', false);
     }
 
-
     $(document).ready(function(){
-
 
         let formCheck = function() {
 
@@ -162,36 +160,37 @@
             if(formCheck()){
                 let afterImgAddress = getImageSrcFromData(editor.getData());
 
-            let imageAddress = {
-                "beforeImgAddress" : beforeImgAddress,
-                "afterImgAddress" : afterImgAddress
-            }
+                let imageAddress = {
+                    "beforeImgAddress" : beforeImgAddress,
+                    "afterImgAddress" : afterImgAddress
+                }
                 $.ajax({
-                    url : '/myApp/delete/ckIMG',
+                    url : '/myApp/contentImgCheck',
                     type : 'post',
                     contentType : 'application/json',
                     data : JSON.stringify(imageAddress),
-                    success : function(result){
+                    success: function (result) {
+                        beforeImgAddress = [];
+                        if(result != 1) return;
                     }
                 })
-
                 $('#modifyContent').attr('name', 'content');
                 form.submit();
             }
         });
 
-        $("#writeNewBtn").on("click", function(){
-            location.href="<c:url value='/board/write'/>";
-        });
-        $("#writeBtn").on("click", function(){
-            let form = $("#form");
-            form.attr("action", "<c:url value='/board/write'/>");
-            form.attr("method", "post");
-            if(formCheck()){
-                form.submit();
+        <%--$("#writeNewBtn").on("click", function(){--%>
+        <%--    location.href="<c:url value='/board/write'/>";--%>
+        <%--});--%>
+        <%--$("#writeBtn").on("click", function(){--%>
+        <%--    let form = $("#form");--%>
+        <%--    form.attr("action", "<c:url value='/board/write'/>");--%>
+        <%--    form.attr("method", "post");--%>
+        <%--    if(formCheck()){--%>
+        <%--        form.submit();--%>
 
-            }
-        });
+        <%--    }--%>
+        <%--});--%>
         listBtn.addEventListener('click', function () {
             location.href = '<c:url value="/board/boardList"/>';
         })
@@ -209,7 +208,6 @@
         });
         return afterImgAddress;
     }
-
 </script>
 </body>
 </html>

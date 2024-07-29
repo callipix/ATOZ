@@ -136,6 +136,9 @@ a {
     align-items: center; /* 가로 중앙 정렬 */
     justify-content: center; /* 세로 중앙 정렬 */
 }
+.search-input {
+    margin: 0px 10px 0px 10px;
+}
 
 /* 검색 폼 내부 요소들을 한 줄에 배치 */
 .search-form {
@@ -157,9 +160,29 @@ a {
 }
 #writeBtn{
     width: 30%;
-    margin: 0px 30px;
+    margin: 0px 10px;
 }
 .test-container{
     display: flex;
     align-items: center;
+}
+/*.form {*/
+/*    margin: 0 auto; !* 폼을 화면 중앙에 배치합니다 *!*/
+/*    padding: 20px; !* 내부 여백을 추가합니다 *!*/
+/*    border: 1px solid #ccc; !* 테두리를 추가합니다 *!*/
+/*    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); !* 약간의 그림자를 추가합니다 *!*/
+/*}*/
+
+.form input[type="text"], .form textarea {
+    width: 100%; /* 입력 요소가 폼의 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리의 크기를 포함하도록 설정 */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* 약간의 그림자를 추가합니다 */
+    margin-bottom: 10px; /* 입력 요소들 사이에 여백을 추가 */
+}
+.form pre {
+    max-width: 100%; /* 코드 블록의 최대 너비를 설정 */
+    overflow: auto; /* 코드 블록이 폼의 크기를 넘을 경우 스크롤바를 추가 */
+    background-color: #f5f5f5; /* 코드 블록의 배경색을 설정 */
+    padding: 10px; /* 내부 여백을 추가 */
+    border: 1px solid #ddd; /* 테두리를 추가 */
 }

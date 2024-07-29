@@ -4,6 +4,7 @@ import com.project.myapp.dto.FilesDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface AwsS3FileUploadService {
 //
@@ -11,7 +12,7 @@ public interface AwsS3FileUploadService {
 //
     int uploadImages(FilesDTO filesDTO) throws IOException;
 
-    void deleteImageFile(String imgAddress) throws IOException;
+    int deleteImageFile(List<String> imgAddress) throws IOException;
 //
 //    // 사진 업로드
 //

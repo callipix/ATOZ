@@ -3,21 +3,19 @@ package com.project.myapp.utiles;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.FilesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.UUID;
-
 @Service
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
@@ -54,7 +52,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
     public String saveFileToS3(MultipartFile image, String id) throws IOException {
         // AWS S3에 이미지를 업로드 하는 메서드
         String originName = image.getOriginalFilename();                        // 원본파일 이름
-        String ext = getFileExtension(originName);     // 확장자
+        String ext = getFileExtension(originName);                              // 확장자
         String storedName = makeFileName(originName);                           // 새로 생성된이름 -> DB에 저장될이름
         ObjectMetadata metadata = new ObjectMetadata();                         // 파일의 메타데이터
         metadata.setContentType("image/" + ext);                                // 이미지파일의 타입 -> 확장자 이미지 업로드
@@ -75,45 +73,50 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
             // DB에 파일 정보를 저장, 파일번호, 원본파일명, UUID파일명, 파일타입(확장자), 파일크기(사이즈), 파일경로
             int result = uploadImages(filesDTO);
-            if(result == 0){
-                // DB에 저장 오류시 AWS S3에 이미 올라간 이미지는 삭제해야한다.
-                deleteImageFile(amazonS3.getUrl(bucketName, storedName).toString());
-                throw new IOException("DB 저장 오류");
-            }
         } catch (IOException e){
             throw new IOException("이미지 업로드 오류");
         }
         return amazonS3.getUrl(bucketName, storedName).toString();
     }
     @Override
+    @Transactional(rollbackFor = IOException.class)
     public int uploadImages(FilesDTO filesDTO) throws IOException {
-        // DB에 저장하는 부분
+        // DB에 파일 정보를 저장하는 메서드
         System.out.println("filesDTO = " + filesDTO);
         int result = this.fileUpload.uploadFile(filesDTO);
-        System.out.println("result = " + result);
+
+        BoardDTO boardDTO = new BoardDTO();
+        System.out.println("DB 파일정보 저장 upload 결과 = " + result);
 
         return result;
     }
-
     @Override
-    public void deleteImageFile(String imageAddress){
-        String key = getKeyFromImageAddress(imageAddress);
-        try {
-            System.out.println("imageAddress = " + imageAddress);
-            amazonS3.deleteObject(awsConfig.getBucketName(), key);
-        } catch (Exception e){
-            throw new AmazonS3Exception("error image delete" , e);
-        }
-    }
+    @Transactional(rollbackFor = IOException.class)
+    public int deleteImageFile(List<String> imageAddress) throws IOException {
+        int result = 0;
+        for (String imgURL : imageAddress) {
+            String decodeURL = "";
 
-    private String getKeyFromImageAddress(String imageAddress){
-        try {
-            URL url = new URL(imageAddress);
-            String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
-            return decodingKey.substring(1);
-        } catch (MalformedURLException | UnsupportedEncodingException e) {
-            throw new AmazonS3Exception("error Image Delete");
-        }
-    }
+            try {
+                decodeURL = URLDecoder.decode(imgURL, "UTF-8");
+                String awsURL = "https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/";
+                imgURL = decodeURL.substring(awsURL.length());
 
+                System.out.println("imgURL = " + imgURL);
+                amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
+
+                result += this.fileUpload.deleteFile(imgURL);
+                System.out.println("파일정보 삭제 결과 = " + result);
+
+                if(result == 0){
+                    throw new IOException("DB 파일정보 삭제 오류");
+                }
+                System.out.println("파일삭제 성공시 = " + result);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IOException("파일정보 저장 오류");
+            }
+        }
+        return result;
+    }
 }

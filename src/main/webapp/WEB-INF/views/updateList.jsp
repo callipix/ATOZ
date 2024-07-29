@@ -208,9 +208,12 @@ auto !important;}</style>
 <!-- 마우스 커서 이펙트 코드 끝-->
 <style>
     .mainHeader {
-        margin: 20px 100px;
+        margin: 20px 100px 0px 100px;
         display: flex;
         align-items: center;
+    }
+    .bottomHeader {
+        margin: 20px 100px 0px 100px;
     }
     #reverseOrder,#openAll, .headerText {
         margin-left: 20px;
@@ -224,7 +227,7 @@ auto !important;}</style>
         <h1>업데이트 내역</h1>
     </div>
 
-    <div>
+    <div class="uplistBtn">
         <button id="reverseOrder"><b>역순보기</b></button>
         <button id="openAll"><b>한번에 열기</b></button>
     </div>
@@ -233,34 +236,23 @@ auto !important;}</style>
 </div>
 </div>
 <div class="updateList">
-    <div class="accordion-main">
-        <button class="accordion"><b>2024.07.15</b></button>
-        <div class="panel">
-            <h5>전체 프로젝트 설정 후 생성</h5>
-            <h5>pom 파일 라이브러리 추가</h5>
-        </div>
-    </div>
-
-    <div class="accordion-main">
-        <button class="accordion"><b>2024.07.16</b></button>
-        <div class="panel">
-            <h5>회원가입기능 쿼리문 뽑아보기</h5>
-            <h5>회원가입기능 백단 메서드 작성</h5>
-            <h5>회원가입기능 메서드 테스트코드 작성 - Junit4</h5>
-            <h5>가입시 문자인증(coolSMS) 추가 - 테스트 성공</h5>
-        </div>
-    </div>
 
     <div class="accordion-main">
         <button class="accordion"><b>2024.07.17</b></button>
         <div class="panel">
-            <h5>api-key, api-secret을 properties 파일로 별도분리하여 읽어오도록 설정</h5>
+            <h5>전체 프로젝트 설정 후 생성</h5>
+            <h5>pom 파일 라이브러리 추가</h5>
+            <h5>회원가입기능 쿼리문 뽑아보기</h5>
+            <h5>회원가입기능 백단 메서드 작성</h5>
+            <h5>회원가입기능 메서드 테스트코드 작성 - Junit4</h5>
         </div>
     </div>
 
     <div class="accordion-main">
         <button class="accordion"><b>2024.07.18</b></button>
         <div class="panel">
+            <h5>가입시 문자인증(coolSMS) 추가 - 테스트 성공</h5>
+            <h5>api-key, api-secret을 properties 파일로 별도분리하여 읽어오도록 설정</h5>
             <h5>MySQL 스프링 연동</h5>
             <h5>가입기능 테스트</h5>
             <h5>트랜잭션 설정 후 간단한 데이터 추가 작동 테스트 - 확인 완료</h5>
@@ -351,22 +343,45 @@ auto !important;}</style>
             <h5>게시판 조회 수정 쓰기 삭제 일부 해결</h5>
             <h5>게시판 기능 정상작동 하면 이후 파일업로드 추가 예정</h5>
         </div>
-
+    </div>
+    <div class="accordion-main">
+        <button class="accordion"><b>2024.07.27</b></button>
+        <div class="panel">
+            <h5>AWS S3 스프링 연동 실행문제로 6시간 날렸다.. 해결은 했는데..</h5>
+        </div>
+    </div>
+    <div class="accordion-main">
+        <button class="accordion"><b>2024.07.28</b></button>
+        <div class="panel">
+            <h5>ckEditor 플러그인 오류로 4시간 내내 이것만 붙잡았는데.. 해결 실패 별별짓을 다했는데..</h5>
+        </div>
+    </div>
+    <div class="accordion-main">
+        <button class="accordion"><b>2024.07.29</b></button>
+        <div class="panel">
+            <h5>게시판 글 작성 : 이미지 삭제시 S3 파일삭제 , DB 파일정보 삭제 구현</h5>
+            <h5>게시판 일부 css 수정</h5>
+            <h5>에러코드 게시판 DB 테이블 추가, 앞으로 여기에 에러기록 예정</h5>
+            <h5>게시판, 회원가입 고도화 작업 예정 -> 프론트-백 유효성 검증 로직 추가 예정</h5>
+            <h5></h5>
+        </div>
     </div>
 </div>
-<h1>업데이트 예정</h1>
-<h4>검색기능 → 2024.07.22 완료</h4>
-<h4>게시글 수정/삭제기능 추가하기 → 2024.07.23 완료, 인증 로직 고도화 예정</h4>
-<h4>파일 첨부 - 이미지</h4>
-<h4>게시판 글쓰기 기능 에디터 추가하기(스마트에디터 or ckeditor5)</h4>
-<h4>날짜별 작업 내용마다 깃 링크 연동하기</h4>
-<h4>댓글기능 추가 → 고도화 예정</h4>
-<h4>관리자 페이지 - 접속모니터링(선택)</h4>
-<h4>스프링 시큐리티 적용해서 인증&권한설정 수정 및 보안강화</h4>
-<h4>아이디 비밀번호 찾기 추가</h4>
-<h4>소셜 로그인(선택)</h4>
-<h4>좋아요 기능 추가</h4>
-<h4 style="text-decoration: line-through;">무한 대댓글</h4>
+<div class="bottomHeader">
+    <h1>업데이트 예정</h1>
+    <h4>검색기능 → 2024.07.22 완료</h4>
+    <h4>게시글 수정/삭제기능 추가하기 → 2024.07.23 완료, 인증 로직 고도화 예정</h4>
+    <h4>파일 첨부 - 이미지</h4>
+    <h4>게시판 글쓰기 기능 에디터 추가하기(스마트에디터 or ckeditor5)</h4>
+    <h4>날짜별 작업 내용마다 깃 링크 연동하기</h4>
+    <h4>댓글기능 추가 → 고도화 예정</h4>
+    <h4>관리자 페이지 - 접속모니터링(선택)</h4>
+    <h4>스프링 시큐리티 적용해서 인증&권한설정 수정 및 보안강화</h4>
+    <h4>아이디 비밀번호 찾기 추가</h4>
+    <h4>소셜 로그인(선택)</h4>
+    <h4>좋아요 기능 추가</h4>
+    <h4 style="text-decoration: line-through;">무한 대댓글</h4>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function initializeAccordion() {

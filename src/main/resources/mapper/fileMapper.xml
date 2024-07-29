@@ -11,4 +11,10 @@
                     (#{original_name},#{stored_name} , #{file_type} , #{file_size} , #{file_path} , now() , #{id})
     </insert>
 
+    <delete id="deleteFileInfoByStoredName" parameterType="string">
+        DELETE
+          FROM files
+         WHERE stored_name = #{stored_name}
+    </delete>
+
 </mapper>

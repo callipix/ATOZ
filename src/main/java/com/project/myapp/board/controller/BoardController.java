@@ -94,7 +94,7 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
             m.addAttribute(boardDTO);
-            m.addAttribute("msg","MOD_ERR");
+            rattr.addAttribute("msg","MOD_ERR");
             return "board/board";
         }
     }
@@ -109,7 +109,7 @@ public class BoardController {
 
         if(result != 1) {
             m.addAttribute("mode","new");
-            m.addAttribute("msg","WRT_ERR");
+            rattr.addAttribute("msg","WRT_ERR");
             System.out.println("result = " + result);
             return "/board/board";
         } else {

@@ -17,5 +17,9 @@ public class FileUpload {
         int result = this.sqlSession.insert(namespace + "insertFileInfo" , filesDTO);
         return result;
     }
+    public int deleteFile(String storedName) {
+        int result = this.sqlSession.delete(namespace + "deleteFileInfoByStoredName" , storedName);
+        return result;
+    }
 
 }

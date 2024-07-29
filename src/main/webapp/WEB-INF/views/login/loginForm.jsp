@@ -119,7 +119,7 @@
             overflow: hidden;
             margin: 0 auto;
             width: 1300px;
-            /*width: 100%;*/
+            width: 100%;
             padding: 0px;
             margin: 0px;
             border: none;
@@ -180,7 +180,7 @@
         }
     }
     body {
-        margin: 0 300px;
+        margin: 0 200px;
     }
 </style>
 <body>
