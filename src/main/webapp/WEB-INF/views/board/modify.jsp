@@ -69,7 +69,7 @@
                     }
                 }
             </script>
-            <script type="module" src="<c:url value='/ckeditor5/modify.js'/>"></script>
+            <script type="module" src="<c:url value='/css/modify.js'/>"></script>
         </form>
 
     </div>

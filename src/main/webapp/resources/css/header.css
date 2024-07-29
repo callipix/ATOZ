@@ -7,7 +7,6 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
     border-radius: 10px;
 }
-
 /* Set a style for all buttons */
 button {
     background-color: #04AA6D;
@@ -128,7 +127,18 @@ span.psw {
 
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
-    display: none;
+    /*display: none;*/
+}
+.icon {
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 50%;
+}
+.icon2 {
+    max-width: 75px;
+    max-height: 75px;
+    background-color: white;
+    border-radius: 50%;
 }
 Add media queries
 

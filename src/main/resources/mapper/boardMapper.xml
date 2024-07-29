@@ -22,14 +22,8 @@
     </delete>
     <insert id="insertBoard" parameterType="com.project.myapp.dto.BoardDTO">
         /** 게시물 등록하기 */
-        INSERT INTO board(title, content , writer , file_no)
-        VALUES (#{title} , #{content}, #{writer} ,
-                <if test="file_no != null">
-                    #{file_no})
-                </if>
-                <if test="file_no == null">
-                    null
-                </if>
+        INSERT INTO board(title, content , writer)
+        VALUES (#{title} , #{content}, #{writer})
     </insert>
     <select id="getBoardByBno" parameterType="int" resultType="com.project.myapp.dto.BoardDTO">
         /** 특정 게시물 가져오기 */

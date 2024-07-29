@@ -41,6 +41,8 @@
     <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess" />
     <view-controller path="/board/boardList" view-name="/board/boardList" />
     <view-controller path="/suggestions" view-name="/suggestions" />
+    <view-controller path="/test" view-name="/login/test" />
+
     <context:component-scan base-package="com.project.myapp" />
 
 

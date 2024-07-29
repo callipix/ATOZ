@@ -10,8 +10,6 @@
     <title>Title</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
-<%--<link rel="stylesheet" href="/resources/css/header.css">--%>
 <style>
     /* Bordered form */
     form {
@@ -186,11 +184,12 @@
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
+    <a href="<c:url value='/' />"> 에러모음</a>
+    <a href="<c:url value='/suggestions' />">건의사항</a>
+    <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <c:if test="${empty loginId}">
-        <a href="<c:url value='/registerForm' />">Sign In</a>
+        <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
-    <a href="<c:url value='/suggestions' />">Suggest</a>
-    <a href="<c:url value='/board/boardList' />">Board</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>

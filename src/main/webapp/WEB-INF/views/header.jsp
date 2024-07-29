@@ -5,7 +5,7 @@
 
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${empty loginId ? '/login/loginForm' : '/login/logout'}"/>
-<c:set var="loginOut" value="${empty loginId ? 'Login' : loginId += '님이 접속하였습니다.'}"/>
+<c:set var="loginOut" value="${empty loginId ? '로그인' : loginId += '님이 접속하였습니다.'}"/>
 
 <!DOCTYPE html>
 <html>
@@ -17,11 +17,12 @@
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
-    <a href="<c:url value='/suggestions' />">Suggest</a>
+    <a href="<c:url value='/test' />"> 에러모음</a>
+    <a href="<c:url value='/suggestions' />">건의사항</a>
+    <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <c:if test="${empty loginId}">
-        <a href="<c:url value='/registerForm' />">Sign In</a>
+        <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
-    <a href="<c:url value='/board/boardList' />">Board</a>
     <a href="<c:url value='${loginOutLink}' />">${loginOut}</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

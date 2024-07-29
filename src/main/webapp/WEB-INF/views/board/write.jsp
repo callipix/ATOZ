@@ -14,12 +14,11 @@
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <link rel="stylesheet" href="<c:url value='/ckeditor5/style.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
 
 </head>
-
 <body>
 <jsp:include page="../header.jsp" />
 <script>
@@ -149,6 +148,8 @@
             location.href="<c:url value='/board/write'/>";
         });
         $("#writeBtn").on("click", function(){
+
+            // $("#contentDisplay").children().children().children().children().css('height','500px;');
 
             let form = $("#newForm");
             form.attr("action", "<c:url value='/board/write'/>");

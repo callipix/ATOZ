@@ -8,7 +8,6 @@
 }
 .board-container {
     width: 70%;
-    text-align: center;
     margin: auto;
 }
 .main-container {
@@ -163,15 +162,16 @@
 }
 /* editorStyles.css */
 .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred {
-    border: 1px solid lightgrey;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    height: 500px;
+    border: 1px solid lightgrey !important;
+    padding: 10px !important;
+    background-color: #f9f9f9 !important;
+    height: 500px !important;
 }
-#contentDisplay {
-    text-align: left;
-    margin-left: 20px;
+.ck.ck-editor__editable_inline {
+
+    & > *:first-child {
+         height: 500px;
+    }
 }
 .cke_editable img {
     width: 100%;

@@ -49,7 +49,7 @@ public class UploadController {
     @ResponseBody
     @PostMapping("/contentImgCheck")
     public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress) throws IOException {
-
+        System.out.println("여길 왜 안타지? = ");
         List<String> beforeAddress = new ArrayList<>();
         List<String> afterAddress  = new ArrayList<>();
 

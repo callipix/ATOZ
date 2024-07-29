@@ -95,7 +95,6 @@
         let data = `${boardDTO.content}`;
         $("#contentDisplay").html(data);
         $("#contentDisplay").children().children().children().css('max-width','100%');
-        $("#contentDisplay").children().children().children().css('border-radius','10px;');
 
         $("#removeBtn").on("click", function(){
             if(!confirm("정말로 삭제하시겠습니까?")){
