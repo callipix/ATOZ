@@ -10,9 +10,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="<c:url value='/css/board.css'/>">
+    <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
+<style>
+    .text-white {
+        color: white !important;
+    }
+</style>
 <body>
 <script>
     let msg = "${msg}";
@@ -73,25 +79,55 @@
     </table>
     <br>
 </div>
-<br>
-<div class="paging-container">
-    <div class="paging">
+<!-- 기존페이징 시작 -->
+<%--<div class="paging-container">--%>
+<%--    <div class="paging">--%>
+<%--        <c:if test="${totalCnt==null || totalCnt==0}">--%>
+<%--            <div> 게시물이 없습니다. </div>--%>
+<%--        </c:if>--%>
+<%--        <c:if test="${totalCnt!=null && totalCnt!=0}">--%>
+<%--            <c:if test="${ph.showPrev}">--%>
+<%--                <a class="page" href="<c:url value="/board/boardList${ph.sc.getQueryString(ph.beginPage-1)}"/>">&lt;</a>--%>
+<%--            </c:if>--%>
+<%--            <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">--%>
+<%--                <a class="page ${i == ph.sc.page ? "paging-active" : ""}" href="<c:url value="/board/boardList${ph.sc.getQueryString(i)}"/>">${i}</a>--%>
+<%--            </c:forEach>--%>
+<%--            <c:if test="${ph.showNext}">--%>
+<%--                <a class="page" href="<c:url value="/board/boardList${ph.sc.getQueryString(ph.endPage+1)}"/>">&gt;</a>--%>
+<%--            </c:if>--%>
+<%--        </c:if>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<!-- 기존페이징 끝 -->
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center mb-0 mt-4">
         <c:if test="${totalCnt==null || totalCnt==0}">
             <div> 게시물이 없습니다. </div>
         </c:if>
-        <c:if test="${totalCnt!=null && totalCnt!=0}">
+        <c:if test="${totalCnt != null && totalCnt != 0}">
             <c:if test="${ph.showPrev}">
-                <a class="page" href="<c:url value="/board/boardList${ph.sc.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
+                <li class="page-item">
+                    <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/board/boardList${ph.sc.getQueryString(ph.beginPage - 1)}' />">
+                        <i class="ti ti-chevron-left"></i>
+                    </a>
+                </li>
             </c:if>
             <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-                <a class="page ${i == ph.sc.page ? "paging-active" : ""}" href="<c:url value="/board/boardList${ph.sc.getQueryString(i)}"/>">${i}</a>
+                <li class="page-item ${i == ph.sc.page ? 'active' : ''}">
+                    <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center ${i == ph.sc.page ? 'text-white' : ''}" href="<c:url value='/board/boardList${ph.sc.getQueryString(i)}' />">${i}</a>
+                </li>
             </c:forEach>
             <c:if test="${ph.showNext}">
-                <a class="page" href="<c:url value="/board/boardList${ph.sc.getQueryString(ph.endPage+1)}"/>">&gt;</a>
+                <li class="page-item">
+                    <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/board/boardList${ph.sc.getQueryString(ph.endPage + 1)}' />">
+                        <i class="ti ti-chevron-right"></i>
+                    </a>
+                </li>
             </c:if>
         </c:if>
-    </div>
-</div>
+    </ul>
+</nav>
 
 </body>
 </html>

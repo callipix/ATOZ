@@ -394,7 +394,7 @@
                 </c:if>
                 <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                     <li class="page-item ${i == ph.sc.page ? 'active' : ''}">
-                        <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="<c:url value='/errorBoard/list${ph.sc.getQueryString(i)}' />">${i}</a>
+                        <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center ${i == ph.sc.page ? 'text-white' : ''}" href="<c:url value='/errorBoard/list${ph.sc.getQueryString(i)}' />">${i}</a>
                     </li>
                 </c:forEach>
                 <c:if test="${ph.showNext}">
