@@ -93,6 +93,8 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
     @Override
     @Transactional(rollbackFor = IOException.class)
     public int deleteImageFile(List<String> imageAddress) throws IOException {
+        // 게시글 내에서 이미지를 추가하거나 삭제했을시 AWS S3에도 업로드한 이미지만
+        // 존재하고 기존 이미지를 삭제하는 메서드(DB에 존재하는 파일 정보도 삭제)
         int result = 0;
         for (String imgURL : imageAddress) {
             String decodeURL = "";

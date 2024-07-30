@@ -335,6 +335,7 @@ ClassicEditor.create(document.querySelector('#content'), editorConfig)
                                 .then(response => response.json())
                                 .then(responseData => {
                                     beforeImgAddressWrite.push(responseData.url);
+        alert("beforeImgAddressWrite =" + beforeImgAddressWrite);
                                     return {
                                         default: responseData.url
                                     };

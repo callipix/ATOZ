@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.myapp.errorboard.dao.ErrorBoardMapper">
+
+    <insert id="insert" parameterType="ErrorBoardDTO">
+            /** 게시글 등록 */
+        INSERT INTO ERR_LOG_BOARD
+            (
+             ERR_CODE, TITLE, CONTENT, WRITER
+                 <if test="errBoardThum  != null">
+                    , ERR_BOARD_THUM
+                 </if>
+             )
+        VALUES
+            (
+             #{errCode} , #{title} , #{content} , #{writer}
+                <if test="errBoardThum != null">
+                   , #{errBoardThum}
+                </if>
+            )
+    </insert>
+    <update id="modify" parameterType="ErrorBoardDTO">
+<!-- 게시글 수정 -->
+        UPDATE ERR_LOG_BOARD
+           SET
+                ERR_CODE = #{errCode}
+              , TITLE = #{title}
+              , CONTENT = #{content}
+              , UP_DATE = now()
+        <if test="errBoardThum != null">
+              , ERR_BOARD_THUM = #{errBoardThum}
+        </if>
+         WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
+    </update>
+<!-- 게시글 삭제 -->
+<!-- 게시글 리스트조회 -->
+
+    <update id="increaseViewCount" parameterType="int">
+<!-- 게시글 조회수증가 -->
+        UPDATE ERR_LOG_BOARD
+        SET view_cnt = view_cnt + 1
+        WHERE ERR_BNO = #{errBno}
+    </update>
+
+    <delete id="delete" parameterType="map">
+        DELETE
+          FROM ERR_Log_BOARD
+         WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
+    </delete>
+
+    <select id="getErrorBoardByErrBno" parameterType="int" resultType="ErrorBoardDTO">
+<!-- 특정게시글 조회 -->
+        <include refid="selectByAll" />
+     WHERE ERR_BNO = #{errBno}
+    </select>
+
+    <select id="getErrorBoardCount" resultType="int">
+        SELECT COUNT(*)
+          FROM ERR_LOG_BOARD
+    </select>
+
+    <sql id="selectByAll">
+        SELECT ROW_NUMBER() OVER(ORDER BY ERR_BNO) AS ROWNUM , ERR_BNO , ERR_CODE, TITLE , CONTENT , WRITER , VIEW_CNT , COMMENT_CNT , REG_DATE , UP_DATE , CATEGORY_NO , ERR_BOARD_THUM
+          FROM ERR_LOG_BOARD
+    </sql>
+
+    <select id="getErrBoardList" resultType="ErrorBoardDTO">
+        <include refid="selectByAll"></include>
+    </select>
+
+    <select id="getSearchSelectPage" parameterType="com.project.myapp.dto.SearchCondition" resultType="ErrorBoardDTO">
+        <include refid="selectByAll"></include>
+        FROM ERR_LOG_BOARD
+        WHERE TRUE
+        <choose>
+            <when test='option=="T"'>
+                and TITLE like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="E"'>
+                and ERR_CODE like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="W"'>
+                and WRITER like concat('%' , #{keyword} , '%')
+            </when>
+            <when test='option=="eAndT"'>
+                and (TITLE  like concat('%', #{keyword} , '%')
+                or ERR_CODE like concat('%', #{keyword} , '%'))
+            </when>
+            <otherwise>
+                and (TITLE like concat('%', #{keyword} , '%')
+                or CONTENT like concat('%', #{keyword} , '%'))
+            </otherwise>
+        </choose>
+        ORDER BY reg_date DESC , bno DESC
+        LIMIT #{offset} , #{pageSize}
+    </select>
+
+    <select id="getSearchResultCount" parameterType="com.project.myapp.dto.SearchCondition" resultType="int">
+        SELECT COUNT(*)
+        FROM ERR_LOG_BOARD
+        WHERE TRUE
+        <choose>
+            <when test='option=="T"'>
+                and title like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="W"'>
+                and writer like concat('%' , #{keyword} , '%')
+            </when>
+            <otherwise>
+                and (title like concat('%', #{keyword} , '%')
+                or content like concat('%', #{keyword} , '%'))
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

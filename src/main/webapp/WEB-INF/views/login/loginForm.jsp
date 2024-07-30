@@ -10,6 +10,8 @@
     <title>Title</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
+<%--<link rel="stylesheet" href="/resources/css/header.css">--%>
 <style>
     /* Bordered form */
     form {
@@ -96,30 +98,14 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
     }
-    /* 컨테이너 배경을 흐리게 하기 위해 추가 */
-    .overlay {
-        display: none; /* 처음에는 숨김 */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 */
-        z-index: 1; /* 폼 뒤에 배치 */
-    }
-    #formTest {
-        z-index: 2; /* 배경보다 앞에 배치 */
-    }
-
     /* Add a black background color to the top navigation */
     .topnav {
             background-color: #333;
             overflow: hidden;
-            margin: 0 auto;
+            margin: auto;
             width: 1300px;
-            width: 100%;
-            padding: 0px;
-            margin: 0px;
+            height: 51px;
+        margin: 0px 100px 0px 100px;
             border: none;
             box-sizing: border-box;
             text-align: center;
@@ -134,7 +120,6 @@
         text-decoration: none;
         font-size: 17px;
     }
-
     /* Change the color of links on hover */
     .topnav a:hover {
         background-color: #ddd;
@@ -184,15 +169,12 @@
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
-    <a href="<c:url value='/' />"> 에러모음</a>
+    <a href="<c:url value='/errorBoard' />"> 에러모음</a>
     <a href="<c:url value='/suggestions' />">건의사항</a>
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
 </div>
 <form action="<c:url value='/login/login'/>" method="post" id="loginForm">
     <div class="imgcontainer">
@@ -226,8 +208,6 @@
 
     let id = document.getElementById('id').value;
     let password = document.getElementById('password').value;
-    console.log("id = " + id);
-    console.log("password = " + password);
 
     function myFunction() {
         if (x.className === "topnav") {
@@ -248,16 +228,6 @@
             this.classList.add('active');
         });
     });
-    // login.addEventListener("click", function(event) {
-    //     event.preventDefault(); // 기본 동작을 막음
-    //     if (form.style.display === "none" || form.style.display === "") {
-    //         form.style.display = "block";
-    //         overlay.style.display = "block";
-    //     } else {
-    //         form.style.display = "none";
-    //         overlay.style.display = "none";
-    //     }
-    // });
     function hideForm() {
         form.style.display = "none";
         overlay.style.display = "none";

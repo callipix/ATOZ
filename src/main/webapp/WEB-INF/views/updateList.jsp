@@ -20,21 +20,20 @@
     }
 </style>
 <body>
-<div class="mainHeader">
-    <div>
-        <h1>업데이트 내역</h1>
-    </div>
+<div class="allHeader">
+    <div class="mainHeader">
+        <div>
+            <h1>업데이트 내역</h1>
+        </div>
 
-    <div class="uplistBtn">
-        <button id="reverseOrder"><b>역순보기</b></button>
-        <button id="openAll"><b>한번에 열기</b></button>
-    </div>
+        <div class="uplistBtn">
+            <button id="reverseOrder"><b>역순보기</b></button>
+            <button id="openAll"><b>한번에 열기</b></button>
+        </div>
 
-    <div class="headerText" style="display: flex"><h5 style="text-decoration: line-through">역순정렬 일부 오류..</h5><h5>&nbsp;&nbsp;→ 해결? 다른 오류 발생</h5></div>
-</div>
-</div>
+        <div class="headerText" style="display: flex"><h5 style="text-decoration: line-through">역순정렬 일부 오류..</h5><h5>&nbsp;&nbsp;→ 해결? 다른 오류 발생</h5></div>
+    </div>
 <div class="updateList">
-
     <div class="accordion-main">
         <button class="accordion"><b>2024.07.17</b></button>
         <div class="panel">
@@ -164,6 +163,16 @@
             <h5></h5>
         </div>
     </div>
+    <div class="accordion-main">
+        <button class="accordion"><b>2024.07.30</b></button>
+        <div class="panel">
+            <h5>게시판 글 작성 : 이미지 삭제시 S3 파일삭제 , DB 파일정보 삭제 구현</h5>
+            <h5>게시판 일부 css 수정</h5>
+            <h5>에러코드 게시판 DB 테이블 추가, 앞으로 여기에 에러기록 예정</h5>
+            <h5>게시판, 회원가입 고도화 작업 예정 -> 프론트-백 유효성 검증 로직 추가 예정</h5>
+            <h5></h5>
+        </div>
+    </div>
 </div>
 <div class="bottomHeader">
     <h1>업데이트 예정</h1>
@@ -179,6 +188,7 @@
     <h4>소셜 로그인(선택)</h4>
     <h4>좋아요 기능 추가</h4>
     <h4 style="text-decoration: line-through;">무한 대댓글</h4>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

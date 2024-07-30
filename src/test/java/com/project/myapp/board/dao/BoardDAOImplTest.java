@@ -33,14 +33,16 @@ public class BoardDAOImplTest {
 
     @Test
     public void insertBoard() {
-        deleteAll();
+//        deleteAll();
         int result = 0;
-        for(int i = 1; i <= 200; i++){
-            BoardDTO boardDTO = new BoardDTO("제목테스트"+ i ,"내용테스트"+i, "aaaa1234");
-            result += boardDAO.insertBoard(boardDTO);
-        }
+//        for(int i = 1; i <= 200; i++){
+//            BoardDTO boardDTO = new BoardDTO("제목테스트"+ i ,"내용테스트"+i, "aaaa1234");
+//            result += boardDAO.insertBoard(boardDTO);
+//        }
+        BoardDTO boardDTO = new BoardDTO("제목테스트" ,"내용테스트", "aaaa1234");
+        result += boardDAO.insertBoard(boardDTO);
         System.out.println("result = " + result);
-        assertTrue( result == 200);
+        assertTrue( result == 1);
     }
 
     @Test

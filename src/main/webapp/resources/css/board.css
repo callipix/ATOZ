@@ -186,3 +186,6 @@ a {
     padding: 10px; /* 내부 여백을 추가 */
     border: 1px solid #ddd; /* 테두리를 추가 */
 }
+#contentDisplay {
+    width: 500px;
+}

@@ -11,6 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
+aws-bucket_config.properties
+api-config.properties
 
 ### Eclipse ###
 .apt_generated
@@ -129,4 +131,4 @@ local.properties
 #.project
 
 !/.gitignore
-!/.gitignore
+/src/main/webapp/resources/bootstrap/

@@ -50,3 +50,7 @@ h4 {
 .accordion.active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+.allHeader {
+    width: 80%;
+    margin: auto;
+}
