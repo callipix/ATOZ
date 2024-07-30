@@ -67,12 +67,11 @@
     </sql>
 
     <select id="getErrBoardList" resultType="ErrorBoardDTO">
-        <include refid="selectByAll"></include>
+        <include refid="selectByAll" />
     </select>
 
     <select id="getSearchSelectPage" parameterType="com.project.myapp.dto.SearchCondition" resultType="ErrorBoardDTO">
-        <include refid="selectByAll"></include>
-        FROM ERR_LOG_BOARD
+        <include refid="selectByAll" />
         WHERE TRUE
         <choose>
             <when test='option=="T"'>
@@ -93,7 +92,7 @@
                 or CONTENT like concat('%', #{keyword} , '%'))
             </otherwise>
         </choose>
-        ORDER BY reg_date DESC , bno DESC
+        ORDER BY REG_DATE DESC , ERR_BNO DESC
         LIMIT #{offset} , #{pageSize}
     </select>
 
@@ -103,14 +102,21 @@
         WHERE TRUE
         <choose>
             <when test='option=="T"'>
-                and title like concat('%', #{keyword} , '%')
+                and TITLE like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="E"'>
+                and ERR_CODE like concat('%', #{keyword} , '%')
             </when>
             <when test='option=="W"'>
-                and writer like concat('%' , #{keyword} , '%')
+                and WRITER like concat('%' , #{keyword} , '%')
+            </when>
+            <when test='option=="eAndT"'>
+                and (TITLE  like concat('%', #{keyword} , '%')
+                or ERR_CODE like concat('%', #{keyword} , '%'))
             </when>
             <otherwise>
-                and (title like concat('%', #{keyword} , '%')
-                or content like concat('%', #{keyword} , '%'))
+                and (TITLE like concat('%', #{keyword} , '%')
+                or CONTENT like concat('%', #{keyword} , '%'))
             </otherwise>
         </choose>
     </select>

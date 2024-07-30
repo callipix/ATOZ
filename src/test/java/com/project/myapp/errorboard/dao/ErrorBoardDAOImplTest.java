@@ -25,16 +25,15 @@ public class ErrorBoardDAOImplTest {
     public void insertErrorBoardMapper() {
 
         ErrorBoardDTO errorBoardDTO = new ErrorBoardDTO();
-
-        errorBoardDTO.setErrCode("11220303");
-        errorBoardDTO.setTitle("에러코드 테스트");
-        errorBoardDTO.setContent("내용은 이렇고");
-        errorBoardDTO.setWriter("aaaa1234");
-
-//        errorBoardDTO.setErrBoardThum("https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/b17500e5-387f-4754-82d8-8b49e9c8dc9a_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-07-13%20210223.png");
-
-        int result = errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
-        assertTrue(result == 1);
+        int result = 0;
+        for (int i = 0; i < 150; i++) {
+            errorBoardDTO.setErrCode("11220303aaabb"+ i);
+            errorBoardDTO.setTitle("에러코드 테스트"+ i);
+            errorBoardDTO.setContent("내용은 이렇고" + i);
+            errorBoardDTO.setWriter("aaaa1234");
+            result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+        }
+        assertTrue(result == 150);
     }
 
     @Test

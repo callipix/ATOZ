@@ -3,6 +3,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="true"%>
 <!-- Core Css -->
+
+<link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
+<link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
+<link rel="stylesheet" href="<c:url value='/css/board.css'/>">
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css">
 <style>
     .container-fluid {
         max-width: 70%;
@@ -10,67 +15,71 @@
     .card.card-body {
         text-align: center;
     }
+    .col-md-4.col-xl-3 {
+        margin: auto;
+        display: flex;
+    }
+    .search-container > * > select  {
+        font-weight: bold;
+    }
 </style>
-<link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
-<link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
-<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css">
 <body>
 <jsp:include page="../header.jsp" />
 <br>
+
 <script>
     let msg = "${msg}";
 </script>
 <div class="container-fluid">
     <div class="position-relative mb-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <br>
-                <h4>그동안 경험했던 에러와 오류들을 기록하는 게시판 07.30 내로 구현 예정</h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a class="text-primary text-decoration-none" href=main/index.html">Home
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item d-flex justify-content-center align-items-center ps-0">
-                            <iconify-icon icon="tabler:chevron-right"></iconify-icon>
-                        </li>
-                        <li class="breadcrumb-item" aria-current="page">Blog</li>
-                    </ol>
-                </nav>
-            </div>
-            <div>
-                <div class="d-flex justify-content-end align-items-center">
-                    <div class="me-2">
-                        <button type="button" class="btn bg-primary-subtle text-primary" onclick="location.href='<c:url value="errorWrite"/>'">글쓰기
-                        </button>
-                    </div>
+        <div>
+            <br>
+            <h4>그동안 경험했던 에러와 오류들을 기록하는 게시판 07.30 내로 구현 예정</h4>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a class="text-primary text-decoration-none" href=main/index.html">Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item d-flex justify-content-center align-items-center ps-0">
+                        <iconify-icon icon="tabler:chevron-right"></iconify-icon>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">Blog</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="me-2">
+                    <button type="button" class="btn bg-primary-subtle text-primary" onclick="location.href='<c:url value="errorWrite"/>'">글쓰기
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-<%-- 검색 서치바 시작--%>
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-md-4 col-xl-3">
-                            <form class="position-relative">
-                                <input type="text" class="form-control product-search ps-5" id="input-search" placeholder="연락처 검색...">
-                                <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
-                            </form>
-                        </div>
-                        <div class="col-md-8 col-xl-9 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
-                            <div class="action-btn show-btn">
-                                <a href="javascript:void(0)" class="delete-multiple bg-danger-subtle btn me-2 text-danger d-flex align-items-center ">
-                                    <i class="ti ti-trash me-1 fs-5"></i> Delete All Row
-                                </a>
-                            </div>
-                            <a href="javascript:void(0)" id="btn-add-contact" class="btn btn-primary d-flex align-items-center">
-                                <i class="ti ti-users text-white me-1 fs-5"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">주소록에 추가
-                            </font></font></a>
-                        </div>
-                    </div>
-                </div>
-<%-- 검색 서치바 끝--%>
+    <%-- 검색 서치바 시작--%>
+    <div class="search-container">
+        <h5>로그인을 해야 글쓰기 버튼이 활성화!! -> 미리 버튼 활성화 뒤에 클릭시 로그인 요청하도록 수정 예정</h5>
+        <form action="<c:url value='/errorBoard/list'/>" class="search-form" method="get">
+            <select class="btn bg-primary-subtle text-primary" name="option">
+                (<option value="eAndT" ${ph.sc.option=='E' || ph.sc.option=='' ? "selected" : ""}>에러코드+제목</option>)
+                <option value="A"     ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
+                <option value="E"     ${ph.sc.option=='E' ? "selected" : ""}>에러코드</option>
+                <option value="T"     ${ph.sc.option=='T' ? "selected" : ""}>제목만</option>
+                <option value="W"     ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>)
+            </select>
+            <input type="text" name="keyword" class="search-input" style="height: 37px" value="${ph.sc.keyword}" placeholder="검색어를 입력하세요.">
+            <input type="submit" class="btn bg-primary-subtle text-primary" value="검색">
+            <br>
+            <br>
+            <c:if test="${sessionScope.id ne null}">
+                <button id="writeBtn" type="button" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
+            </c:if>
+        </form>
+    </div>
+    <%-- 검색 서치바 끝--%>
+    <br>
+
     <div class="row">
         <div class="col-md-6 col-lg-8">
             <div class="card blog blog-img-one position-relative overflow-hidden hover-img">
@@ -369,40 +378,35 @@
             </div>
         </div>
     </div>
+    <br>
     <nav aria-label="...">
         <ul class="pagination justify-content-center mb-0 mt-4">
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
-                    <i class="ti ti-chevron-left"></i>
-                </a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link border-0 rounded-circle round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">4</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">5</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">...</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="javascript:void(0)">10</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
-                    <i class="ti ti-chevron-right"></i>
-                </a>
-            </li>
+            <c:if test="${totalCnt==null || totalCnt==0}">
+                <div> 게시물이 없습니다. </div>
+            </c:if>
+            <c:if test="${totalCnt != null && totalCnt != 0}">
+                <c:if test="${ph.showPrev}">
+                    <li class="page-item">
+                        <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/errorBoard/list${ph.sc.getQueryString(ph.beginPage - 1)}' />">
+                            <i class="ti ti-chevron-left"></i>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    <li class="page-item ${i == ph.sc.page ? 'active' : ''}">
+                        <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center" href="<c:url value='/errorBoard/list${ph.sc.getQueryString(i)}' />">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${ph.showNext}">
+                    <li class="page-item">
+                        <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/errorBoard/list${ph.sc.getQueryString(ph.endPage + 1)}' />">
+                            <i class="ti ti-chevron-right"></i>
+                        </a>
+                    </li>
+                </c:if>
+            </c:if>
         </ul>
     </nav>
 </div>
+<br><br>
 </body>

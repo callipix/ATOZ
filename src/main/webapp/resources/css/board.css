@@ -148,7 +148,7 @@ a {
 .search-button, .search-option,.btn-write {
     background-color: #74685d;
     color: white;
-    padding: 12px 20px;
+    padding: 12px 12px;
     border: none;
     cursor: pointer;
     border-radius: 10px;
