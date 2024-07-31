@@ -40,8 +40,8 @@
     <update id="increaseViewCount" parameterType="int">
 <!-- 게시글 조회수증가 -->
         UPDATE ERR_LOG_BOARD
-        SET view_cnt = view_cnt + 1
-        WHERE ERR_BNO = #{errBno}
+           SET view_cnt = view_cnt + 1
+         WHERE ERR_BNO = #{errBno}
     </update>
 
     <delete id="delete" parameterType="map">
@@ -49,6 +49,13 @@
           FROM ERR_Log_BOARD
          WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
     </delete>
+
+    <select id="getDeleteList" parameterType="int" resultType="com.project.myapp.vo.ErrLogFileDto">
+        SELECT F.FILE_PATH
+          FROM ERR_LOG_BOARD E LEFT JOIN FILES F
+               ON E.WRITER = F.USER_ID
+         WHERE E.ERR_BNO = #{errBno}
+    </select>
 
     <select id="getErrorBoardByErrBno" parameterType="int" resultType="ErrorBoardDTO">
 <!-- 특정게시글 조회 -->
@@ -119,6 +126,7 @@
                 or CONTENT like concat('%', #{keyword} , '%'))
             </otherwise>
         </choose>
+        ORDER BY REG_DATE DESC , ERR_BNO DESC
     </select>
 
 </mapper>

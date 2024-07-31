@@ -18,6 +18,9 @@
     .text-white {
         color: white !important;
     }
+    .active>.page-link{
+        background-color: #73685d;
+    }
 </style>
 <body>
 <script>
@@ -66,14 +69,14 @@
             <td class="title"><a href="<c:url value="/board/read?bno=${boardDTO.bno}"/>"><c:out value="${boardDTO.title}"/></a></td>
             <td class="writer">${boardDTO.writer}</td>
             <c:choose>
-                <c:when test="${boardDTO.reg_date.time >= startOfToday}">
-                    <td class="regdate"><fmt:formatDate value="${boardDTO.reg_date}" pattern="HH:mm" type="time"/></td>
+                <c:when test="${boardDTO.regDate.time >= startOfToday}">
+                    <td class="regdate"><fmt:formatDate value="${boardDTO.regDate}" pattern="HH:mm" type="time"/></td>
                 </c:when>
                 <c:otherwise>
-                    <td class="regdate"><fmt:formatDate value="${boardDTO.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>
+                    <td class="regdate"><fmt:formatDate value="${boardDTO.regDate}" pattern="yyyy-MM-dd" type="date"/></td>
                 </c:otherwise>
             </c:choose>
-            <td class="viewcnt">${boardDTO.view_cnt}</td>
+            <td class="viewcnt">${boardDTO.viewCnt}</td>
         </tr>
         </c:forEach>
     </table>
@@ -115,7 +118,7 @@
             </c:if>
             <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                 <li class="page-item ${i == ph.sc.page ? 'active' : ''}">
-                    <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center ${i == ph.sc.page ? 'text-white' : ''}" href="<c:url value='/board/boardList${ph.sc.getQueryString(i)}' />">${i}</a>
+                    <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center ${i == ph.sc.page ? 'text-white' : ''}" href="<c:url value='/board/boardList${ph.sc.getQueryString(i)}' />" >${i}</a>
                 </li>
             </c:forEach>
             <c:if test="${ph.showNext}">

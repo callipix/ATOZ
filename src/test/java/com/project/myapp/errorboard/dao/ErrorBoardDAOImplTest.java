@@ -26,9 +26,23 @@ public class ErrorBoardDAOImplTest {
 
         ErrorBoardDTO errorBoardDTO = new ErrorBoardDTO();
         int result = 0;
-        for (int i = 0; i < 150; i++) {
-            errorBoardDTO.setErrCode("11220303aaabb"+ i);
+        for (int i = 0; i < 10; i++) {
+            errorBoardDTO.setErrCode("aaaa"+ i);
             errorBoardDTO.setTitle("에러코드 테스트"+ i);
+            errorBoardDTO.setContent("내용은 이렇고" + i);
+            errorBoardDTO.setWriter("aaaa1234");
+            result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+        }
+        for (int i = 10; i < 20; i++) {
+            errorBoardDTO.setErrCode("bbbb"+ i);
+            errorBoardDTO.setTitle("제목에러로만"+ i);
+            errorBoardDTO.setContent("내용은 이렇고" + i);
+            errorBoardDTO.setWriter("aaaa1234");
+            result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+        }
+        for (int i = 20; i < 30; i++) {
+            errorBoardDTO.setErrCode("cccc"+ i);
+            errorBoardDTO.setTitle("테스트용"+ i);
             errorBoardDTO.setContent("내용은 이렇고" + i);
             errorBoardDTO.setWriter("aaaa1234");
             result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);

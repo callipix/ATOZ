@@ -167,12 +167,12 @@
     background-color: #f9f9f9 !important;
     height: 500px !important;
 }
-.ck.ck-editor__editable_inline {
+/*.ck.ck-editor__editable_inline {*/
 
-    & > *:first-child {
-         height: 500px;
-    }
-}
+/*    & > *:first-child {*/
+/*         height: 500px;*/
+/*    }*/
+/*}*/
 .cke_editable img {
     max-width: 100%;
     height: auto;

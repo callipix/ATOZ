@@ -11,6 +11,7 @@
 </head>
 <link rel="stylesheet" href="<c:url value='/css/register.css'/>">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<%--<jsp:include page="../header.jsp" />--%>
 <body>
 <br>
 <div id="formDiv" class="formDiv">
@@ -30,26 +31,26 @@
                         <button id="idCheck" type="button" class="button">중복체크</button>
                     </div>
                 </div>
-                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required>
+                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
             </div>
             <br>
             <div>
                 <label for="password"><b>비밀번호  <span>* 필수입력사항입니다.</span></b></label>
-                <input type="password" placeholder="비밀번호를 입력하세요" name="password" id="password" required>
+                <input type="password" placeholder="비밀번호를 입력하세요" name="password" id="password" required value="<c:out value='${password}'/>">
                 <label for="confirmPassword"></label>
-                <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="confirmPassword" id="confirmPassword" required>
+                <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="confirmPassword" id="confirmPassword" required value="<c:out value='${confirmPassword}'/>">
                 <br>
                 <span id="passPatternCheck"></span>
             </div>
             <br>
             <label for="nickName"><b>닉네임  <span>* 필수입력사항입니다.</span></b></label>
-            <input type="text" placeholder="닉네임을 입력하세요." name="nickName" id="nickName" required>
+            <input type="text" placeholder="닉네임을 입력하세요." name="nickName" id="nickName" required value="<c:out value='${nickName}'/>">
             <br>
             <label for="name"><b>이름  <span>* 필수입력사항입니다.</span></b></label>
-            <input type="text" placeholder="이름을 입력하세요." name="name" id="name" required>
+            <input type="text" placeholder="이름을 입력하세요." name="name" id="name" required value="<c:out value='${name}'/>">
             <br>
             <label for="email"><b>이메일  <span>* 필수입력사항입니다.</span></b></label>
-            <input type="text" placeholder="이메일을 입력하세요." name="email" id="email" required>
+            <input type="text" placeholder="이메일을 입력하세요." name="email" id="email" required value="<c:out value='${email}'/>">
             <br>
             <div style="display: flex">
                 <label for="phoneNo"><b>연락처  <span>* 필수입력사항입니다.</span></b></label>
@@ -57,8 +58,8 @@
                     <button class="button" type="button" id="sendCertifyNo" onclick="sendVerification()">인증번호 발송</button>
                 </div>
             </div>
-            <input type="text" placeholder="연락처를 입력하세요." name="phoneNo" id="phoneNo" required>
-            <input type="text" placeholder="인증번호를 입력하세요." name="certiNo" id="certiNo" required>
+            <input type="text" placeholder="연락처를 입력하세요." name="phoneNo" id="phoneNo" required value="<c:out value='${phoneNo}'/>">
+            <input type="text" placeholder="인증번호를 입력하세요." name="certiNo" id="certiNo" required value="<c:out value='${certiNo}'/>">
             <div style="margin-left: auto">
                 <button class="button" type="button" id="certifyCheck" onclick="phoneNoCertify()">인증번호 확인</button>
             </div>

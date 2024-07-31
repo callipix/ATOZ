@@ -1,8 +1,10 @@
 package com.project.myapp.dto;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class ErrorBoardDTO {
+    private int rownum;
     private int errBno;
     private String errCode;
     private String title;
@@ -17,6 +19,19 @@ public class ErrorBoardDTO {
 
     public ErrorBoardDTO(){}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ErrorBoardDTO that = (ErrorBoardDTO) o;
+        return errBno == that.errBno && Objects.equals(errCode, that.errCode) && Objects.equals(title, that.title) && Objects.equals(content, that.content) && Objects.equals(writer, that.writer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(errBno, errCode, title, content, writer);
+    }
+
     public ErrorBoardDTO(String errCode, String title, String content, String writer) {
         this.errCode = errCode;
         this.title = title;
@@ -29,6 +44,14 @@ public class ErrorBoardDTO {
         this.content = content;
         this.writer = writer;
         this.errBoardThum = errBoardThum;
+    }
+
+    public int getRownum() {
+        return rownum;
+    }
+
+    public void setRownum(int rownum) {
+        this.rownum = rownum;
     }
 
     public int getErrBno() {
@@ -122,7 +145,8 @@ public class ErrorBoardDTO {
     @Override
     public String toString() {
         return "ErrorBoardDTO{" +
-                "errBno=" + errBno +
+                "rownum=" + rownum +
+                ", errBno=" + errBno +
                 ", errCode='" + errCode + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

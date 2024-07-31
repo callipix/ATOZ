@@ -76,14 +76,12 @@ public class BoardController {
 
     // 글수정
     @PostMapping("/modify")
-    public String modify(BoardDTO boardDTO, String modifyContent, SearchCondition sc, RedirectAttributes rattr, Model m , HttpSession session) throws Exception {
+    public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m , HttpSession session) throws Exception {
 
         System.out.println("boardDTO = " + boardDTO);
-        System.out.println("modifyContent = " + modifyContent);
 
         String writer = (String)session.getAttribute("id");
         boardDTO.setWriter(writer);
-//        boardDTO.setContent(modifyContent);
         int result = this.boardService.updateBoardByIdNBno(boardDTO);
         try {
             if(result != 1){

@@ -6,69 +6,88 @@
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
+<!-- Core Css -->
+<title>error 페이지 리스트</title>
+<link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
+<link rel="stylesheet" href="<c:url value='/css/board.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css">
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
+
+<style>
+    .container-fluid {
+        max-width: 70%;
+    }
+    .board-container {
+        width: 100%;
+    }
+    .card.card-body {
+        text-align: center;
+    }
+    .btnList {
+        margin-left: auto;
+        display: flex;
+    }
+    .search-container > * > select  {
+        font-weight: bold;
+    }
+    .btn.bg-primary-subtle.text-primary, .search-input, .search-form {
+        margin-right: 10px;
+        width: auto;;
+    }
+</style>
 <body>
-<jsp:include page="../header.jsp"></jsp:include>
-<link rel="stylesheet" href="<c:url value='/mycustom/buttons.css'/>">
+<jsp:include page="../header.jsp" />
+<br>
+
 <script>
     let msg = "${msg}";
-    let beforeImgAddressWrite = [];
 </script>
-<div>
+<div class="container-fluid">
+    <div class="position-relative mb-4">
+        <div>
+            <br>
+            <h4>그동안 경험했던 에러와 오류들을 기록하기 위한 트러블슈팅 게시판</h4>
+        </div>
+    </div>
     <div class="board-container">
         <div>
             <div class="test-container">
-                <h2 class="writing-header">게시글 작성</h2>
+                <h2 class="writing-header"></h2>
                 <div class="btnList">
-                    <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글등록</button>
-                    <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로</button>
+                    <c:if test="${errorBoardDTO.writer eq loginId}">
+                        <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-trash"></i> 삭제하기</button>
+                        <button type="button" id="modifyBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-edit"></i> 수정하기
+                        </button>
+                    </c:if>
+                    <button type="button" id="listBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-bars"></i> 목록으로</button>
                 </div>
             </div>
         </div>
-        <input type="hidden" name="errBno" value="${errorBoardDTO.bno}">
-
-        <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post" enctype="multipart/form-data">
-            <c:if test="${not empty boardDTO.bno}">
-                <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
+        <form id="form" class="form" action="<c:url value='/errorBoard/remove'/>" method="post" enctype="multipart/form-data">
+            <c:if test="${not empty errorBoardDTO.errBno}">
+                <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
             </c:if>
-            <div class="form-group">
-                <label for="title">
-                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
-                </label>
+            <input name="title" type="text" value='${errorBoardDTO.title}' readonly placeholder="제목">
+            <input name="errCode" type="text" value='발생한 에러코드 : ${errorBoardDTO.errCode}' readonly placeholder="에러코드">
+            <div id="contentDisplay" style="">
             </div>
-            <br>
-            <div class="form-group">
-                <label for="errCode">
-                    <input class="form-control" name="errCode" id="errCode" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  에러코드를 입력해 주세요.">
-                </label>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="content">
-                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
-                </label><br>
-            </div>
-            <script type="importmap">
-                {
-                    "imports": {
-                        "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
-                        "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
-                    }
-                }
-            </script>
-            <script type="module" src="<c:url value='/ckeditor5/write.js'/>"></script>
         </form>
-
+        <br>
     </div>
 </div>
+</body>
 <script>
     let listBtn = document.querySelector('#listBtn');
-
+    let errBno = "${errorBoardDTO.errBno}";
     $(document).ready(function(){
+        let data = `${errorBoardDTO.content}`;
+
+        $("#contentDisplay").html(data);
 
         let formCheck = function() {
 
@@ -98,7 +117,9 @@
             form.attr("method" , "post");
             form.submit();
         })
-
+        $("#modifyBtn").on("click", function() {
+            location.href = "<c:url value='modify?errBno=${errorBoardDTO.errBno}'/>";
+        })
         $("#writeNewBtn").on("click", function(){
             location.href="<c:url value='/errorBoard/write'/>";
         });
@@ -152,4 +173,3 @@
         return afterImgAddress;
     }
 </script>
-</body>

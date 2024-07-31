@@ -20,6 +20,7 @@
     <a href="<c:url value='/errorBoard/list' />">에러게시판</a>
     <a href="<c:url value='/suggestions' />">건의사항</a>
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
+    <a href="<c:url value='/information' />">프로젝트소개</a>
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
