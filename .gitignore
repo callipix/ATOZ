@@ -132,3 +132,4 @@ local.properties
 
 !/.gitignore
 /src/main/webapp/resources/bootstrap/
+/src/main/resources/api-config.properties
