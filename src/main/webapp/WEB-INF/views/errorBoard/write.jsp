@@ -32,18 +32,18 @@
         <input type="hidden" name="errBno" value="${errorBoardDTO.bno}">
 
         <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post" enctype="multipart/form-data">
-            <c:if test="${not empty boardDTO.bno}">
-                <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
+            <c:if test="${not empty errorBoardDTO.errBno}">
+                <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.bno}'/>">
             </c:if>
             <div class="form-group">
                 <label for="title">
-                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
+                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${errorBoardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
                 </label>
             </div>
             <br>
             <div class="form-group">
                 <label for="errCode">
-                    <input class="form-control" name="errCode" id="errCode" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  에러코드를 입력해 주세요.">
+                    <input class="form-control" name="errCode" id="errCode" type="text" value="<c:out value='${errorBoardDTO.errCode}'/>" placeholder="  에러코드를 입력해 주세요.">
                 </label>
             </div>
             <br>

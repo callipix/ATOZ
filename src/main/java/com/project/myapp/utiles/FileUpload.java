@@ -21,5 +21,12 @@ public class FileUpload {
         int result = this.sqlSession.delete(namespace + "deleteFileInfoByStoredName" , storedName);
         return result;
     }
+    public int updateImages(FilesDTO filesDTO) {
+        System.out.println("updateImages filesDTO = " + filesDTO);
+        int result = this.sqlSession.update(namespace + "updateFileInfo" , filesDTO);
+        System.out.println("result = " + result);
+        System.out.println("updateImages AFTER = " + filesDTO);
+        return result;
+    }
 
 }

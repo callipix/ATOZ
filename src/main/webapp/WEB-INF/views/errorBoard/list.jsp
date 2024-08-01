@@ -26,6 +26,13 @@
         margin-right: 10px;
         width: auto;;
     }
+    .text-truncate {
+        max-width: 300px; /* 원하는 너비를 설정하세요 */
+        display: inline-block; /* 또는 block, flex 등 상황에 맞게 설정 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 <body>
 <jsp:include page="../header.jsp" />
@@ -33,6 +40,8 @@
 
 <script>
     let msg = "${msg}";
+
+    if(msg =="WRT_OK") alert("글쓰기가 완료되었습니다.")
 </script>
 <div class="container-fluid">
     <div class="position-relative mb-4">
@@ -40,7 +49,6 @@
             <br>
             <h4>그동안 경험했던 에러와 오류들을 기록할 트러블슈팅 게시판</h4>
         </div>
-
     </div>
     <%-- 검색 서치바 시작--%>
     <div class="search-container">
@@ -68,7 +76,6 @@
     </div>
     <%-- 검색 서치바 끝--%>
     <br>
-
     <div class="row">
         <div class="col-md-6 col-lg-8">
             <div class="card blog blog-img-one position-relative overflow-hidden hover-img">
@@ -102,7 +109,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 col-lg-4">
             <div class="card blog blog-img-two position-relative overflow-hidden hover-img">
                 <div class="card-body position-relative">
@@ -135,7 +141,6 @@
                 </div>
             </div>
         </div>
-
         <c:forEach var="errorBoardDTO" items="${boardList}">
         <div class="col-md-6 col-lg-4">
             <div class="card overflow-hidden hover-img">
@@ -150,7 +155,7 @@
                 <div class="card-body p-4">
                     <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3" name="title">${errorBoardDTO.title}</span>
                     <br>
-                    <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3" name="title">에러코드 : ${errorBoardDTO.errCode}</span>
+                    <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3 text-truncate" name="title">에러코드 : ${errorBoardDTO.errCode}</span>
                     <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="<c:url value='/errorBoard/read?errBno=${errorBoardDTO.errBno}'/>"></a>
                     <div class="d-flex align-items-center gap-4">
                         <div class="d-flex align-items-center gap-2">

@@ -23,7 +23,7 @@
 <jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
-    const beforeImgAddressWrite = [];
+    let beforeImgAddressWrite = [];
 </script>
 
 <div>

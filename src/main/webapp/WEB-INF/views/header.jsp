@@ -14,20 +14,26 @@
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
+<c:if test="${not empty loginId}">
+    <script type="text/javascript">
+        let loginId = true;
+    </script>
+</c:if>
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
     <a href="<c:url value='/errorBoard/list' />">에러게시판</a>
-    <a href="<c:url value='/suggestions' />">건의사항</a>
+<%--    <a href="<c:url value='/suggestions' />">건의사항</a>--%>
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <a href="<c:url value='/information' />">프로젝트소개</a>
     <c:if test="${empty loginId}">
+        <script type="text/javascript">
+            let loginId = false;
+        </script>
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
-    <a href="<c:url value='${loginOutLink}' />">${loginOut}</a>
-<%--    <a href="javascript:void(0);" class="icon" onclick="myFunction()">--%>
-<%--        <i class="fa fa-bars"></i>--%>
-<%--    </a>--%>
+    <a href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
+
 </div>
 <script>
     // Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon
@@ -43,9 +49,9 @@
 
     // Add event listeners to each tab link
     document.querySelectorAll('.topnav a').forEach(function(link) {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             // Remove the active class from all links
-            document.querySelectorAll('.topnav a').forEach(function(link) {
+            document.querySelectorAll('.topnav a').forEach(function (link) {
                 link.classList.remove('active');
             });
 

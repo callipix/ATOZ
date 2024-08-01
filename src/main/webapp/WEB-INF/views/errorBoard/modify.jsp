@@ -26,14 +26,11 @@
                 <div class="btnList">
                     <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-trash"></i> 삭제하기</button>
                     <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로</button>
-                        <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글등록</button>
-                    <c:if test="${mode == 'new'}">
-                    </c:if>
+                    <button type="button" id="modifyBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글수정</button>
                 </div>
             </div>
         </div>
         <input type="hidden" name="errBno" value="${errorBoardDTO.errBno}">
-
         <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post" enctype="multipart/form-data">
             <c:if test="${not empty errorBoardDTO.errBno}">
                 <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
@@ -52,7 +49,7 @@
             <br>
             <div class="form-group">
                 <label for="content">
-                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
+                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${errorBoardDTO.content}"/></textarea>
                 </label><br>
             </div>
             <script type="importmap">
@@ -65,7 +62,6 @@
             </script>
             <script type="module" src="<c:url value='/ckeditor5/write.js'/>"></script>
         </form>
-
     </div>
 </div>
 <script>
@@ -97,20 +93,18 @@
                 return;
             }
             let form = $("#form");
-            form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");
+            form.attr("action", "<c:url value='/errorBoard/remove${searchCondition.queryString}'/>");
             form.attr("method" , "post");
             form.submit();
         })
 
         $("#writeNewBtn").on("click", function(){
-            location.href="<c:url value='/board/write'/>";
+            location.href="<c:url value='/errorBoard/write'/>";
         });
-        $("#writeBtn").on("click", function(){
-
-            // $("#contentDisplay").children().children().children().children().css('height','500px;');
+        $("#modifyBtn").on("click", function(){
 
             let form = $("#newForm");
-            form.attr("action", "<c:url value='/board/write'/>");
+            form.attr("action", "<c:url value='/errorBoard/modify'/>");
             form.attr("method", "post");
 
             if(formCheck()){
