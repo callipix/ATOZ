@@ -20,13 +20,11 @@
 
 <style>
     .container-fluid {
-        max-width: 70%;
+        width: 70%;
     }
     .board-container {
-        width: 100%;
-    }
-    .card.card-body {
-        text-align: center;
+        width: 70%;
+        margin:auto;
     }
     .btnList {
         margin-left: auto;
@@ -35,9 +33,22 @@
     .search-container > * > select  {
         font-weight: bold;
     }
-    .btn.bg-primary-subtle.text-primary, .search-input, .search-form {
+    .btn.bg-primary-subtle.text-primary {
         margin-right: 10px;
         width: auto;;
+    }
+    #contentDisplay{
+        padding: 12px 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+    #contentDisplay img {
+        <%-- contentDisplay내의 모든 img 요소가 가운데 정렬 --%>
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 <body>
@@ -46,6 +57,8 @@
 
 <script>
     let msg = "${msg}";
+
+    if(msg =="MOD_OK") alert("수정이 완료되었습니다.")
 </script>
 <div class="container-fluid">
     <div class="position-relative mb-4">
@@ -54,32 +67,32 @@
             <h4>그동안 경험했던 에러와 오류들을 기록하기 위한 트러블슈팅 게시판</h4>
         </div>
     </div>
-    <div class="board-container">
-        <div>
-            <div class="test-container">
-                <h2 class="writing-header"></h2>
-                <div class="btnList">
-                    <c:if test="${errorBoardDTO.writer eq loginId}">
-                        <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-trash"></i> 삭제하기</button>
-                        <button type="button" id="modifyBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-edit"></i> 수정하기
-                        </button>
-                    </c:if>
-                    <button type="button" id="listBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-bars"></i> 목록으로</button>
-                </div>
+</div>
+<div class="board-container">
+    <div>
+        <div class="test-container">
+            <h2 class="writing-header"></h2>
+            <div class="btnList">
+                <c:if test="${errorBoardDTO.writer eq loginId}">
+                    <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-trash"></i> 삭제하기</button>
+                    <button type="button" id="modifyBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-edit"></i> 수정하기
+                    </button>
+                </c:if>
+                <button type="button" id="listBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-bars"></i> 목록으로</button>
             </div>
         </div>
-        <form id="form" class="form" action="<c:url value='/errorBoard/remove'/>" method="post" enctype="multipart/form-data">
-            <c:if test="${not empty errorBoardDTO.errBno}">
-                <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
-            </c:if>
-            <input name="title" type="text" value='${errorBoardDTO.title}' readonly placeholder="제목">
-            <input name="errCode" type="text" value='발생한 에러코드 : ${errorBoardDTO.errCode}' readonly placeholder="에러코드">
-            <div id="contentDisplay" style="">
-            </div>
-        </form>
-        <br>
     </div>
+    <form id="form" class="form" action="<c:url value='/errorBoard/remove'/>" method="post" enctype="multipart/form-data">
+        <c:if test="${not empty errorBoardDTO.errBno}">
+            <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
+        </c:if>
+        <input name="title" type="text" value='${errorBoardDTO.title}' readonly placeholder="제목">
+        <input name="errCode" type="text" value='발생한 에러코드 : ${errorBoardDTO.errCode}' readonly placeholder="에러코드">
+        <div id="contentDisplay"></div>
+    </form>
+    <br>
 </div>
+<%--</div>--%>
 </body>
 <script>
     let listBtn = document.querySelector('#listBtn');
@@ -88,6 +101,9 @@
         let data = `${errorBoardDTO.content}`;
 
         $("#contentDisplay").html(data);
+        $("#contentDisplay").children().children().css('max-width','100%');
+        $("#contentDisplay").children().find().css('max-width','100%');
+        $("#contentDisplay").children().children().css('margin','auto');
 
         let formCheck = function() {
 

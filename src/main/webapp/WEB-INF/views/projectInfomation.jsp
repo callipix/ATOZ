@@ -5,15 +5,18 @@
     <head>
         <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
         <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
-        <script src="<c:url value='/js/cursorEffect.js'/>"></script>
         <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
     </head>
+        <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 <style>
     .container-fluid {
         width: 1100px;
     }
     .my-3.ps-4.text-dark > * > * {
         margin-left: 10px;
+    }
+    .border-top mt-7 pt-7 > * {
+        margin-bottom: 10px;
     }
 </style>
 <jsp:include page="header.jsp" />
@@ -33,7 +36,7 @@
                         <li class="breadcrumb-item d-flex justify-content-center align-items-center ps-0">
                             <iconify-icon icon="tabler:chevron-right"></iconify-icon>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">Blog Detail</li>
+                        <li class="breadcrumb-item" aria-current="page">추가예정</li>
                     </ol>
                 </nav>
             </div>
@@ -44,12 +47,19 @@
             <a href="javascript:void(0)">
                 <img src="<c:url value='/bootstrap/assets/images/blog/blog-img5.jpg'/>" class="card-img-top rounded-0 object-fit-cover" alt="xtreme-img" height="440">
             </a>
-            <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2024.07.31 14:21 최초등록</span>
+
+            <div class="position-relative" style="height: 35px; margin-right: auto;">
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 40px; background-color: transparent !important; color: white !important; font-weight: bold">2024.07.31 14:21 최초등록</span>
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 20px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.01 17:40 업데이트</span>
+            </div>
+
+        <%--            <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2024.07.31 14:21 최초등록</span>--%>
+<%--            <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2024.08.01 17:40 업데이트</span>--%>
             <img src="<c:url value='/bootstrap/assets/images/profile/user-5.jpg'/>" alt="xtreme-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Esther Lindsey">
         </div>
         <div class="card-body p-4">
             <span class="badge text-bg-light mt-3">Infomation</span>
-            <h2 class="fs-9 fw-semibold my-4">취업이 너무 안되서 뭐라도 해보려고 만들어본 홈페이지</h2>
+            <h2 class="fs-9 fw-semibold my-4">취업이 안되서 공부하면서 만들어본 미니 프로젝트</h2>
             <div class="d-flex align-items-center gap-4">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ti ti-eye text-dark fs-5"></i>여긴 조회수 들어갈 곳
@@ -65,9 +75,9 @@
         <div class="card-body border-top p-4">
             <h2 class="fs-8 fw-semibold mb-3">
             <div class="border-top mt-7 pt-7">
-                <h3 class="fw-semibold mb-2">Quotes</h3>
+<%--                <h3 class="fw-semibold mb-2">Quotes</h3>--%>
                 <div class="p-3 bg-light rounded border-start border-2 border-primary">
-                    <h4 class="mb-0 fs-4 fw-semibold">기본이라는건, 쉬운게 아니라 중요한 것이다
+                    <h4 class="mb-0 fs-4 fw-semibold">기본은 쉬운게 아니라 중요한 것이다
                         <i class="ti ti-quote fs-7"></i>
                     </h4>
                 </div>
@@ -75,11 +85,18 @@
             </h2>
 <%--            --%>
             <div class="border-top mt-7 pt-7">
+                <div style="text-align:center">
+                    <h4>처음엔 가계부 관련된 프로젝트를 해보고 싶었는데.. 막상 설계 해보니 고려해야할 요소들이
+                        <br>너무 많아서 기본기도 없는데 이것저것 해보자는 생각보단 기존에 배웠던 내용들을 바탕으로
+                        <br>알고있는 내용들을 다시 한번 재점검 하고자 시작한 미니 프로젝트
+                    </h4>
+                </div>
+                <br>
                 <div style="display: flex; align-items: center">
-                    <h3 class="fw-semibold">이번 미니프로젝트 목표 → <h4 class="fw-semibold">&nbsp;2024.07.31 기준 1-9 달성</h4></h3>
+                    <h3 class="fw-semibold">이번 미니프로젝트 목표 → <h4 class="fw-semibold">&nbsp;2024.08.01 기준 1-9 달성</h4></h3>
                 </div>
                 <ol class="my-3 text-dark">
-                    <li>기본적인 CRUD 내용 다시 한번 체크 및 재정리</li>
+                    <li>기본적인 CRUD 다시 한번 체크 및 재정리</li>
                     <li>기존에 사용해보지 않았던 DB를 활용해보기(기존 : Oracle) → MySQL(*pick) & PostgreSQL</li>
                     <li>페이징 처리 및 검색에 대해 다시 한번 복습</li>
                     <li>테스트 툴을 최대한 활용해보기 → Junit , Postman</li>
@@ -96,40 +113,41 @@
             <p class="mb-3">
                 현재까지 발견한 오류 또는 해결해야할 내용들
                 <br>
-                오류게시판 글 작성 도중 이미지 추가&삭제 후 글작성시 AWS에 최종 이미지만 업로드돼야 하는데 계속 남아있음(게시판에는 내가 올린 이미지만 존재)
+                <span style="text-decoration: line-through;">
+                글작성중 이미지 추가&삭제하고 글등록시 AWS에 최종 이미지만 업로드돼야 하는데 계속 남아있음(게시판에는 내가 올린 이미지만 존재)
+                </span> → 이건 수정 완료
+                <br>
+                글삭제시 DB랑 AWS에서 삭제해야하는데 이게 복잡하네..
                 <br>
                 Validation을 이용한 서버단 유효성 검증 체크
                 <br>
                 디자인이 조잡하다..일부 css 적용되지 않는 문제
                 <br>
-                home탭에서 역순보기/한번에 열기시 이벤트 동작 오류있음..몇시간 찾아봤지만 해결실패하여 우선 보류..
-            </p>
-            <p class="mb-3">
-
+                Home탭에서 역순보기/한번에 열기시 이벤트 동작 오류있음..몇시간 찾아봤지만 해결실패하여 우선 보류..
             </p>
             <p class="text-dark mb-0">
-                <strong>현재 페이지도 나중에 내용들을 DB화 해서 데이터 별도 저장 예정</strong>
+                <strong>현재 페이지도 나중에 내용들을 DB화 해서 데이터 별도 저장 예정(관리자만 등록↔수정)</strong>
                 <br>
                 <strong>통계 관련된것들도 다뤄보고싶다..</strong>
                 <br>
                 <strong>이번 한번만 하고 끝이 아니라 계속해서 발전시킬 예정</strong>
             </p>
                 <br>
-            <p class="mb-0">
-                <em>This is italic text.</em>
-            </p>
+            <span class="mb-0">
+                <em>디자인은 양해좀..</em>
+            </span>
             <div class="border-top mt-7 pt-7">
                 <h3 class="fw-semibold">개발기간 및 과정</h3>
                 <ul class="my-3 ps-4 text-dark">
-                <h4>2024.07.17 - 2024.07.31 진행중</h4>
+                <h4>2024.07.17 - 2024.08.01 현재 진행중 계속 업데이트 예정</h4>
                     <li class="d-flex align-items-center gap-2">
-                        <span class="p-1 text-bg-dark rounded-circle"></span>1
+                        <span class="p-1 text-bg-dark rounded-circle"></span>기본적인 가입 인증 로직 설계
                     </li>
                     <li class="d-flex align-items-center gap-2">
-                        <span class="p-1 text-bg-dark rounded-circle"></span>2
+                        <span class="p-1 text-bg-dark rounded-circle"></span>간단한 게시판 CRUD, 검색 & 페이징 처리
                     </li>
                     <li class="d-flex align-items-center gap-2">
-                        <span class="p-1 text-bg-dark rounded-circle"></span>3
+                        <span class="p-1 text-bg-dark rounded-circle"></span>AWS를 활용한 별도 서버 구축해보기
                     </li>
                 </ul>
             </div>
@@ -169,7 +187,7 @@
                         <span class="p-1 text-bg-dark rounded-circle"></span>BootStrap(일부만), HTML ES6, CSS3
                     </li>
                     <br>
-                <h4>Ect..</h4>
+                <h4>ETC..</h4>
                     <li class="d-flex align-items-center gap-2">
                         <span class="p-1 text-bg-dark rounded-circle"></span>AWS EC2 WindowServer
                     </li>
@@ -187,7 +205,7 @@
         <div class="card-body">
             <h4 class="mb-4 fw-semibold">To be updated..</h4>
             <form>
-                <textarea class="form-control mb-4" rows="5" placeholder="여긴 아직 아무것도 없지만.. 나중에 추가 예정!"></textarea>
+                <textarea class="form-control mb-4" rows="5" placeholder="여긴 아직 아무것도 없지만.. 여길 포함해서 아랫부분 전부 나중에 추가 예정!"></textarea>
                 <button class="btn btn-primary">Post Comment</button>
             </form>
             <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
@@ -197,29 +215,11 @@
             <div class="position-relative">
                 <div class="p-4 rounded-2 text-bg-light mb-3">
                     <div class="d-flex align-items-center gap-3">
-                        <img src="<c:url value='/bootstrap/assets/images/profile/user-2.jpg'/>" alt="xtreme-img" class="rounded-circle" width="33" height="33">
-                        <h6 class="mb-0 fs-4">Don Russell</h6>
-                        <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                    </div>
-                    <p class="my-3">Es do ujurus nejson imju azgudpi toceztep ji cocicoci bosawrop korze ta.
-                        Casetlu udumej umocu wanaro webmos ijafa ud muli amja softoj ma pijum.
-                    </p>
-                    <div class="d-flex align-items-center gap-2">
-                        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
-                            <i class="ti ti-arrow-back-up"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="p-4 rounded-2 text-bg-light mb-3">
-                    <div class="d-flex align-items-center gap-3">
                         <img src="<c:url value='/bootstrap/assets/images/profile/user-3.jpg'/>" alt="xtreme-img" class="rounded-circle" width="33" height="33">
-                        <h6 class="mb-0 fs-4">Cordelia Potter</h6>
+                        <h6 class="mb-0 fs-4">조금만 기다려주세요</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                     </div>
-                    <p class="my-3">Huwso jewzehgu julriw niwgazep lewbob isujirmuz hemto pahop cewa zuhucze rinitba
-                        etdebluj.
-                        Obdevo bo fa siztes laobeir agoemugo rut sapaviw mulati do re dabelul wo tumnik wih mu.
-                    </p>
+                    <p class="my-3">규모 크게 잡았다가 막상 해보니 할게 너무 많아서 기본적인것만도 벅차다..</p>
                     <div class="d-flex align-items-center gap-2">
                         <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
                             <i class="ti ti-arrow-back-up"></i>
@@ -232,9 +232,7 @@
                         <h6 class="mb-0 fs-4">Irene Hanson</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                     </div>
-                    <p class="my-3">Uborofgic be rof lom sedge vapozi ohoinu nutremcuc ro ko atmeg anrov git ve vuj ki teb
-                        or.
-                        Lohi hafa faddegon horoz ebema kew idful ducam nev rol iga wikkobsu sucdu gud.
+                    <p class="my-3">그래도 생각보다 너무 재밌었다. 기존에 애매하게 알고있던 것들 정리되는 느낌
                     </p>
                 </div>
                 <div class="p-4 rounded-2 text-bg-light">
@@ -243,8 +241,8 @@
                         <h6 class="mb-0 fs-4">Seth Ortiz</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                     </div>
-                    <p class="my-3">Icme rasejmat ciwo ifekemug owoca vicoz ukikitus famiftat nuk eroewu za upe.
-                        Pobrikvup kivofvac tuba ot veh ozoab sa gesi hahoniha hop burbip volo hufotobo di uted vojoamu.
+                    <p class="my-3">
+                        추가해 보고싶은 기능들 : 알림, 채팅, 통계관련, 캘린더, 가계부 등등
                     </p>
                     <div class="d-flex align-items-center gap-2">
                         <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">

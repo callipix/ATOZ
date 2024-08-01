@@ -78,6 +78,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
         }
         return amazonS3.getUrl(bucketName, storedName).toString();
     }
+
     @Override
     @Transactional(rollbackFor = IOException.class)
     public int uploadImages(FilesDTO filesDTO) throws IOException {

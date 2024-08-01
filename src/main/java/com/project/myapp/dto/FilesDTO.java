@@ -14,6 +14,7 @@ public class FilesDTO {
     private Timestamp uploaded_at;                // 업로드 날짜
     private String id;                          // 업로드 id
     private String associated_object_id;
+    private int category_no;
 
     public FilesDTO(){}
 
@@ -39,6 +40,14 @@ public class FilesDTO {
     @Override
     public int hashCode() {
         return Objects.hash(file_no, original_name, stored_name, file_type, file_size, file_path);
+    }
+
+    public int getCategory_no() {
+        return category_no;
+    }
+
+    public void setCategory_no(int category_no) {
+        this.category_no = category_no;
     }
 
     public String getOriginal_name() {
@@ -120,11 +129,12 @@ public class FilesDTO {
                 ", original_name='" + original_name + '\'' +
                 ", stored_name='" + stored_name + '\'' +
                 ", file_type='" + file_type + '\'' +
-                ", file_size='" + file_size + '\'' +
+                ", file_size=" + file_size +
                 ", file_path='" + file_path + '\'' +
-                ", uploaded_at='" + uploaded_at + '\'' +
+                ", uploaded_at=" + uploaded_at +
                 ", id='" + id + '\'' +
                 ", associated_object_id='" + associated_object_id + '\'' +
+                ", category_no=" + category_no +
                 '}';
     }
 }

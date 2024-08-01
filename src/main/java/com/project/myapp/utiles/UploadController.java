@@ -20,7 +20,7 @@ public class UploadController {
 
     @ResponseBody
     @PostMapping("/upload/uploadCK")
-    public Map<String , Object> uploads(MultipartHttpServletRequest request , HttpSession session) {
+    public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {
 
         System.out.println("request = " + request.toString());
         MultipartFile uploadImg = request.getFile("upload");

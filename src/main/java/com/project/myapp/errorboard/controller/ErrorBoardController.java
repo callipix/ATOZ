@@ -74,7 +74,9 @@ public class ErrorBoardController {
                 throw new Exception("Modify Error");
             }
             ratts.addFlashAttribute("msg", "MOD_OK");
-            return "redirect:/errorBoard/list" + sc.getQueryString();
+
+//            return "redirect:/errorBoard/list" + sc.getQueryString();
+            return "redirect:/errorBoard/read?errBno=" + errorBoardDTO.getErrBno();
         } catch (Exception e){
             e.printStackTrace();
             model.addAttribute(errorBoardDTO);

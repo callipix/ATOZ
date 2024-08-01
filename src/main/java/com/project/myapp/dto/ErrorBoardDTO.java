@@ -14,7 +14,7 @@ public class ErrorBoardDTO {
     private int commentCnt;
     private Date regDate;
     private Date upDate;
-    private int categoryNo;
+    private final int categoryNo = 2;
     private String errBoardThum;
 
     public ErrorBoardDTO(){}
@@ -128,10 +128,6 @@ public class ErrorBoardDTO {
 
     public int getCategoryNo() {
         return categoryNo;
-    }
-
-    public void setCategoryNo(int categoryNo) {
-        this.categoryNo = categoryNo;
     }
 
     public String getErrBoardThum() {

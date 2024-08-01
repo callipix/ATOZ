@@ -1,9 +1,11 @@
 package com.project.myapp.errorboard.service;
 
 import com.project.myapp.dto.ErrorBoardDTO;
+import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.dao.ErrorBoardDAO;
 import com.project.myapp.utiles.AwsS3FileUploadService;
+import com.project.myapp.utiles.FileUpload;
 import com.project.myapp.vo.ErrLogFileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,13 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 
     ErrorBoardDAO errorBoardDAO;
     AwsS3FileUploadService awsS3FileUploadService;
+    FileUpload fileUpload;
 
     @Autowired
-    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService){
+    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload){
         this.errorBoardDAO = errorBoardDAO;
         this.awsS3FileUploadService = awsS3FileUploadService;
+        this.fileUpload = fileUpload;
     }
 
     @Override
@@ -31,6 +35,12 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO) throws Exception {
         // 게시글 등록
         int result = errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+        System.out.println("게시물 등록까지 성공? 1 나와야함 result = " + result);
+        FilesDTO filesDTO = new FilesDTO();
+        filesDTO.setCategory_no(errorBoardDTO.getCategoryNo());
+        System.out.println("파일 카테고리 정보 받아오는지 체크 카테고리 아이디 2가 나와야함 filesDTO = " + filesDTO);
+        result += fileUpload.updateImages(filesDTO);
+        System.out.println("최종 결과값? = " + result);
         return result;
     }
 
