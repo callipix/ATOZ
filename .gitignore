@@ -12,7 +12,6 @@ target/
 *.iml
 *.ipr
 aws-bucket_config.properties
-api-config.properties
 
 ### Eclipse ###
 .apt_generated
@@ -132,4 +131,3 @@ local.properties
 
 !/.gitignore
 /src/main/webapp/resources/bootstrap/
-/src/main/resources/api-config.properties
