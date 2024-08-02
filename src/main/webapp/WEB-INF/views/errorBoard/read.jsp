@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
 <link rel="stylesheet" href="<c:url value='/css/board.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
-<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css">
+<%--<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css">--%>
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>

@@ -7,6 +7,7 @@ public class BoardDTO {
 
     private int rownum;
     private Integer bno;
+    private final Integer categoryNo = 1;
     private String title;
     private String content;
     private String writer;
@@ -20,12 +21,12 @@ public class BoardDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardDTO boardDTO = (BoardDTO) o;
-        return rownum == boardDTO.rownum && bno == boardDTO.bno && Objects.equals(title, boardDTO.title) && Objects.equals(content, boardDTO.content) && Objects.equals(writer, boardDTO.writer);
+        return Objects.equals(bno, boardDTO.bno) && Objects.equals(categoryNo, boardDTO.categoryNo) && Objects.equals(title, boardDTO.title) && Objects.equals(content, boardDTO.content) && Objects.equals(writer, boardDTO.writer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rownum, bno, title, content, writer);
+        return Objects.hash(bno, categoryNo, title, content, writer);
     }
 
     public BoardDTO() {
@@ -36,6 +37,10 @@ public class BoardDTO {
         this.title = title;
         this.content = content;
         this.writer = writer;
+    }
+
+    public Integer getCategoryNo() {
+        return categoryNo;
     }
 
     public int getRownum() {
@@ -115,6 +120,7 @@ public class BoardDTO {
         return "BoardDTO{" +
                 "rownum=" + rownum +
                 ", bno=" + bno +
+                ", categoryNo=" + categoryNo +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +

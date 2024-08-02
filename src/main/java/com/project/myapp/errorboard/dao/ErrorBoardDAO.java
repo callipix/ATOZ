@@ -29,6 +29,5 @@ public interface ErrorBoardDAO {
 
     public int increaseViewCount(int errBno);
 
-    public List<ErrLogFileDto> getDeleteList(int errBno);
-
+    public int getSelectKey();
 }

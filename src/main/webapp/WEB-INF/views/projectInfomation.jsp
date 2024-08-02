@@ -49,8 +49,9 @@
             </a>
 
             <div class="position-relative" style="height: 35px; margin-right: auto;">
-                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 40px; background-color: transparent !important; color: white !important; font-weight: bold">2024.07.31 14:21 최초등록</span>
-                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 20px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.01 17:40 업데이트</span>
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 20px; background-color: transparent !important; color: white !important; font-weight: bold">2024.07.31 14:21 최초등록</span>
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 40px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.01 17:40 업데이트</span>
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 60px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.02 18:02 업데이트</span>
             </div>
 
         <%--            <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2024.07.31 14:21 최초등록</span>--%>
@@ -59,7 +60,7 @@
         </div>
         <div class="card-body p-4">
             <span class="badge text-bg-light mt-3">Infomation</span>
-            <h2 class="fs-9 fw-semibold my-4">취업이 안되서 공부하면서 만들어본 미니 프로젝트</h2>
+            <h2 class="fs-9 fw-semibold my-4">취업이 힘들어서 공부하면서 만들어본 미니 프로젝트</h2>
             <div class="d-flex align-items-center gap-4">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ti ti-eye text-dark fs-5"></i>여긴 조회수 들어갈 곳
@@ -117,7 +118,7 @@
                 글작성중 이미지 추가&삭제하고 글등록시 AWS에 최종 이미지만 업로드돼야 하는데 계속 남아있음(게시판에는 내가 올린 이미지만 존재)
                 </span> → 이건 수정 완료
                 <br>
-                글삭제시 DB랑 AWS에서 삭제해야하는데 이게 복잡하네..
+                글삭제시 DB랑 AWS에서 삭제해야하는데 이게 복잡하네.. → 일부 해결완료(70~80%?)..
                 <br>
                 Validation을 이용한 서버단 유효성 검증 체크
                 <br>
@@ -139,7 +140,7 @@
             <div class="border-top mt-7 pt-7">
                 <h3 class="fw-semibold">개발기간 및 과정</h3>
                 <ul class="my-3 ps-4 text-dark">
-                <h4>2024.07.17 - 2024.08.01 현재 진행중 계속 업데이트 예정</h4>
+                <h4>2024.07.17 - 2024.08.02 현재 진행중 계속 업데이트 예정</h4>
                     <li class="d-flex align-items-center gap-2">
                         <span class="p-1 text-bg-dark rounded-circle"></span>기본적인 가입 인증 로직 설계
                     </li>
@@ -216,24 +217,16 @@
                 <div class="p-4 rounded-2 text-bg-light mb-3">
                     <div class="d-flex align-items-center gap-3">
                         <img src="<c:url value='/bootstrap/assets/images/profile/user-3.jpg'/>" alt="xtreme-img" class="rounded-circle" width="33" height="33">
-                        <h6 class="mb-0 fs-4">조금만 기다려주세요</h6>
+                        <h6 class="mb-0 fs-4">wait...!!</h6>
                         <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
                     </div>
                     <p class="my-3">규모 크게 잡았다가 막상 해보니 할게 너무 많아서 기본적인것만도 벅차다..</p>
+                    <p class="my-3">그래도 생각보다 너무 재밌었다. 기존에 애매하게 알고있던 것들 정리되는 느낌</p>
                     <div class="d-flex align-items-center gap-2">
                         <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">
                             <i class="ti ti-arrow-back-up"></i>
                         </a>
                     </div>
-                </div>
-                <div class="p-4 rounded-2 text-bg-light mb-3 ms-7">
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="<c:url value='/bootstrap/assets/images/profile/user-6.jpg'/>" alt="xtreme-img" class="rounded-circle" width="40" height="40">
-                        <h6 class="mb-0 fs-4">Irene Hanson</h6>
-                        <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>
-                    </div>
-                    <p class="my-3">그래도 생각보다 너무 재밌었다. 기존에 애매하게 알고있던 것들 정리되는 느낌
-                    </p>
                 </div>
                 <div class="p-4 rounded-2 text-bg-light">
                     <div class="d-flex align-items-center gap-3">

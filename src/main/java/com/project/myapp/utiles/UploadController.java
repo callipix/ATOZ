@@ -1,5 +1,8 @@
 package com.project.myapp.utiles;
 
+import com.project.myapp.errorboard.dao.ErrorBoardDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +17,18 @@ import java.util.*;
 
 @Controller
 public class UploadController {
+    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+
+    AwsS3FileUploadService awsS3FileUploadService;
+    FileUpload fileUpload;
+    private final ErrorBoardDAO errorBoardDAO;
 
     @Autowired
-    AwsS3FileUploadService awsS3FileUploadService;
+    UploadController(AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload, ErrorBoardDAO errorBoardDAO){
+        this.awsS3FileUploadService = awsS3FileUploadService;
+        this.fileUpload = fileUpload;
+        this.errorBoardDAO = errorBoardDAO;
+    }
 
     @ResponseBody
     @PostMapping("/upload/uploadCK")
@@ -48,11 +60,10 @@ public class UploadController {
 
     @ResponseBody
     @PostMapping("/contentImgCheck")
-    public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress) throws IOException {
-        System.out.println("여길 왜 안타지? = ");
+    public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress , int categoryNo) throws IOException {
         List<String> beforeAddress = new ArrayList<>();
         List<String> afterAddress  = new ArrayList<>();
-
+        Map<String , Object> resultMap = new HashMap<>();
         int result = 0;
         for(String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
             beforeAddress.add(beforeImgAddress);
@@ -65,17 +76,17 @@ public class UploadController {
         if(!imageAddress.isEmpty()){
             // 이미지 업로드 여부 -> 업로드 존재시
             List<String> endImgList = new ArrayList<>(beforeAddress);
-
             endImgList.removeAll(afterAddress);
+            result = this.awsS3FileUploadService.deleteImageFile(endImgList, afterAddress, categoryNo);
 
-            result = this.awsS3FileUploadService.deleteImageFile(endImgList);
-
+            resultMap.put("result" , result);
+            resultMap.put("afterAddress" , afterAddress);
             System.out.println("deletedImg = " + endImgList);
         }
         if(result != 0) {
-            return ResponseEntity.ok(HttpStatus.OK);
+            return ResponseEntity.ok(resultMap);
         }
-        return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("HttpStatus", HttpStatus.BAD_REQUEST);
     }
 
     /** *

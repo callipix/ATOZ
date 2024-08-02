@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ErrorBoardDTO {
+    
     private int rownum;
     private int errBno;
     private String errCode;

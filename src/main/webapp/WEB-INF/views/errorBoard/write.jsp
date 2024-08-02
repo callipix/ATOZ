@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
 <body>
-<jsp:include page="../header.jsp"></jsp:include>
+<jsp:include page="../header.jsp" />
 <link rel="stylesheet" href="<c:url value='/mycustom/buttons.css'/>">
 <script>
     let msg = "${msg}";
@@ -35,6 +35,7 @@
             <c:if test="${not empty errorBoardDTO.errBno}">
                 <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.bno}'/>">
             </c:if>
+                <input type="hidden" id="afterList" name="afterList">
             <div class="form-group">
                 <label for="title">
                     <input class="form-control" name="title" id="title" type="text" value="<c:out value='${errorBoardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
@@ -66,9 +67,9 @@
     </div>
 </div>
 <script>
-    let listBtn = document.querySelector('#listBtn');
-
+    const listBtn = document.querySelector('#listBtn');
     $(document).ready(function(){
+            let afterList = document.querySelector('#afterList');
 
         let formCheck = function() {
 
@@ -88,7 +89,6 @@
             }
             return true;
         }
-
         $("#removeBtn").on("click", function(){
             if(!confirm("정말로 삭제하시겠습니까?")){
                 return;
@@ -104,36 +104,35 @@
         });
         $("#writeBtn").on("click", function(){
 
-            // $("#contentDisplay").children().children().children().children().css('height','500px;');
-
             let form = $("#newForm");
             form.attr("action", "<c:url value='/errorBoard/write'/>");
             form.attr("method", "post");
 
             if(formCheck()){
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
-
-                alert("afterImgAddressWrite = " + afterImgAddressWrite);
-                alert("beforeImgAddressWrite = " + beforeImgAddressWrite);
-
                 let imageAddress = {
                     "beforeImgAddress" : beforeImgAddressWrite,
                     "afterImgAddress" : afterImgAddressWrite
                 }
-                alert("imageAddress" + imageAddress);
+                let categoryNo = 2;
+
                 $.ajax({
-                    url: '/myApp/contentImgCheck',
+                    url: '/myApp/contentImgCheck?categoryNo=' + categoryNo,
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(imageAddress),
                     success: function (result) {
                         beforeImgAddressWrite = [];
-                        if(result != 1) return;
-                    }
-                })
+                        if(result != 1){
+                            return;
+                        }
+                    },
+                });
+                afterList.value = afterImgAddressWrite;
+                // 폼 제출
                 form.submit();
             }
-        })
+        });
     });
     listBtn.addEventListener('click', function () {
         location.href = '<c:url value="/errorBoard/list"/>';

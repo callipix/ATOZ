@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class FileUpload {
 
@@ -15,6 +17,7 @@ public class FileUpload {
 
     public int uploadFile(FilesDTO filesDTO) {
         int result = this.sqlSession.insert(namespace + "insertFileInfo" , filesDTO);
+
         return result;
     }
     public int deleteFile(String storedName) {
@@ -24,9 +27,14 @@ public class FileUpload {
     public int updateImages(FilesDTO filesDTO) {
         System.out.println("updateImages filesDTO = " + filesDTO);
         int result = this.sqlSession.update(namespace + "updateFileInfo" , filesDTO);
-        System.out.println("result = " + result);
-        System.out.println("updateImages AFTER = " + filesDTO);
         return result;
     }
-
+    public int getFileNoKeyList(String imgAddress) {
+        int fileNoKey = sqlSession.selectOne(namespace + "getFileNoKey", imgAddress);
+        return fileNoKey;
+    }
+    public int selectKey(){
+        int selectKey = this.sqlSession.selectOne(namespace + "selectKey");
+        return selectKey;
+    }
 }

@@ -1,6 +1,9 @@
 package com.project.myapp.utiles;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,15 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView exceptionHandler(Exception e){
+    public static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-        System.out.println("여길 오긴 오나?");
-        System.out.println("e.getMessage() = " + e.getMessage());
-        ModelAndView mav =new ModelAndView();
-        mav.setViewName("errorPage/error404");
-        mav.addObject("exception", e);
-        return mav;
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e , Model model){
+        logger.info("404 에러페이지 입장!{}");
+        logger.error(e.getMessage());
+        model.addAttribute("exception", e);
+
+        return "errorPage/error404";
     }
 
 }

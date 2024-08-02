@@ -6,6 +6,8 @@ import java.util.Objects;
 public class FilesDTO {
 
     private int file_no;                        // 파일번호 -> DB에서 auto_increment
+    private int category_no;
+    private int post_no;
     private String original_name;               // 파일의 오리지날명
     private String stored_name;                 // UUID로 생성한 파일명
     private String file_type;                   // 파일의 타입(여기선 이미지 파일 종류)
@@ -14,19 +16,19 @@ public class FilesDTO {
     private Timestamp uploaded_at;                // 업로드 날짜
     private String id;                          // 업로드 id
     private String associated_object_id;
-    private int category_no;
 
     public FilesDTO(){}
 
-    public FilesDTO(int file_no, String original_name, String stored_name, String file_type, long file_size, String file_path, String id, String associated_object_id) {
+    public FilesDTO(int file_no, int category_no, int post_no, String original_name, String stored_name, String file_type, long file_size, String file_path, String id) {
         this.file_no = file_no;
+        this.category_no = category_no;
+        this.post_no = post_no;
         this.original_name = original_name;
         this.stored_name = stored_name;
         this.file_type = file_type;
         this.file_size = file_size;
         this.file_path = file_path;
         this.id = id;
-        this.associated_object_id = associated_object_id;
     }
 
     @Override
@@ -40,6 +42,14 @@ public class FilesDTO {
     @Override
     public int hashCode() {
         return Objects.hash(file_no, original_name, stored_name, file_type, file_size, file_path);
+    }
+
+    public int getPost_no() {
+        return post_no;
+    }
+
+    public void setPost_no(int post_no) {
+        this.post_no = post_no;
     }
 
     public int getCategory_no() {
@@ -126,6 +136,8 @@ public class FilesDTO {
     public String toString() {
         return "FilesDTO{" +
                 "file_no=" + file_no +
+                ", category_no=" + category_no +
+                ", post_no=" + post_no +
                 ", original_name='" + original_name + '\'' +
                 ", stored_name='" + stored_name + '\'' +
                 ", file_type='" + file_type + '\'' +
@@ -134,7 +146,6 @@ public class FilesDTO {
                 ", uploaded_at=" + uploaded_at +
                 ", id='" + id + '\'' +
                 ", associated_object_id='" + associated_object_id + '\'' +
-                ", category_no=" + category_no +
                 '}';
     }
 }

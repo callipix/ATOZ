@@ -17,12 +17,20 @@
          WHERE stored_name = #{stored_name}
     </delete>
 
+    <select id="getFileNoKey" parameterType="string" resultType="int">
+        SELECT FILE_NO
+          FROM FILES
+         WHERE FILE_PATH = #{file_path}
+    </select>
+
+    <select id="selectKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
     <update id="updateFileInfo" parameterType="com.project.myapp.dto.FilesDTO">
         UPDATE FILES
-           SET category_no = #{category_no}
-        WHERE FILE_NO = #{file_no}
-        <selectKey resultType="int" keyProperty="file_no" order="BEFORE">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+           SET  category_no = #{category_no}
+               ,post_no = #{post_no}
+         WHERE FILE_NO = #{file_no}
     </update>
 </mapper>

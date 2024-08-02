@@ -3,6 +3,7 @@ package com.project.myapp.errorboard.dao;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.vo.ErrLogFileDto;
+import org.apache.http.impl.io.AbstractMessageParser;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -64,13 +65,10 @@ public class ErrorBoardDAOImpl implements ErrorBoardDAO{
         int result = sqlSession.update(namespace + "increaseViewCount", errBno);
         return result;
     }
-
     @Override
-    public List<ErrLogFileDto> getDeleteList(int errBno) {
-        System.out.println("errBno = " + errBno);
-        List<ErrLogFileDto> list = sqlSession.selectList(namespace + "getDeleteList", errBno);
-        System.out.println("list = " + list);
-        return list;
+    public int getSelectKey(){
+        int result = sqlSession.selectOne(namespace + "getSelectKey");
+        System.out.println("getSelectKey result = " + result);
+        return result;
     }
-
 }

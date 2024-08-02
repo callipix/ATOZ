@@ -244,6 +244,24 @@
                 <h5>게시물 삭제시 AWS에서 반영 안되는 문제 → 우선 보류(DB까지 수정해야 해서 일이 커졌다..)</h5>
                 <h5>현재까지 내역들 AWS로 테스트 해보기</h5>
                 <h5>예정 목록중 스프링 시큐리티로 권한추가 → 이걸 먼저 해야할듯 한데..</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/1a3b1cd6c10219036314253fba669f7c4e2e30c2"><h5>404에러페이지 추가 및 일부 css 수정, AWS에 올려서 테스트 중</h5></a>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.08.02</b></button>
+            <div class="panel">
+                <h5>게시물 삭제시 AWS에서 반영 안되는 문제 → 일부 해결(DB테이블 수정, 일부 파일업로드 로직 수정, DB 쿼리문 변경..)</h5>
+                <h5>현재까지 내역들 AWS로 테스트 예정</h5>
+                <h5>파일업로드 가지고만 만 3일을 낑낑댔다..ㅜㅜ</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/1a3b1cd6c10219036314253fba669f7c4e2e30c2"><h5>404에러페이지 추가 및 일부 css 수정, AWS에 올려서 테스트 중</h5></a>
+                </div>
             </div>
         </div>
     </div>

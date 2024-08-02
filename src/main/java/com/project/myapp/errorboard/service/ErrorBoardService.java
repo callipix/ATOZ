@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ErrorBoardService {
     // 게시글 등록
-    public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO) throws Exception;
+    public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception;
 
     // 게시글 리스트
     public List<ErrorBoardDTO> getSearchSelectPage(SearchCondition sc) throws Exception;
