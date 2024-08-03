@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 @Controller
@@ -29,7 +31,6 @@ public class UploadController {
         this.fileUpload = fileUpload;
         this.errorBoardDAO = errorBoardDAO;
     }
-
     @ResponseBody
     @PostMapping("/upload/uploadCK")
     public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {
@@ -57,10 +58,9 @@ public class UploadController {
             return map;
         }
     }
-
     @ResponseBody
     @PostMapping("/contentImgCheck")
-    public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress , int categoryNo) throws IOException {
+    public ResponseEntity removeImage(@RequestBody Map<String , List<String>> imageAddress) throws IOException {
         List<String> beforeAddress = new ArrayList<>();
         List<String> afterAddress  = new ArrayList<>();
         Map<String , Object> resultMap = new HashMap<>();
@@ -77,7 +77,7 @@ public class UploadController {
             // 이미지 업로드 여부 -> 업로드 존재시
             List<String> endImgList = new ArrayList<>(beforeAddress);
             endImgList.removeAll(afterAddress);
-            result = this.awsS3FileUploadService.deleteImageFile(endImgList, afterAddress, categoryNo);
+            result = this.awsS3FileUploadService.deleteImageFile(endImgList, afterAddress);
 
             resultMap.put("result" , result);
             resultMap.put("afterAddress" , afterAddress);
@@ -88,7 +88,6 @@ public class UploadController {
         }
         return new ResponseEntity<>("HttpStatus", HttpStatus.BAD_REQUEST);
     }
-
     /** *
      * 업로드 과정(DB까지)
      * 1. 이미지 파일이 맞는지 체크
