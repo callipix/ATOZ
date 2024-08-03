@@ -4,12 +4,15 @@ public class Convertor {
     public static void main(String[] args) {
 
         String aa = "ERR_BNO ERR_CODE TITLE CONTENT WRITER VIEW_CNT COMMENT_CNT REG_DATE UP_DATE CATEGORY_NO ERR_BOARD_THUM ";
-        String result = "";
-        result = aa.toLowerCase();
-        System.out.println("result = " + result);
-        for (int i = 0; i < aa.length(); i++) {
-            aa.toLowerCase();
-        }
-
+        System.out.println("bb = " + toLowerConvertor(aa));
+        System.out.println("cc = " + toUpperConvertor(aa));
+    }
+    private static String toLowerConvertor(String string){
+        // 소문자를 대문자로 변환해주는
+        return string.toLowerCase();
+    }
+    private static String toUpperConvertor(String string){
+        // 대문자를 소문자로 변환해주는
+        return string.toUpperCase();
     }
 }

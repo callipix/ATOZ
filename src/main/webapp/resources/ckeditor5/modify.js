@@ -326,7 +326,6 @@ ClassicEditor.create(document.querySelector('#modifyContent'), editorConfig)
                         .then(file => {
                             const data = new FormData();
                             data.append('upload', file);
-
                             return fetch('/myApp/upload/uploadCK', {
                                 method: 'POST',
                                 body: data

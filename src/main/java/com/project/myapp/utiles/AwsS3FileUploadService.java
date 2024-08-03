@@ -13,6 +13,6 @@ public interface AwsS3FileUploadService {
 
     int uploadImages(FilesDTO filesDTO) throws IOException;
 
-    int deleteImageFile(List<String> imgAddress, List<String> afterAddress, int categoryNo) throws IOException;
+    int deleteImageFile(List<String> imgAddress, List<String> afterAddress) throws IOException;
 
 }

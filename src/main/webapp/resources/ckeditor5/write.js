@@ -319,7 +319,6 @@ const editorConfig = {
 ClassicEditor.create(document.querySelector('#content'), editorConfig)
     .then(editor => {
         window.editor = editor;
-
         editor.plugins.get('FileRepository').createUploadAdapter = loader => {
             return {
                 upload() {
@@ -327,7 +326,6 @@ ClassicEditor.create(document.querySelector('#content'), editorConfig)
                         .then(file => {
                             const data = new FormData();
                             data.append('upload', file);
-
                             return fetch('/myApp/upload/uploadCK', {
                                 method: 'POST',
                                 body: data
@@ -335,7 +333,6 @@ ClassicEditor.create(document.querySelector('#content'), editorConfig)
                                 .then(response => response.json())
                                 .then(responseData => {
                                     beforeImgAddressWrite.push(responseData.url);
-        alert("beforeImgAddressWrite =" + beforeImgAddressWrite);
                                     return {
                                         default: responseData.url
                                     };

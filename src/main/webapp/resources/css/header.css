@@ -94,10 +94,12 @@ span.psw {
 .topnav {
     background-color: #333;
     overflow: hidden;
-    width: 1300px;
     height: 51px;
     padding: 0px;
-    margin: 0px 100px 0px 100px;
+    max-width: 1300px;
+    margin: auto;
+    /*width: 1300px;*/
+    /*margin: 0px 100px 0px 100px;*/
     border: none;
     box-sizing: border-box;
     text-align: center;

@@ -3,32 +3,32 @@ package com.project.myapp.utiles;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.errorboard.dao.ErrorBoardDAO;
-import com.project.myapp.errorboard.service.ErrorBoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.*;
 
 @Service
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
+    @Value("${cloud.aws.s3.bucketName}")
+    private String bucketName;
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
     private final ErrorBoardDAO errorBoardDAO;
     private final AmazonS3 amazonS3;
     private final AwsConfig awsConfig;
     private final FileUpload fileUpload;
+
 
     @Autowired      // 생성자 주입
     public AwsS3FileUploadServiceImpl(ErrorBoardDAO errorBoardDAO, AmazonS3 amazonS3, AwsConfig awsConfig, FileUpload fileUpload) {
@@ -86,7 +86,6 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
         }
         return amazonS3.getUrl(bucketName, storedName).toString();
     }
-
     @Override
     @Transactional(rollbackFor = IOException.class)
     public int uploadImages(FilesDTO filesDTO) throws IOException {
@@ -98,7 +97,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
     }
     @Override
     @Transactional(rollbackFor = IOException.class)
-    public int deleteImageFile(List<String> imageAddress,List<String> afterAddress, int categoryNo) throws IOException {
+    public int deleteImageFile(List<String> imageAddress,List<String> afterAddress) throws IOException {
         // 게시글 내에서 이미지를 추가하거나 삭제했을시 AWS S3에도 업로드한 이미지만
         // 존재하고 기존 이미지를 삭제하는 메서드(DB에 존재하는 파일 정보도 삭제)
         int result = 0;
@@ -127,5 +126,4 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
         }
         return result;
     }
-
 }

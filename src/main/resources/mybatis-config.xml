@@ -8,6 +8,7 @@
 </settings>
     <typeAliases>
         <typeAlias alias="ErrorBoardDTO" type="com.project.myapp.dto.ErrorBoardDTO" />
+        <typeAlias alias="SuggestionDTO" type="com.project.myapp.dto.SuggestionDTO" />
     </typeAliases>
 
 </configuration>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.myapp.suggestion.dao.SuggestionMapper">
+
+    <select id="isEqualsIdNPass" parameterType="string" resultType="int">
+        /** 코멘트 삭제시 작성자명과 패스워드가 일치 하는지 */
+        SELECT EXISTS(
+                        SELECT writer , password
+                          FROM SUGGESTION
+                         WHERE writer = #{writer} and password = #{password}
+        )
+    </select>
+
+    <!-- 전체 댓글 삭제 -> 관리자용 -->
+    <delete id="deleteAllSuggestComment" parameterType="int">
+        DELETE
+        FROM suggestion
+        WHERE cno = #{cno}
+    </delete>
+    <!-- 코멘트 수 카운트 -->
+    <select id="suggestCommentCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM suggestion
+    </select>
+    <!-- 코멘트 삭제-->
+    <delete id="suggestCommentDelete" parameterType="map">
+        DELETE
+        FROM suggestion
+        WHERE true
+          AND writer = #{writer}
+          AND sno = #{sno}
+          AND password = #{password}
+    </delete>
+    <!-- 코멘트 등록-->
+    <insert id="suggestCommentInsert" parameterType="com.project.myapp.dto.CommentDTO">
+        INSERT INTO
+            suggestion(writer, password ,content, reg_date, up_date)
+        VALUES
+            (#{writer} , #{password} , #{content} , now() , now())
+    </insert>
+    <!-- 리스트 가져오기-->
+    <select id="getSuggestList" parameterType="int" resultType="com.project.myapp.dto.CommentDTO">
+        SELECT sno , writer ,content, reg_date, up_date
+        FROM suggestion
+    </select>
+    <!-- 코멘트 수정 -->
+    <update id="updateSuggestComment" parameterType="com.project.myapp.dto.CommentDTO">
+        UPDATE  suggestion
+        SET   content   = #{content}
+          , writer = #{writer}
+          , up_date   = now()
+        WHERE true
+          AND writer = #{writer}
+          AND sno = #{sno}
+          AND password = #{password}
+    </update>
+</mapper>

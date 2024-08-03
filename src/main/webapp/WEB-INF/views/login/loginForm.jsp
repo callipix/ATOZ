@@ -103,9 +103,10 @@
             background-color: #333;
             overflow: hidden;
             margin: auto;
-            width: 1300px;
+        max-width: 1300px;
+            /*width: 1300px;*/
             height: 51px;
-        margin: 0px 100px 0px 100px;
+        /*margin: 0px 100px 0px 100px;*/
             border: none;
             box-sizing: border-box;
             text-align: center;

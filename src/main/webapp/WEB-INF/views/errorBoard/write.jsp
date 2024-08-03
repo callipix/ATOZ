@@ -114,10 +114,9 @@
                     "beforeImgAddress" : beforeImgAddressWrite,
                     "afterImgAddress" : afterImgAddressWrite
                 }
-                let categoryNo = 2;
 
                 $.ajax({
-                    url: '/myApp/contentImgCheck?categoryNo=' + categoryNo,
+                    url: '/myApp/contentImgCheck',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(imageAddress),

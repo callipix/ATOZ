@@ -4,11 +4,6 @@
     justify-content: center;
     align-items: center;
 }
-body {
-    /*padding:1.5em;*/
-    /*background: #f5f5f5;*/
-}
-
 table {
     border: 1px #a39485 solid;
     font-size: .9em;
@@ -167,16 +162,16 @@ a {
     align-items: center;
 }
 /*.form {*/
-/*    margin: 0 auto; !* 폼을 화면 중앙에 배치합니다 *!*/
-/*    padding: 20px; !* 내부 여백을 추가합니다 *!*/
-/*    border: 1px solid #ccc; !* 테두리를 추가합니다 *!*/
-/*    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); !* 약간의 그림자를 추가합니다 *!*/
+/*    margin: 0 auto; !* 폼을 화면 중앙에 배치 */
+/*    padding: 20px; !* 내부 여백을 추가 */
+/*    border: 1px solid #ccc; !* 테두리를 추가 */
+/*    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); 그림자를 추가 */
 /*}*/
 
 .form input[type="text"], .form textarea {
     width: 100%; /* 입력 요소가 폼의 전체 너비를 차지하도록 설정 */
     box-sizing: border-box; /* 패딩과 테두리의 크기를 포함하도록 설정 */
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* 약간의 그림자를 추가합니다 */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* 그림자를 추가 */
     margin-bottom: 10px; /* 입력 요소들 사이에 여백을 추가 */
 }
 .form pre {

@@ -15,20 +15,23 @@ import java.util.List;
 @RestController
 public class CommentController {
 
-    @Autowired
     CommentService commentService;
+
+    @Autowired
+    CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
 
     @ResponseBody
     @PatchMapping("/comments/{cno}")
     public ResponseEntity<String> modify(@PathVariable Integer cno , @RequestBody CommentDTO commentDTO , HttpSession session){
 
         System.out.println("commentDTO = " + commentDTO);
-
         String commenter = (String) session.getAttribute("id");
 
         commentDTO.setCno(cno);
         commentDTO.setCommenter(commenter);
-
         try {
             int result = this.commentService.updateComment(commentDTO);
             if(result != 1){
@@ -40,7 +43,6 @@ public class CommentController {
             return new ResponseEntity<>("MOD_ERR" , HttpStatus.BAD_REQUEST);
         }
     }
-
     // 댓글 등록
     @ResponseBody
     @PostMapping("/comments")
@@ -50,19 +52,17 @@ public class CommentController {
         commentDTO.setCommenter(commenter);
         try {
             CommentDTO result = this.commentService.insertComment(commentDTO);
-                if(result == null){
+            if(result == null){
                 throw new Exception("Write failed");
             }
             System.out.println("Controller commentDTO = " + commentDTO);
             System.out.println("ResponseEntity.ok(commentDTO)= "+ ResponseEntity.ok(commentDTO));
             return ResponseEntity.ok(commentDTO);
-//            return new ResponseEntity<>(commentDTO , HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(commentDTO , HttpStatus.BAD_REQUEST);
         }
     }
-
     // 지정된 댓글을 삭제하는 메서드
     @DeleteMapping("/comments/{cno}")
     @ResponseBody
@@ -87,7 +87,6 @@ public class CommentController {
     public ResponseEntity<List<CommentDTO>> commentList(Integer bno, Model m){
         // 지정된 게시물의 모든 댓글 리스트 가져오기
         List<CommentDTO> list = null;
-
         try {
             list = this.commentService.getCommentForBoard(bno);
             // 댓글 리스트를 정상적으로 가져왔을시에 http 상태코드를 200으로 설정

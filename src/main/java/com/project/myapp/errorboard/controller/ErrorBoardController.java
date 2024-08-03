@@ -21,8 +21,13 @@ import java.util.List;
 @RequestMapping("/errorBoard")
 public class ErrorBoardController {
 
-    @Autowired
     ErrorBoardService errorBoardService;
+
+    @Autowired
+    ErrorBoardController(ErrorBoardService errorBoardService){
+        this.errorBoardService = errorBoardService;
+    }
+
     @GetMapping("/write")
     public String write(Model model) {
         model.addAttribute("mode" , "new");
@@ -31,8 +36,10 @@ public class ErrorBoardController {
     }
 
     @PostMapping("/write")
-    public String write(ErrorBoardDTO errorBoardDTO ,@ModelAttribute("afterList") List<String> afterList, RedirectAttributes ratts, Model model, HttpSession session){
+    public String write(ErrorBoardDTO errorBoardDTO ,@RequestParam List<String> afterList, RedirectAttributes ratts, Model model, HttpSession session){
 
+        System.out.println("errorBoardDTO = " + errorBoardDTO);
+        System.out.println("afterList = " + afterList);
         String writer = (String)session.getAttribute("id");
         errorBoardDTO.setWriter(writer);
         int result = 0;
@@ -71,7 +78,6 @@ public class ErrorBoardController {
                 throw new Exception("Modify Error");
             }
             ratts.addFlashAttribute("msg", "MOD_OK");
-
 //            return "redirect:/errorBoard/list" + sc.getQueryString();
             return "redirect:/errorBoard/read?errBno=" + errorBoardDTO.getErrBno();
         } catch (Exception e){
