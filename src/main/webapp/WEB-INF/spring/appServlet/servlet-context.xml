@@ -57,8 +57,9 @@
     <view-controller path="/login/loginFailPage" view-name="/login/loginFailPage" />
     <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess" />
     <view-controller path="/board/boardList" view-name="/board/boardList" />
-    <view-controller path="/suggestions" view-name="/suggestions" />
+<!--    <view-controller path="/suggestions" view-name="/etc/suggestions" />-->
     <view-controller path="/information" view-name="/projectInfomation" />
+
 
     <context:component-scan base-package="com.project.myapp" />
 

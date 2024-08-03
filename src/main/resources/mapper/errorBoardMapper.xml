@@ -129,7 +129,4 @@
         ORDER BY REG_DATE DESC , ERR_BNO DESC
     </select>
 
-    <select id="getSelectKey" resultType="int">
-        SELECT LAST_INSERT_ID()
-    </select>
 </mapper>

@@ -9,7 +9,7 @@
         SELECT EXISTS(
                         SELECT writer , password
                           FROM SUGGESTION
-                         WHERE writer = #{writer} and password = #{password}
+                         WHERE writer = #{writer} AND password = #{password}
         )
     </select>
 
@@ -20,7 +20,7 @@
         WHERE cno = #{cno}
     </delete>
     <!-- 코멘트 수 카운트 -->
-    <select id="suggestCommentCount" parameterType="int" resultType="int">
+    <select id="suggestCommentCount" resultType="int">
         SELECT COUNT(*)
         FROM suggestion
     </select>
@@ -29,31 +29,28 @@
         DELETE
         FROM suggestion
         WHERE true
-          AND writer = #{writer}
           AND sno = #{sno}
           AND password = #{password}
     </delete>
     <!-- 코멘트 등록-->
-    <insert id="suggestCommentInsert" parameterType="com.project.myapp.dto.CommentDTO">
+    <insert id="suggestCommentInsert" parameterType="SuggestionDTO">
         INSERT INTO
             suggestion(writer, password ,content, reg_date, up_date)
         VALUES
             (#{writer} , #{password} , #{content} , now() , now())
     </insert>
     <!-- 리스트 가져오기-->
-    <select id="getSuggestList" parameterType="int" resultType="com.project.myapp.dto.CommentDTO">
+    <select id="getSuggestList" parameterType="int" resultType="SuggestionDTO">
         SELECT sno , writer ,content, reg_date, up_date
         FROM suggestion
     </select>
     <!-- 코멘트 수정 -->
-    <update id="updateSuggestComment" parameterType="com.project.myapp.dto.CommentDTO">
+    <update id="updateSuggestComment" parameterType="SuggestionDTO">
         UPDATE  suggestion
-        SET   content   = #{content}
-          , writer = #{writer}
-          , up_date   = now()
-        WHERE true
-          AND writer = #{writer}
-          AND sno = #{sno}
-          AND password = #{password}
+           SET  content   = #{content}
+              , up_date   = now()
+         WHERE true
+           AND sno = #{sno}
+           AND password = #{password}
     </update>
 </mapper>
