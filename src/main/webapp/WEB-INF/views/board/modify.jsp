@@ -21,6 +21,11 @@
 <script>
     let msg = "${msg}";
     let beforeImgAddress = [];
+    let session = "${sessionScope.get("id")}";
+    if(!session || session !=){
+        alert("로그인 후 이용하세요");
+        location.href = '/myApp/errorBoard/list';
+    }
 </script>
 
 <div>

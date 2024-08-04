@@ -2,34 +2,45 @@ package com.project.myapp.dto;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static java.lang.Math.*;
+import static java.util.Objects.requireNonNullElse;
+
 public class SearchCondition {
-
     private Integer page = 1;
-    private Integer pageSize = 10;
-    private String keyword = "";
-    private String option  = "";
+    private Integer pageSize = DEFAULT_PAGE_SIZE;
+    private String  option = "";
+    private String  keyword = "";
 
-    public SearchCondition() {}
-    public SearchCondition(Integer page, Integer pageSize, String keyword, String option) {
+    public static final int MIN_PAGE_SIZE = 5;
+    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int MAX_PAGE_SIZE = 50;
+
+    public SearchCondition(){}
+
+    public SearchCondition(Integer page, Integer pageSize) {
+        this(page, pageSize, "", "");
+    }
+
+    public SearchCondition(Integer page, Integer pageSize, String option, String keyword) {
         this.page = page;
         this.pageSize = pageSize;
-        this.keyword = keyword;
         this.option = option;
+        this.keyword = keyword;
     }
 
-    public String getQueryString(Integer page){
-
-        return UriComponentsBuilder.newInstance()
-                .queryParam("page", page)
-                .queryParam("pageSize" , pageSize)
-                .queryParam("option" , option)
-                .queryParam("keyword" , keyword)
-                .build().toUriString();
-    }
-    public String getQueryString(){
+    public String getQueryString() {
         return getQueryString(page);
     }
 
+    public String getQueryString(Integer page) {
+        // ?page=10&pageSize=10&option=A&keyword=title
+        return UriComponentsBuilder.newInstance()
+                .queryParam("page",     page)
+                .queryParam("pageSize", pageSize)
+                .queryParam("option",   option)
+                .queryParam("keyword",  keyword)
+                .build().toString();
+    }
     public Integer getPage() {
         return page;
     }
@@ -43,17 +54,10 @@ public class SearchCondition {
     }
 
     public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-    public Integer getOffset(){
-        return (page - 1)*pageSize;
-    }
-    public String getKeyword() {
-        return keyword;
-    }
+        this.pageSize = requireNonNullElse(pageSize, DEFAULT_PAGE_SIZE);
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+        // MIN_PAGE_SIZE <= pageSize <= MAX_PAGE_SIZE
+        this.pageSize = max(MIN_PAGE_SIZE, min(this.pageSize, MAX_PAGE_SIZE));
     }
 
     public String getOption() {
@@ -64,14 +68,25 @@ public class SearchCondition {
         this.option = option;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public Integer getOffset() {
+        return (page-1)*pageSize;
+    }
+
     @Override
     public String toString() {
         return "SearchCondition{" +
                 "page=" + page +
                 ", pageSize=" + pageSize +
-                ", offset=" + getOffset() +
-                ", keyword='" + keyword + '\'' +
                 ", option='" + option + '\'' +
+                ", keyword='" + keyword + '\'' +
                 '}';
     }
 }

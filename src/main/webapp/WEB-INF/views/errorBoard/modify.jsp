@@ -6,18 +6,44 @@
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
+<link rel="stylesheet" href="<c:url value='/mycustom/buttons.css'/>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <body>
-<jsp:include page="../header.jsp"></jsp:include>
-<link rel="stylesheet" href="<c:url value='/mycustom/buttons.css'/>">
+<jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
+    let errBno = "${errorBoardDTO.errBno}";
     let beforeImgAddressWrite = [];
+    let sessionId = "${sessionScope.get("id")}";
+    if(!sessionId){
+        alert("로그인 후 이용하세요");
+        location.href = '/myApp/errorBoard/list';
+    } else{
+        let data = {
+            errBno, sessionId
+        }
+        $.ajax({
+            url : '/myApp/errorBoard/isCheckWriter',
+            method : 'post',
+            data : data,
+            success : function (result){
+                if(result === 'notEqualsWriter'){
+                    alert("잘못된 접근입니다.");
+                    history.back();
+                }
+            }
+        })
+    }
 </script>
+<style>
+    .btnList > *{
+        padding: 8px 12px ;
+    }
+</style>
 <div>
     <div class="board-container">
         <div>
@@ -110,14 +136,10 @@
             if(formCheck()){
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
 
-                alert("afterImgAddressWrite = " + afterImgAddressWrite);
-                alert("beforeImgAddressWrite = " + beforeImgAddressWrite);
-
                 let imageAddress = {
                     "beforeImgAddress" : beforeImgAddressWrite,
                     "afterImgAddress" : afterImgAddressWrite
                 }
-                alert("imageAddress" + imageAddress);
                 $.ajax({
                     url: '/myApp/contentImgCheck',
                     type: 'post',

@@ -19,4 +19,6 @@ public interface SuggestionDAO {
 
     public int getSuggestListCount();
 
+    public int passCheck(int sno , String password);
+
 }

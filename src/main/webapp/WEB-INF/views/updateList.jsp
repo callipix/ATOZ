@@ -4,6 +4,18 @@
 <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>"/>
 <a href="https://www.cursors-4u.com/cursor/2009/01/30/cute-running-puppy.html" target="_blank" title="Cute Running Puppy"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Cute Running Puppy" style="position:absolute; top: 0px; right: 0px;" /></a>
 <script src="<c:url value='/js/cursorEffect.js'/>"></script>
+<style>
+    .allHeader{
+        width: 1300px;
+    }
+    .mainHeader, .bottomHeader, .bottomHeader > h1 {
+        justify-content: center;
+    }
+    .updateList, .bottomHeader{
+        width: 70%;
+        margin: auto;
+    }
+</style>
 <body>
 <div class="allHeader">
     <div class="mainHeader">

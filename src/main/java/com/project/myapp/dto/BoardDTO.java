@@ -48,6 +48,7 @@ public class BoardDTO {
     }
 
     public void setRownum(int rownum) {
+
         this.rownum = rownum;
     }
 

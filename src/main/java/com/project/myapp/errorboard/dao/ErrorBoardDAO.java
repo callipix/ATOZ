@@ -30,4 +30,6 @@ public interface ErrorBoardDAO {
     public int increaseViewCount(int errBno);
 
     public int getSelectKey();
+
+    int isCheckWriter(String writer, int errBno);
 }

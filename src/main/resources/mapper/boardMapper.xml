@@ -114,5 +114,6 @@
                     or content like concat('%', #{keyword} , '%'))
                 </otherwise>
             </choose>
+        ORDER BY reg_date DESC , bno DESC
     </select>
 </mapper>

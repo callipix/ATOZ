@@ -5,9 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class SuggestionDAOImpl implements SuggestionDAO {
@@ -44,10 +42,25 @@ public class SuggestionDAOImpl implements SuggestionDAO {
         return result;
     }
 
+
+
     @Override
     public int getSuggestListCount() {
 
         int result = this.sqlSession.selectOne(namespace + "suggestCommentCount");
+        return result;
+    }
+
+    @Override
+    public int passCheck(int sno, String password) {
+        System.out.println("passCheck DAOImpl sno = " + sno);
+        System.out.println("passCheck DAOImpl = " + password);
+        Map<String , Object> map = new HashMap<>();
+        map.put("sno", sno);
+        map.put("password", password);
+        System.out.println("passCheck DAOImpl map = " + map);
+        int result = this.sqlSession.selectOne(namespace + "isEqualsIdNPass", map);
+        System.out.println("passCheck DAOImpl result = " + result);
         return result;
     }
 }

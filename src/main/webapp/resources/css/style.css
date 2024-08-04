@@ -165,7 +165,7 @@
     border: 1px solid lightgrey !important;
     padding: 10px !important;
     background-color: #f9f9f9 !important;
-    height: 500px !important;
+    min-height: 500px !important;
 }
 /*.ck.ck-editor__editable_inline {*/
 

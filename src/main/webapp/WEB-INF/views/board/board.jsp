@@ -20,6 +20,8 @@
 <jsp:include page="../header.jsp" />
 <script>
     let msg = "${msg}";
+    let session = "${sessionScope.get("id")}"
+    console.log(session);
 </script>
 <div>
     <div class="board-container">

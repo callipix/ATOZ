@@ -15,4 +15,6 @@ public interface SuggestionService {
     public int delete(String password , int sno);
 
     public int getSuggestListCount();
+
+    public int passCheck(int sno , String password);
 }

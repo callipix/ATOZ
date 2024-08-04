@@ -5,6 +5,8 @@ import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.service.ErrorBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/errorBoard")
@@ -26,6 +30,16 @@ public class ErrorBoardController {
     @Autowired
     ErrorBoardController(ErrorBoardService errorBoardService){
         this.errorBoardService = errorBoardService;
+    }
+
+    @ResponseBody
+    @PostMapping("/isCheckWriter")
+    public ResponseEntity<String> isCheckWriter(String sessionId, Integer errBno){
+        int result = errorBoardService.isCheckWriter(sessionId, errBno);
+        if(result != 1){
+            return new ResponseEntity<>("notEqualsWriter", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("equalsWriter", HttpStatus.OK);
     }
 
     @GetMapping("/write")

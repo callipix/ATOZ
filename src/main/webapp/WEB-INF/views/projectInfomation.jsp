@@ -98,16 +98,16 @@
                 </div>
                 <ol class="my-3 text-dark">
                     <li>기본적인 CRUD 다시 한번 체크 및 재정리</li>
-                    <li>기존에 사용해보지 않았던 DB를 활용해보기(기존 : Oracle) → MySQL(*pick) & PostgreSQL</li>
-                    <li>페이징 처리 및 검색에 대해 다시 한번 복습</li>
-                    <li>테스트 툴을 최대한 활용해보기 → Junit , Postman</li>
-                    <li>Debugging을 활용하여 에러 해결하기</li>
-                    <li>DB 트랜잭션을 적용하여 오류시 데이터의 일관성 유지</li>
+                    <li>기존에 사용해보지 않았던 DB 사용해보기(기존 : Oracle) → MySQL(*) & PostgreSQL</li>
+                    <li>페이징 및 검색 다시 한번 복습</li>
+                    <li>테스트 툴 최대한 활용하기 → Junit , Postman</li>
+                    <li>Debugging 활용하여 에러 해결하기</li>
+                    <li>DB 트랜잭션 적용하여 오류시 데이터의 일관성 유지</li>
                     <li>AWS를 이용한 별도의 서버 구축 및 파일업로드 활용(EC2, S3)</li>
                     <li>특정 기능을 Rest API로 구현해보기</li>
-                    <li>key와 관련된 파일들을(api-key..) properties파일로 만들어서 관리하기</li>
-                    <li>Validation을 이용해서 서버에서 유효성 검증하기</li>
-                    <li>스프링 시큐리티를 사용하여 접근권한 설정하기 → 보안강화</li>
+                    <li>설정파일 properties로 관리하기</li>
+                    <li>Validation으로 서버에서 유효성 검증하기</li>
+                    <li>스프링 시큐리티 사용하여 접근권한 설정하기 → 보안강화</li>
                 </ol>
             </div>
 <%--            --%>

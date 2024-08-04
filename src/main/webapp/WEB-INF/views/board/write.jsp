@@ -163,7 +163,6 @@
                     "beforeImgAddress" : beforeImgAddressWrite,
                     "afterImgAddress" : afterImgAddressWrite
                 }
-                alert("imageAddress" + imageAddress);
                 $.ajax({
                     url: '/myApp/contentImgCheck',
                     type: 'post',

@@ -60,4 +60,10 @@ public class SuggestionServiceImpl implements SuggestionService{
         log.info("getSuggestListCount for serviceImpl{}" , result);
         return result;
     }
+
+    @Override
+    public int passCheck(int sno, String password) {
+        int result = suggestionDAO.passCheck(sno, password);
+        return result;
+    }
 }

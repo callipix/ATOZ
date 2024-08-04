@@ -134,8 +134,7 @@ public class BoardController {
         return "/board/board";
     }
     @GetMapping("/boardList")
-    public String getBoardList(Model m, SearchCondition sc){
-
+    public String getBoardList(Model m, SearchCondition sc, HttpServletRequest request){
         try {
             int totalCnt = this.boardService.getSearchResultCount(sc);
             m.addAttribute("totalCnt", totalCnt);

@@ -25,4 +25,6 @@ public interface ErrorBoardService {
     // 게시글 업데이트
     public int update(ErrorBoardDTO errorBoardDTO) throws Exception;
 
+    public int isCheckWriter(String writer, int errBno);
+
 }

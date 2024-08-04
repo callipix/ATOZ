@@ -65,13 +65,19 @@
         <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
             <h4 class="mb-0">Comments</h4>
             <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">${suggestCount}</span>
+            <h5 class="mb-0">코멘트 수정은 현재 미구현입니다. 건의사항 댓글목록 페이징 예정중이나 잠시 보류중</h5>
         </div>
 
         <div class="position-relative" id="suggestionList" name="suggestionList">
+                <c:if test="${empty suggestCount || suggestCount == null || suggestCount == 0}">
+                    <div style="text-align:center; margin: auto">
+                    건의사항이 없습니다..
+                    </div>
+                </c:if>
             <c:forEach var="suggestionDTO" items="${suggestionList}">
                 <div class="p-4 rounded-2 text-bg-light mb-3">
                     <div class="d-flex align-items-center gap-3">
-                        <input type="hidden" id="sno" name="sno" value="${suggestionDTO.sno}">
+                        <input type="hidden" class="sno" name="sno" value="${suggestionDTO.sno}">
                         <c:choose>
                             <c:when test="${empty value}">
                                 <img src="<c:url value='/bootstrap/assets/images/profile/user-3.jpg'/>" alt="xtreme-img" class="rounded-circle" width="33" height="33">
@@ -91,11 +97,11 @@
                             </c:choose>
                         </div>
                         <div class="mod-del-pass">
-                            <button class="btn btn-primary" id="deleteBtn" style="background-color: transparent; border: none; color:black;">삭제</button>
-                            <button class="btn btn-primary" id="modifyBtn" style="background-color: transparent; border: none; color:black;">수정</button>
+                            <button class="btn btn-primary" id="deleteBtn" style="background-color: transparent; border: none; color:black;" data-sno="${suggestionDTO.sno}">삭제</button>
+                            <button class="btn btn-primary" id="modifyBtn" style="background-color: transparent; border: none; color:black;" data-sno="${suggestionDTO.sno}">수정</button>
                             <div class="mb-3" name="modifyPass" id="modifyPass">
                                 <label for name="modifyCheckPassword">
-                                <input type="password" name="modifyCheckPassword" placeholder="비밀번호" style="width: 100px; margin-right: 0px">
+                                    <input type="password" name="modifyCheckPassword" placeholder="비밀번호" style="width: 100px; height: 40px; margin-right: 0px;">
                                 </label>
                             </div>
                         </div>
@@ -114,7 +120,7 @@
     const deleteBtn = document.querySelector('#deleteBtn');
     const modifyBtn = document.querySelector('#modifyBtn');
     const content = document.querySelector('#content');
-    const modifyCheckPassword = document.querySelector('#modifyCheckPassword');
+    const modifyCheckPassword = document.querySelector('input[name="modifyCheckPassword"]');
 
     let addZero = function(value=1){
         return value > 9 ? value : "0"+value;
@@ -159,23 +165,23 @@
                 "content" : inputContent
             }
             let str = '';
+            let ms = Date.now();
+            alert(dateToString);
             let contextPath = <%=application.getContextPath() + "/"%>
                 $.ajax({
                     url: "/myApp/suggestions",
                     method: 'post',
                     data: suggestDTO,
                     success: function (result) {
-                        str += '<div class="p-4 rounded-2 text-bg-light">';
+                        str += '<div class="p-4 rounded-2 text-bg-light mb-3">';
                         str += '    <div class="d-flex align-items-center gap-3">';
                         str += '        <img src="' + contextPath +'/bootstrap/assets/images/profile/user-3.jpg" alt="xtreme-img" class="rounded-circle" width="33" height="33">';
                         str += '        <h6 class="mb-0 fs-4">' + result.writer + '</h6>';
                         str += '        <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>';
+                        str +=  (dateToString(ms)).substring(11,16);
                         str += '    </div>';
                         str += '    <p class="my-3">' + result.content + '</p>';
                         str += '    <div class="d-flex align-items-center gap-2">';
-                        str += '        <a class="d-flex align-items-center justify-content-center text-bg-primary p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply">';
-                        str += '            <i class="ti ti-arrow-back-up"></i>';
-                        str += '        </a>';
                         str += '    </div>';
                         str += '</div>';
                         $("#suggestionList").prepend(str);
@@ -189,25 +195,38 @@
             }
 
         })
-        deleteBtn.addEventListener('click', function (e){
-            let inputPassword = modifyCheckPassword.value;
-            let sno = document.querySelector("#sno");
 
-            // if(e.target && e.target.tagName ===)
-
-            alert(sno.value);
-            alert(inputPassword);
-            if(confirm("삭제하시겠습니까?")) {
-            }
-            $.ajax({
-                url : 'suggestions/'+ sno + '?password='+ inputPassword,
-                method : 'delete',
-                success : function(result){
-                    alert(result);
+        document.querySelectorAll('#deleteBtn').forEach(function(button) {
+            // 1. deleteBtn을 가진 모든 요소를 선택
+            // 2. 선택된 모든 요소에 대해 반복문을 실행(forEach문)
+            button.addEventListener('click', function() {
+                // 3. 각 요소에 클릭이벤트를 추가
+                let password = modifyCheckPassword.value;
+                let sno = this.dataset.sno;
+                // 4. 클릭된 버튼 요소의 data-sno값을 가져옴
+                if(password === '' || password.trim() === ''){
+                    alert("패스워드를 입력하세요");
+                    return;
                 }
+                if(!confirm("삭제하시겠습니까?")) { return; }
 
-            })
-        })
+                $.ajax({
+                    url : '/myApp/suggestions/'+ sno + '?password='+ password,
+                    method : 'delete',
+                    success : function(result){
+                        if(result === 'passNotEqual'){
+                            alert("비밀번호가 일치하지 않습니다.");
+                            return;
+                        }
+                        if(result === 'DEL_OK'){
+                            alert("삭제되었습니다.");
+                            location.href = '/myApp/suggestions/';
+                        }
+                    }
+
+                })
+            });
+        });
     })
 </script>
 </body>

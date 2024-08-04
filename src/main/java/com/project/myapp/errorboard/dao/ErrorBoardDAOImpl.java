@@ -2,8 +2,6 @@ package com.project.myapp.errorboard.dao;
 
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.SearchCondition;
-import com.project.myapp.vo.ErrLogFileDto;
-import org.apache.http.impl.io.AbstractMessageParser;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -69,6 +67,16 @@ public class ErrorBoardDAOImpl implements ErrorBoardDAO{
     public int getSelectKey(){
         int result = sqlSession.selectOne(namespace + "getSelectKey");
         System.out.println("getSelectKey result = " + result);
+        return result;
+    }
+    @Override
+    public int isCheckWriter(String writer, int errBno){
+        System.out.println("dao writer = " + writer);
+        System.out.println("dao errBno = " + errBno);
+        Map<String, Object> map = new HashMap<>();
+        map.put("writer", writer);
+        map.put("errBno", errBno);
+        int result = sqlSession.selectOne(namespace + "isCheckWriter", map);
         return result;
     }
 }

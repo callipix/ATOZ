@@ -17,7 +17,9 @@ public class LoginDAOImpl implements LoginDAO {
     @Override
     public int loginCheck(Map<String, String> map){
         int result = 0;
+        System.out.println("map = " + map);
             result = sqlSession.selectOne(namespace+"loginCheck", map);
+        System.out.println("loginCheck result = " + result);
         return result;
     }
 }

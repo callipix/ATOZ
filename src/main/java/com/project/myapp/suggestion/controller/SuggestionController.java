@@ -1,5 +1,6 @@
 package com.project.myapp.suggestion.controller;
 
+import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SuggestionDTO;
 import com.project.myapp.suggestion.service.SuggestionService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,13 @@ public class SuggestionController {
         System.out.println("sno = " + sno);
         System.out.println("password = " + password);
         try {
-            int result = this.suggestionService.delete(password,sno);
+
+            int result = this.suggestionService.passCheck(sno , password);
+            System.out.println("passCheck result = " + result);
+            if(result != 1){
+                return new ResponseEntity<>("passNotEqual" , HttpStatus.OK);
+            }
+            result = this.suggestionService.delete(password,sno);
 
             if(result != 1){
                 throw new Exception("Delete failed");
@@ -89,11 +96,12 @@ public class SuggestionController {
             int suggestCount = this.suggestionService.getSuggestListCount();
             model.addAttribute("suggestionList" ,suggestionList);
             model.addAttribute("suggestCount" , suggestCount);
-            System.out.println("suggestionList = " + suggestionList);
-            System.out.println("suggestCount = " + suggestCount);
+
+            for(SuggestionDTO suggest : suggestionList){
+                System.out.println("suggest = " + suggest);
+            }
             Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
             model.addAttribute("startOfToday", startOfToday.toEpochMilli());
-
         } catch (Exception e){
             e.printStackTrace();
             model.addAttribute("msg" , "LIST_ERR");

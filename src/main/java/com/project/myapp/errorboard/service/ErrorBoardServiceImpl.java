@@ -95,4 +95,14 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
         return result;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int isCheckWriter(String writer, int errBno) {
+        System.out.println("service writer = " + writer);
+        System.out.println("service errBno = " + errBno);
+        int result = this.errorBoardDAO.isCheckWriter(writer, errBno);
+        System.out.println("service result = " + result);
+        return result;
+    }
+
 }
