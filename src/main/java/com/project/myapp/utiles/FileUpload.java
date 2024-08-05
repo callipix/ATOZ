@@ -34,7 +34,7 @@ public class FileUpload {
         return fileNoKey;
     }
     public int selectKey(){
-        int selectKey = this.sqlSession.selectOne(namespace + "selectKey");
+        int selectKey = this.sqlSession.selectOne(namespace + "getSelectKey");
         return selectKey;
     }
 }

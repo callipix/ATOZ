@@ -46,16 +46,22 @@
 
     <delete id="delete" parameterType="map">
         DELETE
-          FROM ERR_Log_BOARD
+          FROM ERR_LOG_BOARD
          WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
     </delete>
 
-    <select id="getDeleteList" parameterType="int" resultType="com.project.myapp.vo.ErrLogFileDto">
-        SELECT F.FILE_PATH
-          FROM ERR_LOG_BOARD E LEFT JOIN FILES F
-               ON E.WRITER = F.USER_ID
+    <select id="getDeleteList" parameterType="int" resultType="ErrNFilesDTO">
+        SELECT E.ERR_BNO as errBno, F.POST_NO as postNo , F.FILE_NO as fileNo , F.STORED_NAME as storedName , F.FILE_PATH as filePath
+        FROM ERR_LOG_BOARD E LEFT JOIN FILES F
+               ON E.CATEGORY_NO = F.CATEGORY_NO
+              AND E.ERR_BNO = F.POST_NO
          WHERE E.ERR_BNO = #{errBno}
     </select>
+
+<!--    <resultMap id="joinMap" type="ErrNFilesDTO">-->
+<!--        <association property="E" javaType="com.project.myapp.dto.ErrorBoardDTO"/>-->
+<!--        <association property="F" javaType="com.project.myapp.dto.FilesDTO"/>-->
+<!--    </resultMap>-->
 
     <select id="getErrorBoardByErrBno" parameterType="int" resultType="ErrorBoardDTO">
 <!-- 특정게시글 조회 -->

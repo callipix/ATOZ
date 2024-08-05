@@ -1,5 +1,6 @@
 package com.project.myapp.errorboard.dao;
 
+import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.vo.ErrLogFileDto;
@@ -32,4 +33,6 @@ public interface ErrorBoardDAO {
     public int getSelectKey();
 
     int isCheckWriter(String writer, int errBno);
+
+    List<ErrNFilesDTO> getDeleteList(int errBno);
 }

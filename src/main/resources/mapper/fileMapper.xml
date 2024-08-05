@@ -13,8 +13,8 @@
 
     <delete id="deleteFileInfoByStoredName" parameterType="string">
         DELETE
-          FROM files
-         WHERE stored_name = #{stored_name}
+          FROM FILES
+         WHERE FILE_PATH = #{file_path}
     </delete>
 
     <select id="getFileNoKey" parameterType="string" resultType="int">

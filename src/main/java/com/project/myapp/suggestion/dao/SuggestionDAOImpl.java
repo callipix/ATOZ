@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @Repository
 public class SuggestionDAOImpl implements SuggestionDAO {

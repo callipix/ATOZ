@@ -1,9 +1,12 @@
 package com.project.myapp.errorboard.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.dao.ErrorBoardDAO;
+import com.project.myapp.utiles.AwsConfig;
 import com.project.myapp.utiles.AwsS3FileUploadService;
 import com.project.myapp.utiles.FileUpload;
 import com.project.myapp.vo.ErrLogFileDto;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,15 +23,19 @@ import java.util.Map;
 @Service
 public class ErrorBoardServiceImpl implements ErrorBoardService {
 
-    ErrorBoardDAO errorBoardDAO;
     AwsS3FileUploadService awsS3FileUploadService;
+    AwsConfig awsConfig;
+    ErrorBoardDAO errorBoardDAO;
     FileUpload fileUpload;
+    AmazonS3 amazonS3;
 
     @Autowired
-    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload){
+    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload , AmazonS3 amazonS3,AwsConfig awsConfig ){
         this.errorBoardDAO = errorBoardDAO;
         this.awsS3FileUploadService = awsS3FileUploadService;
         this.fileUpload = fileUpload;
+        this.amazonS3 = amazonS3;
+        this.awsConfig = awsConfig;
     }
 
     @Override
@@ -78,11 +86,19 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     @Transactional(rollbackFor = Exception.class)
     public int delete(Integer errBno, String writer) throws Exception {
         System.out.println("errBno = " + errBno);
+        String awsURL = "https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/";
+        String bucketName = awsConfig.getBucketName();
         // 게시글 삭제
         int result = errorBoardDAO.delete(errBno, writer);
-        System.out.println("게시글만 삭제했을때 결과값, 1이 나와야함 = " + result);
+        System.out.println("게시글 삭제결과 1 나와야함 = " + result);
 
-        System.out.println("이미지 주소 삭제 결과 이미지 개수만큼 나와야함 = " + result);
+        // 해당 게시물에 등록됐던 파일 정보(storedName)를 가져온다(파일테이블)
+        List<ErrNFilesDTO> deleteList = this.errorBoardDAO.getDeleteList(errBno);
+        System.out.println("deleteList = " + deleteList);
+        for(ErrNFilesDTO deleteKey : deleteList){
+            System.out.println("deleteKey = " + deleteKey);
+        }
+        System.out.println("최종삭제 결과 게시글 1 + 이미지 삭제 개수만큼 여기서는 4 나와야함 = " + result);
         return result;
     }
 

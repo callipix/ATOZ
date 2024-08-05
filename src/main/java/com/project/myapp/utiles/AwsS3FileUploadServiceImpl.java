@@ -121,7 +121,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
                 System.out.println("파일삭제 성공시 = " + result);
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new IOException("파일정보 저장 오류");
+                throw new IOException("파일정보 삭제 오류");
             }
         }
         return result;

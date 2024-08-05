@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<title>에러게시판 게시글수정</title>
 <body>
 <jsp:include page="../header.jsp" />
 <script>

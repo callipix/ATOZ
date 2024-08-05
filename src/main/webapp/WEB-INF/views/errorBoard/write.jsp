@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
+<title>에러게시판 게시글쓰기</title>
 <body>
 <jsp:include page="../header.jsp" />
 <link rel="stylesheet" href="<c:url value='/mycustom/buttons.css'/>">

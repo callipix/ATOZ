@@ -7,7 +7,7 @@
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
 <!-- Core Css -->
-<title>error 페이지 리스트</title>
+<title>에러게시판 게시글조회</title>
 <link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />

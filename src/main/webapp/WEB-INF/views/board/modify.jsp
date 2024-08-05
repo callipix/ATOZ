@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.2/translations/ko.js"></script>
+    <title>자유게시판 게시글수정</title>
 </head>
 <body>
 <jsp:include page="../header.jsp" />

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <title>자유게시판 게시글리스트</title>
 </head>
 <style>
     .text-white {

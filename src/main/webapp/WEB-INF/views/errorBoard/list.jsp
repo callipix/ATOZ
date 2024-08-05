@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="true"%>
 <!-- Core Css -->
-<title>error 페이지 리스트</title>
+<title>에러게시판 게시글 리스트</title>
 <link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
 <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
 <link rel="stylesheet" href="<c:url value='/css/board.css'/>">
@@ -85,23 +85,22 @@
                             <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mollie Underwood">
                                 <img src="<c:url value='/bootstrap/assets/images/profile/user-4.jpg'/>" alt="xtreme-img" class="rounded-circle img-fluid" width="40" height="40">
                             </div>
-                            <span class="badge text-bg-primary fs-2 fw-semibold">Gadget</span>
+                            <span class="badge text-bg-primary fs-2 fw-semibold">나중에 카테고리 세분화 되면</span>
                         </div>
                         <div>
-                            <a href="<c:url value='/errorBoard/read?errBno=${errorBoardDTO.errBno}'/>" class="fs-7 my-4 fw-semibold text-white d-block lh-sm text-primary">Early Black Friday
-                                Amazon deals: cheap TVs, headphones, laptops</a>
+                            <a href="<c:url value='/errorBoard/read?errBno=${errorBoardDTO.errBno}'/>" class="fs-7 my-4 fw-semibold text-white d-block lh-sm text-primary">여긴 일주일동안 조회수 상위였던 게시물 추가 예정</a>
                             <div class="d-flex align-items-center gap-4">
                                 <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                                     <i class="ti ti-eye fs-5"></i>
-                                    6006
+                                    조회수 들어갈곳
                                 </div>
                                 <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                                     <i class="ti ti-message-2 fs-5"></i>
-                                    3
+                                    댓글수 들어갈곳
                                 </div>
                                 <div class="d-flex align-items-center gap-1 text-white fw-normal ms-auto">
                                     <i class="ti ti-point"></i>
-                                    <small>Fri, Jan 13</small>
+                                    <small>작성 날짜 들어갈곳 (형식 :ex)Fri, Jan 13)</small>
                                 </div>
                             </div>
                         </div>
@@ -117,23 +116,22 @@
                             <div class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Francisco Quinn">
                                 <img src="<c:url value='/bootstrap/assets/images/profile/user-5.jpg'/>" alt="xtreme-img" class="rounded-circle img-fluid" width="40" height="40">
                             </div>
-                            <span class="badge text-bg-primary fs-2 fw-semibold">Health</span>
+                            <span class="badge text-bg-primary fs-2 fw-semibold">나중에 카테고리 세분화 되면</span>
                         </div>
                         <div>
-                            <a href="../main/blog-detail.html" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">Presented by Max
-                                Rushden with Barry Glendenning, Philippe Auclair</a>
+                            <a href="../main/blog-detail.html" class="fs-7 my-4 fw-semibold text-white d-block lh-sm">여긴 일주일동안 추천수 상위였던 게시물 추가 예정</a>
                             <div class="d-flex align-items-center gap-4">
                                 <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                                     <i class="ti ti-eye fs-5"></i>
-                                    713
+                                    조회수
                                 </div>
                                 <div class="d-flex align-items-center gap-2 text-white fs-3 fw-normal">
                                     <i class="ti ti-message-2 fs-5"></i>
-                                    3
+                                    추천수
                                 </div>
                                 <div class="d-flex align-items-center gap-1 text-white fw-normal ms-auto">
                                     <i class="ti ti-point"></i>
-                                    <small>Wed, Jan 18</small>
+                                    <small>작성날짜</small>
                                 </div>
                             </div>
                         </div>
@@ -148,8 +146,7 @@
                 <div class="position-relative">
 
                         <img src="<c:url value='/bootstrap/assets/images/blog/blog-img6.jpg'/>" class="card-img-top" alt="xtreme-img">
-                    <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
-                    min Read</span>
+                    <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">추가예정</span>
                     <img src="<c:url value='/bootstrap/assets/images/profile/user-3.jpg'/>" alt="xtreme-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Addie Keller">
                 </div>
                 <div class="card-body p-4">

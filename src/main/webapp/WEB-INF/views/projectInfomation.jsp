@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <title>Title</title>
+    <title>프로젝트 개요</title>
     <head>
         <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
         <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
@@ -52,6 +52,7 @@
                 <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 20px; background-color: transparent !important; color: white !important; font-weight: bold">2024.07.31 14:21 최초등록</span>
                 <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 40px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.01 17:40 업데이트</span>
                 <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 60px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.02 18:02 업데이트</span>
+                <span class="badge text-bg-light mb-9 me-9 position-absolute" style="right: 10px; bottom: 80px; background-color: transparent !important; color: white !important; font-weight: bold">2024.08.04 23:07 업데이트</span>
             </div>
 
         <%--            <span class="badge text-bg-light mb-9 me-9 position-absolute bottom-0 end-0">2024.07.31 14:21 최초등록</span>--%>
@@ -94,7 +95,7 @@
                 </div>
                 <br>
                 <div style="display: flex; align-items: center">
-                    <h3 class="fw-semibold">이번 미니프로젝트 목표 → <h4 class="fw-semibold">&nbsp;2024.08.03 기준 1-9 달성</h4></h3>
+                    <h3 class="fw-semibold">이번 미니프로젝트 목표 → <h4 class="fw-semibold">&nbsp;2024.08.04 기준 1-9 달성</h4></h3>
                 </div>
                 <ol class="my-3 text-dark">
                     <li>기본적인 CRUD 다시 한번 체크 및 재정리</li>

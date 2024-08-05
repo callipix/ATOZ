@@ -30,23 +30,12 @@
     </div>
     <div class="updateList">
         <div class="accordion-main">
-            <button class="accordion"><b>2024.07.17</b></button>
-            <div class="panel">
-                <h5>전체 프로젝트 설정 후 생성</h5>
-                <h5>pom 파일 라이브러리 추가</h5>
-                <h5>회원가입기능 쿼리문 뽑아보기</h5>
-                <h5>회원가입기능 백단 메서드 작성</h5>
-                <h5>회원가입기능 메서드 테스트코드 작성 - Junit4</h5>
-            </div>
-        </div>
-
-        <div class="accordion-main">
             <button class="accordion"><b>2024.07.18</b></button>
             <div class="panel">
-                <h5>가입시 문자인증(coolSMS) 추가 - 테스트 성공</h5>
-                <h5>api-key, api-secret을 properties 파일로 별도분리하여 읽어오도록 설정</h5>
-                <h5>MySQL 스프링 연동</h5>
-                <h5>가입기능 테스트</h5>
+                <h5>전체 프로젝트 생성 후 설정(pom파일 라이브러리 추가)</h5>
+                <h5>회원가입기능 쿼리문, 비즈니스로직, 테스트코드 작성(Junit4)</h5>
+                <h5>가입시 문자인증(coolSMS) 추가 & 테스트까지 완료</h5>
+                <h5>MySQL 스프링 연동 및 가입기능 테스트</h5>
                 <h5>트랜잭션 설정 후 간단한 데이터 추가 작동 테스트 - 확인 완료</h5>
             </div>
         </div>
@@ -79,7 +68,7 @@
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/a11e98d1d2ba70ebba33647ff30189417e024341"><h5>백엔드 - 문자인증 라이브러리 및 apiKey파일 properties로 생성 및 관리, 로그인 및 회원가입 로직 설계 및 작성</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/a11e98d1d2ba70ebba33647ff30189417e024341"><h5>문자인증 라이브러리 추가 및 apikey : properties로 생성 & 관리, 로그인 & 회원가입 비즈니스로직 작성</h5></a>
                 </div>
             </div>
         </div>
@@ -88,11 +77,9 @@
             <button class="accordion"><b>2024.07.21</b></button>
             <div class="panel">
                 <h5>로그인 기능 일부 수정 및 게시판 추가</h5>
-                <h5>게시판 기본 CRUD 쿼리문 작성</h5>
-                <h5>게시판 Mapper 파일 작성</h5>
-                <h5>게시판 리스트 불러오기 테스트코드 작성</h5>
-                <h5>게시판 페이징 쿼리문 boardMapper에 추가</h5>
-                <h5>게시판 리스트 페이징 테스트</h5>
+                <h5>게시판 기본 CRUD 쿼리문 & Mapper 작성</h5>
+                <h5>게시글 리스트 테스트코드 작성</h5>
+                <h5>게시글 리스트 페이징 추가 및 테스트</h5>
                 <h5>인텔리제이 깃 연동중에 실수로 날려먹어서 재작성</h5>
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
@@ -112,7 +99,7 @@
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/4d2baae2ee3d9003f5b51d06d8d36d67198e5498"><h5>백엔드 - 게시판 글쓰기, 조회, 페이징</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/4d2baae2ee3d9003f5b51d06d8d36d67198e5498"><h5>게시판 글쓰기, 조회, 페이징</h5></a>
                     &nbsp;&nbsp;
                     <a href="https://github.com/callipix/myApp/commit/1919cc23171d03cba51826862a99e4ae34dfa09d"><h5>게시판 검색, 페이징</h5></a>
                 </div>
@@ -143,7 +130,7 @@
                 <h5>댓글 백단 로직 설계 - Rest API 이용</h5>
                 <h5>댓글 백단 테스트코드 작성 후 테스트 → 테스트코드 & Postman 모두 이상없이 작동 확인, 트랜잭션까지 테스트 완료</h5>
                 <h5>댓글 프론트단 UI 설계</h5>
-                <h5>댓글 프론트-백 연동 테스트 → 답글기능 일부 오류발생, 댓글만 등록, 삭제완료 </h5>
+                <h5>댓글 프론트 - 백 연동 테스트 → 답글기능 일부 오류발생, 댓글만 등록, 삭제완료 </h5>
                 <h5>댓글 프론트 - 백 연동 → 수정기능 진행중, 답글(대댓글) 우선 보류</h5>
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
@@ -226,7 +213,7 @@
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/4157a63f39f76f7f6b0cf9b6967249fe700d0165"><h5>에러코드게시판 테스트</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/4157a63f39f76f7f6b0cf9b6967249fe700d0165"><h5>에러코드 게시판 테스트</h5></a>
                     &nbsp;&nbsp;
                     <a href="https://github.com/callipix/myApp/commit/792377eb6af20b1d2c3dff19503d15f7f240bcbf"><h5>에러코드 게시판 페이징 및 검색기능 일부 추가</h5></a>
                     &nbsp;&nbsp;
@@ -246,7 +233,7 @@
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/249080f925204775c8e102ff8665a5660bb0b73d"><h5>백엔드 에러게시판 DTO 생성 및 기능 구현</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/249080f925204775c8e102ff8665a5660bb0b73d"><h5>에러게시판 DTO 생성 및 기능 구현</h5></a>
                 </div>
             </div>
         </div>
@@ -268,11 +255,42 @@
             <div class="panel">
                 <h5>게시물 삭제시 AWS에서 반영 안되는 문제 → 일부 해결(DB테이블 수정, 일부 파일업로드 로직 수정, DB 쿼리문 변경..)</h5>
                 <h5>현재까지 내역들 AWS로 테스트 예정</h5>
-                <h5>파일업로드 가지고만 만 3일을 낑낑댔다..ㅜㅜ</h5>
+                <h5>파일업로드 가지고만 만 3일을 해먹었다..!</h5>
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/1a3b1cd6c10219036314253fba669f7c4e2e30c2"><h5>404에러페이지 추가 및 일부 css 수정, AWS에 올려서 테스트 중</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/0533708d06f7dcbab0d74357414e63efa6f8a1f0"><h5>게시글 작성중 이미지 변경시 DB 반영안되던 문제 일부 해결</h5></a>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.08.03</b></button>
+            <div class="panel">
+                <h5>건의게시판 테이블 추가 및 등록,삭제,수정 기능 추가 및 AWS 서버 테스트</h5>
+                <h5>→ 비즈니스로직 설계 및 DAO & Mapper 작성</h5>
+                <h5>→ 컨트롤러 추가중, UI : 08.04 추가 예정</h5>
+                <h5>게시글 작성시 AWS 업로드 일부 오류 수정 + lombok dependency 추가(v1.18.30)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/4cc5603a88a2390985bec74c1de181bedeb89115"><h5>(1)건의사항  CRUD 비즈니스로직 작성중</h5></a>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/0352cac49f1a4f563c246cbb418e6d1b23988695"><h5>(2)건의사항  CRUD 비즈니스로직 작성 진행중(UI 일부 추가)</h5></a>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.08.04</b></button>
+            <div class="panel">
+                <h5>건의사항 기능 구현 → Rest API</h5>
+                <h5>건의사항 댓글목록 페이징 처리 예정 및 일부 CSS 수정</h5>
+                <h5>집에서 VirtualBox로 리눅스에서 서버 테스트하다가 하루날렸다!(DB 연동 및 외부접근시 포트포워딩 에러)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/91c262cd01492c83f45da3bc0c55d456813eedb1"><h5>건의사항 기능 추가(수정 미구현)</h5></a>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/e7519808f092a6cf93605d43e03ff37239b5cfd8"><h5>게시글 수정시 일부 문제점 발생, 변경</h5></a>
                 </div>
             </div>
         </div>

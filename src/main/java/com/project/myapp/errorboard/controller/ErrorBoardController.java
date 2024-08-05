@@ -105,9 +105,6 @@ public class ErrorBoardController {
     @PostMapping("/remove")
     public String remove(Integer errBno,SearchCondition sc , HttpSession session, RedirectAttributes ratts) {
         String writer = (String)session.getAttribute("id");
-        System.out.println("writer = " + writer);
-        System.out.println("errBno = " + errBno);
-        System.out.println("sc = " + sc);
         String msg = "DEL_OK";
         int result = 0;
         try {

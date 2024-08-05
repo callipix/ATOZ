@@ -15,7 +15,7 @@
   <!-- Core Css -->
   <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
 
-  <title>Xtreme Bootstrap Admin</title>
+  <title>404 Error Page</title>
 </head>
 
 <body>
@@ -32,6 +32,7 @@
               <img src="<c:url value='/bootstrap/assets/images/backgrounds/errorimg.svg'/>" alt="xtreme-img" class="img-fluid mb-3" width="500" />
               <h1 class="fw-semibold mb-7 fs-9"></h1>
               <h4 class="fw-semibold mb-7">뭔가 문제가 있을때 나오는 창</h4>
+              <h4 class="fw-semibold mb-7">아직 구현되지 않았을 가능성이 큽니다.</h4>
               <a class="btn btn-primary" href="<c:url value='/'/>" role="button" style="font-weight: bold">일단 집으로</a>
             </div>
           </div>

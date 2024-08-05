@@ -6,7 +6,7 @@
 <c:set var="loginOutLink" value="${empty loginId ? '/login/loginForm' : '/login/logout'}"/>
 <c:set var="loginOut" value="${empty loginId ? 'Login' : loginId +='님이 접속하였습니다.'}"/><html>
 <head>
-    <title>홈페이지</title>
+    <title>미니프로젝트</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>

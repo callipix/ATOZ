@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>건의사항</title>
     <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />
@@ -97,11 +97,11 @@
                             </c:choose>
                         </div>
                         <div class="mod-del-pass">
-                            <button class="btn btn-primary" id="deleteBtn" style="background-color: transparent; border: none; color:black;" data-sno="${suggestionDTO.sno}">삭제</button>
+                            <button class="btn btn-primary" name="deleteBtn" id="deleteBtn" style="background-color: transparent; border: none; color:black;" data-sno="${suggestionDTO.sno}">삭제</button>
                             <button class="btn btn-primary" id="modifyBtn" style="background-color: transparent; border: none; color:black;" data-sno="${suggestionDTO.sno}">수정</button>
                             <div class="mb-3" name="modifyPass" id="modifyPass">
                                 <label for name="modifyCheckPassword">
-                                    <input type="password" name="modifyCheckPassword" placeholder="비밀번호" style="width: 100px; height: 40px; margin-right: 0px;">
+                                    <input type="password" id="modifyCheckPassword" class="modifyCheckPassword" name="modifyCheckPassword" placeholder="비밀번호" style="width: 100px; height: 40px; margin-right: 0px;">
                                 </label>
                             </div>
                         </div>
@@ -120,7 +120,9 @@
     const deleteBtn = document.querySelector('#deleteBtn');
     const modifyBtn = document.querySelector('#modifyBtn');
     const content = document.querySelector('#content');
-    const modifyCheckPassword = document.querySelector('input[name="modifyCheckPassword"]');
+    // const modifyCheckPassword = document.querySelector('#modifyCheckPassword');
+
+    const modifyCheckPass = document.querySelectorAll('button[name="deleteBtn"]');
 
     let addZero = function(value=1){
         return value > 9 ? value : "0"+value;
@@ -166,7 +168,6 @@
             }
             let str = '';
             let ms = Date.now();
-            alert(dateToString);
             let contextPath = <%=application.getContextPath() + "/"%>
                 $.ajax({
                     url: "/myApp/suggestions",
@@ -195,12 +196,15 @@
             }
 
         })
+    })
 
-        document.querySelectorAll('#deleteBtn').forEach(function(button) {
+    modifyCheckPass.forEach(function(button) {
             // 1. deleteBtn을 가진 모든 요소를 선택
             // 2. 선택된 모든 요소에 대해 반복문을 실행(forEach문)
             button.addEventListener('click', function() {
                 // 3. 각 요소에 클릭이벤트를 추가
+                const parentDiv = button.closest('.mod-del-pass');
+                const modifyCheckPassword = parentDiv.querySelector('input[name="modifyCheckPassword"]');
                 let password = modifyCheckPassword.value;
                 let sno = this.dataset.sno;
                 // 4. 클릭된 버튼 요소의 data-sno값을 가져옴
@@ -227,7 +231,6 @@
                 })
             });
         });
-    })
 </script>
 </body>
 </html>

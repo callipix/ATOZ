@@ -1,6 +1,7 @@
 package com.project.myapp.dto;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 public class FilesDTO {
@@ -13,7 +14,7 @@ public class FilesDTO {
     private String file_type;                   // 파일의 타입(여기선 이미지 파일 종류)
     private long file_size;                      // 파일사이즈
     private String file_path;                   // 파일 경로
-    private Timestamp uploaded_at;                // 업로드 날짜
+    private Date uploaded_at;                // 업로드 날짜
     private String id;                          // 업로드 id
     private String associated_object_id;
 
@@ -108,11 +109,11 @@ public class FilesDTO {
         this.file_path = file_path;
     }
 
-    public Timestamp getUploaded_at() {
+    public Date getUploaded_at() {
         return uploaded_at;
     }
 
-    public void setUploaded_at(Timestamp uploaded_at) {
+    public void setUploaded_at(Date uploaded_at) {
         this.uploaded_at = uploaded_at;
     }
 

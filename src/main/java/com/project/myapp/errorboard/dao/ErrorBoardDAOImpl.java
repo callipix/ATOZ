@@ -1,5 +1,6 @@
 package com.project.myapp.errorboard.dao;
 
+import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
@@ -78,5 +79,13 @@ public class ErrorBoardDAOImpl implements ErrorBoardDAO{
         map.put("errBno", errBno);
         int result = sqlSession.selectOne(namespace + "isCheckWriter", map);
         return result;
+    }
+
+    @Override
+    public List<ErrNFilesDTO> getDeleteList(int errBno){
+        System.out.println("DAO errBno = " + errBno);
+        List<ErrNFilesDTO> deleteList = sqlSession.selectList(namespace + "getDeleteList", errBno);
+        System.out.println("DAO deleteList = " + deleteList);
+        return deleteList;
     }
 }
