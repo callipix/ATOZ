@@ -8,7 +8,8 @@ import org.springframework.validation.Validator;
 public class GlobalValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+
+        return UserDTO.class.isAssignableFrom(clazz);
     }
 
     @Override

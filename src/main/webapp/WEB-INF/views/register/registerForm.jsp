@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
@@ -15,14 +17,16 @@
 <body>
 <br>
 <div id="formDiv" class="formDiv">
-    <form id="signUpForm" method="post" action="<c:url value='/register/'/>">
+        <!-- 폼 필드들 -->
+        <!-- 폼 필드들 -->
+    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">
+<%--    <form id="signUpForm" method="post" action="<c:url value='/register/'/>">--%>
         <div class="container">
             <h1>회원가입</h1>
             <p>아래에 있는 정보를 입력해주세요.</p>
             <hr>
-
+            <div id="msg" class="msg"><form:errors path="id" /></div>
             <div>
-
                 <div class="idForm" style="display: flex">
                     <div>
                         <label for="id"><b>아이디  <span>* 필수입력사항입니다.</span></b></label>
@@ -31,7 +35,8 @@
                         <button id="idCheck" type="button" class="button">중복체크</button>
                     </div>
                 </div>
-                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
+                <form:input path="id" placeholder="아이디를 입력하세요" id="id" cssClass="form-control" />
+<%--                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">--%>
             </div>
             <br>
             <div>
@@ -75,7 +80,8 @@
         <div class="container signin">
             <p>이미 가입된 계정인가요? <a href="#"><b>login</b></a></p>
         </div>
-    </form>
+<%--    </form>--%>
+    </form:form>
 </div>
 <script type="text/javascript">
 
@@ -110,7 +116,7 @@
         event.preventDefault();
 
         if(!isExistsChkId){
-        event.preventDefault();
+            event.preventDefault();
             alert("아이디 중복체크를 확인하세요.");
             return;
         }
@@ -139,7 +145,7 @@
     idCheckBtn.addEventListener('click', function(){
         let id = inputId.value;
         if(!regId.test(id)){
-            alert("아이디는 대소문자 관계없이 숫자를 포함한 8자까지 가능합니다.");
+            alert("아이디는 대소문자 관계없이 숫자를 포함한 8~12자리까지 가능합니다.");
             return;
         }
         $.ajax({
@@ -199,10 +205,10 @@
                 inputPhoneNo.focus();
             }
         })
-    // });
+        // });
     }
     function phoneNoCertify(){
-    // certifyCheckBtn.addEventListener('click', function(){
+        // certifyCheckBtn.addEventListener('click', function(){
         let inputNo = inputCertiNo.value;
 
         console.log("inputNo = " + inputNo)
@@ -215,7 +221,7 @@
         alert("인증번호가 일치합니다.");
         console.log("test = " + isExistsChkId)
         inputCertiNo.focus();
-    // });
+        // });
     }
 </script>
 </body>
