@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface SuggestionDAO {
 
-    public List<SuggestionDTO> getSuggestList();
+    public List<SuggestionDTO> getSuggestList(Map map);
 
     public int insert(SuggestionDTO suggestionDTO);
 

@@ -1,5 +1,6 @@
 package com.project.myapp.errorboard.dao;
 
+import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
@@ -15,11 +18,16 @@ public class ErrorBoardDAOImplTest {
 
     @Autowired
     private ErrorBoardDAO errorBoardDAO;
-
-    private static final String namespace = "com.project.myapp.errorboard.dao.ErrorBoardMapper.";
-
     @Autowired
     private SqlSession sqlSession;
+    private static final String namespace = "com.project.myapp.errorboard.dao.ErrorBoardMapper.";
+
+    @Test
+    public void delete(){
+        int errBno = 112;
+        List<ErrNFilesDTO> deleteList = sqlSession.selectList(namespace + "getDeleteList", errBno);
+        System.out.println("deleteList = " + deleteList);
+    }
 
     @Test
     public void insertErrorBoardMapper() {

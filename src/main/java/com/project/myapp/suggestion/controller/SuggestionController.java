@@ -1,6 +1,7 @@
 package com.project.myapp.suggestion.controller;
 
 import com.project.myapp.dto.PageHandler;
+import com.project.myapp.dto.PageHandler2;
 import com.project.myapp.dto.SuggestionDTO;
 import com.project.myapp.suggestion.service.SuggestionService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 //@RestController
@@ -90,16 +93,27 @@ public class SuggestionController {
 
     }
     @GetMapping("/suggestions")
-    public String getSuggestList(Model model){
-        try {
-            List<SuggestionDTO> suggestionList = this.suggestionService.getSuggestList();
-            int suggestCount = this.suggestionService.getSuggestListCount();
-            model.addAttribute("suggestionList" ,suggestionList);
-            model.addAttribute("suggestCount" , suggestCount);
+    public String getSuggestList(Integer page , Integer pageSize,Model model){
 
-            for(SuggestionDTO suggest : suggestionList){
-                System.out.println("suggest = " + suggest);
-            }
+        if(page == null){ page = 1;}
+        if(pageSize == null){ pageSize = 4;}
+
+        try {
+            int suggestCount = this.suggestionService.getSuggestListCount();
+            PageHandler2 pageHandler = new PageHandler2(suggestCount, page , pageSize);
+
+            Map map = new HashMap();
+            map.put("offset" , (page-1) * pageSize);
+            map.put("pageSize" , pageSize);
+
+            List<SuggestionDTO> suggestionList = this.suggestionService.getSuggestList(map);
+
+            model.addAttribute("suggestionList" , suggestionList);
+            model.addAttribute("suggestCount" , suggestCount);
+            model.addAttribute("ph" ,pageHandler);
+            model.addAttribute("page" , page);
+            model.addAttribute("pageSize" , pageSize);
+
             Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
             model.addAttribute("startOfToday", startOfToday.toEpochMilli());
         } catch (Exception e){

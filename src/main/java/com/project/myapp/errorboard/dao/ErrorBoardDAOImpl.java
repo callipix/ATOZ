@@ -2,6 +2,7 @@ package com.project.myapp.errorboard.dao;
 
 import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
+import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,20 +73,10 @@ public class ErrorBoardDAOImpl implements ErrorBoardDAO{
     }
     @Override
     public int isCheckWriter(String writer, int errBno){
-        System.out.println("dao writer = " + writer);
-        System.out.println("dao errBno = " + errBno);
         Map<String, Object> map = new HashMap<>();
         map.put("writer", writer);
         map.put("errBno", errBno);
         int result = sqlSession.selectOne(namespace + "isCheckWriter", map);
         return result;
-    }
-
-    @Override
-    public List<ErrNFilesDTO> getDeleteList(int errBno){
-        System.out.println("DAO errBno = " + errBno);
-        List<ErrNFilesDTO> deleteList = sqlSession.selectList(namespace + "getDeleteList", errBno);
-        System.out.println("DAO deleteList = " + deleteList);
-        return deleteList;
     }
 }

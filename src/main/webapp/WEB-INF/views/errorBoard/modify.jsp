@@ -58,10 +58,12 @@
             </div>
         </div>
         <input type="hidden" name="errBno" value="${errorBoardDTO.errBno}">
+
         <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post" enctype="multipart/form-data">
             <c:if test="${not empty errorBoardDTO.errBno}">
                 <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
             </c:if>
+            <input type="hidden" id="afterList" name="afterList">
             <div class="form-group">
                 <label for="title">
                     <input class="form-control" name="title" id="title" type="text" value="<c:out value='${errorBoardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
@@ -92,10 +94,10 @@
     </div>
 </div>
 <script>
-    let listBtn = document.querySelector('#listBtn');
+    const listBtn = document.querySelector('#listBtn');
 
     $(document).ready(function(){
-
+        let afterList = document.querySelector('#afterList');
         let formCheck = function() {
 
             let form = document.querySelector("#newForm");
@@ -136,11 +138,11 @@
 
             if(formCheck()){
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
-
                 let imageAddress = {
                     "beforeImgAddress" : beforeImgAddressWrite,
                     "afterImgAddress" : afterImgAddressWrite
                 }
+
                 $.ajax({
                     url: '/myApp/contentImgCheck',
                     type: 'post',
@@ -149,8 +151,9 @@
                     success: function (result) {
                         beforeImgAddressWrite = [];
                         if(result != 1) return;
-                    }
-                })
+                    },
+                });
+                afterList.value = afterImgAddressWrite;
                 form.submit();
             }
         })

@@ -61,7 +61,7 @@
         </div>
         <div class="card-body p-4">
             <span class="badge text-bg-light mt-3">Infomation</span>
-            <h2 class="fs-9 fw-semibold my-4">취업이 힘들어서 공부하면서 만들어본 미니 프로젝트</h2>
+            <h2 class="fs-9 fw-semibold my-4">일하고 싶은데.. 공부하면서 만들어본 미니 프로젝트</h2>
             <div class="d-flex align-items-center gap-4">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ti ti-eye text-dark fs-5"></i>여긴 조회수 들어갈 곳

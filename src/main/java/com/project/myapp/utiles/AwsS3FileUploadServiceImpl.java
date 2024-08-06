@@ -92,7 +92,6 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
         // DB에 파일 정보를 저장하는 메서드
         System.out.println("filesDTO = " + filesDTO);
         int result = this.fileUpload.uploadFile(filesDTO);
-        int key = this.errorBoardDAO.getSelectKey();
         return result;
     }
     @Override
@@ -122,6 +121,39 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new IOException("파일정보 삭제 오류");
+            }
+        }
+        return result;
+    }
+    @Override
+    @Transactional(rollbackFor = IOException.class)
+    public int deleteFileAwsS3(List<FilesDTO> filesDTOList) {
+        int result = 0;
+        List<String> fileAddList = new ArrayList<>();
+        for(FilesDTO fileList : filesDTOList){
+            fileAddList.add(fileList.getFile_path());
+        }
+
+        for (String imgURL : fileAddList) {
+            String decodeURL = "";
+
+            try {
+                decodeURL = URLDecoder.decode(imgURL, "UTF-8");
+                String awsURL = "https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/";
+                imgURL = decodeURL.substring(awsURL.length());
+
+                System.out.println("imgURL = " + imgURL);
+                amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
+
+                result += this.fileUpload.deleteFile(imgURL);
+                System.out.println("파일정보 삭제 결과 = " + result);
+
+                if (result == 0) {
+                    throw new IOException("DB 파일정보 삭제 오류");
+                }
+                System.out.println("파일삭제 성공시 = " + result);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return result;

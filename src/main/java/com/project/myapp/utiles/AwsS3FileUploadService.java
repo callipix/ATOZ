@@ -15,4 +15,5 @@ public interface AwsS3FileUploadService {
 
     int deleteImageFile(List<String> imgAddress, List<String> afterAddress) throws IOException;
 
+    int deleteFileAwsS3(List<FilesDTO> filesDTO) throws IOException;
 }

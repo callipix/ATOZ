@@ -146,7 +146,7 @@
                 <div class="position-relative">
 
                         <img src="<c:url value='/bootstrap/assets/images/blog/blog-img6.jpg'/>" class="card-img-top" alt="xtreme-img">
-                    <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">추가예정</span>
+                    <span class="badge text-bg-light fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">${errorBoardDTO.writer}</span>
                     <img src="<c:url value='/bootstrap/assets/images/profile/user-3.jpg'/>" alt="xtreme-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Addie Keller">
                 </div>
                 <div class="card-body p-4">

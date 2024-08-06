@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SuggestionService {
-    public List<SuggestionDTO> getSuggestList();
+    public List<SuggestionDTO> getSuggestList(Map map);
 
     public SuggestionDTO insert(SuggestionDTO suggestionDTO);
 

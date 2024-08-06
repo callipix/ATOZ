@@ -11,4 +11,11 @@
                          WHERE id = #{id} AND pwd = #{password}
         )
     </select>
+
+    <select id="boardUserInfo" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+        SELECT u.nickname
+          FROM err_log_board E LEFT OUTER JOIN user_info U
+            on e.writer = u.id
+         WHERE e.writer = #{writer}
+    </select>
 </mapper>

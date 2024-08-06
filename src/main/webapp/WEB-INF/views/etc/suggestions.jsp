@@ -1,6 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ page session="true"%>
 <html>
 <head>
     <title>건의사항</title>
@@ -110,6 +111,31 @@
                 </div>
             </c:forEach>
         </div>
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center mb-0 mt-4">
+                <c:if test="${suggestCount != null && suggestCount != 0}">
+                    <c:if test="${ph.showPrev}">
+                        <li class="page-item">
+                            <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/suggestions?page=${ph.beginPage - 1}' />">
+                                <i class="ti ti-chevron-left"></i>
+                            </a>
+                        </li
+                    </c:if>
+                    <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                        <li class="page-item ${i == ph.page ? 'active' : ''}">
+                            <a class="page-link border-0 rounded-circle text-dark round-32 mx-1 d-flex align-items-center justify-content-center ${i == ph.page ? 'text-white' : ''}" href="<c:url value='/suggestions?page=${i}' />">${i}</a>
+                        </li>
+                    </c:forEach>
+                    <c:if test="${ph.showNext}">
+                        <li class="page-item">
+                            <a class="page-link border-0 rounded-circle text-dark round-32 d-flex align-items-center justify-content-center" href="<c:url value='/suggestions?page=${ph.endPage + 1}' />">
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+                        </li>
+                    </c:if>
+                </c:if>
+            </ul>
+        </nav>
     </div>
 </div>
 <script>

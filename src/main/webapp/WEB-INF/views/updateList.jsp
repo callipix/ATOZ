@@ -294,6 +294,31 @@
                 </div>
             </div>
         </div>
+    <div class="accordion-main">
+            <button class="accordion"><b>2024.08.05</b></button>
+            <div class="panel">
+                <h5>게시글 삭제시 DB에서 삭제 안되던 문제 진행중..</h5>
+                <h5>게시글 업데이트시에도 DB에서 업데이트 안되던 문제 발생</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/77194b23c647ebca62490d5d4cf5103df97e7e0d"><h5>게시글 삭제시 해당 오류 진행중..</h5></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-main">
+            <button class="accordion"><b>2024.08.06</b></button>
+            <div class="panel">
+                <h5>게시글 삭제시 DB에서 삭제 안되던 문제 진행중..</h5>
+                <h5>게시글 업데이트시에도 DB에서 업데이트 안되던 문제 발생</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/77194b23c647ebca62490d5d4cf5103df97e7e0d"><h5>게시글 삭제시 해당 오류 진행중..</h5></a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="bottomHeader">
         <h1>업데이트 예정</h1>

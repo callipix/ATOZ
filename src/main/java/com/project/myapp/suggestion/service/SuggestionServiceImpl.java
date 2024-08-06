@@ -22,8 +22,8 @@ public class SuggestionServiceImpl implements SuggestionService{
     }
 
     @Override
-    public List<SuggestionDTO> getSuggestList() {
-        List<SuggestionDTO> suggestionDTOList = suggestionDAO.getSuggestList();
+    public List<SuggestionDTO> getSuggestList(Map map) {
+        List<SuggestionDTO> suggestionDTOList = suggestionDAO.getSuggestList(map);
         log.info("getSuggestList for serviceImpl");
         return suggestionDTOList;
     }

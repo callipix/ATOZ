@@ -46,7 +46,6 @@ public class ErrorBoardDTO {
         this.writer = writer;
         this.errBoardThum = errBoardThum;
     }
-
     public int getRownum() {
         return rownum;
     }

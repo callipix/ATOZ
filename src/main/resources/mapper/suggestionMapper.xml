@@ -54,4 +54,12 @@
            AND sno = #{sno}
            AND password = #{password}
     </update>
+
+    <select id="getSelectPage" parameterType="map" resultType="SuggestionDTO">
+        /** 게시물 페이징 */
+        SELECT ROW_NUMBER() OVER(ORDER BY sno) AS rownum, sno , content , writer , reg_date , up_date
+        FROM suggestion
+        ORDER BY reg_date DESC , sno DESC
+            LIMIT #{offset} , #{pageSize}
+    </select>
 </mapper>

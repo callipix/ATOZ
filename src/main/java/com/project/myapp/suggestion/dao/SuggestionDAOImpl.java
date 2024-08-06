@@ -17,9 +17,9 @@ public class SuggestionDAOImpl implements SuggestionDAO {
     private static final String namespace = "com.project.myapp.suggestion.dao.SuggestionMapper.";
 
     @Override
-    public List<SuggestionDTO> getSuggestList() {
+    public List<SuggestionDTO> getSuggestList(Map map) {
 
-        List<SuggestionDTO> suggestionList = this.sqlSession.selectList(namespace + "getSuggestList");
+        List<SuggestionDTO> suggestionList = this.sqlSession.selectList(namespace + "getSelectPage", map);
 
         return suggestionList;
     }

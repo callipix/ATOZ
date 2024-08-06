@@ -4,7 +4,7 @@
 
 <mapper namespace="com.project.myapp.utiles.FileMapper">
 
-    <insert id="insertFileInfo" parameterType="com.project.myapp.dto.FilesDTO">
+    <insert id="insertFileInfo" parameterType="com.project.myapp.dto.FilesDTO" useGeneratedKeys="true" keyProperty="file_no">
         INSERT INTO files
                     (original_name   ,  stored_name  , file_type    , file_size    , file_path    , uploaded_at , user_id)
         VALUES
@@ -14,7 +14,13 @@
     <delete id="deleteFileInfoByStoredName" parameterType="string">
         DELETE
           FROM FILES
-         WHERE FILE_PATH = #{file_path}
+         WHERE stored_name = #{stored_name}
+    </delete>
+
+    <delete id="deleteFileInfoByFileNo" parameterType="int">
+        DELETE
+          FROM FILES
+         WHERE FILE_NO = #{file_no}
     </delete>
 
     <select id="getFileNoKey" parameterType="string" resultType="int">
@@ -29,8 +35,45 @@
 
     <update id="updateFileInfo" parameterType="com.project.myapp.dto.FilesDTO">
         UPDATE FILES
-           SET  category_no = #{category_no}
-               ,post_no = #{post_no}
+           SET   category_no = #{category_no}
+               , post_no = #{post_no}
          WHERE FILE_NO = #{file_no}
     </update>
+
+    <select id="getDeleteList" parameterType="int" resultMap="joinMap">
+        SELECT E.ERR_BNO, F.CATEGORY_NO, F.POST_NO, F.FILE_NO, F.STORED_NAME, F.FILE_PATH
+        FROM FILES F LEFT JOIN ERR_LOG_BOARD E
+                                       ON E.CATEGORY_NO = F.CATEGORY_NO
+                                           AND E.ERR_BNO = F.POST_NO
+        WHERE E.ERR_BNO = #{errBno}
+    </select>
+    <resultMap type="com.project.myapp.dto.FilesDTO" id="joinMap" >
+        <result property="file_no" column="file_no" />
+        <result property="original_name" column="original_name" />
+        <result property="stored_name" column="stored_name" />
+        <result property="file_type" column="file_type" />
+        <result property="file_size" column="file_size" />
+        <result property="file_path" column="file_path" />
+        <result property="uploaded_at" column="uploaded_at" />
+        <result property="id" column="user_id" />
+        <result property="associated_object_id" column="associated_object_id" />
+        <result property="category_no" column="category_no" />
+        <result property="post_no" column="post_no" />
+        <collection property="errorBoardDTO" resultMap="errorBoardDTO" />
+    </resultMap>
+
+    <resultMap type="com.project.myapp.dto.ErrorBoardDTO" id="errorBoardDTO" >
+        <result property="errBno" column="ERR_BNO" />
+        <result property="errCode" column="ERR_CODE" />
+        <result property="title" column="TITLE" />
+        <result property="content" column="CONTENT" />
+        <result property="writer" column="WRITER" />
+        <result property="viewCnt" column="VIEW_CNT" />
+        <result property="commentCnt" column="COMMENT_CNT" />
+        <result property="regDate" column="REG_DATE" />
+        <result property="upDate" column="UP_DATE" />
+        <result property="categoryNo" column="CATEGORY_NO" />
+        <result property="errBoardThum" column="ERR_BOARD_THUM" />
+    </resultMap>
+
 </mapper>

@@ -1,9 +1,15 @@
 package com.project.myapp.errorboard.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.project.myapp.dto.ErrorBoardDTO;
+import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.service.ErrorBoardService;
+import com.project.myapp.utiles.AwsConfig;
+import com.project.myapp.utiles.AwsS3FileUploadService;
+import com.project.myapp.utiles.AwsS3FileUploadServiceImpl;
+import com.project.myapp.utiles.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,10 +33,16 @@ import java.util.Objects;
 public class ErrorBoardController {
 
     ErrorBoardService errorBoardService;
+    FileUpload fileUpload;
+    AwsConfig awsConfig;
+    AwsS3FileUploadService awsS3FileUploadService;
 
     @Autowired
-    ErrorBoardController(ErrorBoardService errorBoardService){
+    ErrorBoardController(ErrorBoardService errorBoardService, FileUpload fileUpload, AwsConfig awsConfig, AwsS3FileUploadService awsS3FileUploadService){
         this.errorBoardService = errorBoardService;
+        this.fileUpload = fileUpload;
+        this.awsConfig = awsConfig;
+        this.awsS3FileUploadService = awsS3FileUploadService;
     }
 
     @ResponseBody
@@ -81,16 +94,20 @@ public class ErrorBoardController {
         return "errorBoard/modify";
     }
     @PostMapping("/modify")
-    public  String modify(ErrorBoardDTO errorBoardDTO ,SearchCondition sc, RedirectAttributes ratts, Model model, HttpSession session){
-        System.out.println("errorBoardDTO = " + errorBoardDTO);
+    public  String modify(ErrorBoardDTO errorBoardDTO ,@RequestParam List<String> afterList,SearchCondition sc, RedirectAttributes ratts, Model model, HttpSession session){
         String writer = (String)session.getAttribute("id");
         errorBoardDTO.setWriter(writer);
+        List<FilesDTO> filesDTOList = this.fileUpload.getDeleteList(errorBoardDTO.getErrBno());
+        for(FilesDTO filesDTO : filesDTOList){
+            System.out.println("filesDTO = " + filesDTO);
+        }
         int result = 0;
         try {
-            result = this.errorBoardService.update(errorBoardDTO);
-            if(result != 1){
+            result = this.errorBoardService.update(errorBoardDTO , afterList);
+            if(result == 0){
                 throw new Exception("Modify Error");
             }
+
             ratts.addFlashAttribute("msg", "MOD_OK");
 //            return "redirect:/errorBoard/list" + sc.getQueryString();
             return "redirect:/errorBoard/read?errBno=" + errorBoardDTO.getErrBno();
@@ -103,15 +120,19 @@ public class ErrorBoardController {
     }
 
     @PostMapping("/remove")
-    public String remove(Integer errBno,SearchCondition sc , HttpSession session, RedirectAttributes ratts) {
+    public String remove(Integer errBno,SearchCondition sc , HttpSession session, RedirectAttributes ratts) throws Exception {
         String writer = (String)session.getAttribute("id");
         String msg = "DEL_OK";
+
         int result = 0;
+
+        List<FilesDTO> filesDTOList = this.fileUpload.getDeleteList(errBno);
         try {
             result = this.errorBoardService.delete(errBno , writer);
             if(result == 0){
                 throw new Exception("Delete failed");
             }
+            result += this.awsS3FileUploadService.deleteFileAwsS3(filesDTOList);
         } catch (Exception e) {
             e.printStackTrace();
             msg = "DEL_ERR";

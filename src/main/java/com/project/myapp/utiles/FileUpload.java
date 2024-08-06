@@ -21,6 +21,7 @@ public class FileUpload {
         return result;
     }
     public int deleteFile(String storedName) {
+        System.out.println("FileUpload.class storedName = " + storedName);
         int result = this.sqlSession.delete(namespace + "deleteFileInfoByStoredName" , storedName);
         return result;
     }
@@ -36,5 +37,11 @@ public class FileUpload {
     public int selectKey(){
         int selectKey = this.sqlSession.selectOne(namespace + "getSelectKey");
         return selectKey;
+    }
+
+    public List<FilesDTO> getDeleteList(int errBno) {
+        List<FilesDTO> deleteList = this.sqlSession.selectList(namespace + "getDeleteList", errBno);
+        return deleteList;
+
     }
 }

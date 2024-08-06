@@ -1,24 +1,33 @@
 package com.project.myapp.dto;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
 public class FilesDTO {
 
-    private int file_no;                        // 파일번호 -> DB에서 auto_increment
-    private int category_no;
-    private int post_no;
-    private String original_name;               // 파일의 오리지날명
-    private String stored_name;                 // UUID로 생성한 파일명
-    private String file_type;                   // 파일의 타입(여기선 이미지 파일 종류)
-    private long file_size;                      // 파일사이즈
-    private String file_path;                   // 파일 경로
-    private Date uploaded_at;                // 업로드 날짜
-    private String id;                          // 업로드 id
+    private int file_no;                 // 파일번호 -> DB에서 auto_increment
+    private String original_name;        // 파일의 오리지날명
+    private String stored_name;          // UUID로 생성한 파일명
+    private String file_type;            // 파일의 타입(여기선 이미지 파일 종류)
+    private long file_size;              // 파일사이즈
+    private String file_path;            // 파일 경로
+    private Date uploaded_at;            // 업로드 날짜
+    private String id;                   // 업로드 id
     private String associated_object_id;
+    private int category_no;             // 카테고리번호(pk)
+    private int post_no;                 // 게시글번호(pk)
 
-    public FilesDTO(){}
+    private ErrorBoardDTO errorBoardDTO;
+
+    public FilesDTO() { }
+
+    public FilesDTO(int file_no, String stored_name, String file_path, int category_no, int post_no) {
+        this.file_no = file_no;
+        this.stored_name = stored_name;
+        this.file_path = file_path;
+        this.category_no = category_no;
+        this.post_no = post_no;
+    }
 
     public FilesDTO(int file_no, int category_no, int post_no, String original_name, String stored_name, String file_type, long file_size, String file_path, String id) {
         this.file_no = file_no;
@@ -43,6 +52,14 @@ public class FilesDTO {
     @Override
     public int hashCode() {
         return Objects.hash(file_no, original_name, stored_name, file_type, file_size, file_path);
+    }
+
+    public ErrorBoardDTO getErrorBoardDTO() {
+        return errorBoardDTO;
+    }
+
+    public void setErrorBoardDTO(ErrorBoardDTO errorBoardDTO) {
+        this.errorBoardDTO = errorBoardDTO;
     }
 
     public int getPost_no() {

@@ -9,7 +9,7 @@
 
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
 <!--        <property name="url" value="jdbc:mysql://13.125.69.3:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />-->
-        <property name="url" value="jdbc:mysql://localhost:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />
+        <property name="url" value="jdbc:mysql://54.180.133.61:3306/springPractice?useUnicode=true&amp;characterEncoding=utf8" />
         <property name="username" value="callipix" />
         <property name="password" value="java" />
     </bean>
