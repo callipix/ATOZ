@@ -310,12 +310,11 @@
     <div class="accordion-main">
             <button class="accordion"><b>2024.08.06</b></button>
             <div class="panel">
-                <h5>게시글 삭제시 DB에서 삭제 안되던 문제 진행중..</h5>
-                <h5>게시글 업데이트시에도 DB에서 업데이트 안되던 문제 발생</h5>
+                <h5>게시글 삭제&수정시 DB/AWS 에서 반영 안되던 문제 일부 해결</h5>
                 <div style="align-items: center; display: flex">
                     <img src="<c:url value='/img/github.png'/>"/>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/callipix/myApp/commit/77194b23c647ebca62490d5d4cf5103df97e7e0d"><h5>게시글 삭제시 해당 오류 진행중..</h5></a>
+                    <a href="https://github.com/callipix/myApp/commit/881d565637e04b1508d2f5c18e88fe0e1bc16bf7"><h5>건의사항 페이징, 게시물 삭제/업데이트시 오류 일부 해결</h5></a>
                 </div>
             </div>
         </div>
