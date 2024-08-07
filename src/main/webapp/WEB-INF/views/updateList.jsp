@@ -306,7 +306,6 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="accordion-main">
             <button class="accordion"><b>2024.08.06</b></button>
             <div class="panel">
@@ -318,6 +317,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="bottomHeader">
         <h1>업데이트 예정</h1>

@@ -16,6 +16,7 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        System.out.println("target = " + target);
 
         UserDTO userDTO = (UserDTO) target;
 
@@ -24,42 +25,47 @@ public class UserValidator implements Validator {
         String email = userDTO.getEmail();
         String nickName = userDTO.getNickName();
 
+        String idPattern = "^[a-zA-Z0-9]$";
+        String passwordPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]$";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String nickNamePattern = "^(?=.*[가-힣])?(?=.*[a-zA-Z])?(?=.*\\d)?[가-힣a-zA-Z\\d]$";
+
+        Pattern pattern = Pattern.compile(idPattern , Pattern.CASE_INSENSITIVE);
+        Pattern pattern2 = Pattern.compile(passwordPattern , Pattern.CASE_INSENSITIVE);
+        Pattern pattern3 = Pattern.compile(emailPattern , Pattern.CASE_INSENSITIVE);
+        Pattern pattern4 = Pattern.compile(nickNamePattern , Pattern.CASE_INSENSITIVE);
+
+        Matcher matcherId = pattern.matcher(id);
+        Matcher matcherPassword = pattern2.matcher(password);
+        Matcher matcherEmail = pattern3.matcher(email);
+        Matcher matcherNickname = pattern4.matcher(nickName);
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"id", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickName", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email", "required");
 
-        if(id != null && id.isEmpty()){
-            String idPattern = "^[a-zA-Z0-9]{8,12}$";
-            Pattern pattern = Pattern.compile(idPattern , Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(id);
-            if(!matcher.matches()){
-                errors.rejectValue("id", "invalidId");
-            }
+        if(id.length() < 8 || id.length() > 12){
+            errors.rejectValue("id", "invalidLength", new String[]{"8" , "12"}, null);
         }
-        if(password != null && password.isEmpty()){
-            String passwordPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,20}$";
-            Pattern pattern = Pattern.compile(passwordPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(password);
-            if(!matcher.matches()){
-                errors.rejectValue("pwd", "invalidPassword");
-            }
+        if(password.length() < 8 || password.length() > 20){
+            errors.rejectValue("password", "invalidLength", new String[]{"8" , "20"}, null);
         }
-        if(email != null && email.isEmpty()){
-            String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-            Pattern pattern = Pattern.compile(emailPattern , Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if(!matcher.matches()){
-                errors.rejectValue("email", "invalidEmail");
-            }
+        if(nickName.length() < 3 || nickName.length() > 8) {
+            errors.rejectValue("nickName", "invalidLength", new String[]{"3" , "8"}, null);
         }
-        if(nickName != null && nickName.isEmpty()){
-            String nickNamePattern = "^(?=.*[가-힣])?(?=.*[a-zA-Z])?(?=.*\\d)?[가-힣a-zA-Z\\d]{3,8}$";
-            Pattern pattern = Pattern.compile(nickNamePattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(nickName);
-            if(!matcher.matches()){
-                errors.rejectValue("nickName", "invalidNickName");
-            }
+
+        if(!matcherId.matches()){
+            errors.rejectValue("id", "invalidId", null);
+        }
+        if(!matcherPassword.matches()){
+            errors.rejectValue("password", "invalidPassword" , null);
+        }
+        if(!matcherEmail.matches()){
+            errors.rejectValue("email", "invalidEmail", null);
+        }
+        if(!matcherNickname.matches()){
+            errors.rejectValue("nickName", "invalidNickName" , null);
         }
 
     }

@@ -8,6 +8,7 @@ import com.project.myapp.errorboard.dao.ErrorBoardDAO;
 import com.project.myapp.utiles.AwsConfig;
 import com.project.myapp.utiles.AwsS3FileUploadService;
 import com.project.myapp.utiles.FileUpload;
+import com.project.myapp.utiles.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     @Transactional(rollbackFor = Exception.class)
     public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception {
         // 게시글 등록
+        errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
 
         List<Integer> fileNoList = new ArrayList<>();
         for(String fileKeyList : afterList){
@@ -93,6 +95,8 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     @Transactional(rollbackFor = Exception.class)
     public int update(ErrorBoardDTO errorBoardDTO ,List<String> afterList) throws Exception {
         // 게시글 업데이트
+        errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
+
         int result = errorBoardDAO.update(errorBoardDTO);
 
         List<Integer> fileNoList = new ArrayList<>();

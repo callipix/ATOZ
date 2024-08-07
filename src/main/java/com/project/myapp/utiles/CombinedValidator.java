@@ -1,7 +1,5 @@
 package com.project.myapp.utiles;
 
-
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

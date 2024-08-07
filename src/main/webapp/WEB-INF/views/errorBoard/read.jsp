@@ -96,9 +96,8 @@
 </body>
 <script>
     let listBtn = document.querySelector('#listBtn');
-    let errBno = "${errorBoardDTO.errBno}";
+    let data = `${errorBoardDTO.content}`;
     $(document).ready(function(){
-        let data = `${errorBoardDTO.content}`;
 
         $("#contentDisplay").html(data);
         $("#contentDisplay").children().children().css('max-width','100%');

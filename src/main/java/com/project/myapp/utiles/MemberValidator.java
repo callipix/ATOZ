@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 public class MemberValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-
         return MemberDTO.class.isAssignableFrom(clazz);
     }
 
