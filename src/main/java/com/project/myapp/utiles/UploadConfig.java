@@ -68,7 +68,7 @@ public class UploadConfig {
             System.out.println("afterImgAddress = " + afterImgAddress);
         }
         if(!imageAddress.isEmpty()){
-            // 이미지 업로드 여부 -> 업로드 존재시
+            // 이미지 업로드 여부 → 업로드 존재시
             List<String> endImgList = new ArrayList<>(beforeAddress);
             endImgList.removeAll(afterAddress);
             result = this.awsS3FileUploadService.deleteImageFile(endImgList, afterAddress);

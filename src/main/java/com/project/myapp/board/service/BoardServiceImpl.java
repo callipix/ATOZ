@@ -3,6 +3,7 @@ package com.project.myapp.board.service;
 import com.project.myapp.board.dao.BoardDAO;
 import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.SearchCondition;
+import com.project.myapp.utiles.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
+
+    BoardDAO boardDAO;
 
     @Autowired
-    BoardDAO boardDAO;
+    public BoardServiceImpl(BoardDAO boardDAO){
+        // 생성자 주입
+        this.boardDAO = boardDAO;
+    }
 
     @Override
     public List<BoardDTO> getBoardList() {
@@ -43,12 +49,15 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int insertBoard(BoardDTO board) throws Exception {
+
+        board.setContent(StringUtils.escapeDollorSign(board.getContent()));
         int result = boardDAO.insertBoard(board);
         return result;
     }
 
     @Override
     public int updateBoardByIdNBno(BoardDTO board) throws Exception {
+        board.setContent(StringUtils.escapeDollorSign(board.getContent()));
         int result = boardDAO.updateBoardByIdNBno(board);
         return result;
     }

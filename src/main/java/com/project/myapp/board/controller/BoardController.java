@@ -36,13 +36,7 @@ public class BoardController {
         this.boardService = boardService;
         this.commentService = commentService;
     }
-    
-    @GetMapping("/write")
-    public String write(Model m){
-        m.addAttribute("mode","new");
-        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
-        return "board/write";
-    }
+
     @GetMapping("/modify")
     public String modify(Integer bno, Model m){
 
@@ -95,6 +89,13 @@ public class BoardController {
             rattr.addAttribute("msg","MOD_ERR");
             return "board/board";
         }
+    }
+
+    @GetMapping("/write")
+    public String write(Model m){
+        m.addAttribute("mode","new");
+        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
+        return "board/write";
     }
     @PostMapping("/write")
     public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session) throws Exception {

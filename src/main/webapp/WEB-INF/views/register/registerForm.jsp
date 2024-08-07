@@ -26,7 +26,6 @@
             <h1>회원가입</h1>
             <p>아래에 있는 정보를 입력해주세요.</p>
             <hr>
-            <div id="msg" class="msg"><form:errors path="id" /></div>
             <div>
                 <div class="idForm" style="display: flex">
                     <div>
@@ -37,6 +36,9 @@
                     </div>
                 </div>
                 <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
+                <div id="msg" class="msg">
+                    <form:errors path="id" cssClass="error" />
+                </div>
             </div>
             <br>
             <div>
