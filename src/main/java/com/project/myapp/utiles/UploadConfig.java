@@ -12,30 +12,24 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 
 @Controller
-public class UploadController {
-    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+public class UploadConfig {
 
     AwsS3FileUploadService awsS3FileUploadService;
     FileUpload fileUpload;
-    private final ErrorBoardDAO errorBoardDAO;
 
     @Autowired
-    UploadController(AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload, ErrorBoardDAO errorBoardDAO){
+    UploadConfig(AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload){
         this.awsS3FileUploadService = awsS3FileUploadService;
         this.fileUpload = fileUpload;
-        this.errorBoardDAO = errorBoardDAO;
     }
     @ResponseBody
     @PostMapping("/upload/uploadCK")
     public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {
 
-        System.out.println("request = " + request.toString());
         MultipartFile uploadImg = request.getFile("upload");
         System.out.println("uploadImg = " + uploadImg);
         String id = (String)session.getAttribute("id");

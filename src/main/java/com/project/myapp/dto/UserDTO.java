@@ -10,8 +10,6 @@ public class UserDTO {
     private String status;
     private String profile;
 
-    private MemberDTO memberDTO;
-
     public UserDTO() {
     }
 
@@ -20,14 +18,6 @@ public class UserDTO {
         this.password = password;
         this.nickName = nickName;
         this.email = email;
-    }
-
-    public MemberDTO getMemberDTO() {
-        return memberDTO;
-    }
-
-    public void setMemberDTO(MemberDTO memberDTO) {
-        this.memberDTO = memberDTO;
     }
 
     public String getId() {
@@ -96,7 +86,6 @@ public class UserDTO {
                 ", type='" + type + '\'' +
                 ", status='" + status + '\'' +
                 ", profile='" + profile + '\'' +
-                ", memberDTO=" + memberDTO +
                 '}';
     }
 }

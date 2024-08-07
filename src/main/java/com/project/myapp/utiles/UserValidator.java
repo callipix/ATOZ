@@ -1,7 +1,5 @@
 package com.project.myapp.utiles;
 
-import com.project.myapp.dto.MemberDTO;
-import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.dto.UserDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -13,28 +11,23 @@ import java.util.regex.Pattern;
 public class UserValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-        return RegisterDTO.class.isAssignableFrom(clazz);
+        return UserDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        RegisterDTO registerDTO = (RegisterDTO) target;
+        UserDTO userDTO = (UserDTO) target;
 
-        String id = registerDTO.getUserDTO().getId();
-        String pwd = registerDTO.getUserDTO().getPassword();
-        String email = registerDTO.getUserDTO().getEmail();
-        String nickName = registerDTO.getUserDTO().getNickName();
-
-        String name = registerDTO.getMemberDTO().getName();
-        String phoneNo = registerDTO.getMemberDTO().getPhoneNo();
+        String id = userDTO.getId();
+        String password = userDTO.getPassword();
+        String email = userDTO.getEmail();
+        String nickName = userDTO.getNickName();
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"id", "required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pwd", "required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickName", "required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email", "required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"phoneNo", "required");
 
         if(id != null && id.isEmpty()){
             String idPattern = "^[a-zA-Z0-9]{8,12}$";
@@ -44,10 +37,10 @@ public class UserValidator implements Validator {
                 errors.rejectValue("id", "invalidId");
             }
         }
-        if(pwd != null && pwd.isEmpty()){
+        if(password != null && password.isEmpty()){
             String passwordPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,20}$";
             Pattern pattern = Pattern.compile(passwordPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(pwd);
+            Matcher matcher = pattern.matcher(password);
             if(!matcher.matches()){
                 errors.rejectValue("pwd", "invalidPassword");
             }
@@ -66,22 +59,6 @@ public class UserValidator implements Validator {
             Matcher matcher = pattern.matcher(nickName);
             if(!matcher.matches()){
                 errors.rejectValue("nickName", "invalidNickName");
-            }
-        }
-        if(name != null && name.isEmpty()){
-            String namePattern = "^[가-힣a-zA-Z]{3,8}$";
-            Pattern pattern = Pattern.compile(namePattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(name);
-            if(!matcher.matches()){
-                errors.rejectValue("name", "invalidName");
-            }
-        }
-        if(phoneNo != null && phoneNo.isEmpty()){
-            String phoneNoPattern = "^01[0-9]-\\d{3,4}-\\d{4}$";
-            Pattern pattern = Pattern.compile(phoneNoPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(phoneNo);
-            if(!matcher.matches()){
-                errors.rejectValue("phoneNo", "invalidPhoneNo");
             }
         }
 

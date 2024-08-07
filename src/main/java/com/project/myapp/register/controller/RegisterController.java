@@ -3,9 +3,11 @@ package com.project.myapp.register.controller;
 import com.project.myapp.dto.MemberDTO;
 import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.dto.UserDTO;
-import com.project.myapp.dto.UserMemberWrapper;
 import com.project.myapp.register.service.RegisterService;
+import com.project.myapp.utiles.CombinedValidator;
+import com.project.myapp.utiles.MemberValidator;
 import com.project.myapp.utiles.UserValidator;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -27,10 +29,10 @@ public class RegisterController {
     private RegisterService registerService;
 
     @InitBinder
-    public void initBinder(WebDataBinder binder) {
+    public void initBinder(@NotNull WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-        binder.setValidator(new UserValidator());
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.setValidator(new CombinedValidator(new UserValidator(), new MemberValidator()));
     }
 
     @GetMapping("/idCheck")
@@ -50,25 +52,23 @@ public class RegisterController {
         return result;
     }
 
-    @GetMapping("/form")
-    public String showForm(Model model){
-        model.addAttribute("register", new RegisterDTO());
-        return "registerForm";
-    }
-
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes rdda, HttpSession session) throws Exception {
+    public String registerUser(@Valid UserDTO userDTO, BindingResult userResult, @Valid MemberDTO memberDTO, BindingResult memberResult , RedirectAttributes rdda, HttpSession session) throws Exception {
 
-        System.out.println("registerDTO = " + registerDTO);
+        System.out.println("userDTO = " + userDTO);
+        System.out.println("memberDTO = " + memberDTO);
 
-        if(bindingResult.hasErrors()) {
+        System.out.println("userResult = " + userResult);
+        System.out.println("memberResult = " + memberResult);
+
+        if(userResult.hasErrors()) {
             return "registerForm";
         }
-        if(bindingResult.hasErrors()) {
+        if(memberResult.hasErrors()) {
             return "registerForm";
         }
 
-        int result = this.registerService.insertUser(new RegisterDTO(registerDTO.getUserDTO(), registerDTO.getMemberDTO()));
+        int result = this.registerService.insertUser(new RegisterDTO(userDTO, memberDTO));
 
         System.out.println("result = " + result);
         try {

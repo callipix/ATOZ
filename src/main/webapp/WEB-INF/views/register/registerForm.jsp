@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
@@ -14,13 +13,15 @@
 <link rel="stylesheet" href="<c:url value='/css/register.css'/>">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <%--<jsp:include page="../header.jsp" />--%>
+    <script>
+    </script>
 <body>
 <br>
 <div id="formDiv" class="formDiv">
         <!-- 폼 필드들 -->
         <!-- 폼 필드들 -->
-    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">
-<%--    <form id="signUpForm" method="post" action="<c:url value='/register/'/>">--%>
+<%--    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">--%>
+    <form id="signUpForm" method="post" action="<c:url value='/register/'/>">
         <div class="container">
             <h1>회원가입</h1>
             <p>아래에 있는 정보를 입력해주세요.</p>
@@ -35,8 +36,7 @@
                         <button id="idCheck" type="button" class="button">중복체크</button>
                     </div>
                 </div>
-                <form:input path="id" placeholder="아이디를 입력하세요" id="id" cssClass="form-control" />
-<%--                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">--%>
+                <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
             </div>
             <br>
             <div>
@@ -80,8 +80,8 @@
         <div class="container signin">
             <p>이미 가입된 계정인가요? <a href="#"><b>login</b></a></p>
         </div>
-<%--    </form>--%>
-    </form:form>
+    </form>
+<%--    </form:form>--%>
 </div>
 <script type="text/javascript">
 

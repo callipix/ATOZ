@@ -27,7 +27,7 @@ public class MemberDTO {
     public MemberDTO() {
     }
 
-    public MemberDTO(String id, String name, String phone) {
+    public MemberDTO(String id, String name, String phoneNo) {
         this.id = id;
         this.name = name;
         this.phoneNo = phoneNo;

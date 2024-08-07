@@ -22,7 +22,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
-    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadConfig.class);
 
     private final ErrorBoardDAO errorBoardDAO;
     private final AmazonS3 amazonS3;
