@@ -35,12 +35,26 @@ public class BoardDAOImplTest {
     public void insertBoard() {
 //        deleteAll();
         int result = 0;
-//        for(int i = 1; i <= 200; i++){
-//            BoardDTO boardDTO = new BoardDTO("제목테스트"+ i ,"내용테스트"+i, "aaaa1234");
-//            result += boardDAO.insertBoard(boardDTO);
-//        }
-        BoardDTO boardDTO = new BoardDTO("제목테스트" ,"내용테스트", "aaaa1234");
-        result += boardDAO.insertBoard(boardDTO);
+        for(int i = 1; i <= 20; i++){
+            BoardDTO boardDTO = new BoardDTO("Junit을 사용하여 Test Code로 게시물 insert 해보기 "+ i ,"내용테스트"+i, "aaaa1234");
+            result += boardDAO.insertBoard(boardDTO);
+        }
+        for(int i = 21; i <= 40; i++){
+            BoardDTO boardDTO = new BoardDTO("AWS로 서버, 파일업로드 해보기 "+ i ,"내용 잘 들어 가는지?"+i, "vvvv1234");
+            result += boardDAO.insertBoard(boardDTO);
+        }
+        for(int i = 41; i <= 60; i++){
+            BoardDTO boardDTO = new BoardDTO("MySQL 사용해보기 "+ i ,"내용 잘 들어가나?"+i, "xxxx123a");
+            result += boardDAO.insertBoard(boardDTO);
+        }
+        for(int i = 61; i <= 80; i++){
+            BoardDTO boardDTO = new BoardDTO("현재까지 깃 링크 연동완료 "+ i ,"내용테스트중"+i, "aaaa1234");
+            result += boardDAO.insertBoard(boardDTO);
+        }
+        for(int i = 81; i <= 100; i++){
+            BoardDTO boardDTO = new BoardDTO("Postman 사용해서 url응답 확인하기 "+ i ,"고려해야 할 요소들이 너무 많다"+i, "asdfzzzz1");
+            result += boardDAO.insertBoard(boardDTO);
+        }
         System.out.println("result = " + result);
         assertTrue( result == 1);
     }
