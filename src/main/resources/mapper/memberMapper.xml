@@ -4,10 +4,18 @@
 
 <mapper namespace="com.project.myapp.board.dao.MemberMapper">
 
-    <select id="memberList" resultType="com.project.myapp.dto.TestMember">
+    <select id="memberList" resultMap="MemberResultMap">
         /** 여기 실행된거 맞나*/
         SELECT *
         FROM mymember
     </select>
 
+    <resultMap id="MemberResultMap" type="com.project.myapp.dto.TestMember">
+        <result property="MEM_ID" column="MEM_ID"/>
+        <result property="MEM_PASS" column="MEM_PASS"/>
+        <result property="MEM_NAME" column="MEM_NAME"/>
+        <result property="MEM_TEL" column="MEM_TEL"/>
+        <result property="MEM_ADDR" column="MEM_ADDR"/>
+        <result property="MEM_PHOTO" column="MEM_PHOTO"/>
+    </resultMap>
 </mapper>
