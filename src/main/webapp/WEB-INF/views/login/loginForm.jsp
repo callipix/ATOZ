@@ -7,7 +7,7 @@
 <c:set var="loginOut" value="${empty loginId ? 'Login' : loginId}"/>
 <html>
 <head>
-    <title>로그인 페이지</title>
+    <title>Login</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
@@ -171,9 +171,10 @@
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
     <a href="<c:url value='/errorBoard/list' />">에러게시판</a>
-<%--    <a href="<c:url value='/suggestions' />">건의사항</a>--%>
-    <a href="<c:url value='/information' />">프로젝트소개</a>
+    <a href="<c:url value='/suggestions' />">건의사항</a>
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
+    <a href="<c:url value='/information' />">프로젝트소개</a>
+    <a href="<c:url value='/profile' />">프로필</a>
     <c:if test="${empty loginId}">
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>

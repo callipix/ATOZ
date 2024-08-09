@@ -22,4 +22,22 @@ public class MymemberDAOImpl implements MymemberDAO {
         System.out.println("list = " + list);
         return list;
     }
+
+    @Override
+    public int idCheck(String id){
+        int result = this.sqlSession.selectOne(namespace + "idCheck", id);
+        return result;
+    }
+
+    @Override
+    public int addMember(TestMember member) {
+        int result = this.sqlSession.insert(namespace + "save", member);
+        return result;
+    }
+
+    @Override
+    public TestMember getMember(String id) {
+        TestMember member = this.sqlSession.selectOne(namespace + "getMember", id);
+        return member;
+    }
 }

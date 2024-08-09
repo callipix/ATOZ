@@ -2,12 +2,10 @@ package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.MymemberService;
 import com.project.myapp.dto.TestMember;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,4 +23,28 @@ public class TestMemberController {
         return list;
     }
 
+    @GetMapping("/idCheck")
+    @ResponseBody
+    public String idCheck(String id){
+        System.out.println("id = " + id);
+        int result = this.mymemberService.idCheck(id);
+        System.out.println("result = " + result);
+        return String.valueOf(result);
+    }
+    @ResponseBody
+    @PostMapping("/addMember")
+    public TestMember addMember(TestMember member){
+        System.out.println("member = " + member);
+        int result = this.mymemberService.addMember(member);
+        System.out.println("result = " + result);
+        System.out.println("member = " + member);
+        return member;
+    }
+    @ResponseBody
+    @PostMapping("/memDetail")
+    public TestMember read(@RequestParam("memID") String memID){
+        System.out.println("memID = " + memID);
+        TestMember getMember = this.mymemberService.getMember(memID);
+        return getMember;
+    }
 }

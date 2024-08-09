@@ -1,4 +1,4 @@
-package com.project.myapp.board.controller;
+package com.project.myapp.utiles;
 
 public class Convertor {
     public static void main(String[] args) {
@@ -7,11 +7,11 @@ public class Convertor {
         System.out.println("bb = " + toLowerConvertor(aa));
         System.out.println("cc = " + toUpperConvertor(aa));
     }
-    private static String toLowerConvertor(String string){
+    public static String toLowerConvertor(String string){
         // 소문자를 대문자로 변환해주는
         return string.toLowerCase();
     }
-    private static String toUpperConvertor(String string){
+    public static String toUpperConvertor(String string){
         // 대문자를 소문자로 변환해주는
         return string.toUpperCase();
     }

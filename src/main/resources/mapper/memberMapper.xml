@@ -10,6 +10,25 @@
         FROM mymember
     </select>
 
+    <select id="idCheck" parameterType="string" resultType="int">
+        SELECT EXISTS(
+            SELECT MEM_ID
+             FROM MYMEMBER
+             WHERE MEM_ID = #{MEM_ID}
+        )
+    </select>
+
+    <select id="getMember" parameterType="string" resultMap="MemberResultMap">
+        SELECT MEM_ID , MEM_PASS, MEM_NAME , MEM_TEL , MEM_ADDR
+          FROM MYMEMBER
+         WHERE MEM_ID = #{MEM_ID}
+    </select>
+
+    <insert id="save" parameterType="com.project.myapp.dto.TestMember">
+        INSERT INTO MYMEMBER(MEM_ID , MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR)
+              VALUES (#{MEM_ID} , #{MEM_PASS}, #{MEM_NAME}, #{MEM_TEL}, #{MEM_ADDR})
+    </insert>
+
     <resultMap id="MemberResultMap" type="com.project.myapp.dto.TestMember">
         <result property="MEM_ID" column="MEM_ID"/>
         <result property="MEM_PASS" column="MEM_PASS"/>

@@ -26,6 +26,7 @@
     <a href="<c:url value='/suggestions' />">건의사항</a>
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <a href="<c:url value='/information' />">프로젝트소개</a>
+    <a href="<c:url value='/profile' />">프로필</a>
     <c:if test="${empty loginId}">
         <script type="text/javascript">
             let loginId = false;
@@ -33,7 +34,6 @@
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
     <a href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
-
 </div>
 <script>
     // Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon
