@@ -2,6 +2,8 @@ package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.MymemberService;
 import com.project.myapp.dto.TestMember;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +13,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/mymember")
+@AllArgsConstructor
 public class TestMemberController {
 
-    @Autowired
-    MymemberService mymemberService;
+    private final MymemberService mymemberService;
 
     @GetMapping("/memberList")
     @ResponseBody

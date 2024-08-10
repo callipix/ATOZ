@@ -1,31 +1,28 @@
 package com.project.myapp.utiles;
 
-import com.project.myapp.errorboard.dao.ErrorBoardDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
+@AllArgsConstructor
 public class UploadConfig {
 
-    AwsS3FileUploadService awsS3FileUploadService;
-    FileUpload fileUpload;
+    private final AwsS3FileUploadService awsS3FileUploadService;
 
-    @Autowired
-    UploadConfig(AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload){
-        this.awsS3FileUploadService = awsS3FileUploadService;
-        this.fileUpload = fileUpload;
-    }
     @ResponseBody
     @PostMapping("/upload/uploadCK")
     public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {

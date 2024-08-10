@@ -1,16 +1,14 @@
 package com.project.myapp.errorboard.controller;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.service.ErrorBoardService;
-import com.project.myapp.utiles.AwsConfig;
+import com.project.myapp.config.AwsConfig;
 import com.project.myapp.utiles.AwsS3FileUploadService;
-import com.project.myapp.utiles.AwsS3FileUploadServiceImpl;
 import com.project.myapp.utiles.FileUpload;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,27 +21,17 @@ import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/errorBoard")
+@AllArgsConstructor
 public class ErrorBoardController {
 
-    ErrorBoardService errorBoardService;
-    FileUpload fileUpload;
-    AwsConfig awsConfig;
-    AwsS3FileUploadService awsS3FileUploadService;
-
-    @Autowired
-    ErrorBoardController(ErrorBoardService errorBoardService, FileUpload fileUpload, AwsConfig awsConfig, AwsS3FileUploadService awsS3FileUploadService){
-        this.errorBoardService = errorBoardService;
-        this.fileUpload = fileUpload;
-        this.awsConfig = awsConfig;
-        this.awsS3FileUploadService = awsS3FileUploadService;
-    }
+    private final AwsConfig awsConfig;
+    private final FileUpload fileUpload;
+    private final ErrorBoardService errorBoardService;
+    private final AwsS3FileUploadService awsS3FileUploadService;
 
     @ResponseBody
     @PostMapping("/isCheckWriter")
@@ -141,7 +129,6 @@ public class ErrorBoardController {
         try {
             ErrorBoardDTO errorBoardDTO = this.errorBoardService.getErrorBoardByErrBno(errBno);
 
-            System.out.println("컨트롤러 errorBoardDTO = " + errorBoardDTO);
             model.addAttribute("mode" , "mod");
             model.addAttribute(errorBoardDTO);
         } catch (Exception e){
@@ -173,7 +160,6 @@ public class ErrorBoardController {
             m.addAttribute("msg" , "LIST_ERR");
             m.addAttribute("totalCnt" , 0);
         }
-        System.out.println("sc = " + sc);
         return "errorBoard/list";
     }
 }

@@ -1,15 +1,12 @@
 package com.project.myapp.errorboard.service;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.project.myapp.dto.ErrorBoardDTO;
 import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.dao.ErrorBoardDAO;
-import com.project.myapp.utiles.AwsConfig;
-import com.project.myapp.utiles.AwsS3FileUploadService;
 import com.project.myapp.utiles.FileUpload;
-import com.project.myapp.utiles.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.myapp.config.StringUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,22 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ErrorBoardServiceImpl implements ErrorBoardService {
 
-    AwsS3FileUploadService awsS3FileUploadService;
-    ErrorBoardDAO errorBoardDAO;
-    FileUpload fileUpload;
-    AwsConfig awsConfig;
-    AmazonS3 amazonS3;
-
-    @Autowired
-    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload , AmazonS3 amazonS3,AwsConfig awsConfig ){
-        this.errorBoardDAO = errorBoardDAO;
-        this.awsS3FileUploadService = awsS3FileUploadService;
-        this.fileUpload = fileUpload;
-        this.amazonS3 = amazonS3;
-        this.awsConfig = awsConfig;
-    }
+    private final FileUpload fileUpload;
+    private final ErrorBoardDAO errorBoardDAO;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -94,9 +80,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     public int update(ErrorBoardDTO errorBoardDTO ,List<String> afterList) throws Exception {
         // 게시글 업데이트
         errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
-
         int result = errorBoardDAO.update(errorBoardDTO);
-
         List<Integer> fileNoList = new ArrayList<>();
 
         for(String fileKeyList : afterList){

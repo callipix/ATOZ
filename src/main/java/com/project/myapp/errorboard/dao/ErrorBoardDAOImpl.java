@@ -1,11 +1,9 @@
 package com.project.myapp.errorboard.dao;
 
-import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
-import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -13,12 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@AllArgsConstructor
 public class ErrorBoardDAOImpl implements ErrorBoardDAO{
 
+    private final SqlSession sqlSession;
     private static final String namespace = "com.project.myapp.errorboard.dao.ErrorBoardMapper.";
-
-    @Autowired
-    private SqlSession sqlSession;
 
     public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO) {
         return sqlSession.insert(namespace + "insert", errorBoardDTO);

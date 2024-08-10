@@ -1,10 +1,7 @@
 package com.project.myapp.errorboard.dao;
 
-import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
-import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.dto.SearchCondition;
-import com.project.myapp.vo.ErrLogFileDto;
 
 import java.util.List;
 import java.util.Map;

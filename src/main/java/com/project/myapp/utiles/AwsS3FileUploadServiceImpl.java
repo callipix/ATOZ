@@ -2,13 +2,13 @@ package com.project.myapp.utiles;
 
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.project.myapp.config.AwsConfig;
 import com.project.myapp.dto.FilesDTO;
-import com.project.myapp.errorboard.dao.ErrorBoardDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,25 +18,12 @@ import java.net.URLDecoder;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
-    @Value("${cloud.aws.s3.bucketName}")
-    private String bucketName;
-    private static final Logger logger = LoggerFactory.getLogger(UploadConfig.class);
-
-    private final ErrorBoardDAO errorBoardDAO;
     private final AmazonS3 amazonS3;
     private final AwsConfig awsConfig;
     private final FileUpload fileUpload;
-
-
-    @Autowired      // 생성자 주입
-    public AwsS3FileUploadServiceImpl(ErrorBoardDAO errorBoardDAO, AmazonS3 amazonS3, AwsConfig awsConfig, FileUpload fileUpload) {
-        this.errorBoardDAO = errorBoardDAO;
-        this.amazonS3 = amazonS3;
-        this.awsConfig = awsConfig;
-        this.fileUpload = fileUpload;
-    }
 
     // UUID를 사용해서 저장할 파일 이름을 생성(중복방지)
     private String makeFileName(String originName){

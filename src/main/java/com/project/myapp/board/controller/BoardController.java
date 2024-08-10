@@ -6,6 +6,7 @@ import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,16 +27,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
+@AllArgsConstructor
 public class BoardController {
 
-    BoardService boardService;
-    CommentService commentService;
-
-    @Autowired          // 생성자주입
-    BoardController (BoardService boardService, CommentService commentService){
-        this.boardService = boardService;
-        this.commentService = commentService;
-    }
+    private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/modify")
     public String modify(Integer bno, Model m){
@@ -53,7 +49,6 @@ public class BoardController {
         String msg = "DEL_OK";
         try {
             int result = this.boardService.deleteByIdNBno(bno , writer);
-            System.out.println("result = " + result);
                 if(result != 1){
                     throw new Exception("Delete failed"); 
                 }
@@ -68,8 +63,6 @@ public class BoardController {
     // 글수정
     @PostMapping("/modify")
     public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m , HttpSession session) throws Exception {
-
-        System.out.println("boardDTO = " + boardDTO);
 
         String writer = (String)session.getAttribute("id");
         boardDTO.setWriter(writer);

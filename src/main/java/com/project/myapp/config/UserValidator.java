@@ -1,4 +1,4 @@
-package com.project.myapp.utiles;
+package com.project.myapp.config;
 
 import com.project.myapp.dto.UserDTO;
 import org.springframework.validation.Errors;
@@ -16,8 +16,6 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        System.out.println("target = " + target);
-
         UserDTO userDTO = (UserDTO) target;
 
         String id = userDTO.getId();
@@ -54,7 +52,6 @@ public class UserValidator implements Validator {
         if(nickName.length() < 3 || nickName.length() > 8) {
             errors.rejectValue("nickName", "invalidLength", new String[]{"3" , "8"}, null);
         }
-
         if(!matcherId.matches()){
             errors.rejectValue("id", "invalidId", null);
         }

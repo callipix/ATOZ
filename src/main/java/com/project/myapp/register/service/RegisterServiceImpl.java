@@ -1,30 +1,24 @@
 package com.project.myapp.register.service;
 
+import com.project.myapp.config.ApiProperties;
 import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.register.dao.RegisterDAO;
-import com.project.myapp.utiles.ApiConfigProperties;
+import lombok.AllArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.jsp.tagext.TryCatchFinally;
 import java.util.HashMap;
 import java.util.Random;
 
 @Service
+@AllArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
 
-    ApiConfigProperties apiConfigProperties;
-    RegisterDAO registerDAO;
-
-    @Autowired
-    public RegisterServiceImpl(ApiConfigProperties apiConfigProperties , RegisterDAO registerDAO) {
-        this.apiConfigProperties = apiConfigProperties;
-        this.registerDAO = registerDAO;
-    }
+    private final RegisterDAO registerDAO;
+    private final ApiProperties apiProperties;
 
     @Override
     public int idCheck(String id){
@@ -54,11 +48,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     private void certifiedPhoneNumber(String phoneNo, String noStr) {
 
-        String apiKey = apiConfigProperties.getApiKey();
-        String apiSecret = apiConfigProperties.getApiSecret();
-
+        String apiKey = apiProperties.getApiKey();
+        String apiSecret = apiProperties.getApiSecret();
         Message coolsms = new Message(apiKey, apiSecret);
-
         // 4 params(to, from, type, text) are mandatory. must be filled
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("to", phoneNo);    // 수신전화번호

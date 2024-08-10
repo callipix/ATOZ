@@ -1,4 +1,4 @@
-package com.project.myapp.utiles;
+package com.project.myapp.config;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

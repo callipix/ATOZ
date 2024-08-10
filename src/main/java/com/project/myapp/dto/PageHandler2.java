@@ -3,7 +3,7 @@ package com.project.myapp.dto;
 public class PageHandler2 {
 
     private int totalCnt;           // 전체 게시물 개수 -> 255
-    private int naviSize = 10;      // 페이징바 사이즈(페이지 네비게이션 바) -> 미리 설정
+    private int naviSize = 2;      // 페이징바 사이즈(페이지 네비게이션 바) -> 미리 설정
 
     private int totalPage;          // 전체 페이지 개수 -> 26개
     private int beginPage;          // 페이지 네비게이션 바 시작페이지

@@ -1,4 +1,4 @@
-package com.project.myapp.utiles;
+package com.project.myapp.config;
 
 public class Convertor {
     public static void main(String[] args) {

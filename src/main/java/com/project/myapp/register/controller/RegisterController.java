@@ -1,20 +1,22 @@
 package com.project.myapp.register.controller;
 
+import com.project.myapp.config.CombinedValidator;
+import com.project.myapp.config.UserValidator;
 import com.project.myapp.dto.MemberDTO;
 import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.dto.UserDTO;
 import com.project.myapp.register.service.RegisterService;
-import com.project.myapp.utiles.CombinedValidator;
 import com.project.myapp.utiles.MemberValidator;
-import com.project.myapp.utiles.UserValidator;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -23,10 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
+@AllArgsConstructor
 public class RegisterController {
 
-    @Autowired
-    private RegisterService registerService;
+    private final RegisterService registerService;
 
     @InitBinder
     public void initBinder(@NotNull WebDataBinder binder) {

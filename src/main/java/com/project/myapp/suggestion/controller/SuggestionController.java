@@ -1,18 +1,16 @@
 package com.project.myapp.suggestion.controller;
 
-import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.PageHandler2;
 import com.project.myapp.dto.SuggestionDTO;
 import com.project.myapp.suggestion.service.SuggestionService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -23,14 +21,10 @@ import java.util.Map;
 @Slf4j
 //@RestController
 @Controller
+@AllArgsConstructor
 public class SuggestionController {
 
-    SuggestionService suggestionService;
-
-    @Autowired
-    public SuggestionController(SuggestionService suggestionService) {
-        this.suggestionService = suggestionService;
-    }
+    private final SuggestionService suggestionService;
 
     @PostMapping("/suggestions")
     @ResponseBody

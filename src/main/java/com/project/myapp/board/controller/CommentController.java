@@ -3,6 +3,7 @@ package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.CommentService;
 import com.project.myapp.dto.CommentDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class CommentController {
 
-    CommentService commentService;
-
-    @Autowired
-    CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
-
+    private final CommentService commentService;
 
     @ResponseBody
     @PatchMapping("/comments/{cno}")

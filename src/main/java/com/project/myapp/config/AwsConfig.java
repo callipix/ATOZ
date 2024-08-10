@@ -1,4 +1,4 @@
-package com.project.myapp.utiles;
+package com.project.myapp.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

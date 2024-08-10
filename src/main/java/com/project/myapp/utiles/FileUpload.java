@@ -1,17 +1,17 @@
 package com.project.myapp.utiles;
 
 import com.project.myapp.dto.FilesDTO;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class FileUpload {
 
-    @Autowired
-    SqlSession sqlSession;
+    private final SqlSession sqlSession;
 
     private static final String namespace = "com.project.myapp.utiles.FileMapper.";
 

@@ -2,8 +2,8 @@ package com.project.myapp.suggestion.service;
 
 import com.project.myapp.dto.SuggestionDTO;
 import com.project.myapp.suggestion.dao.SuggestionDAO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,15 +11,10 @@ import java.util.List;
 import java.util.Map;
 @Slf4j
 @Service
+@AllArgsConstructor
 public class SuggestionServiceImpl implements SuggestionService{
 
-
-    SuggestionDAO suggestionDAO;
-
-    @Autowired
-    SuggestionServiceImpl(SuggestionDAO suggestionDAO){
-        this.suggestionDAO = suggestionDAO;
-    }
+    private final SuggestionDAO suggestionDAO;
 
     @Override
     public List<SuggestionDTO> getSuggestList(Map map) {
@@ -29,7 +24,6 @@ public class SuggestionServiceImpl implements SuggestionService{
 
     @Override
     public SuggestionDTO insert(SuggestionDTO suggestionDTO) {
-
         int result = this.suggestionDAO.insert(suggestionDTO);
         return suggestionDTO;
     }
