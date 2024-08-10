@@ -21,12 +21,10 @@ public class FileUpload {
         return result;
     }
     public int deleteFile(String storedName) {
-        System.out.println("FileUpload.class storedName = " + storedName);
         int result = this.sqlSession.delete(namespace + "deleteFileInfoByStoredName" , storedName);
         return result;
     }
     public int updateImages(FilesDTO filesDTO) {
-        System.out.println("updateImages filesDTO = " + filesDTO);
         int result = this.sqlSession.update(namespace + "updateFileInfo" , filesDTO);
         return result;
     }

@@ -38,9 +38,7 @@ public class RegisterController {
     @GetMapping("/idCheck")
     @ResponseBody
     public int idCheck(String id){
-        System.out.println("inputId = " + id);
         Integer result = this.registerService.idCheck(id);
-        System.out.println("result = " + result);
         return result;
     }
     @ResponseBody
@@ -48,18 +46,11 @@ public class RegisterController {
     public String sendSMS(String phoneNo){
 
         String result = this.registerService.sendSMS(phoneNo);
-        System.out.println("result = " + result);
         return result;
     }
 
     @PostMapping("/register")
     public String registerUser(@Valid UserDTO userDTO, BindingResult userResult, @Valid MemberDTO memberDTO, BindingResult memberResult , RedirectAttributes rdda, HttpSession session) throws Exception {
-
-        System.out.println("userDTO = " + userDTO);
-        System.out.println("memberDTO = " + memberDTO);
-
-        System.out.println("userResult = " + userResult);
-        System.out.println("memberResult = " + memberResult);
 
         if(userResult.hasErrors()) {
             return "registerForm";
@@ -69,8 +60,6 @@ public class RegisterController {
         }
 
         int result = this.registerService.insertUser(new RegisterDTO(userDTO, memberDTO));
-
-        System.out.println("result = " + result);
         try {
             if(result >= 1){
                 session.setAttribute("message", "회원가입에 성공하였습니다.");

@@ -84,10 +84,8 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int delete(Integer errBno, String writer) throws Exception {
-        System.out.println("errBno = " + errBno);
         // 게시글 삭제
         int result = errorBoardDAO.delete(errBno, writer);
-        System.out.println("게시글 삭제결과 1 나와야함 = " + result);
         return result;
     }
 
@@ -112,7 +110,6 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
             fileDTO.setCategory_no(errorBoardDTO.getCategoryNo());
             result += this.fileUpload.updateImages(fileDTO);
         }
-        System.out.println("result = " + result);
 
         return result;
     }
@@ -120,9 +117,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int isCheckWriter(String writer, int errBno) {
-        System.out.println("service errBno = " + errBno);
         int result = this.errorBoardDAO.isCheckWriter(writer, errBno);
-        System.out.println("service result = " + result);
         return result;
     }
 

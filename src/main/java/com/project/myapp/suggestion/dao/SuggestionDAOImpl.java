@@ -54,14 +54,10 @@ public class SuggestionDAOImpl implements SuggestionDAO {
 
     @Override
     public int passCheck(int sno, String password) {
-        System.out.println("passCheck DAOImpl sno = " + sno);
-        System.out.println("passCheck DAOImpl = " + password);
         Map<String , Object> map = new HashMap<>();
         map.put("sno", sno);
         map.put("password", password);
-        System.out.println("passCheck DAOImpl map = " + map);
         int result = this.sqlSession.selectOne(namespace + "isEqualsIdNPass", map);
-        System.out.println("passCheck DAOImpl result = " + result);
         return result;
     }
 }

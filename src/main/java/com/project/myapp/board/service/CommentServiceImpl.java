@@ -32,17 +32,9 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(rollbackFor = Exception.class)
     public int deleteComment(Integer cno, Integer bno, String commenter) throws Exception {
 
-        System.out.println("cno = " + cno);
-        System.out.println("bno = " + bno);
-        System.out.println("commenter = " + commenter);
-
         int result = this.boardDAO.updateCommentCount(bno , -1);
 
-        System.out.println("result = " + result);
-
-        result = this.commentDAO.deleteComment(cno , commenter);
-
-        System.out.println("result = " + result);
+        result += this.commentDAO.deleteComment(cno , commenter);
 
         return result;
     }
@@ -54,8 +46,6 @@ public class CommentServiceImpl implements CommentService {
         int resultBoard  = this.boardDAO.updateCommentCount(commentDTO.getBno() , 1);
 
         int result = this.commentDAO.insertComment(commentDTO);
-        System.out.println("result = " + result);
-        System.out.println("commentDTO = " + commentDTO);
         return commentDTO;
     }
 
@@ -74,7 +64,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateComment(CommentDTO commentDTO) throws Exception {
-        System.out.println("commentDTO = " + commentDTO);
         int result = commentDAO.updateComment(commentDTO);
         return result;
     }

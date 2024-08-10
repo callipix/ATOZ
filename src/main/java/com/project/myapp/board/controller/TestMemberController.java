@@ -26,24 +26,18 @@ public class TestMemberController {
     @GetMapping("/idCheck")
     @ResponseBody
     public String idCheck(String id){
-        System.out.println("id = " + id);
         int result = this.mymemberService.idCheck(id);
-        System.out.println("result = " + result);
         return String.valueOf(result);
     }
     @ResponseBody
     @PostMapping("/addMember")
     public TestMember addMember(TestMember member){
-        System.out.println("member = " + member);
         int result = this.mymemberService.addMember(member);
-        System.out.println("result = " + result);
-        System.out.println("member = " + member);
         return member;
     }
     @ResponseBody
     @PostMapping("/memDetail")
     public TestMember read(@RequestParam("memID") String memID){
-        System.out.println("memID = " + memID);
         TestMember getMember = this.mymemberService.getMember(memID);
         return getMember;
     }

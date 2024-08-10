@@ -55,8 +55,6 @@ public class CommentController {
             if(result == null){
                 throw new Exception("Write failed");
             }
-            System.out.println("Controller commentDTO = " + commentDTO);
-            System.out.println("ResponseEntity.ok(commentDTO)= "+ ResponseEntity.ok(commentDTO));
             return ResponseEntity.ok(commentDTO);
         } catch (Exception e){
             e.printStackTrace();
@@ -90,9 +88,6 @@ public class CommentController {
         try {
             list = this.commentService.getCommentForBoard(bno);
             // 댓글 리스트를 정상적으로 가져왔을시에 http 상태코드를 200으로 설정
-            for(CommentDTO commentDTO : list){
-                System.out.println("list = " + list);
-            }
             m.addAttribute("list", list);
             return new ResponseEntity<List<CommentDTO>>(list , HttpStatus.OK);
         } catch (Exception e){

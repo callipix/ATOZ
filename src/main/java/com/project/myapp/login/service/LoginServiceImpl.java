@@ -16,19 +16,13 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public int loginCheck(String id , String password) {
 
-        System.out.println("id = " + id);
-        System.out.println("password = " + password);
-
         int result = 0;
         Map<String, String> loginCheckMap = new HashMap<String, String>();
         loginCheckMap.put("id", id);
         loginCheckMap.put("password", password);
 
-        System.out.println("loginCheckMap = " + loginCheckMap);
-
         try {
             result = loginDAO.loginCheck(loginCheckMap);
-            System.out.println("result = " + result);
 
         } catch (Exception e) {
             e.printStackTrace();

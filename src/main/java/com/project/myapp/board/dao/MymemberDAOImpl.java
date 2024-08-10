@@ -19,7 +19,6 @@ public class MymemberDAOImpl implements MymemberDAO {
     public List<TestMember> memberList() {
 
         List<TestMember> list = this.sqlSession.selectList(namespace + "memberList");
-        System.out.println("list = " + list);
         return list;
     }
 

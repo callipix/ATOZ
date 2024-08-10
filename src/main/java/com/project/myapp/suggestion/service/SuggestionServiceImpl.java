@@ -24,7 +24,6 @@ public class SuggestionServiceImpl implements SuggestionService{
     @Override
     public List<SuggestionDTO> getSuggestList(Map map) {
         List<SuggestionDTO> suggestionDTOList = suggestionDAO.getSuggestList(map);
-        log.info("getSuggestList for serviceImpl");
         return suggestionDTOList;
     }
 
@@ -32,16 +31,12 @@ public class SuggestionServiceImpl implements SuggestionService{
     public SuggestionDTO insert(SuggestionDTO suggestionDTO) {
 
         int result = this.suggestionDAO.insert(suggestionDTO);
-        log.info("insert for serviceImpl{}", result);
-        log.info("suggestionDTO {}", suggestionDTO);
         return suggestionDTO;
     }
 
     @Override
     public int update(SuggestionDTO suggestionDTO) {
         int result = this.suggestionDAO.update(suggestionDTO);
-        log.info("update for serviceImpl{}", result);
-        log.info("suggestionDTO {}2", suggestionDTO);
         return result;
     }
 
@@ -57,7 +52,6 @@ public class SuggestionServiceImpl implements SuggestionService{
     @Override
     public int getSuggestListCount() {
         int result = suggestionDAO.getSuggestListCount();
-        log.info("getSuggestListCount for serviceImpl{}" , result);
         return result;
     }
 

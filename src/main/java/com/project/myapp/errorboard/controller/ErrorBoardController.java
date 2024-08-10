@@ -58,15 +58,12 @@ public class ErrorBoardController {
     @GetMapping("/write")
     public String write(Model model) {
         model.addAttribute("mode" , "new");
-        System.out.println("model.getAttribute(\"mode\") = " + model.getAttribute("mode"));
         return "errorBoard/write";
     }
 
     @PostMapping("/write")
     public String write(ErrorBoardDTO errorBoardDTO ,@RequestParam List<String> afterList, RedirectAttributes ratts, Model model, HttpSession session){
 
-        System.out.println("errorBoardDTO = " + errorBoardDTO);
-        System.out.println("afterList = " + afterList);
         String writer = (String)session.getAttribute("id");
         errorBoardDTO.setWriter(writer);
         int result = 0;
@@ -98,9 +95,6 @@ public class ErrorBoardController {
         String writer = (String)session.getAttribute("id");
         errorBoardDTO.setWriter(writer);
         List<FilesDTO> filesDTOList = this.fileUpload.getDeleteList(errorBoardDTO.getErrBno());
-        for(FilesDTO filesDTO : filesDTOList){
-            System.out.println("filesDTO = " + filesDTO);
-        }
         int result = 0;
         try {
             result = this.errorBoardService.update(errorBoardDTO , afterList);
@@ -172,10 +166,6 @@ public class ErrorBoardController {
 
             m.addAttribute("boardList", boardList);
             m.addAttribute("ph", pageHandler);
-
-            for(ErrorBoardDTO errorBoardDTO : boardList){
-                System.out.println("errorBoardDTO = " + errorBoardDTO);
-            }
             Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
             m.addAttribute("startOfToday", startOfToday.toEpochMilli());
         } catch (Exception e) {

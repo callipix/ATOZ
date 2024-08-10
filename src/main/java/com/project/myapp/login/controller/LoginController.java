@@ -34,7 +34,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(String id, String password, String toURL , boolean rememberId , HttpServletRequest request, HttpServletResponse response, Model m) throws UnsupportedEncodingException {
-        System.out.println("id = " + id +" "+"password = " + password);
 
         HttpSession session = null;
         if(!loginCheck(id , password)){
@@ -48,7 +47,6 @@ public class LoginController {
 
         // 3.홈으로 이동
         toURL = toURL == null || toURL.equals("") ? "/" : toURL;
-        System.out.println("toURL = " + toURL);
         return "redirect:" + toURL;
     }
 
@@ -56,10 +54,8 @@ public class LoginController {
         int result = 0;
             result = this.loginService.loginCheck(id, password);
         if(result == 1){
-            System.out.println("로그인 성공");
             return true;
         } else {
-            System.out.println("로그인 실패, 아이디 또는 패스워드 불일치");
             return false;
         }
     }

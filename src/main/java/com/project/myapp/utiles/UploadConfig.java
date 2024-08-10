@@ -31,14 +31,12 @@ public class UploadConfig {
     public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {
 
         MultipartFile uploadImg = request.getFile("upload");
-        System.out.println("uploadImg = " + uploadImg);
         String id = (String)session.getAttribute("id");
         try{
             String successURL = this.awsS3FileUploadService.saveFileToS3(uploadImg , id);
             if(successURL == null) {
                 throw new Exception("uploadCK failed");
             }
-            System.out.println("successURL = " + successURL);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uploaded" , true);
             map.put("url" , successURL);
@@ -61,11 +59,9 @@ public class UploadConfig {
         int result = 0;
         for(String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
             beforeAddress.add(beforeImgAddress);
-            System.out.println("beforeImgAddress = " + beforeImgAddress);
         }
         for(String afterImgAddress : imageAddress.get("afterImgAddress")) {
             afterAddress.add(afterImgAddress);
-            System.out.println("afterImgAddress = " + afterImgAddress);
         }
         if(!imageAddress.isEmpty()){
             // 이미지 업로드 여부 → 업로드 존재시
@@ -75,7 +71,6 @@ public class UploadConfig {
 
             resultMap.put("result" , result);
             resultMap.put("afterAddress" , afterAddress);
-            System.out.println("deletedImg = " + endImgList);
         }
         if(result != 0) {
             return ResponseEntity.ok(resultMap);

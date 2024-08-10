@@ -35,13 +35,11 @@ public class SuggestionController {
     @PostMapping("/suggestions")
     @ResponseBody
     public ResponseEntity<SuggestionDTO> write(SuggestionDTO suggestionDTO){
-        System.out.println("suggestionDTO = " + suggestionDTO);
         try{
             suggestionDTO = this.suggestionService.insert(suggestionDTO);
             if(suggestionDTO == null){
                 throw new Exception("Write failed");
             }
-            log.info("suggestionDTO result {}" , suggestionDTO);
             return ResponseEntity.ok(suggestionDTO);
         } catch (Exception e){
             e.printStackTrace();
@@ -71,12 +69,9 @@ public class SuggestionController {
     @DeleteMapping("/suggestions/{sno}")
     @ResponseBody
     public ResponseEntity<String> delete(@PathVariable Integer sno,String password){
-        System.out.println("sno = " + sno);
-        System.out.println("password = " + password);
         try {
 
             int result = this.suggestionService.passCheck(sno , password);
-            System.out.println("passCheck result = " + result);
             if(result != 1){
                 return new ResponseEntity<>("passNotEqual" , HttpStatus.OK);
             }

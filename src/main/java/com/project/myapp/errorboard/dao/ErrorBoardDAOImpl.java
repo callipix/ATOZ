@@ -68,7 +68,6 @@ public class ErrorBoardDAOImpl implements ErrorBoardDAO{
     @Override
     public int getSelectKey(){
         int result = sqlSession.selectOne(namespace + "getSelectKey");
-        System.out.println("getSelectKey result = " + result);
         return result;
     }
     @Override

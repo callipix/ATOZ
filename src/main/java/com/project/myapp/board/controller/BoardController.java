@@ -43,8 +43,6 @@ public class BoardController {
         BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
         m.addAttribute("boardDTO", boardDTO);
         m.addAttribute("mode","mod");
-
-        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
         return "board/modify";
     }
 
@@ -64,7 +62,6 @@ public class BoardController {
             msg = "DEL_ERR";
         }
         rattr.addFlashAttribute("msg",msg);
-        System.out.println("msg = " + msg);
         return "redirect:/board/boardList"+ sc.getQueryString();
     }
 
@@ -94,13 +91,11 @@ public class BoardController {
     @GetMapping("/write")
     public String write(Model m){
         m.addAttribute("mode","new");
-        System.out.println("m.getAttribute(\"mode\") = " + m.getAttribute("mode"));
         return "board/write";
     }
     @PostMapping("/write")
     public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session) throws Exception {
 
-        System.out.println("boardDTO = " + boardDTO);
         String writer = (String) session.getAttribute("id");
         boardDTO.setWriter(writer);
 
@@ -109,7 +104,6 @@ public class BoardController {
         if(result != 1) {
             m.addAttribute("mode","new");
             rattr.addAttribute("msg","WRT_ERR");
-            System.out.println("result = " + result);
             return "/board/board";
         } else {
             rattr.addFlashAttribute("msg","WRT_OK");
@@ -125,8 +119,6 @@ public class BoardController {
             m.addAttribute("commentList",commentList);
             m.addAttribute("mode","mod");
             m.addAttribute(boardDTO);
-            System.out.println("boardDTO = " + boardDTO);
-            System.out.println("commentList = " + commentList);
         } catch (Exception e){
             e.printStackTrace();
             rattr.addAttribute("msg" , "READ_ERR");
@@ -154,7 +146,6 @@ public class BoardController {
             m.addAttribute("msg" , "LIST_ERR");
             m.addAttribute("totalCnt" , 0);
         }
-        System.out.println("sc = " + sc);
         return "board/boardList";
     }
 }

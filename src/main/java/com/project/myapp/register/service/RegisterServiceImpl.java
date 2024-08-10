@@ -49,7 +49,6 @@ public class RegisterServiceImpl implements RegisterService {
             noStr += ranNo.nextInt(10);
         }
         certifiedPhoneNumber(phoneNo, noStr);
-        System.out.println("noStr = " + noStr);
         return noStr;
     }
 
@@ -70,10 +69,8 @@ public class RegisterServiceImpl implements RegisterService {
 
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println(obj.toString());
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
+            e.printStackTrace();
         }
     }
 }
