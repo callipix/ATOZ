@@ -1,21 +1,12 @@
-### http://54.180.133.61:8080/myApp/
-
+### http://54.180.133.61:8080/myApp/ ↔  http://www.myportfolio.p-e.kr/
 ##### 2024.08.06 AM 09:00 ~ 현재 서버 실행중
 ##### OS : AWS EC2 - Windows Server 2022 Datacenter 21H2, AWS S3 : File Upload
-##### AWS를 사용중인데, 정확한 원인은 알 수 없으나 요근래 속도가 매우 느려졌는데 조금만 이해해주세요.
-##### 도메인 연결까지 하여 개인 리눅스 서버로 대체 예정입니다.
-##### 일부 CSS가 어긋난 경우가 많아요. 스터디카페에서 노트북으로 거의 작성했더니 집에서 데스크톱으로 확인하면 안 맞는 경우가 많았는데 이거 잡아보다가 시간을 너무 많이 뺏겨서.. 수정 예정이긴 하나 우선은 중요하게 해결할 부분은 아니라 판단하였습니다.
-##### 몇몇 페이지는 부트스트랩 템플릿을 활용하였고, 일부 프론트에 관련된 기능, CSS는 W3Schools를 참고하였습니다.
-##### 기본적인 회원가입, 게시판의 CRUD와 페이징처리,검색기능을 구현하였으나, 최종적으로는 지속적으로 사용할 수 있는 일종의 가계부(+일기장) 같은 느낌의 프로젝트를 목표로 하고 있습니다.
-##### 게시판 내에 프로젝트에 대한 개발 과정, 상세내역을 작성할 예정입니다. 부족한 부분이 많지만 계속해서 발전시키겠습니다.
+##### AWS를 사용해 서버 실행중이며 다소 느린관계로 양해부탁드립니다.
+##### 일부 페이지는 부트스트랩 템플릿을 활용하였고, 프론트에 관련된 기능(JS, CSS)은 W3Schools를 참고하였습니다.
+##### 기본적인 회원가입, 게시판의 CRUD와 페이징처리, 검색기능을 구현하였으나, 최종적으로는 지속적으로 사용할 수 있는 일종의 가계부(+일기장) 같은 느낌의 프로젝트를 목표로 하고 있습니다.
+##### 게시판 내에 프로젝트에 대한 개발 과정, 상세내역을 작성할 예정입니다.
 
 <div style="background-color: white;">
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=120&text=Mini&nbsp;Project&animation=fadeIn&fontColor=000000&fontSize=40" />
-</div>
-
-<div style="margin: 0px 20px 0px 20px;">
-  <img style="width:22px;" src="https://github.com/user-attachments/assets/19cc11fe-265f-493f-a0fe-6b36987fe2b5">
 
 <div> 
   <h2 style="color: #282d33;"> ✈️ 프로젝트 간략 소개 </h2>  
@@ -25,6 +16,7 @@
 <br><br>
 </div>
 <h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
+2024.07.17 - 2024.08.06
 <div align="center">  
 </div>
 
@@ -49,36 +41,38 @@
 <div>
 <div>
   <h4>BackEnd</h4>
-<img src="https://img.shields.io/badge/Java 1.8-007396?style=flat&logo=data:image/svg%2bxml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KDTwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIFRyYW5zZm9ybWVkIGJ5OiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4KPHN2ZyB3aWR0aD0iMTUwcHgiIGhlaWdodD0iMTUwcHgiIHZpZXdCb3g9IjAgMCAzMi4wMCAzMi4wMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMC4yNTYiPgoNPGcgaWQ9IlNWR1JlcG9fYmdDYXJyaWVyIiBzdHJva2Utd2lkdGg9IjAiLz4KDTxnIGlkPSJTVkdSZXBvX3RyYWNlckNhcnJpZXIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgoNPGcgaWQ9IlNWR1JlcG9faWNvbkNhcnJpZXIiPiA8cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTIuNTU3IDIzLjIyYzAgMC0wLjk4MiAwLjU3MSAwLjY5OSAwLjc2NSAyLjAzNyAwLjIzMiAzLjA3OSAwLjE5OSA1LjMyNC0wLjIyNiAwIDAgMC41OSAwLjM3IDEuNDE1IDAuNjkxLTUuMDMzIDIuMTU3LTExLjM5LTAuMTI1LTcuNDM3LTEuMjN6TTExLjk0MiAyMC40MDVjMCAwLTEuMTAyIDAuODE2IDAuNTgxIDAuOTkgMi4xNzYgMC4yMjQgMy44OTUgMC4yNDMgNi44NjktMC4zMyAwIDAgMC40MTEgMC40MTcgMS4wNTggMC42NDUtNi4wODUgMS43NzktMTIuODYzIDAuMTQtOC41MDgtMS4zMDV6TTE3LjEyNyAxNS42M2MxLjI0IDEuNDI4LTAuMzI2IDIuNzEzLTAuMzI2IDIuNzEzczMuMTQ5LTEuNjI1IDEuNzAzLTMuNjYxYy0xLjM1MS0xLjg5OC0yLjM4Ni0yLjg0MSAzLjIyMS02LjA5MyAwIDAtOC44MDEgMi4xOTgtNC41OTggNy4wNDJ6TTIzLjc4MyAyNS4zMDJjMCAwIDAuNzI3IDAuNTk5LTAuODAxIDEuMDYyLTIuOTA1IDAuODgtMTIuMDkxIDEuMTQ2LTE0LjY0MyAwLjAzNS0wLjkxNy0wLjM5OSAwLjgwMy0wLjk1MyAxLjM0NC0xLjA2OSAwLjU2NC0wLjEyMiAwLjg4Ny0wLjEgMC44ODctMC4xLTEuMDIwLTAuNzE5LTYuNTk0IDEuNDExLTIuODMxIDIuMDIxIDEwLjI2MiAxLjY2NCAxOC43MDYtMC43NDkgMTYuMDQ0LTEuOTV6TTEzLjAyOSAxNy40ODljMCAwLTQuNjczIDEuMTEtMS42NTUgMS41MTMgMS4yNzQgMC4xNzEgMy44MTQgMC4xMzIgNi4xODEtMC4wNjYgMS45MzQtMC4xNjMgMy44NzYtMC41MSAzLjg3Ni0wLjUxcy0wLjY4MiAwLjI5Mi0xLjE3NSAwLjYyOWMtNC43NDUgMS4yNDgtMTMuOTExIDAuNjY3LTExLjI3Mi0wLjYwOSAyLjIzMi0xLjA3OSA0LjA0Ni0wLjk1NiA0LjA0Ni0wLjk1NnpNMjEuNDEyIDIyLjE3NGM0LjgyNC0yLjUwNiAyLjU5My00LjkxNSAxLjAzNy00LjU5MS0wLjM4MiAwLjA3OS0wLjU1MiAwLjE0OC0wLjU1MiAwLjE0OHMwLjE0Mi0wLjIyMiAwLjQxMi0wLjMxOGMzLjA3OS0xLjA4MyA1LjQ0OCAzLjE5My0wLjk5NCA0Ljg4Ny0wIDAgMC4wNzUtMC4wNjcgMC4wOTctMC4xMjZ6TTE4LjUwMyAzLjMzN2MwIDAgMi42NzEgMi42NzItMi41MzQgNi43ODEtNC4xNzQgMy4yOTYtMC45NTIgNS4xNzYtMC4wMDIgNy4zMjMtMi40MzYtMi4xOTgtNC4yMjQtNC4xMzMtMy4wMjUtNS45MzQgMS43NjEtMi42NDQgNi42MzgtMy45MjUgNS41Ni04LjE3ek0xMy41MDMgMjguOTY2YzQuNjMgMC4yOTYgMTEuNzQtMC4xNjQgMTEuOTA4LTIuMzU1IDAgMC0wLjMyNCAwLjgzMS0zLjgyNiAxLjQ5LTMuOTUyIDAuNzQ0LTguODI2IDAuNjU3LTExLjcxNiAwLjE4IDAgMCAwLjU5MiAwLjQ5IDMuNjM1IDAuNjg1eiIvPiA8L2c+Cg08L3N2Zz4=">
-<img src="https://img.shields.io/badge/Spring 5.2.5-6DB33F?style=Plastic&logo=Spring&logoColor=white">
+<img src="https://img.shields.io/badge/Java 11-007396?style=flat&logo=data:image/svg%2bxml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KDTwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIFRyYW5zZm9ybWVkIGJ5OiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4KPHN2ZyB3aWR0aD0iMTUwcHgiIGhlaWdodD0iMTUwcHgiIHZpZXdCb3g9IjAgMCAzMi4wMCAzMi4wMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMC4yNTYiPgoNPGcgaWQ9IlNWR1JlcG9fYmdDYXJyaWVyIiBzdHJva2Utd2lkdGg9IjAiLz4KDTxnIGlkPSJTVkdSZXBvX3RyYWNlckNhcnJpZXIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgoNPGcgaWQ9IlNWR1JlcG9faWNvbkNhcnJpZXIiPiA8cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTIuNTU3IDIzLjIyYzAgMC0wLjk4MiAwLjU3MSAwLjY5OSAwLjc2NSAyLjAzNyAwLjIzMiAzLjA3OSAwLjE5OSA1LjMyNC0wLjIyNiAwIDAgMC41OSAwLjM3IDEuNDE1IDAuNjkxLTUuMDMzIDIuMTU3LTExLjM5LTAuMTI1LTcuNDM3LTEuMjN6TTExLjk0MiAyMC40MDVjMCAwLTEuMTAyIDAuODE2IDAuNTgxIDAuOTkgMi4xNzYgMC4yMjQgMy44OTUgMC4yNDMgNi44NjktMC4zMyAwIDAgMC40MTEgMC40MTcgMS4wNTggMC42NDUtNi4wODUgMS43NzktMTIuODYzIDAuMTQtOC41MDgtMS4zMDV6TTE3LjEyNyAxNS42M2MxLjI0IDEuNDI4LTAuMzI2IDIuNzEzLTAuMzI2IDIuNzEzczMuMTQ5LTEuNjI1IDEuNzAzLTMuNjYxYy0xLjM1MS0xLjg5OC0yLjM4Ni0yLjg0MSAzLjIyMS02LjA5MyAwIDAtOC44MDEgMi4xOTgtNC41OTggNy4wNDJ6TTIzLjc4MyAyNS4zMDJjMCAwIDAuNzI3IDAuNTk5LTAuODAxIDEuMDYyLTIuOTA1IDAuODgtMTIuMDkxIDEuMTQ2LTE0LjY0MyAwLjAzNS0wLjkxNy0wLjM5OSAwLjgwMy0wLjk1MyAxLjM0NC0xLjA2OSAwLjU2NC0wLjEyMiAwLjg4Ny0wLjEgMC44ODctMC4xLTEuMDIwLTAuNzE5LTYuNTk0IDEuNDExLTIuODMxIDIuMDIxIDEwLjI2MiAxLjY2NCAxOC43MDYtMC43NDkgMTYuMDQ0LTEuOTV6TTEzLjAyOSAxNy40ODljMCAwLTQuNjczIDEuMTEtMS42NTUgMS41MTMgMS4yNzQgMC4xNzEgMy44MTQgMC4xMzIgNi4xODEtMC4wNjYgMS45MzQtMC4xNjMgMy44NzYtMC41MSAzLjg3Ni0wLjUxcy0wLjY4MiAwLjI5Mi0xLjE3NSAwLjYyOWMtNC43NDUgMS4yNDgtMTMuOTExIDAuNjY3LTExLjI3Mi0wLjYwOSAyLjIzMi0xLjA3OSA0LjA0Ni0wLjk1NiA0LjA0Ni0wLjk1NnpNMjEuNDEyIDIyLjE3NGM0LjgyNC0yLjUwNiAyLjU5My00LjkxNSAxLjAzNy00LjU5MS0wLjM4MiAwLjA3OS0wLjU1MiAwLjE0OC0wLjU1MiAwLjE0OHMwLjE0Mi0wLjIyMiAwLjQxMi0wLjMxOGMzLjA3OS0xLjA4MyA1LjQ0OCAzLjE5My0wLjk5NCA0Ljg4Ny0wIDAgMC4wNzUtMC4wNjcgMC4wOTctMC4xMjZ6TTE4LjUwMyAzLjMzN2MwIDAgMi42NzEgMi42NzItMi41MzQgNi43ODEtNC4xNzQgMy4yOTYtMC45NTIgNS4xNzYtMC4wMDIgNy4zMjMtMi40MzYtMi4xOTgtNC4yMjQtNC4xMzMtMy4wMjUtNS45MzQgMS43NjEtMi42NDQgNi42MzgtMy45MjUgNS41Ni04LjE3ek0xMy41MDMgMjguOTY2YzQuNjMgMC4yOTYgMTEuNzQtMC4xNjQgMTEuOTA4LTIuMzU1IDAgMC0wLjMyNCAwLjgzMS0zLjgyNiAxLjQ5LTMuOTUyIDAuNzQ0LTguODI2IDAuNjU3LTExLjcxNiAwLjE4IDAgMCAwLjU5MiAwLjQ5IDMuNjM1IDAuNjg1eiIvPiA8L2c+Cg08L3N2Zz4=">
+<img src="https://img.shields.io/badge/Spring 5.3.37-6DB33F?style=Plastic&logo=Spring&logoColor=white">
 </div>
 <div>
   <h4>Database</h4>
-  <img src="https://img.shields.io/badge/Oracle SQL 11g-F80000?style=Plastic&logo=Oracle&logoColor=white" />
-<img src="https://img.shields.io/badge/SQL Developer 11g-gray?style=flat&logo=data:image/png%2bxml;base64,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">
+  <img src="https://img.shields.io/badge/MySQL 8.0.38-4479A1?style=Plastic&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL Workbench 8.0CE-4479A1?style=Plastic&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/MyBatis 3.5.10-gray?style=flat&logo=data:image/png%2bxml;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADoklEQVR4nO2ZaYhOURjHf2MdY89kj0KyZBmSLJHsQpQvaBRKkeQDktDIlpSdwQd7lg92yZbQNCWKDyaR/YMIMwbTzBgzr079b51u8473Lu/Mq+6/TnPfe+855/mf8zz/57lnIEKECLWFKUAeMJr/HJuBGPAJmAcMA1rzH6IhcEVknFYB5AINSCGkASOAATW8Ux9YAlwE8oFSETL3UgaLZNQHYKzcpicwEVig5/OBLBEymKQ+j0khNAJuuVwnXnsDjAcy9bvINVYnYBVwUzFVDhQDL4EzWpCMZJJpAmzQhIUy+A5wBNgBHNU9Jz5m6LpK/ZsD+2T4vxajCFgml04q0uJMYnZuu4z5KRLmehDwIsEdjVnNLE69ZBN5BZzXyg20YsPgpMugMv39BlR6JLOOJCPPNeF34BowTWJQ7Hp+DkiXiw2Xmh0C7kpEquIQ+Q10q40kaLcfQHc9323d35uAi2QB7xRv2cBy4J76Hwwj0cVLaH2AA1IzE+R/ZADakbcy4kKCfr7TIv4eWKPSx6kYAsVKhvz6gSbKFgE7HuxAd9BG+WUP0DTBuUZJ7ewdLrdcrj8BcbMaFzLB+0S6vxaYq8zfOcDKPbPGNwn2kmvOmUGJzPeoMmYVnwK7PK5iqTXGEC2MuXdD97YEzSsmEX71kQNiktpcK1MPBsbEmed4Nf1viIBdNawHuvols84nEaddlWiY2HoOPAIWAi2tOdIVh0XaVSMSbV1ESiXjk/3uToa0PgiZpRprcTWGzQbax5n7sPX+WaALATEnIBGnCu5dwzsFckWTQ6YCvYDr1nPj4idUkAaCW0m8tF8ao5XP/svCrLtMfnjt05DPGsMp7722LEJGb5XxfgIeqZbXvuVSz9DRV2WEF2OM0hhs80EkP0zj2wEbgX763VHf54kYYgLYiY/vPoisDINAdxWHTuY15fkE6/k4iUBZnLhwgjRN8umVREUN0vxPtFBpcj/Od8IfkbNl0CS3kaq7nNrLqZwbA/t9BvllP0Fs9Pt2gt/VMWXh7aqNqoPJ1rNcBaHXEmeIVyK7fE7mtI8q981n7ildFwUc8xg+kKYTkViKtEIJCn7J5KQAiUp9HQZGto5z6orIakJED+BhHZDYRBJQT/8m+FILBKqAFSQZmTpIKEkSCXPiYhJrraGtzrO+hUSgTOdfzagjmKOf6TpFKfEprVuBDqQQGgFDVVOdVqXqnNjHFF8FqhhyVMaYg78IESJEiBAhAiHiL7qqAQdttdy6AAAAAElFTkSuQmCC">
 </div>
 <div>
   <h4>FrontEnd</h4>
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=Plastic&logo=HTML5&logoColor=white" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=Plastic&logo=CSS3&logoColor=white" />
+  <img src="https://img.shields.io/badge/Bootstrap5-7952B3?style=Plastic&logo=Bootstrap&logoColor=white" />
+  <img src="https://img.shields.io/badge/jQuery 3.7.1-0769AD?style=Plastic&logo=jQuery&logoColor=white" />
   <img src="https://img.shields.io/badge/Javascript ES6-F7DF1E?style=Plastic&logo=Javascript&logoColor=white" />
   <br>
 </div>
 
 <h3>Tools & ETC </h3>
 
-<img src="https://img.shields.io/badge/Eclipse Egov 3.10 IDE-2C2255?style=Plastic&logo=Eclipse&logoColor=white" />
-
-<img src="https://img.shields.io/badge/Visual Studio Code-0288d1?style=flat&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgNDggNDgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiPjxwYXRoIGZpbGw9IiMyOWI2ZjYiIGQ9Ik00NCwxMS4xMXYyNS43OGMwLDEuMjctMC43OSwyLjQtMS45OCwyLjgybC04LjgyLDQuMTRMMzQsMzNWMTVMMzMuMiw0LjE1bDguODIsNC4xNCBDNDMuMjEsOC43MSw0NCw5Ljg0LDQ0LDExLjExeiIvPjxwYXRoIGZpbGw9IiMwMjc3YmQiIGQ9Ik05LDMzLjg5NkwzNCwxNVY1LjM1M2MwLTEuMTk4LTEuNDgyLTEuNzU4LTIuMjc1LTAuODZMNC42NTgsMjkuMjM5IGMtMC45LDAuODMtMC44NDksMi4yNjcsMC4xMDcsMy4wMzJjMCwwLDEuMzI0LDEuMjMyLDEuODAzLDEuNTc0QzcuMzA0LDM0LjM3LDguMjcxLDM0LjQzLDksMzMuODk2eiIvPjxwYXRoIGZpbGw9IiMwMjg4ZDEiIGQ9Ik05LDE0LjEwNEwzNCwzM3Y5LjY0N2MwLDEuMTk4LTEuNDgyLDEuNzU4LTIuMjc1LDAuODZMNC42NTgsMTguNzYxIGMtMC45LTAuODMtMC44NDktMi4yNjcsMC4xMDctMy4wMzJjMCwwLDEuMzI0LTEuMjMyLDEuODAzLTEuNTc0QzcuMzA0LDEzLjYzLDguMjcxLDEzLjU3LDksMTQuMTA0eiIvPjwvc3ZnPg==">
-<img src="https://img.shields.io/badge/MyBatis 3.5.10-gray?style=flat&logo=data:image/png%2bxml;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADoklEQVR4nO2ZaYhOURjHf2MdY89kj0KyZBmSLJHsQpQvaBRKkeQDktDIlpSdwQd7lg92yZbQNCWKDyaR/YMIMwbTzBgzr079b51u8473Lu/Mq+6/TnPfe+855/mf8zz/57lnIEKECLWFKUAeMJr/HJuBGPAJmAcMA1rzH6IhcEVknFYB5AINSCGkASOAATW8Ux9YAlwE8oFSETL3UgaLZNQHYKzcpicwEVig5/OBLBEymKQ+j0khNAJuuVwnXnsDjAcy9bvINVYnYBVwUzFVDhQDL4EzWpCMZJJpAmzQhIUy+A5wBNgBHNU9Jz5m6LpK/ZsD+2T4vxajCFgml04q0uJMYnZuu4z5KRLmehDwIsEdjVnNLE69ZBN5BZzXyg20YsPgpMugMv39BlR6JLOOJCPPNeF34BowTWJQ7Hp+DkiXiw2Xmh0C7kpEquIQ+Q10q40kaLcfQHc9323d35uAi2QB7xRv2cBy4J76Hwwj0cVLaH2AA1IzE+R/ZADakbcy4kKCfr7TIv4eWKPSx6kYAsVKhvz6gSbKFgE7HuxAd9BG+WUP0DTBuUZJ7ewdLrdcrj8BcbMaFzLB+0S6vxaYq8zfOcDKPbPGNwn2kmvOmUGJzPeoMmYVnwK7PK5iqTXGEC2MuXdD97YEzSsmEX71kQNiktpcK1MPBsbEmed4Nf1viIBdNawHuvols84nEaddlWiY2HoOPAIWAi2tOdIVh0XaVSMSbV1ESiXjk/3uToa0PgiZpRprcTWGzQbax5n7sPX+WaALATEnIBGnCu5dwzsFckWTQ6YCvYDr1nPj4idUkAaCW0m8tF8ao5XP/svCrLtMfnjt05DPGsMp7722LEJGb5XxfgIeqZbXvuVSz9DRV2WEF2OM0hhs80EkP0zj2wEbgX763VHf54kYYgLYiY/vPoisDINAdxWHTuY15fkE6/k4iUBZnLhwgjRN8umVREUN0vxPtFBpcj/Od8IfkbNl0CS3kaq7nNrLqZwbA/t9BvllP0Fs9Pt2gt/VMWXh7aqNqoPJ1rNcBaHXEmeIVyK7fE7mtI8q981n7ildFwUc8xg+kKYTkViKtEIJCn7J5KQAiUp9HQZGto5z6orIakJED+BhHZDYRBJQT/8m+FILBKqAFSQZmTpIKEkSCXPiYhJrraGtzrO+hUSgTOdfzagjmKOf6TpFKfEprVuBDqQQGgFDVVOdVqXqnNjHFF8FqhhyVMaYg78IESJEiBAhAiHiL7qqAQdttdy6AAAAAElFTkSuQmCC">
+<img src="https://img.shields.io/badge/IntelliJ IDEA IDE 2024.1.4-000000?style=Plastic&logo=intellijidea&logoColor=white" />
+<img src="https://img.shields.io/badge/AmazonS3-569A31?style=Plastic&logo=amazons3&logoColor=white" />
+<img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=Plastic&logo=amazonec2&logoColor=white" />
 <br>
-<img src="https://img.shields.io/badge/jQuery 3.7.1-0769AD?style=Plastic&logo=jQuery&logoColor=white" />
-<img src="https://img.shields.io/badge/Bootstrap4-7952B3?style=Plastic&logo=Bootstrap&logoColor=white" />
+<img src="https://img.shields.io/badge/Postman-FF6C37?style=Plastic&logo=postman&logoColor=white" />
+<img src="https://img.shields.io/badge/JUnit4-25A162?style=Plastic&logo=junit5&logoColor=white" />
+<img src="https://img.shields.io/badge/Git-F05032?style=Plastic&logo=git&logoColor=white" />
+<img src="https://img.shields.io/badge/Github-181717?style=Plastic&logo=github&logoColor=white" />
 <br>
-<img src="https://img.shields.io/badge/Redmine-B32024?style=Plastic&logo=Redmine&logoColor=white" />
-<img src="https://img.shields.io/badge/Apache Tomcat 8.5-F8DC75?style=Plastic&logo=apachetomcat&logoColor=white" />
+<img src="https://img.shields.io/badge/Apache Tomcat 9.0.93-F8DC75?style=Plastic&logo=apachetomcat&logoColor=white" />
 <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=Plastic&logo=apachemaven&logoColor=white" />
-
 </div>
 </div>
 <br>
