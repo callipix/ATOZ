@@ -9,26 +9,37 @@
 <div style="background-color: white;">
 
 <div> 
-  <h2 style="color: #282d33;"> ✈️ 프로젝트 간략 소개 </h2>  
-  <div style="font-weight: 700; font-size: 15px; color: #282d33;" align="center">
-    <br>
+  <h2 style="color: #282d33;"> ✈️ 프로젝트 개요</h2>  
+  <div style="font-weight: 700; font-size: 15px; color: #282d33;">
+    <h4>기초지만 중요한 내용을 스스로 다시 한번 환경 설정부터 배포까지 해보고 간단한 성능테스트 후 개선까지 해보는 것을 목표로 하고자 한 개인프로젝트</h4>
+<h6>
+1. 기본적인 CRUD 다시 한번 체크 및 재정리<br>
+2. 기존에 사용 해보지 않았던 DB 사용(기존 : Oracle → MySQL)<br>
+3. 페이징 및 검색 다시 한번 복습<br>
+4. 테스트툴 활용하기 → Junit4, Postman<br>
+5. Debugging 활용하여 에러 해결하기<br>
+6. DB 트랜잭션 적용 및 확인<br>
+7. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3)<br>
+8. 특정 기능 Rest API로 구현<br>
+9. 일부설정파일 properties로 관리<br>
+10. Validation으로 서버단 유효성 검증<br>
+11. 스프링 시큐리티 사용하여 접근권한 설정 → 보안강화<br>
+12. 부하테스트를 통한 성능 측정 후 개선(JMeter)
+</h6>
   </div>
-<br><br>
+<br>
 </div>
 <h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
+<h4>
 2024.07.17 - 2024.08.06
+</h4>
 <div align="center">  
 </div>
 
 <br><br>
-<h2 style="color: #282d33;"> 🗂️ ERD 구조도 </h2>
+<h2 style="color: #282d33;"> 🗂️ ERD </h2>
 <div align="center">
   <img style="width:70%" src="https://github.com/user-attachments/assets/4ad12a1a-6495-4109-9bb7-1a291af80d22">
-</div>
-
-<br><br>
-<h2 style="color: #282d33;"> 📜 웹사이트 전체 구성 </h2>
-<div align= "center">
 </div>
   <br>
 <br>
