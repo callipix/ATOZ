@@ -6,13 +6,12 @@
 
     <select id="findAll" resultType="com.project.myapp.dto.Notice">
         SELECT *
-        FROM notice
-                 limit 5000
+        FROM notice limit 5000
     </select>
 
     <select id="findByPage" parameterType="Integer" resultType="com.project.myapp.dto.Notice">
         SELECT *
-        FROM notice
-                 LIMIT #{startIdx},10
+        FROM notice LIMIT #{startIdx},10
     </select>
+
 </mapper>

@@ -11,8 +11,8 @@ import lombok.ToString;
 @ToString
 public class CategoryDTO {
 
-    private int categoryNo;
-    private String categoryName;
-    private int categoryPickBno;
+	private int categoryNo;
+	private String categoryName;
+	private int categoryPickBno;
 
 }

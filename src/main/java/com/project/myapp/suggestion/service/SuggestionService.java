@@ -1,20 +1,20 @@
 package com.project.myapp.suggestion.service;
 
-import com.project.myapp.dto.SuggestionDTO;
-
 import java.util.List;
 import java.util.Map;
 
+import com.project.myapp.dto.SuggestionDTO;
+
 public interface SuggestionService {
-    public List<SuggestionDTO> getSuggestList(Map map);
+	public List<SuggestionDTO> getSuggestList(Map map);
 
-    public SuggestionDTO insert(SuggestionDTO suggestionDTO);
+	public SuggestionDTO insert(SuggestionDTO suggestionDTO);
 
-    public int update(SuggestionDTO suggestionDTO);
+	public int update(SuggestionDTO suggestionDTO);
 
-    public int delete(String password , int sno);
+	public int delete(String password, int sno);
 
-    public int getSuggestListCount();
+	public int getSuggestListCount();
 
-    public int passCheck(int sno , String password);
+	public int passCheck(int sno, String password);
 }

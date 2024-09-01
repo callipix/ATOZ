@@ -1,28 +1,34 @@
 package com.project.myapp.dto;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class AdminDTO {
 
-    private String id;
+	private String id;
 
-    public AdminDTO() {
-    }
+	public AdminDTO(String id) {
+		this.id = id;
+	}
 
-    public AdminDTO(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminDTO{" +
-                "id='" + id + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "AdminDTO{" +
+			"id='" + id + '\'' +
+			'}';
+	}
 }

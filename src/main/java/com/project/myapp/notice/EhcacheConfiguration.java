@@ -13,18 +13,18 @@ import org.springframework.core.io.ClassPathResource;
 @EnableCaching
 public class EhcacheConfiguration {
 
-    @Bean
-    @Primary
-    public CacheManager cacheManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
-        return new EhCacheCacheManager(ehCacheManagerFactoryBean.getObject());
-    }
+	@Bean
+	@Primary
+	public CacheManager cacheManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
+		return new EhCacheCacheManager(ehCacheManagerFactoryBean.getObject());
+	}
 
-    @Bean
-    public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
-        EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
-        ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
-        ehCacheManagerFactoryBean.setShared(true);
-        return ehCacheManagerFactoryBean;
-    }
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
+		EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+		ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		ehCacheManagerFactoryBean.setShared(true);
+		return ehCacheManagerFactoryBean;
+	}
 
 }

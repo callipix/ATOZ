@@ -4,9 +4,9 @@ import com.project.myapp.dto.RegisterDTO;
 
 public interface RegisterService {
 
-    public int idCheck(String id);
+	int idCheck(String id);
 
-    public String sendSMS(String phoneNo);
+	String sendSMS(String phoneNo);
 
-    public int insertUser(RegisterDTO registerDTO) throws Exception;
+	int insertUser(RegisterDTO registerDTO) throws Exception;
 }

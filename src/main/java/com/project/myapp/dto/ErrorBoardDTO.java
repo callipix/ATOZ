@@ -4,155 +4,161 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ErrorBoardDTO {
-    
-    private int rownum;
-    private int errBno;
-    private String errCode;
-    private String title;
-    private String content;
-    private String writer;
-    private int viewCnt;
-    private int commentCnt;
-    private Date regDate;
-    private Date upDate;
-    private final int categoryNo = 2;
-    private String errBoardThum;
 
-    public ErrorBoardDTO(){}
+	private int rownum;
+	private int errBno;
+	private String errCode;
+	private String title;
+	private String content;
+	private String writer;
+	private int viewCnt;
+	private int commentCnt;
+	private Date regDate;
+	private Date upDate;
+	private final int categoryNo = 2;
+	private String errBoardThum;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ErrorBoardDTO that = (ErrorBoardDTO) o;
-        return errBno == that.errBno && Objects.equals(errCode, that.errCode) && Objects.equals(title, that.title) && Objects.equals(content, that.content) && Objects.equals(writer, that.writer);
-    }
+	public ErrorBoardDTO() {
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(errBno, errCode, title, content, writer);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ErrorBoardDTO that = (ErrorBoardDTO)o;
+		return errBno == that.errBno && Objects.equals(errCode, that.errCode) && Objects.equals(title, that.title)
+			&& Objects.equals(content, that.content) && Objects.equals(writer, that.writer);
+	}
 
-    public ErrorBoardDTO(String errCode, String title, String content, String writer) {
-        this.errCode = errCode;
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
-    }
-    public ErrorBoardDTO(String errCode, String title, String content, String writer, String errBoardThum) {
-        this.errCode = errCode;
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
-        this.errBoardThum = errBoardThum;
-    }
-    public int getRownum() {
-        return rownum;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(errBno, errCode, title, content, writer);
+	}
 
-    public void setRownum(int rownum) {
-        this.rownum = rownum;
-    }
+	public ErrorBoardDTO(String errCode, String title, String content, String writer) {
+		this.errCode = errCode;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+	}
 
-    public int getErrBno() {
-        return errBno;
-    }
+	public ErrorBoardDTO(String errCode, String title, String content, String writer, String errBoardThum) {
+		this.errCode = errCode;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.errBoardThum = errBoardThum;
+	}
 
-    public void setErrBno(int errBno) {
-        this.errBno = errBno;
-    }
+	public int getRownum() {
+		return rownum;
+	}
 
-    public String getErrCode() {
-        return errCode;
-    }
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
 
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
+	public int getErrBno() {
+		return errBno;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setErrBno(int errBno) {
+		this.errBno = errBno;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getErrCode() {
+		return errCode;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setErrCode(String errCode) {
+		this.errCode = errCode;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getWriter() {
-        return writer;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public int getViewCnt() {
-        return viewCnt;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setViewCnt(int viewCnt) {
-        this.viewCnt = viewCnt;
-    }
+	public String getWriter() {
+		return writer;
+	}
 
-    public int getCommentCnt() {
-        return commentCnt;
-    }
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 
-    public void setCommentCnt(int commentCnt) {
-        this.commentCnt = commentCnt;
-    }
+	public int getViewCnt() {
+		return viewCnt;
+	}
 
-    public Date getRegDate() {
-        return regDate;
-    }
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
+	}
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
+	public int getCommentCnt() {
+		return commentCnt;
+	}
 
-    public Date getUpDate() {
-        return upDate;
-    }
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
 
-    public void setUpDate(Date upDate) {
-        this.upDate = upDate;
-    }
+	public Date getRegDate() {
+		return regDate;
+	}
 
-    public int getCategoryNo() {
-        return categoryNo;
-    }
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
-    public String getErrBoardThum() {
-        return errBoardThum;
-    }
+	public Date getUpDate() {
+		return upDate;
+	}
 
-    public void setErrBoardThum(String errBoardThum) {
-        this.errBoardThum = errBoardThum;
-    }
+	public void setUpDate(Date upDate) {
+		this.upDate = upDate;
+	}
 
-    @Override
-    public String toString() {
-        return "ErrorBoardDTO{" +
-                "rownum=" + rownum +
-                ", errBno=" + errBno +
-                ", errCode='" + errCode + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", writer='" + writer + '\'' +
-                ", viewCnt=" + viewCnt +
-                ", commentCnt=" + commentCnt +
-                ", regDate=" + regDate +
-                ", upDate=" + upDate +
-                ", categoryNo=" + categoryNo +
-                ", errBoardThum='" + errBoardThum + '\'' +
-                '}';
-    }
+	public int getCategoryNo() {
+		return categoryNo;
+	}
+
+	public String getErrBoardThum() {
+		return errBoardThum;
+	}
+
+	public void setErrBoardThum(String errBoardThum) {
+		this.errBoardThum = errBoardThum;
+	}
+
+	@Override
+	public String toString() {
+		return "ErrorBoardDTO{" +
+			"rownum=" + rownum +
+			", errBno=" + errBno +
+			", errCode='" + errCode + '\'' +
+			", title='" + title + '\'' +
+			", content='" + content + '\'' +
+			", writer='" + writer + '\'' +
+			", viewCnt=" + viewCnt +
+			", commentCnt=" + commentCnt +
+			", regDate=" + regDate +
+			", upDate=" + upDate +
+			", categoryNo=" + categoryNo +
+			", errBoardThum='" + errBoardThum + '\'' +
+			'}';
+	}
 }
