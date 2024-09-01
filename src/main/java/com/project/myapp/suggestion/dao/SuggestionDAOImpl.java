@@ -1,19 +1,20 @@
 package com.project.myapp.suggestion.dao;
 
 import com.project.myapp.dto.SuggestionDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Stream;
-
+@Slf4j
 @Repository
+@RequiredArgsConstructor
 public class SuggestionDAOImpl implements SuggestionDAO {
 
-    @Autowired
-    private SqlSession sqlSession;
-
+    private final SqlSession sqlSession;
     private static final String namespace = "com.project.myapp.suggestion.dao.SuggestionMapper.";
 
     @Override
@@ -43,8 +44,6 @@ public class SuggestionDAOImpl implements SuggestionDAO {
         return result;
     }
 
-
-
     @Override
     public int getSuggestListCount() {
 
@@ -54,14 +53,14 @@ public class SuggestionDAOImpl implements SuggestionDAO {
 
     @Override
     public int passCheck(int sno, String password) {
-        System.out.println("passCheck DAOImpl sno = " + sno);
-        System.out.println("passCheck DAOImpl = " + password);
+        log.info("passCheck DAOImpl sno = {}", sno);
+        log.info("passCheck DAOImpl = {} ",password);
         Map<String , Object> map = new HashMap<>();
         map.put("sno", sno);
         map.put("password", password);
-        System.out.println("passCheck DAOImpl map = " + map);
+        log.info("passCheck DAOImpl map = {} ", map);
         int result = this.sqlSession.selectOne(namespace + "isEqualsIdNPass", map);
-        System.out.println("passCheck DAOImpl result = " + result);
+        log.info("passCheck DAOImpl result = {} ", result);
         return result;
     }
 }

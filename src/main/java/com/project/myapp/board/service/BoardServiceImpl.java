@@ -4,6 +4,7 @@ import com.project.myapp.board.dao.BoardDAO;
 import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.utiles.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
-
-    BoardDAO boardDAO;
-
-    @Autowired
-    public BoardServiceImpl(BoardDAO boardDAO){
-        // 생성자 주입
-        this.boardDAO = boardDAO;
-    }
+    private final BoardDAO boardDAO;
 
     @Override
     public List<BoardDTO> getBoardList() {

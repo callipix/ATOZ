@@ -4,6 +4,7 @@ import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.PageHandler2;
 import com.project.myapp.dto.SuggestionDTO;
 import com.project.myapp.suggestion.service.SuggestionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +22,15 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-//@RestController
 @Controller
+@RequiredArgsConstructor
 public class SuggestionController {
+    private final SuggestionService suggestionService;
 
-    SuggestionService suggestionService;
-
-    @Autowired
-    public SuggestionController(SuggestionService suggestionService) {
-        this.suggestionService = suggestionService;
-    }
-
-    @PostMapping("/suggestions")
     @ResponseBody
+    @PostMapping("/suggestions")
     public ResponseEntity<SuggestionDTO> write(SuggestionDTO suggestionDTO){
-        System.out.println("suggestionDTO = " + suggestionDTO);
+        log.info("suggestionDTO = {}", suggestionDTO);
         try{
             suggestionDTO = this.suggestionService.insert(suggestionDTO);
             if(suggestionDTO == null){
@@ -49,10 +44,9 @@ public class SuggestionController {
         }
     }
 
-    @PatchMapping("/suggestions/{sno}")
     @ResponseBody
+    @PatchMapping("/suggestions/{sno}")
     public ResponseEntity<String> modify(@PathVariable Integer sno, @RequestBody SuggestionDTO suggestionDTO){
-
         suggestionDTO.setSno(sno);
         try {
             int result = this.suggestionService.update(suggestionDTO);
@@ -68,18 +62,19 @@ public class SuggestionController {
 
     }
 
-    @DeleteMapping("/suggestions/{sno}")
     @ResponseBody
+    @DeleteMapping("/suggestions/{sno}")
     public ResponseEntity<String> delete(@PathVariable Integer sno,String password){
-        System.out.println("sno = " + sno);
-        System.out.println("password = " + password);
+        log.info("sno = {}", sno);
+        log.info("password = {}", password);
         try {
-
             int result = this.suggestionService.passCheck(sno , password);
-            System.out.println("passCheck result = " + result);
+            log.info("passCheck result = {}", result);
+
             if(result != 1){
                 return new ResponseEntity<>("passNotEqual" , HttpStatus.OK);
             }
+
             result = this.suggestionService.delete(password,sno);
 
             if(result != 1){
@@ -90,11 +85,10 @@ public class SuggestionController {
             e.printStackTrace();
             return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);
         }
-
     }
+
     @GetMapping("/suggestions")
     public String getSuggestList(Integer page , Integer pageSize,Model model){
-
         if(page == null){ page = 1;}
         if(pageSize == null){ pageSize = 4;}
 

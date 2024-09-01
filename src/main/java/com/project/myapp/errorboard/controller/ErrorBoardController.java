@@ -10,6 +10,7 @@ import com.project.myapp.utiles.AwsConfig;
 import com.project.myapp.utiles.AwsS3FileUploadService;
 import com.project.myapp.utiles.AwsS3FileUploadServiceImpl;
 import com.project.myapp.utiles.FileUpload;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +31,13 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/errorBoard")
+@RequiredArgsConstructor
 public class ErrorBoardController {
 
-    ErrorBoardService errorBoardService;
-    FileUpload fileUpload;
-    AwsConfig awsConfig;
-    AwsS3FileUploadService awsS3FileUploadService;
-
-    @Autowired
-    ErrorBoardController(ErrorBoardService errorBoardService, FileUpload fileUpload, AwsConfig awsConfig, AwsS3FileUploadService awsS3FileUploadService){
-        this.errorBoardService = errorBoardService;
-        this.fileUpload = fileUpload;
-        this.awsConfig = awsConfig;
-        this.awsS3FileUploadService = awsS3FileUploadService;
-    }
+    private final ErrorBoardService errorBoardService;
+    private final FileUpload fileUpload;
+    private final AwsConfig awsConfig;
+    private final AwsS3FileUploadService awsS3FileUploadService;
 
     @ResponseBody
     @PostMapping("/isCheckWriter")

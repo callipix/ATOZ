@@ -2,6 +2,9 @@ package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.MymemberService;
 import com.project.myapp.dto.TestMember;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/mymember")
+@RequiredArgsConstructor
 public class TestMemberController {
 
-    @Autowired
-    MymemberService mymemberService;
+    private final MymemberService mymemberService;
 
     @GetMapping("/memberList")
     @ResponseBody
@@ -26,24 +29,18 @@ public class TestMemberController {
     @GetMapping("/idCheck")
     @ResponseBody
     public String idCheck(String id){
-        System.out.println("id = " + id);
         int result = this.mymemberService.idCheck(id);
-        System.out.println("result = " + result);
         return String.valueOf(result);
     }
     @ResponseBody
     @PostMapping("/addMember")
     public TestMember addMember(TestMember member){
-        System.out.println("member = " + member);
         int result = this.mymemberService.addMember(member);
-        System.out.println("result = " + result);
-        System.out.println("member = " + member);
         return member;
     }
     @ResponseBody
     @PostMapping("/memDetail")
     public TestMember read(@RequestParam("memID") String memID){
-        System.out.println("memID = " + memID);
         TestMember getMember = this.mymemberService.getMember(memID);
         return getMember;
     }

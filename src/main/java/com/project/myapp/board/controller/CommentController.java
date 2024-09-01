@@ -3,6 +3,8 @@ package com.project.myapp.board.controller;
 
 import com.project.myapp.board.service.CommentService;
 import com.project.myapp.dto.CommentDTO;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +15,22 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class CommentController {
 
-    CommentService commentService;
-
-    @Autowired
-    CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
-
+    private final CommentService commentService;
 
     @ResponseBody
     @PatchMapping("/comments/{cno}")
     public ResponseEntity<String> modify(@PathVariable Integer cno , @RequestBody CommentDTO commentDTO , HttpSession session){
 
         System.out.println("commentDTO = " + commentDTO);
+
         String commenter = (String) session.getAttribute("id");
 
         commentDTO.setCno(cno);
         commentDTO.setCommenter(commenter);
+
         try {
             int result = this.commentService.updateComment(commentDTO);
             if(result != 1){
@@ -43,6 +42,7 @@ public class CommentController {
             return new ResponseEntity<>("MOD_ERR" , HttpStatus.BAD_REQUEST);
         }
     }
+
     // 댓글 등록
     @ResponseBody
     @PostMapping("/comments")
@@ -52,11 +52,9 @@ public class CommentController {
         commentDTO.setCommenter(commenter);
         try {
             CommentDTO result = this.commentService.insertComment(commentDTO);
-            if(result == null){
+                if(result == null){
                 throw new Exception("Write failed");
             }
-            System.out.println("Controller commentDTO = " + commentDTO);
-            System.out.println("ResponseEntity.ok(commentDTO)= "+ ResponseEntity.ok(commentDTO));
             return ResponseEntity.ok(commentDTO);
         } catch (Exception e){
             e.printStackTrace();
@@ -90,9 +88,6 @@ public class CommentController {
         try {
             list = this.commentService.getCommentForBoard(bno);
             // 댓글 리스트를 정상적으로 가져왔을시에 http 상태코드를 200으로 설정
-            for(CommentDTO commentDTO : list){
-                System.out.println("list = " + list);
-            }
             m.addAttribute("list", list);
             return new ResponseEntity<List<CommentDTO>>(list , HttpStatus.OK);
         } catch (Exception e){

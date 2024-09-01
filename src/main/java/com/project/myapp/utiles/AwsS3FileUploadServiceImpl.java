@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.project.myapp.dto.FilesDTO;
 import com.project.myapp.errorboard.dao.ErrorBoardDAO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.*;
-
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
-    @Value("${cloud.aws.s3.bucketName}")
-    private String bucketName;
-    private static final Logger logger = LoggerFactory.getLogger(UploadConfig.class);
-
-    private final ErrorBoardDAO errorBoardDAO;
     private final AmazonS3 amazonS3;
     private final AwsConfig awsConfig;
     private final FileUpload fileUpload;
-
-
-    @Autowired      // 생성자 주입
-    public AwsS3FileUploadServiceImpl(ErrorBoardDAO errorBoardDAO, AmazonS3 amazonS3, AwsConfig awsConfig, FileUpload fileUpload) {
-        this.errorBoardDAO = errorBoardDAO;
-        this.amazonS3 = amazonS3;
-        this.awsConfig = awsConfig;
-        this.fileUpload = fileUpload;
-    }
 
     // UUID를 사용해서 저장할 파일 이름을 생성(중복방지)
     private String makeFileName(String originName){
@@ -108,16 +97,16 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
                 String awsURL = "https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/";
                 imgURL = decodeURL.substring(awsURL.length());
 
-                System.out.println("imgURL = " + imgURL);
+                log.info("imgURL = {}", imgURL);
                 amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
 
                 result += this.fileUpload.deleteFile(imgURL);
-                System.out.println("파일정보 삭제 결과 = " + result);
+                log.info("파일정보 삭제 결과 for deleteImageFile = {}", result);
 
                 if (result == 0) {
                     throw new IOException("DB 파일정보 삭제 오류");
                 }
-                System.out.println("파일삭제 성공시 = " + result);
+                log.info("파일삭제 성공시 for deleteImageFile = {}", result);
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new IOException("파일정보 삭제 오류");
@@ -142,16 +131,16 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
                 String awsURL = "https://test-bucket-myappaws.s3.ap-northeast-2.amazonaws.com/";
                 imgURL = decodeURL.substring(awsURL.length());
 
-                System.out.println("imgURL = " + imgURL);
+                log.info("imgURL for deleteFileAWS = {}", imgURL);
                 amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
 
                 result += this.fileUpload.deleteFile(imgURL);
-                System.out.println("파일정보 삭제 결과 = " + result);
+                log.info("파일정보 삭제 결과 for deleteFileAwsS3 = {}", result);
 
                 if (result == 0) {
                     throw new IOException("DB 파일정보 삭제 오류");
                 }
-                System.out.println("파일삭제 성공시 = " + result);
+                log.info("파일삭제 성공시 for deleteFileAwsS3 = {}", result);
             } catch (IOException e) {
                 e.printStackTrace();
             }

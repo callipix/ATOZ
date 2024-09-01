@@ -9,6 +9,7 @@ import com.project.myapp.utiles.AwsConfig;
 import com.project.myapp.utiles.AwsS3FileUploadService;
 import com.project.myapp.utiles.FileUpload;
 import com.project.myapp.utiles.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,22 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ErrorBoardServiceImpl implements ErrorBoardService {
 
-    AwsS3FileUploadService awsS3FileUploadService;
-    ErrorBoardDAO errorBoardDAO;
-    FileUpload fileUpload;
-    AwsConfig awsConfig;
-    AmazonS3 amazonS3;
-
-    @Autowired
-    ErrorBoardServiceImpl(ErrorBoardDAO errorBoardDAO , AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload , AmazonS3 amazonS3,AwsConfig awsConfig ){
-        this.errorBoardDAO = errorBoardDAO;
-        this.awsS3FileUploadService = awsS3FileUploadService;
-        this.fileUpload = fileUpload;
-        this.amazonS3 = amazonS3;
-        this.awsConfig = awsConfig;
-    }
+    private final ErrorBoardDAO errorBoardDAO;
+    private final FileUpload fileUpload;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

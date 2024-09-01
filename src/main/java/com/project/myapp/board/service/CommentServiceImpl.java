@@ -3,6 +3,7 @@ package com.project.myapp.board.service;
 import com.project.myapp.board.dao.BoardDAO;
 import com.project.myapp.board.dao.CommentDAO;
 import com.project.myapp.dto.CommentDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -11,16 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-
-    CommentDAO commentDAO;
-    BoardDAO boardDAO;
-
-    @Autowired
-    public CommentServiceImpl(CommentDAO commentDAO, BoardDAO boardDAO) {
-        this.commentDAO = commentDAO;
-        this.boardDAO = boardDAO;
-    }
+    private final CommentDAO commentDAO;
+    private final BoardDAO boardDAO;
 
     @Override
     public int commentCount(int bno) throws Exception {

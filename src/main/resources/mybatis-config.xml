@@ -9,8 +9,8 @@
     <typeAliases>
         <typeAlias alias="ErrorBoardDTO" type="com.project.myapp.dto.ErrorBoardDTO" />
         <typeAlias alias="SuggestionDTO" type="com.project.myapp.dto.SuggestionDTO" />
-        <typeAlias alias="FilesDTO" type="com.project.myapp.dto.FilesDTO" />
-        <typeAlias alias="ErrNFilesDTO" type="com.project.myapp.dto.ErrNFilesDTO" />
+        <typeAlias alias="FilesDTO"      type="com.project.myapp.dto.FilesDTO" />
+        <typeAlias alias="ErrNFilesDTO"  type="com.project.myapp.dto.ErrNFilesDTO" />
     </typeAliases>
 
 </configuration>

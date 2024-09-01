@@ -7,6 +7,7 @@ import com.project.myapp.register.service.RegisterService;
 import com.project.myapp.utiles.CombinedValidator;
 import com.project.myapp.utiles.MemberValidator;
 import com.project.myapp.utiles.UserValidator;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -23,10 +24,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
+@RequiredArgsConstructor
 public class RegisterController {
 
-    @Autowired
-    private RegisterService registerService;
+    private final RegisterService registerService;
 
     @InitBinder
     public void initBinder(@NotNull WebDataBinder binder) {
@@ -38,9 +39,7 @@ public class RegisterController {
     @GetMapping("/idCheck")
     @ResponseBody
     public int idCheck(String id){
-        System.out.println("inputId = " + id);
         Integer result = this.registerService.idCheck(id);
-        System.out.println("result = " + result);
         return result;
     }
     @ResponseBody

@@ -1,34 +1,36 @@
 package com.project.myapp.login.service;
 
 import com.project.myapp.login.dao.LoginDAO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService{
 
-    @Autowired
-    private LoginDAO loginDAO;
+    private final LoginDAO loginDAO;
 
     @Override
     public int loginCheck(String id , String password) {
 
-        System.out.println("id = " + id);
-        System.out.println("password = " + password);
+        log.info("id = {}", id);
+        log.info("password = {}", password);
 
         int result = 0;
         Map<String, String> loginCheckMap = new HashMap<String, String>();
         loginCheckMap.put("id", id);
         loginCheckMap.put("password", password);
 
-        System.out.println("loginCheckMap = " + loginCheckMap);
+        log.info("loginCheckMap = {}", loginCheckMap);
 
         try {
             result = loginDAO.loginCheck(loginCheckMap);
-            System.out.println("result = " + result);
+            log.info("result = {}", result);
 
         } catch (Exception e) {
             e.printStackTrace();

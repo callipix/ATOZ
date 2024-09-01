@@ -3,6 +3,7 @@ package com.project.myapp.register.service;
 import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.register.dao.RegisterDAO;
 import com.project.myapp.utiles.ApiConfigProperties;
+import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -15,16 +16,11 @@ import java.util.HashMap;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
 
-    ApiConfigProperties apiConfigProperties;
-    RegisterDAO registerDAO;
-
-    @Autowired
-    public RegisterServiceImpl(ApiConfigProperties apiConfigProperties , RegisterDAO registerDAO) {
-        this.apiConfigProperties = apiConfigProperties;
-        this.registerDAO = registerDAO;
-    }
+    private final ApiConfigProperties apiConfigProperties;
+    private final RegisterDAO registerDAO;
 
     @Override
     public int idCheck(String id){

@@ -1,6 +1,7 @@
 package com.project.myapp.login.controller;
 
 import com.project.myapp.login.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,10 @@ import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @GetMapping("/logout")
     public String logOut(HttpSession session, HttpServletRequest request){

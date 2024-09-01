@@ -1,9 +1,7 @@
 package com.project.myapp.utiles;
 
-import com.project.myapp.errorboard.dao.ErrorBoardDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,31 +12,27 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
-
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class UploadConfig {
 
-    AwsS3FileUploadService awsS3FileUploadService;
-    FileUpload fileUpload;
+    private final AwsS3FileUploadService awsS3FileUploadService;
+    private final FileUpload fileUpload;
 
-    @Autowired
-    UploadConfig(AwsS3FileUploadService awsS3FileUploadService, FileUpload fileUpload){
-        this.awsS3FileUploadService = awsS3FileUploadService;
-        this.fileUpload = fileUpload;
-    }
     @ResponseBody
     @PostMapping("/upload/uploadCK")
     public Map<String , Object> uploads(MultipartHttpServletRequest request, HttpSession session) {
 
         MultipartFile uploadImg = request.getFile("upload");
-        System.out.println("uploadImg = " + uploadImg);
+        log.info("uploadImg = {}", uploadImg);
         String id = (String)session.getAttribute("id");
         try{
             String successURL = this.awsS3FileUploadService.saveFileToS3(uploadImg , id);
             if(successURL == null) {
                 throw new Exception("uploadCK failed");
             }
-            System.out.println("successURL = " + successURL);
+            log.info("successURL = {} ", successURL);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uploaded" , true);
             map.put("url" , successURL);
@@ -61,11 +55,11 @@ public class UploadConfig {
         int result = 0;
         for(String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
             beforeAddress.add(beforeImgAddress);
-            System.out.println("beforeImgAddress = " + beforeImgAddress);
+            log.info("beforeImgAddress = {} ", beforeImgAddress);
         }
         for(String afterImgAddress : imageAddress.get("afterImgAddress")) {
             afterAddress.add(afterImgAddress);
-            System.out.println("afterImgAddress = " + afterImgAddress);
+            log.info("afterImgAddress = {} ", afterImgAddress);
         }
         if(!imageAddress.isEmpty()){
             // 이미지 업로드 여부 → 업로드 존재시
@@ -75,7 +69,7 @@ public class UploadConfig {
 
             resultMap.put("result" , result);
             resultMap.put("afterAddress" , afterAddress);
-            System.out.println("deletedImg = " + endImgList);
+            log.info("deletedImg = {} ", endImgList);
         }
         if(result != 0) {
             return ResponseEntity.ok(resultMap);
