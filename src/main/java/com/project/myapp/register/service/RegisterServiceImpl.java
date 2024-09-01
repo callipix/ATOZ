@@ -4,6 +4,7 @@ import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.register.dao.RegisterDAO;
 import com.project.myapp.utiles.ApiConfigProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 import java.util.HashMap;
 import java.util.Random;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
@@ -24,19 +25,18 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public int idCheck(String id){
-
         int result =this.registerDAO.idCheck(id);
-
         return result;
     }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertUser(RegisterDTO registerDTO) throws Exception {
-
         int result  = this.registerDAO.insertUser(registerDTO.getUserDTO());
-            result += this.registerDAO.insertMember(registerDTO.getMemberDTO());
-            return result;
+        result += this.registerDAO.insertMember(registerDTO.getMemberDTO());
+        return result;
     }
+
     @Override
     public String sendSMS(String phoneNo) {
         Random ranNo = new Random();
@@ -45,7 +45,7 @@ public class RegisterServiceImpl implements RegisterService {
             noStr += ranNo.nextInt(10);
         }
         certifiedPhoneNumber(phoneNo, noStr);
-        System.out.println("noStr = " + noStr);
+        log.info("noStr = {}", noStr);
         return noStr;
     }
 
@@ -66,10 +66,10 @@ public class RegisterServiceImpl implements RegisterService {
 
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println(obj.toString());
+            log.info(" {} ",obj.toString());
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
+            log.info(" {} ",e.getMessage());
+            log.info(" {} ",e.getCode());
         }
     }
 }

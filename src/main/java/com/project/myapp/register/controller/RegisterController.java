@@ -8,6 +8,7 @@ import com.project.myapp.utiles.CombinedValidator;
 import com.project.myapp.utiles.MemberValidator;
 import com.project.myapp.utiles.UserValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class RegisterController {
@@ -47,18 +49,18 @@ public class RegisterController {
     public String sendSMS(String phoneNo){
 
         String result = this.registerService.sendSMS(phoneNo);
-        System.out.println("result = " + result);
+        log.info("result for sendSMS = {}", result);
         return result;
     }
 
     @PostMapping("/register")
     public String registerUser(@Valid UserDTO userDTO, BindingResult userResult, @Valid MemberDTO memberDTO, BindingResult memberResult , RedirectAttributes rdda, HttpSession session) throws Exception {
 
-        System.out.println("userDTO = " + userDTO);
-        System.out.println("memberDTO = " + memberDTO);
+        log.info("userDTO = {}", userDTO);
+        log.info("memberDTO = {}", memberDTO);
 
-        System.out.println("userResult = " + userResult);
-        System.out.println("memberResult = " + memberResult);
+        log.info("userResult = {}", userResult);
+        log.info("memberResult = {}", memberResult);
 
         if(userResult.hasErrors()) {
             return "registerForm";
@@ -69,7 +71,7 @@ public class RegisterController {
 
         int result = this.registerService.insertUser(new RegisterDTO(userDTO, memberDTO));
 
-        System.out.println("result = " + result);
+        log.info("result = {} ", result);
         try {
             if(result >= 1){
                 session.setAttribute("message", "회원가입에 성공하였습니다.");
