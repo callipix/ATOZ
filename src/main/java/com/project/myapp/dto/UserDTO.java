@@ -1,13 +1,17 @@
 package com.project.myapp.dto;
 
-import lombok.*;
-
 import java.util.Date;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Builder
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class UserDTO {
 

@@ -24,7 +24,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.project.myapp.noticeDTO.mapper"/>
+        <property name="basePackage" value="com.project.myapp.notice.mapper"/>
     </bean>
 
     <context:component-scan base-package="com.project.myapp"/>

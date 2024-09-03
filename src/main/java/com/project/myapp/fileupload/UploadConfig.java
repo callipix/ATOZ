@@ -1,4 +1,4 @@
-package com.project.myapp.notice.controller;
+package com.project.myapp.fileupload;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.project.myapp.fileupload.AwsS3FileUploadService;
-import com.project.myapp.fileupload.FileUpload;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UploadConfig {
 
 	private final AwsS3FileUploadService awsS3FileUploadService;
-	private final FileUpload fileUpload;
 
 	@ResponseBody
 	@PostMapping("/upload/uploadCK")

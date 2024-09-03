@@ -5,11 +5,9 @@
 <mapper namespace="com.project.myapp.register.dao.RegisterMapper">
 
     <select id="idCheck" resultType="int" parameterType="string">
-        SELECT EXISTS(
-                        SELECT id
-                          FROM user_info
-                         WHERE id = #{id}
-        )
+        SELECT EXISTS(SELECT id
+                      FROM user_info
+                      WHERE id = #{id})
     </select>
 
     <select id="findById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
@@ -19,18 +17,22 @@
     </select>
 
     <select id="findByEmail" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
-            SELECT id , email
-            FROM user_info
-            WHERE email = #{email}
+        SELECT id, email
+        FROM user_info
+        WHERE email = #{email}
     </select>
 
     <insert id="insertUser" parameterType="com.project.myapp.dto.UserDTO">
-        INSERT INTO user_info(id, pwd, nickname , email)
-        VALUES(#{id}, #{password},#{nickName}, #{email})
+        INSERT INTO user_info(id, pwd, nickname, email)
+        VALUES (#{id}, #{password}, #{nickName}, #{email})
     </insert>
     <insert id="insertMember" parameterType="com.project.myapp.dto.MemberDTO">
-        INSERT INTO member(mem_id , name , phone)
-        VALUES(#{id}, #{name}, #{phoneNo})
+        INSERT INTO member(mem_id, name, phone)
+        VALUES (#{id}, #{name}, #{phoneNo})
+    </insert>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user.user(name, email, role)
     </insert>
 
 </mapper>
