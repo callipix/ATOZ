@@ -3,6 +3,8 @@ package com.project.myapp.register.dao;
 import com.project.myapp.dto.MemberDTO;
 import com.project.myapp.dto.UserDTO;
 
+import java.util.Optional;
+
 public interface RegisterDAO {
 
 	int idCheck(String id);
@@ -11,4 +13,7 @@ public interface RegisterDAO {
 
 	int insertMember(MemberDTO memberDTO);
 
+	UserDTO findByEmail(String email);
+
+	UserDTO findById(String id);
 }

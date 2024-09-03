@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class BoardDAOImpl implements BoardDAO {
+
 	private final SqlSession sqlSession;
 	private static final String namespace = "com.project.myapp.board.dao.BoardMapper.";
 

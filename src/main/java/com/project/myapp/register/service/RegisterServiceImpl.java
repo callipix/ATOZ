@@ -1,8 +1,10 @@
 package com.project.myapp.register.service;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Random;
 
+import com.project.myapp.dto.UserDTO;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,12 @@ public class RegisterServiceImpl implements RegisterService {
 	public int insertUser(RegisterDTO registerDTO) throws Exception {
 		int result = this.registerDAO.insertUser(registerDTO.getUserDTO());
 		result += this.registerDAO.insertMember(registerDTO.getMemberDTO());
+		return result;
+	}
+
+	@Override
+	public UserDTO findByEmail(String email) {
+		UserDTO result = this.registerDAO.findByEmail(email);
 		return result;
 	}
 

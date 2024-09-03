@@ -8,6 +8,8 @@ import com.project.myapp.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class RegisterDAOImpl implements RegisterDAO {
@@ -30,6 +32,18 @@ public class RegisterDAOImpl implements RegisterDAO {
 	@Override
 	public int insertMember(MemberDTO memberDTO) {
 		int result = this.sqlSession.insert(NAMESPACE + "insertMember", memberDTO);
+		return result;
+	}
+
+	@Override
+	public UserDTO findByEmail(String email) {
+		UserDTO result = this.sqlSession.selectOne(NAMESPACE + "findByEmail", email);
+		return result;
+	}
+
+	@Override
+	public UserDTO findById(String id) {
+		UserDTO result = this.sqlSession.selectOne(NAMESPACE + "findById", id);
 		return result;
 	}
 }

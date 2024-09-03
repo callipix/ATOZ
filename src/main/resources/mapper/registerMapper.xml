@@ -12,6 +12,18 @@
         )
     </select>
 
+    <select id="findById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+        SELECT id
+        FROM user_info
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByEmail" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+            SELECT id , email
+            FROM user_info
+            WHERE email = #{email}
+    </select>
+
     <insert id="insertUser" parameterType="com.project.myapp.dto.UserDTO">
         INSERT INTO user_info(id, pwd, nickname , email)
         VALUES(#{id}, #{password},#{nickName}, #{email})
