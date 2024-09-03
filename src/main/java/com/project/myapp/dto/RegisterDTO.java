@@ -2,35 +2,38 @@ package com.project.myapp.dto;
 
 public class RegisterDTO {
 
-    private UserDTO userDTO;
-    private MemberDTO memberDTO;
+	private UserDTO userDTO;
+	private MemberDTO memberDTO;
 
-    public RegisterDTO() {}
-    public RegisterDTO(UserDTO userDTO, MemberDTO memberDTO) {
-        this.userDTO = userDTO;
-        this.memberDTO = memberDTO;
-    }
+	public RegisterDTO() {
+	}
 
-    public UserDTO getUserDTO() {
-        return userDTO;
-    }
+	public RegisterDTO(UserDTO userDTO, MemberDTO memberDTO) {
+		this.userDTO = userDTO;
+		this.memberDTO = memberDTO;
+	}
 
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
-    }
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
 
-    public MemberDTO getMemberDTO() {
-        return memberDTO;
-    }
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 
-    public void setMemberDTO(MemberDTO memberDTO) {
-        this.memberDTO = memberDTO;
-    }
-    @Override
-    public String toString() {
-        return "RegisterDTO{" +
-                "userDTO=" + userDTO +
-                ", memberDTO=" + memberDTO +
-                '}';
-    }
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "RegisterDTO{" +
+			"userDTO=" + userDTO +
+			", memberDTO=" + memberDTO +
+			'}';
+	}
 }

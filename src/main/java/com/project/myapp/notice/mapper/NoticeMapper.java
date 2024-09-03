@@ -6,14 +6,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.project.myapp.dto.Notice;
+import com.project.myapp.dto.NoticeDTO;
 
 @Mapper
 public interface NoticeMapper {
-	List<Notice> findAll();
+	List<NoticeDTO> findAll();
 
-	List<Notice> findByPage(int startIdx);
+	List<NoticeDTO> findByPage(int startIdx);
 
-	List<Notice> findNoticesByDates(@Param("startDate") LocalDateTime startDate,
+	List<NoticeDTO> findNoticesByDates(@Param("startDate") LocalDateTime startDate,
 		@Param("endDate") LocalDateTime endDate);
 }

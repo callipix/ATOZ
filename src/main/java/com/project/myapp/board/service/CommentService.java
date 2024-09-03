@@ -6,16 +6,15 @@ import com.project.myapp.dto.CommentDTO;
 
 public interface CommentService {
 
-	public int commentCount(int bno) throws Exception;
+	int commentCount(int bno) throws Exception;
 
-	public int deleteComment(Integer cno, Integer bno, String commenter) throws Exception;
+	int deleteComment(Integer cno, Integer bno, String commenter) throws Exception;
 
-	//    public int insertComment(Integer bno , String content , String commenter) throws Exception;
-	public CommentDTO insertComment(CommentDTO commentDTO) throws Exception;
+	CommentDTO insertComment(CommentDTO commentDTO) throws Exception;
 
-	public List<CommentDTO> getCommentForBoard(int bno) throws Exception;
+	List<CommentDTO> getCommentForBoard(int bno) throws Exception;
 
-	public CommentDTO getCommentByCno(int cno) throws Exception;
+	CommentDTO getCommentByCno(int cno) throws Exception;
 
-	public int updateComment(CommentDTO commentDTO) throws Exception;
+	int updateComment(CommentDTO commentDTO) throws Exception;
 }

@@ -53,7 +53,12 @@ public class CommentController {
 		}
 	}
 
-	// 댓글 등록
+	/**
+	 * 댓글 등록 메서드
+	 * @param commentDTO 댓글
+	 * @param session 댓글 작성자 아이디를 가져오기 위한 세션
+	 * @return 작성된 댓글 DTO 반환
+	 */
 	@ResponseBody
 	@PostMapping("/comments")
 	public ResponseEntity<CommentDTO> write(CommentDTO commentDTO, HttpSession session) {
@@ -73,8 +78,8 @@ public class CommentController {
 	}
 
 	// 지정된 댓글을 삭제하는 메서드
-	@DeleteMapping("/comments/{cno}")
 	@ResponseBody
+	@DeleteMapping("/comments/{cno}")
 	public ResponseEntity<String> remove(@PathVariable Integer cno, Integer bno, HttpSession session) {
 
 		String commenter = (String)session.getAttribute("id");
@@ -92,8 +97,8 @@ public class CommentController {
 		}
 	}
 
-	@GetMapping("/comments")
 	@ResponseBody
+	@GetMapping("/comments")
 	public ResponseEntity<List<CommentDTO>> commentList(Integer bno, Model m) {
 		// 지정된 게시물의 모든 댓글 리스트 가져오기
 		List<CommentDTO> list = null;

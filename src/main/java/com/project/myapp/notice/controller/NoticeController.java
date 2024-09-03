@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.myapp.dto.Notice;
+import com.project.myapp.dto.NoticeDTO;
 import com.project.myapp.notice.service.NoticeService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,24 +28,24 @@ public class NoticeController {
 
 	@GetMapping("")
 	public ResponseEntity<Object> findAll() {
-		List<Notice> notices = noticeService.getAllNotices();
-		return new ResponseEntity<>(notices, HttpStatus.OK);
+		List<NoticeDTO> noticeDTO = noticeService.getAllNotices();
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/{page}")
 	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) {
-		List<Notice> notices = noticeService.findByPage(request, page);
-		return new ResponseEntity<>(notices, HttpStatus.OK);
+		List<NoticeDTO> noticeDTO = noticeService.findByPage(request, page);
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/dates")
 	public ResponseEntity<Object> findNoticesByDates(@RequestParam("startDate") String startDate,
 		@RequestParam("endDate") String endDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		List<Notice> notices = noticeService.findNoticesByDates(
+		List<NoticeDTO> noticeDTO = noticeService.findNoticesByDates(
 			LocalDateTime.parse(startDate, formatter),
 			LocalDateTime.parse(endDate, formatter)
 		);
-		return new ResponseEntity<>(notices, HttpStatus.OK);
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 }
