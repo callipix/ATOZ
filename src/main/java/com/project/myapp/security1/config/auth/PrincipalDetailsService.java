@@ -25,6 +25,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("username = {}", username);
 		UserDTO userEntity = registerDAO.findById(username);
+
 		if (userEntity != null) {
 			return new PrincipalDetails(userEntity);
 		}

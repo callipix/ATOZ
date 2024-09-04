@@ -26,7 +26,7 @@ import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.service.ErrorBoardService;
 import com.project.myapp.fileupload.AwsS3FileUploadService;
 import com.project.myapp.fileupload.FileUpload;
-import com.project.myapp.utiles.AwsConfig;
+import com.project.myapp.utiles.properties.AwsProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class ErrorBoardController {
 
 	private final ErrorBoardService errorBoardService;
 	private final FileUpload fileUpload;
-	private final AwsConfig awsConfig;
+	private final AwsProperties awsProperties;
 	private final AwsS3FileUploadService awsS3FileUploadService;
 
 	@ResponseBody

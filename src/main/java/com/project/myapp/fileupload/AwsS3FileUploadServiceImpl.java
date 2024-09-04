@@ -18,7 +18,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.project.myapp.dto.FilesDTO;
-import com.project.myapp.utiles.AwsConfig;
+import com.project.myapp.utiles.properties.AwsProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
 	private final AmazonS3 amazonS3;
-	private final AwsConfig awsConfig;
+	private final AwsProperties awsProperties;
 	private final FileUpload fileUpload;
 
 	// UUID를 사용해서 저장할 파일 이름을 생성(중복방지)
@@ -59,7 +59,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 		String storedName = makeFileName(originName);                           // 새로 생성된이름 -> DB에 저장될이름
 		ObjectMetadata metadata = new ObjectMetadata();                         // 파일의 메타데이터
 		metadata.setContentType("image/" + ext);                                // 이미지파일의 타입 -> 확장자 이미지 업로드
-		String bucketName = awsConfig.getBucketName();
+		String bucketName = awsProperties.getBucketName();
 		Map<String, Object> map = new HashMap<>();
 
 		try {
@@ -106,7 +106,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 				imgURL = decodeURL.substring(awsURL.length());
 
 				log.info("imgURL = {}", imgURL);
-				amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
+				amazonS3.deleteObject(awsProperties.getBucketName(), imgURL);
 
 				result += this.fileUpload.deleteFile(imgURL);
 				log.info("파일정보 삭제 결과 for deleteImageFile = {}", result);
@@ -141,7 +141,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 				imgURL = decodeURL.substring(awsURL.length());
 
 				log.info("imgURL for deleteFileAWS = {}", imgURL);
-				amazonS3.deleteObject(awsConfig.getBucketName(), imgURL);
+				amazonS3.deleteObject(awsProperties.getBucketName(), imgURL);
 
 				result += this.fileUpload.deleteFile(imgURL);
 				log.info("파일정보 삭제 결과 for deleteFileAwsS3 = {}", result);

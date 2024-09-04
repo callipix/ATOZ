@@ -2,17 +2,14 @@ package com.project.myapp.dto;
 
 import java.util.Date;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.*;
+import org.springframework.security.core.userdetails.User;
 @Builder
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
 	private String id;

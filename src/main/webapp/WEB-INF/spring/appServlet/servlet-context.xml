@@ -62,6 +62,5 @@
     <view-controller path="/profile" view-name="/etc/profile"/>
 
     <context:component-scan base-package="com.project.myapp"/>
-    <context:component-scan base-package="com.project.myapp.security1.config"/>
 
 </beans:beans>

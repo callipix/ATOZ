@@ -1,4 +1,4 @@
-package com.project.myapp.utiles;
+package com.project.myapp.utiles.properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
 @PropertySource("classpath:aws-bucket_config.properties")
-public class AwsConfig {
+public class AwsProperties {
 
 	@Value("${cloud.aws.credentials.secretKey}")
 	private String secretKey;

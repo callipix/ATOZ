@@ -1,7 +1,6 @@
 package com.project.myapp.register.service;
 
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.Random;
 
 import com.project.myapp.dto.UserDTO;
@@ -14,7 +13,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import com.project.myapp.dto.RegisterDTO;
 import com.project.myapp.register.dao.RegisterDAO;
-import com.project.myapp.utiles.ApiConfigProperties;
+import com.project.myapp.utiles.properties.ApiProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
 
-	private final ApiConfigProperties apiConfigProperties;
+	private final ApiProperties apiProperties;
 	private final RegisterDAO registerDAO;
 
 	@Override
@@ -61,8 +60,8 @@ public class RegisterServiceImpl implements RegisterService {
 
 	private void certifiedPhoneNumber(String phoneNo, String noStr) {
 
-		String apiKey = apiConfigProperties.getApiKey();
-		String apiSecret = apiConfigProperties.getApiSecret();
+		String apiKey = apiProperties.getApiKey();
+		String apiSecret = apiProperties.getApiSecret();
 
 		Message coolsms = new Message(apiKey, apiSecret);
 
