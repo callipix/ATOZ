@@ -10,7 +10,7 @@
 //import org.springframework.security.oauth2.core.AuthorizationGrantType;
 //
 //@Configuration
-//@PropertySource("classpath:application-oauth.properties")
+//@PropertySource("classpath:application-oauth2.properties")
 //public class OAuth2Config {
 //
 //    private SecurityProperties securityProperties;
