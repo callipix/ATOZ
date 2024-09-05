@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<%@ page session="true"%>
+<%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${empty loginId ? '/login/login' : '/login/logOut'}"/>
 <c:set var="loginOut" value="${empty loginId ? 'Login' : loginId}"/>
@@ -83,10 +82,12 @@
             display: block;
             float: none;
         }
+
         .cancelbtn {
             width: 100%;
         }
     }
+
     #loginForm {
         display: block;
         width: 20%; /* 폼을 50%로 축소 */
@@ -100,19 +101,21 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
     }
+
     /* Add a black background color to the top navigation */
     .topnav {
-            background-color: #333;
-            overflow: hidden;
-            margin: auto;
+        background-color: #333;
+        overflow: hidden;
+        margin: auto;
         max-width: 1300px;
-            /*width: 1300px;*/
-            height: 51px;
+        /*width: 1300px;*/
+        height: 51px;
         /*margin: 0px 100px 0px 100px;*/
-            border: none;
-            box-sizing: border-box;
-            text-align: center;
+        border: none;
+        box-sizing: border-box;
+        text-align: center;
     }
+
     /* Style the links inside the navigation bar */
     .topnav a {
         float: right;
@@ -123,6 +126,7 @@
         text-decoration: none;
         font-size: 17px;
     }
+
     /* Change the color of links on hover */
     .topnav a:hover {
         background-color: #ddd;
@@ -139,12 +143,16 @@
     .topnav .icon {
         display: none;
     }
-    Add media queries
 
+    Add media queries
     Example
+
     /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
     @media screen and (max-width: 600px) {
-        .topnav a:not(:first-child) {display: none;}
+        .topnav a:not(:first-child) {
+            display: none;
+        }
+
         .topnav a.icon {
             float: right;
             display: block;
@@ -153,18 +161,23 @@
 
     /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
     @media screen and (max-width: 600px) {
-        .topnav.responsive {position: relative;}
+        .topnav.responsive {
+            position: relative;
+        }
+
         .topnav.responsive a.icon {
             position: absolute;
             right: 0;
             top: 0;
         }
+
         .topnav.responsive a {
             float: none;
             display: block;
             text-align: left;
         }
     }
+
     body {
         margin: 0 200px;
     }
@@ -198,12 +211,13 @@
         </label>
     </div>
     <h4>소셜 로그인</h4>
-    <br />
+    <br/>
     <!-- javascript:; 는 클릭해도 반응을 없게 하는 키워드 -->
     <a href="/oauth2/authorization/google">
-        <img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png" alt="google" width="357px" height="117px" />
+        <img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png" alt="google"
+             width="357px" height="117px"/>
     </a>
-    <br />
+    <br/>
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>
@@ -227,11 +241,12 @@
             x.className = "topnav";
         }
     }
+
     // Add event listeners to each tab link
-    document.querySelectorAll('.topnav a').forEach(function(link) {
-        link.addEventListener('click', function() {
+    document.querySelectorAll('.topnav a').forEach(function (link) {
+        link.addEventListener('click', function () {
             // Remove the active class from all links
-            document.querySelectorAll('.topnav a').forEach(function(link) {
+            document.querySelectorAll('.topnav a').forEach(function (link) {
                 link.classList.remove('active');
             });
 
@@ -239,6 +254,7 @@
             this.classList.add('active');
         });
     });
+
     function hideForm() {
         form.style.display = "none";
         overlay.style.display = "none";

@@ -1,6 +1,5 @@
 package com.project.myapp.utiles;
 
-import com.project.myapp.utiles.properties.AwsProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.project.myapp.utiles.properties.AwsProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,11 +19,11 @@ public class AwsS3FileUploadServiceImplTest {
 	@Autowired
 	private AmazonS3 amazonS3;
 	@Autowired
-	private AwsProperties awsProperties;
+	private AwsProperties awsConfig;
 
 	@Test
 	public void saveFileToS3() {
-		log.info("key = {}", awsProperties.getBucketName());
+		log.info("key = {}", awsConfig.getBucketName());
 		log.info("amazonS3 = {}", amazonS3);
 	}
 

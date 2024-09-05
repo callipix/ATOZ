@@ -2,10 +2,16 @@ package com.project.myapp.dto;
 
 import java.util.Date;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Builder
-@Data
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +31,6 @@ public class UserDTO {
 	private String status;
 	private String profile;
 
-	private Date  createDate;
+	private Date createDate;
 
 }

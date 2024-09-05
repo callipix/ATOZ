@@ -1,4 +1,4 @@
-package com.project.myapp.security1.config.oauth;
+package com.project.myapp.security.oauth;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.project.myapp.security1.config.auth;
+package com.project.myapp.security.auth;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

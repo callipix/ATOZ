@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RegisterController {
 
 	private final RegisterService registerService;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@InitBinder
 	public void initBinder(@NotNull WebDataBinder binder) {
@@ -74,6 +76,9 @@ public class RegisterController {
 		if (memberResult.hasErrors()) {
 			return "registerForm";
 		}
+
+		userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+		System.out.println("userDTO.getPassword() = " + userDTO.getPassword());
 
 		int result = this.registerService.insertUser(new RegisterDTO(userDTO, memberDTO));
 

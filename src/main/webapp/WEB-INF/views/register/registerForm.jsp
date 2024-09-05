@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page session="true"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
@@ -13,14 +14,14 @@
 <link rel="stylesheet" href="<c:url value='/css/register.css'/>">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <%--<jsp:include page="../header.jsp" />--%>
-    <script>
-    </script>
+<script>
+</script>
 <body>
 <br>
 <div id="formDiv" class="formDiv">
-        <!-- 폼 필드들 -->
-        <!-- 폼 필드들 -->
-<%--    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">--%>
+    <!-- 폼 필드들 -->
+    <!-- 폼 필드들 -->
+    <%--    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">--%>
     <form id="signUpForm" method="post" action="<c:url value='/register/'/>">
         <div class="container">
             <h1>회원가입</h1>
@@ -29,7 +30,7 @@
             <div>
                 <div class="idForm" style="display: flex">
                     <div>
-                        <label for="id"><b>아이디  <span>* 필수입력사항입니다.</span></b></label>
+                        <label for="id"><b>아이디 <span>* 필수입력사항입니다.</span></b></label>
                     </div>
                     <div style="margin-left: auto">
                         <button id="idCheck" type="button" class="button">중복체크</button>
@@ -37,36 +38,43 @@
                 </div>
                 <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
                 <div id="msg" class="msg">
-                    <form:errors path="id" cssClass="error" />
+                    <%--                    <form:errors path="id" cssClass="error" />--%>
                 </div>
             </div>
             <br>
             <div>
-                <label for="password"><b>비밀번호  <span>* 필수입력사항입니다.</span></b></label>
-                <input type="password" placeholder="비밀번호를 입력하세요" name="password" id="password" required value="<c:out value='${password}'/>">
+                <label for="password"><b>비밀번호 <span>* 필수입력사항입니다.</span></b></label>
+                <input type="password" placeholder="비밀번호를 입력하세요" name="password" id="password" required
+                       value="<c:out value='${password}'/>">
                 <label for="confirmPassword"></label>
-                <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="confirmPassword" id="confirmPassword" required value="<c:out value='${confirmPassword}'/>">
+                <input type="password" placeholder="비밀번호를 다시 한번 입력하세요" name="confirmPassword" id="confirmPassword"
+                       required value="<c:out value='${confirmPassword}'/>">
                 <br>
                 <span id="passPatternCheck"></span>
             </div>
             <br>
-            <label for="nickName"><b>닉네임  <span>* 필수입력사항입니다.</span></b></label>
-            <input type="text" placeholder="닉네임을 입력하세요." name="nickName" id="nickName" required value="<c:out value='${nickName}'/>">
+            <label for="nickName"><b>닉네임 <span>* 필수입력사항입니다.</span></b></label>
+            <input type="text" placeholder="닉네임을 입력하세요." name="nickName" id="nickName" required
+                   value="<c:out value='${nickName}'/>">
             <br>
-            <label for="name"><b>이름  <span>* 필수입력사항입니다.</span></b></label>
+            <label for="name"><b>이름 <span>* 필수입력사항입니다.</span></b></label>
             <input type="text" placeholder="이름을 입력하세요." name="name" id="name" required value="<c:out value='${name}'/>">
             <br>
-            <label for="email"><b>이메일  <span>* 필수입력사항입니다.</span></b></label>
-            <input type="text" placeholder="이메일을 입력하세요." name="email" id="email" required value="<c:out value='${email}'/>">
+            <label for="email"><b>이메일 <span>* 필수입력사항입니다.</span></b></label>
+            <input type="text" placeholder="이메일을 입력하세요." name="email" id="email" required
+                   value="<c:out value='${email}'/>">
             <br>
             <div style="display: flex">
-                <label for="phoneNo"><b>연락처  <span>* 필수입력사항입니다.</span></b></label>
+                <label for="phoneNo"><b>연락처 <span>* 필수입력사항입니다.</span></b></label>
                 <div style="margin-left: auto">
-                    <button class="button" type="button" id="sendCertifyNo" onclick="sendVerification()">인증번호 발송</button>
+                    <button class="button" type="button" id="sendCertifyNo" onclick="sendVerification()">인증번호 발송
+                    </button>
                 </div>
             </div>
-            <input type="text" placeholder="연락처를 입력하세요." name="phoneNo" id="phoneNo" required value="<c:out value='${phoneNo}'/>">
-            <input type="text" placeholder="인증번호를 입력하세요." name="certiNo" id="certiNo" required value="<c:out value='${certiNo}'/>">
+            <input type="text" placeholder="연락처를 입력하세요." name="phoneNo" id="phoneNo" required
+                   value="<c:out value='${phoneNo}'/>">
+            <input type="text" placeholder="인증번호를 입력하세요." name="certiNo" id="certiNo" required
+                   value="<c:out value='${certiNo}'/>">
             <div style="margin-left: auto">
                 <button class="button" type="button" id="certifyCheck" onclick="phoneNoCertify()">인증번호 확인</button>
             </div>
@@ -83,7 +91,7 @@
             <p>이미 가입된 계정인가요? <a href="#"><b>login</b></a></p>
         </div>
     </form>
-<%--    </form:form>--%>
+    <%--    </form:form>--%>
 </div>
 <script type="text/javascript">
 
@@ -104,7 +112,7 @@
     const inputCertiNo = document.querySelector('#certiNo');
 
     const sendCertifyNoBtn = document.querySelector('#sendCertifyNo');                       // 인증번호 발송버튼
-    const certifyCheckBtn  = document.querySelector('#certifyCheck');                        // 인증번호 확인버튼
+    const certifyCheckBtn = document.querySelector('#certifyCheck');                        // 인증번호 확인버튼
     const consentCheckbox = document.querySelector('#consentCheckbox');
 
     const signUpForm = document.querySelector('#signUpForm');
@@ -114,26 +122,26 @@
     let isConfirmChkPwd = false;
     let isConfirmPhoneNo = false;
 
-    signUpForm.addEventListener('submit', function(event){
+    signUpForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        if(!isExistsChkId){
+        if (!isExistsChkId) {
             event.preventDefault();
             alert("아이디 중복체크를 확인하세요.");
             return;
         }
-        if(!isConfirmChkPwd){
+        if (!isConfirmChkPwd) {
             inputConfirmPassword.focus();
             alert("재확인 비밀번호가 일치하지 않습니다.");
             return;
         }
-        if(!isConfirmPhoneNo){
+        if (!isConfirmPhoneNo) {
             event.preventDefault();
             inputCertiNo.focus();
             alert("전화번호 인증을 확인하세요.");
             return;
         }
-        if(!consentCheckbox.checked){
+        if (!consentCheckbox.checked) {
             alert("개인정보 이용에 동의해야 합니다.");
             event.preventDefault();
             return;
@@ -144,18 +152,18 @@
         // location.href="/";
     })
 
-    idCheckBtn.addEventListener('click', function(){
+    idCheckBtn.addEventListener('click', function () {
         let id = inputId.value;
-        if(!regId.test(id)){
+        if (!regId.test(id)) {
             alert("아이디는 대소문자 관계없이 숫자를 포함한 8~12자리까지 가능합니다.");
             return;
         }
         $.ajax({
-            url : 'idCheck',
-            method : 'get',
-            data : {id : id},
-            success : function(result){
-                if(result === 1){
+            url: 'idCheck',
+            method: 'get',
+            data: {id: id},
+            success: function (result) {
+                if (result === 1) {
                     alert("이미 존재하는 아이디입니다.");
                     isExistsChkId = false;
                     inputId.focus();
@@ -168,11 +176,11 @@
         console.log("최종 결과값은? " + isExistsChkId);
     });
 
-    function checkPasswordMatch(){
+    function checkPasswordMatch() {
         const password = inputPassword.value;
         const confirmPassword = inputConfirmPassword.value;
 
-        if(!regPwd.test(password)){
+        if (!regPwd.test(password)) {
             passPatternCheckMessage.textContent = '비밀번호가 입력 형식에 맞지 않습니다.';
             passPatternCheckMessage.style.color = 'red';
             return;
@@ -187,34 +195,36 @@
             isConfirmChkPwd = false;
         }
     }
+
     inputConfirmPassword.addEventListener('input', checkPasswordMatch);
 
     let certiNoByServer;           // 서버에서 넘어온 인증번호
     // sendCertifyNoBtn.addEventListener('click', function(){
-    function sendVerification(){
+    function sendVerification() {
         let phoneNo = inputPhoneNo.value;
 
-        if(phoneNo === ''){
+        if (phoneNo === '') {
             alert("연락처를 입력하세요.");
             inputPhoneNo.focus();
         }
         $.ajax({
-            url : 'sendSMS',
-            method : 'post',
-            data : {phoneNo : phoneNo},
-            success : function(result){
+            url: 'sendSMS',
+            method: 'post',
+            data: {phoneNo: phoneNo},
+            success: function (result) {
                 certiNoByServer = result;
                 inputPhoneNo.focus();
             }
         })
         // });
     }
-    function phoneNoCertify(){
+
+    function phoneNoCertify() {
         // certifyCheckBtn.addEventListener('click', function(){
         let inputNo = inputCertiNo.value;
 
         console.log("inputNo = " + inputNo)
-        if(certiNoByServer !== inputNo){
+        if (certiNoByServer !== inputNo) {
             alert("인증번호가 일치하지않습니다.");
             isConfirmPhoneNo = false;
             return;

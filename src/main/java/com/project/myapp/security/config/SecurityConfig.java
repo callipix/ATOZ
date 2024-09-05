@@ -1,21 +1,17 @@
-package com.project.myapp.security1.config;
+package com.project.myapp.security.config;
 
-import com.project.myapp.security1.config.oauth.PrincipalOAuth2UserService;
-import com.project.myapp.utiles.properties.OAuth2Properties;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
@@ -27,65 +23,54 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.project.myapp.security.oauth.PrincipalOAuth2UserService;
+import com.project.myapp.utiles.properties.OAuth2Properties;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Configuration
-@EnableWebSecurity//부트와 달리 일반스프링에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
+@EnableWebMvc        //
+@Configuration        // 환경설정 선언
+@EnableWebSecurity    //부트와 달리 일반스프링에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
 @RequiredArgsConstructor
-@ComponentScan(basePackages = "com.project.**")
+@ComponentScan(basePackages = "com.project.myapp")
 public class SecurityConfig {
 
 	private final OAuth2Properties oAuth2Properties;
 	private final PrincipalOAuth2UserService principalOAuth2UserService;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Bean
+	public BCryptPasswordEncoder encodePwd() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/user/**").authenticated()
-						.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.anyRequest().permitAll()
-				);
+			.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers("/user/**").authenticated()
+				.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().permitAll()
+			);
 		http.formLogin(form -> form
-						.loginPage("/login/loginForm")
-						.loginProcessingUrl("/login") // 이 설정은 유지
-						.usernameParameter("id")
-						.passwordParameter("password")
-						.defaultSuccessUrl("/")
-				)
-				.oauth2Login(oauth2Login -> oauth2Login
-						.loginPage("/loginForm") // 이 부분을 유지하고자 한다면, 커스텀 페이지 사용
-						.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(principalOAuth2UserService))
-				);
+				.loginPage("/login/loginForm")
+				.loginProcessingUrl("/login") // 이 설정은 유지
+				.usernameParameter("id")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/")
+			)
+			.oauth2Login(oauth2Login -> oauth2Login
+				.loginPage("/loginForm") // 이 부분을 유지하고자 한다면, 커스텀 페이지 사용
+				.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(principalOAuth2UserService))
+			);
 
 		return http.build();
 	}
-		//		http.authorizeRequests()
-//				.antMatchers("/oauth_login", "/loginFailure", "/")
-//				.permitAll()
-//				.anyRequest()
-//				.authenticated()
-//				.and()
-//				.oauth2Login()
-//				.loginPage("/oauth_login")
-//				.authorizationEndpoint()
-//				.baseUri("/oauth2/authorize-client")
-//				.authorizationRequestRepository(authorizationRequestRepository())
-//				.and()
-//				.tokenEndpoint()
-//				.accessTokenResponseClient(accessTokenResponseClient())
-//				.and()
-//				.defaultSuccessUrl("/loginSuccess")
-//				.failureUrl("/loginFailure");
-//		return http.build();
 
 	@Bean
 	public AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
@@ -104,9 +89,9 @@ public class SecurityConfig {
 	@Bean
 	public ClientRegistrationRepository clientRegistrationRepository() {
 		List<ClientRegistration> registrations = clients.stream()
-				.map(c -> getRegistration(c))
-				.filter(registration -> registration != null)
-				.collect(Collectors.toList());
+			.map(c -> getRegistration(c))
+			.filter(registration -> registration != null)
+			.collect(Collectors.toList());
 
 		return new InMemoryClientRegistrationRepository(registrations);
 	}
@@ -127,9 +112,9 @@ public class SecurityConfig {
 
 		if (client.equals("google")) {
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-					.clientId(clientId)
-					.clientSecret(clientSecret)
-					.build();
+				.clientId(clientId)
+				.clientSecret(clientSecret)
+				.build();
 		}
 
 		return null;

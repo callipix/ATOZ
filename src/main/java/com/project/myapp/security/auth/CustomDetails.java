@@ -1,16 +1,17 @@
-package com.project.myapp.security1.config.auth;
+package com.project.myapp.security.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.project.myapp.dto.UserDTO;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class CustomDetails implements UserDetails, OAuth2User {
 	public CustomDetails(UserDTO user) {
 		this.user = user;
 	}
+
 	// OAuth2.0 로그인시 사용
 	public CustomDetails(UserDTO user, Map<String, Object> attributes) {
 		this.user = user;
@@ -38,7 +40,7 @@ public class CustomDetails implements UserDetails, OAuth2User {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
 		Collection<GrantedAuthority> collect = new ArrayList<>();
-		collect.add((GrantedAuthority) () -> user.getRole());
+		collect.add((GrantedAuthority)() -> user.getRole());
 		return collect;
 	}
 

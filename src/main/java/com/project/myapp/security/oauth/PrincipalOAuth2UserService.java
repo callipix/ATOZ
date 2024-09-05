@@ -1,17 +1,18 @@
-package com.project.myapp.security1.config.oauth;
+package com.project.myapp.security.oauth;
 
-import com.project.myapp.security1.config.auth.CustomDetails;
-import com.project.myapp.dto.UserDTO;
-import com.project.myapp.register.dao.RegisterMapper;
+import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.project.myapp.dto.UserDTO;
+import com.project.myapp.register.dao.RegisterMapper;
+import com.project.myapp.security.auth.CustomDetails;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -38,20 +39,20 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 			System.out.println("구글 로그인 요청~~");
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
 		}
-//		else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
-//			System.out.println("페이스북 로그인 요청~~");
-//			oAuth2UserInfo = new FaceBookUserInfo(oAuth2User.getAttributes());
-//		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")){
-//			System.out.println("네이버 로그인 요청~~");
-//			oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
-//		} else {
-//			System.out.println("우리는 구글과 페이스북만 지원해요 ㅎㅎ");
-//		}
+		//		else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+		//			System.out.println("페이스북 로그인 요청~~");
+		//			oAuth2UserInfo = new FaceBookUserInfo(oAuth2User.getAttributes());
+		//		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")){
+		//			System.out.println("네이버 로그인 요청~~");
+		//			oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+		//		} else {
+		//			System.out.println("우리는 구글과 페이스북만 지원해요 ㅎㅎ");
+		//		}
 
 		//System.out.println("oAuth2UserInfo.getProvider() : " + oAuth2UserInfo.getProvider());
 		//System.out.println("oAuth2UserInfo.getProviderId() : " + oAuth2UserInfo.getProviderId());
 		Optional<UserDTO> userOptional =
-				registerMapper.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
+			registerMapper.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
 		UserDTO userDTO;
 		if (userOptional.isPresent()) {
@@ -62,12 +63,12 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 		} else {
 			// user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
 			userDTO = UserDTO.builder()
-					.nickName(oAuth2UserInfo.getProviderId())
-					.email(oAuth2UserInfo.getEmail())
-					.role("ROLE_USER")
-					.provider(oAuth2UserInfo.getProvider())
-					.providerId(oAuth2UserInfo.getProviderId())
-					.build();
+				.nickName(oAuth2UserInfo.getProviderId())
+				.email(oAuth2UserInfo.getEmail())
+				.role("ROLE_USER")
+				.provider(oAuth2UserInfo.getProvider())
+				.providerId(oAuth2UserInfo.getProviderId())
+				.build();
 			registerMapper.updateUser(userDTO);
 		}
 
