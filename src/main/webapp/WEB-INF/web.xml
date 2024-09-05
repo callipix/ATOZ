@@ -7,15 +7,24 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/root-context.xml
         </param-value>
     </context-param>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/views/errorPage/error404.jsp</location>
-    </error-page>
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/WEB-INF/views/errorPage/error404.jsp</location>-->
+<!--    </error-page>-->
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -49,5 +58,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- 한글 변환 필터 끝 -->
+
 
 </web-app>

@@ -15,13 +15,9 @@ public class ApiProperties {
 
 	public String getApiKey() {
 		return apiKey;
-	}
-
-	;
-
+	};
 	public String getApiSecret() {
 		return apiSecret;
-	}
+	};
 
-	;
 }

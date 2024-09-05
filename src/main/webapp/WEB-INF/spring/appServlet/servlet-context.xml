@@ -54,8 +54,8 @@
     <view-controller path="/" view-name="/home"/>
     <view-controller path="/registerForm" view-name="/register/registerForm"/>
     <view-controller path="/resultPage" view-name="/register/resultPage"/>
-    <view-controller path="/login/loginFailPage" view-name="/login/loginFailPage"/>
-    <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess"/>
+<!--    <view-controller path="/login/loginFailPage" view-name="/login/loginFailPage"/>-->
+<!--    <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess"/>-->
     <view-controller path="/board/boardList" view-name="/board/boardList"/>
     <view-controller path="/information" view-name="/projectInfomation"/>
     <view-controller path="/member" view-name="/test/member"/>

@@ -1,11 +1,19 @@
 package com.project.myapp.login.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.project.myapp.security1.config.auth.CustomDetails;
+import com.project.myapp.utiles.properties.OAuth2Properties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +32,10 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
 	private final LoginService loginService;
+	private static String authorizationRequestBaseUri = "oauth2/authorization";
+	private final Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
+	private final ClientRegistrationRepository clientRegistrationRepository;
+	private final OAuth2Properties oAuth2Properties;
 
 	@GetMapping("/logout")
 	public String logOut(HttpSession session, HttpServletRequest request) {
@@ -39,8 +51,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(String id, String password, String toURL, boolean rememberId, HttpServletRequest request,
-		HttpServletResponse response, Model m) throws UnsupportedEncodingException {
+	public String login(String id, String password, String toURL, HttpServletRequest request
+			, Authentication authentication, @AuthenticationPrincipal CustomDetails userDetails) throws UnsupportedEncodingException {
 		log.info("id, password = {}, {}", id, password);
 
 		HttpSession session = null;
@@ -52,6 +64,13 @@ public class LoginController {
 		session = request.getSession();
 		session.setAttribute("id", id);
 		session.setAttribute("password", password);
+
+		System.out.println();
+		CustomDetails customDetails = (CustomDetails) authentication.getPrincipal();
+		log.info("authentication : {}", customDetails.getUser());
+		System.out.println();
+		log.info("userDetails {}", userDetails.getUser());
+
 
 		// 3.홈으로 이동
 		toURL = toURL == null || toURL.equals("") ? "/" : toURL;

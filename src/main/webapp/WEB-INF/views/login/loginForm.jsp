@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@ page session="true"%>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${empty loginId ? '/login/login' : '/login/logOut'}"/>
@@ -195,7 +197,13 @@
             <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
     </div>
-
+    <h4>소셜 로그인</h4>
+    <br />
+    <!-- javascript:; 는 클릭해도 반응을 없게 하는 키워드 -->
+    <a href="/oauth2/authorization/google">
+        <img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png" alt="google" width="357px" height="117px" />
+    </a>
+    <br />
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>

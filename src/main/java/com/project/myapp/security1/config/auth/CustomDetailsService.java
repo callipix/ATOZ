@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.myapp.dto.UserDTO;
-import com.project.myapp.register.dao.RegisterDAO;
+import com.project.myapp.register.dao.RegisterMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,18 +16,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PrincipalDetailsService implements UserDetailsService {
+public class CustomDetailsService implements UserDetailsService {
 
-	private final RegisterDAO registerDAO;
+	private final RegisterMapper registerMapper;
 
 	// Security Session(내부 Authentication(내부 UserDetails))
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.info("username = {}", username);
-		UserDTO userEntity = registerDAO.findById(username);
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		log.info("username = {}", id);
 
+		UserDTO userEntity = registerMapper.findById(id);
+
+		log.info("userEntity = {}", userEntity);
 		if (userEntity != null) {
-			return new PrincipalDetails(userEntity);
+			return new CustomDetails(userEntity);
 		}
 		return null;
 	}

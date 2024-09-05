@@ -2,8 +2,12 @@ package com.project.myapp.register.dao;
 
 import com.project.myapp.dto.MemberDTO;
 import com.project.myapp.dto.UserDTO;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface RegisterDAO {
+import java.util.Optional;
+
+@Mapper
+public interface RegisterMapper {
 
 	int idCheck(String id);
 
@@ -15,7 +19,7 @@ public interface RegisterDAO {
 
 	UserDTO findById(String id);
 
-	UserDTO findByProviderAndProviderId(String provider, String providerId);
+	Optional<UserDTO> findByProviderAndProviderId(String provider, String providerId);
 
-	int save(UserDTO userDTO);
+	int updateUser(UserDTO userDTO);
 }

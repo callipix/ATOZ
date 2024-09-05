@@ -12,7 +12,7 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import com.project.myapp.dto.RegisterDTO;
-import com.project.myapp.register.dao.RegisterDAO;
+import com.project.myapp.register.dao.RegisterMapper;
 import com.project.myapp.utiles.properties.ApiProperties;
 
 import lombok.RequiredArgsConstructor;
@@ -24,25 +24,25 @@ import lombok.extern.slf4j.Slf4j;
 public class RegisterServiceImpl implements RegisterService {
 
 	private final ApiProperties apiProperties;
-	private final RegisterDAO registerDAO;
+	private final RegisterMapper registerMapper;
 
 	@Override
 	public int idCheck(String id) {
-		int result = this.registerDAO.idCheck(id);
+		int result = this.registerMapper.idCheck(id);
 		return result;
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int insertUser(RegisterDTO registerDTO) throws Exception {
-		int result = this.registerDAO.insertUser(registerDTO.getUserDTO());
-		result += this.registerDAO.insertMember(registerDTO.getMemberDTO());
+		int result = this.registerMapper.insertUser(registerDTO.getUserDTO());
+		result += this.registerMapper.insertMember(registerDTO.getMemberDTO());
 		return result;
 	}
 
 	@Override
 	public UserDTO findByEmail(String email) {
-		UserDTO result = this.registerDAO.findByEmail(email);
+		UserDTO result = this.registerMapper.findByEmail(email);
 		return result;
 	}
 

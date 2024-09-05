@@ -3,10 +3,9 @@ package com.project.myapp.dto;
 import java.util.Date;
 
 import lombok.*;
-import org.springframework.security.core.userdetails.User;
+
 @Builder
-@Getter
-@Setter
+@Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +25,6 @@ public class UserDTO {
 	private String status;
 	private String profile;
 
-	private Date createDate;
+	private Date  createDate;
 
 }
