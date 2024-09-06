@@ -20,19 +20,23 @@ public class CustomDetails implements UserDetails, OAuth2User {
 	private UserDTO user;  // 컴포지션
 	private Map<String, Object> attributes;
 
-	public CustomDetails(UserDTO user) {
+	public CustomDetails(UserDTO user){
 		this.user = user;
-	}
+    }
 
 	// OAuth2.0 로그인시 사용
-	public CustomDetails(UserDTO user, Map<String, Object> attributes) {
+	public CustomDetails(UserDTO user, Map<String, Object> attributes){
 		this.user = user;
 		this.attributes = attributes;
+    }
+
+	public UserDTO getUser() {
+		return user;
 	}
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		return Map.of();
+		return attributes;
 	}
 
 	// 해당 User의 권한을 리턴하는 메서드
@@ -78,6 +82,7 @@ public class CustomDetails implements UserDetails, OAuth2User {
 
 	@Override
 	public String getName() {
-		return "";
+		return user.getId()+"";
 	}
+
 }

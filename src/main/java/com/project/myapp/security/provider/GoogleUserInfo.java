@@ -1,4 +1,6 @@
-package com.project.myapp.security.oauth;
+package com.project.myapp.security.provider;
+
+import com.project.myapp.oauth.OAuth2UserInfo;
 
 import java.util.Map;
 

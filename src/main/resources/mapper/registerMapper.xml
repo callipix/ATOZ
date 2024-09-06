@@ -11,9 +11,9 @@
     </select>
 
     <select id="findById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
-        SELECT id
-        FROM user_info
-        WHERE id = #{id}
+        SELECT id, pwd as password, nickName, email, role, type, provider, providerId, status, profile, createdate
+          FROM user_info
+         WHERE id = #{id}
     </select>
 
     <select id="findByEmail" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
@@ -23,7 +23,7 @@
     </select>
 
     <select id="findByProviderAndProviderId" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
-        SELECT id, password, nickName, email, role, type, provider, providerId, status, profile, createDate
+        SELECT id, pwd as password, nickName, email, role, type, provider, providerId, status, profile, createDate
         FROM user_info
         WHERE provider = #{provider} AND providerId = #{providerId}
     </select>
@@ -32,20 +32,27 @@
         INSERT INTO user_info(id, pwd, nickname, email)
         VALUES (#{id}, #{password}, #{nickName}, #{email})
     </insert>
+
     <insert id="insertMember" parameterType="com.project.myapp.dto.MemberDTO">
         INSERT INTO member(mem_id, name, phone)
         VALUES (#{id}, #{name}, #{phoneNo})
     </insert>
 
+    <insert id="insertAuth" parameterType="com.project.myapp.dto.UserAuth">
+        INSERT INTO user_auth(id)
+        VALUES (#{id})
+    </insert>
+
+
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_info(id , pwd , nickname, email, provider,providerId)
-        VALUES (#{id} , #{pwd}, #{nickname}, #{email}, )
+        VALUES (#{id} , #{password}, #{nickname}, #{email}, )
     </insert>
 
     <update id="updateUser" parameterType="com.project.myapp.dto.UserDTO">
         UPDATE user_info
            SET   id = #{id}
-                , pwd        =#{pwd}
+                , pwd        =#{password}
                 , nickname   =#{nickname}
                 , email      =#{email}
                 , type       =#{type}

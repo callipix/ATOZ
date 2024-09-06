@@ -12,6 +12,12 @@
         )
     </select>
 
+    <select id="passCheckById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+        SELECT pwd as password
+          FROM user_info
+         WHERE id = #{id}
+    </select>
+
     <select id="boardUserInfo" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
         SELECT u.nickname
           FROM err_log_board E LEFT OUTER JOIN user_info U

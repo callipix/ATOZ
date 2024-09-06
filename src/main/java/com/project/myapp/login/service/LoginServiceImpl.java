@@ -3,6 +3,7 @@ package com.project.myapp.login.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.project.myapp.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import com.project.myapp.login.dao.LoginDAO;
@@ -38,6 +39,12 @@ public class LoginServiceImpl implements LoginService {
 			e.printStackTrace();
 			return 0;
 		}
+		return result;
+	}
+
+	@Override
+	public UserDTO passCheckById(String id){
+		UserDTO result = this.loginDAO.passCheckById(id);
 		return result;
 	}
 }

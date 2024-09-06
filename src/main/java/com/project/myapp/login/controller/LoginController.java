@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.project.myapp.security.auth.CustomDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
@@ -47,7 +50,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(String id, String password, String toURL, HttpServletRequest request) throws
+	public String login(String id, String password, String toURL, HttpServletRequest request
+	, Authentication authentication, @AuthenticationPrincipal CustomDetails userDetails) throws
 		UnsupportedEncodingException {
 		log.info("id, password = {}, {}", id, password);
 
@@ -61,6 +65,11 @@ public class LoginController {
 		session.setAttribute("id", id);
 		session.setAttribute("password", password);
 
+		log.info("==============================================================");
+		CustomDetails customDetails = (CustomDetails) authentication.getPrincipal();
+		log.info("authentication = {}", customDetails.getUser());
+		log.info("userDetails = {}", userDetails.getUser());
+
 		// 3.홈으로 이동
 		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
 		log.info("toURL = {}", toURL);
@@ -68,9 +77,11 @@ public class LoginController {
 	}
 
 	public boolean loginCheck(String id, String password) {
-		int result = 0;
-		result = this.loginService.loginCheck(id, password);
-		if (result == 1) {
+
+		String passwordHash = this.loginService.passCheckById(id).getPassword();
+		log.info("passwordHash = {}" , passwordHash);
+		boolean passCheck = bCryptPasswordEncoder.matches(password, passwordHash);
+		if (passCheck) {
 			log.info("로그인 성공");
 			return true;
 		} else {

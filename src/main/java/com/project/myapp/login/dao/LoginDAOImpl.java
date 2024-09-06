@@ -2,6 +2,7 @@ package com.project.myapp.login.dao;
 
 import java.util.Map;
 
+import com.project.myapp.dto.UserDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,13 @@ public class LoginDAOImpl implements LoginDAO {
 		log.info("map = {}", map);
 		result = sqlSession.selectOne(namespace + "loginCheck", map);
 		log.info("loginCheck result = {}", result);
+		return result;
+	}
+
+	@Override
+	public UserDTO passCheckById(String id) {
+		UserDTO result = sqlSession.selectOne(namespace + "passCheckById", id);
+		log.info("passCheckById result = {}", result);
 		return result;
 	}
 }

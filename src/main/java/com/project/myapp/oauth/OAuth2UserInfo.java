@@ -1,4 +1,4 @@
-package com.project.myapp.security.oauth;
+package com.project.myapp.oauth;
 
 public interface OAuth2UserInfo {
 	String getProviderId();

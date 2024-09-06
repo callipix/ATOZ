@@ -3,6 +3,7 @@ package com.project.myapp.register.service;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.project.myapp.dto.UserAuth;
 import com.project.myapp.dto.UserDTO;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class RegisterServiceImpl implements RegisterService {
 	public int insertUser(RegisterDTO registerDTO) throws Exception {
 		int result = this.registerMapper.insertUser(registerDTO.getUserDTO());
 		result += this.registerMapper.insertMember(registerDTO.getMemberDTO());
+		UserAuth userAuth = new UserAuth(registerDTO.getUserDTO().getId());
+		result += this.registerMapper.insertAuth(userAuth);
 		return result;
 	}
 
