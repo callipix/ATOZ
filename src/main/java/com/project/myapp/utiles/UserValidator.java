@@ -3,12 +3,13 @@ package com.project.myapp.utiles;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.project.myapp.dto.UserDTO;
-
+@Slf4j
 public class UserValidator implements Validator {
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -17,7 +18,7 @@ public class UserValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		System.out.println("target = " + target);
+		log.info("target = {}", target);
 
 		UserDTO userDTO = (UserDTO)target;
 

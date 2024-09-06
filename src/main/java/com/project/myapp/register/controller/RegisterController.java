@@ -78,7 +78,7 @@ public class RegisterController {
 		}
 
 		userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-		System.out.println("userDTO.getPassword() = " + userDTO.getPassword());
+		log.info("userDTO.getPassword() = {}", userDTO.getPassword());
 
 		int result = this.registerService.insertUser(new RegisterDTO(userDTO, memberDTO));
 

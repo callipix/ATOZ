@@ -22,12 +22,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         // 기본 리다이렉션 URL 설정
         String redirectUrl = "/";
 
-        System.out.println("authentication = " + authentication.getAuthorities());
+        log.info("authentication = {}", authentication.getAuthorities());
             List<String> roleNames = new ArrayList<String>();
             authentication.getAuthorities().forEach(authority->{
                 roleNames.add(authority.getAuthority());
             });
-        System.out.println("roleNames = " + roleNames);
+        log.info("roleNames = {}", roleNames);
         // 사용자의 권한에 따라 리다이렉션할 URL 결정
         if (roleNames.contains("ROLE_ADMIN")) {
             redirectUrl = "/myApp/adminTest";
@@ -35,8 +35,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             redirectUrl = "/myApp/";
         }
         // 응답 객체를 사용해 리다이렉션
-        System.out.println("redirectUrl = " + redirectUrl);
+        log.info("redirectUrl = {}", redirectUrl);
         response.sendRedirect(redirectUrl);
-
     }
 }

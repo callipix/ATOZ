@@ -3,6 +3,7 @@ package com.project.myapp.oauth;
 import java.util.Optional;
 
 import com.project.myapp.security.provider.GoogleUserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -16,7 +17,7 @@ import com.project.myapp.register.dao.RegisterMapper;
 import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -36,21 +37,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		// Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
 		OAuth2UserInfo oAuth2UserInfo = null;
 		if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
-			System.out.println("구글 로그인 요청~~");
+			log.info("구글 로그인 요청~~");
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
 		}
 		//		else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
-		//			System.out.println("페이스북 로그인 요청~~");
+		//			log.info("페이스북 로그인 요청~~");
 		//			oAuth2UserInfo = new FaceBookUserInfo(oAuth2User.getAttributes());
 		//		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")){
-		//			System.out.println("네이버 로그인 요청~~");
+		//			log.info("네이버 로그인 요청~~");
 		//			oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
 		//		} else {
-		//			System.out.println("우리는 구글과 페이스북만 지원해요 ㅎㅎ");
+		//			log.info("우리는 구글과 페이스북만 지원해요 ㅎㅎ");
 		//		}
 
-		//System.out.println("oAuth2UserInfo.getProvider() : " + oAuth2UserInfo.getProvider());
-		//System.out.println("oAuth2UserInfo.getProviderId() : " + oAuth2UserInfo.getProviderId());
+		//log.info("oAuth2UserInfo.getProvider()   {}" , oAuth2UserInfo.getProvider());
+		//log.info("oAuth2UserInfo.getProviderId() {}" , oAuth2UserInfo.getProviderId());
 		Optional<UserDTO> userOptional =
 			registerMapper.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
@@ -71,7 +72,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 				.build();
 			registerMapper.updateUser(userDTO);
 		}
-
 		return new CustomDetails(userDTO, oAuth2User.getAttributes());
 	}
 }
