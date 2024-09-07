@@ -1,6 +1,7 @@
 //package com.project.myapp.security1.config;
 //
 //
+//import com.project.myapp.utiles.properties.OAuth2Properties;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.PropertySource;
@@ -13,16 +14,16 @@
 //@PropertySource("classpath:application-oauth2.properties")
 //public class OAuth2Config {
 //
-//    private SecurityProperties securityProperties;
+//    private OAuth2Properties oAuth2Properties;
 //
 //    @Bean
 //    public ClientRegistrationRepository clientRegistrationRepository() {
 //        ClientRegistration googleClientRegistration = ClientRegistration.withRegistrationId("google")
-//                .clientId(securityProperties.getClientId())
-//                .clientSecret(securityProperties.getClientSecret())
+//                .clientId(oAuth2Properties.getClientId())
+//                .clientSecret(oAuth2Properties.getClientSecret())
 //                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//                .redirectUri(securityProperties.getRedirect_uri())
-//                .scope(securityProperties.getScope().split(","))
+//                .redirectUri(oAuth2Properties.getRedirect_uri())
+//                .scope(oAuth2Properties.getScope().split(","))
 //                .authorizationUri("https://accounts.google.com/o/oauth2/auth")
 //                .tokenUri("https://oauth2.googleapis.com/token")
 //                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")

@@ -62,7 +62,7 @@
     /* Avatar image */
     img.avatar {
         width: 40%;
-        border-radius: 50%;
+        /*border-radius: 50%;*/
     }
 
     /* Add padding to containers */
@@ -195,9 +195,6 @@
     </c:if>
 </div>
 <form action="<c:url value='/login/login'/>" method="post" id="loginForm">
-    <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
     <div class="container">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="아이디를 입력하세요" id="id" name="id" required>
@@ -210,13 +207,13 @@
             <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
     </div>
+    <div style="text-align: center">
     <h4>소셜 로그인</h4>
-    <br/>
-    <!-- javascript:; 는 클릭해도 반응을 없게 하는 키워드 -->
-    <a href="/oauth2/authorization/google">
-        <img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png" alt="google"
-             width="357px" height="117px"/>
+    <a href="<c:url value='/oauth2/authorization/google'/>">
+        <img src="<c:url value='/img/free-icon-google-300221.png'/>" alt="google"
+             width="50" height="50px"/>
     </a>
+    </div>
     <br/>
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>

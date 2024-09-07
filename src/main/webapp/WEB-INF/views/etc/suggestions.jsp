@@ -66,7 +66,7 @@
         <div class="d-flex align-items-center gap-3 mb-4 mt-7 pt-8">
             <h4 class="mb-0">Comments</h4>
             <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">${suggestCount}</span>
-            <h5 class="mb-0">코멘트 수정은 현재 미구현입니다. 건의사항 댓글목록 페이징 예정중이나 잠시 보류중</h5>
+            <h5 class="mb-0">코멘트 수정 불가, 건의사항 댓글목록 페이징 처리</h5>
         </div>
 
         <div class="position-relative" id="suggestionList" name="suggestionList">

@@ -23,10 +23,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String redirectUrl = "/";
 
         log.info("authentication = {}", authentication.getAuthorities());
-            List<String> roleNames = new ArrayList<String>();
-            authentication.getAuthorities().forEach(authority->{
-                roleNames.add(authority.getAuthority());
-            });
+        List<String> roleNames = new ArrayList<String>();
+        authentication.getAuthorities().forEach(authority->{
+            roleNames.add(authority.getAuthority());
+        });
         log.info("roleNames = {}", roleNames);
         // 사용자의 권한에 따라 리다이렉션할 URL 결정
         if (roleNames.contains("ROLE_ADMIN")) {

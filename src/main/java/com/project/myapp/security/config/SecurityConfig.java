@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -57,6 +58,11 @@ public class SecurityConfig {
 	private static List<String> clients = Arrays.asList("google");
 
 	@Bean
+	public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
+		return new DefaultWebSecurityExpressionHandler();
+	}
+
+	@Bean
 	public BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
 	}
@@ -74,6 +80,14 @@ public class SecurityConfig {
 						.anyRequest().permitAll()
 				);
 		http.userDetailsService(customDetailsService);
+
+		http.logout()
+				.logoutUrl("/login/logout")
+				.logoutSuccessUrl("/")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.permitAll();
+
 		http.formLogin(form -> form
 						.loginPage("/login/loginForm")		// 실제 로그인 폼페이지
 						.loginProcessingUrl("/login/login") // 실제 로그인 처리경로

@@ -22,6 +22,7 @@ import com.project.myapp.utiles.properties.OAuth2Properties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -54,7 +55,6 @@ public class LoginController {
 	, Authentication authentication, @AuthenticationPrincipal CustomDetails userDetails) throws
 		UnsupportedEncodingException {
 		log.info("id, password = {}, {}", id, password);
-
 		HttpSession session = null;
 		if (!loginCheck(id, password)) {
 			session = request.getSession();
@@ -69,6 +69,8 @@ public class LoginController {
 		CustomDetails customDetails = (CustomDetails) authentication.getPrincipal();
 		log.info("authentication = {}", customDetails.getUser());
 		log.info("userDetails = {}", userDetails.getUser());
+
+		System.out.println("PrincipalDetails = " + userDetails.getUser());
 
 		// 3.홈으로 이동
 		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
