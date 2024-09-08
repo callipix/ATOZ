@@ -1,8 +1,8 @@
-package com.project.myapp.security.provider;
-
-import com.project.myapp.oauth.OAuth2UserInfo;
+package com.project.myapp.security.oauth.provider;
 
 import java.util.Map;
+
+import com.project.myapp.security.oauth.service.OAuth2UserInfo;
 
 public class GoogleUserInfo implements OAuth2UserInfo {
 

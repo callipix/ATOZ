@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.project.myapp.security.auth.CustomDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,13 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.myapp.login.service.LoginService;
-import com.project.myapp.utiles.properties.OAuth2Properties;
+import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -34,7 +33,6 @@ public class LoginController {
 	private static String authorizationRequestBaseUri = "oauth2/authorization";
 	private final Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 	private final ClientRegistrationRepository clientRegistrationRepository;
-	private final OAuth2Properties oAuth2Properties;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/logout")
@@ -50,9 +48,14 @@ public class LoginController {
 		return "login/loginForm";
 	}
 
+	// @GetMapping("/oauth2/code/google")
+	public void signinKakao(@RequestParam String code) {
+		System.out.println("code = " + code);
+	}
+
 	@PostMapping("/login")
 	public String login(String id, String password, String toURL, HttpServletRequest request
-	, Authentication authentication, @AuthenticationPrincipal CustomDetails userDetails) throws
+		, Authentication authentication, @AuthenticationPrincipal CustomDetails userDetails) throws
 		UnsupportedEncodingException {
 		log.info("id, password = {}, {}", id, password);
 		HttpSession session = null;
@@ -66,7 +69,7 @@ public class LoginController {
 		session.setAttribute("password", password);
 
 		log.info("==============================================================");
-		CustomDetails customDetails = (CustomDetails) authentication.getPrincipal();
+		CustomDetails customDetails = (CustomDetails)authentication.getPrincipal();
 		log.info("authentication = {}", customDetails.getUser());
 		log.info("userDetails = {}", userDetails.getUser());
 
@@ -81,7 +84,7 @@ public class LoginController {
 	public boolean loginCheck(String id, String password) {
 
 		String passwordHash = this.loginService.passCheckById(id).getPassword();
-		log.info("passwordHash = {}" , passwordHash);
+		log.info("passwordHash = {}", passwordHash);
 		boolean passCheck = bCryptPasswordEncoder.matches(password, passwordHash);
 		if (passCheck) {
 			log.info("로그인 성공");
