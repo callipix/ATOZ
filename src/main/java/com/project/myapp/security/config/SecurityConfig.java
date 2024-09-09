@@ -3,8 +3,6 @@ package com.project.myapp.security.config;
 import java.util.Arrays;
 import java.util.List;
 
-import com.project.myapp.security.jwt.JwtAuthenticationFilter;
-import com.project.myapp.security.jwt.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +31,8 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.project.myapp.security.jwt.JwtAuthenticationFilter;
+import com.project.myapp.security.jwt.JwtTokenProvider;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 import com.project.myapp.utiles.properties.OAuth2Properties;
 
@@ -85,9 +85,10 @@ public class SecurityConfig {
 			.clientRegistrationRepository(clientRegistrationRepository())
 			.userInfoEndpoint()
 			.userService(customOAuth2UserService);
-//		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
-//		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-//		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+
+		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 
 		http.logout()
 			.logoutUrl("/login/logout")
