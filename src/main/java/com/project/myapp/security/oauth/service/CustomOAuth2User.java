@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CustomOAuth2User {
+
 	GOOGLE(null, "sub", "email");
 
 	private final String attributeName;

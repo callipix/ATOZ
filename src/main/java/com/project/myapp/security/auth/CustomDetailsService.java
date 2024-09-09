@@ -24,7 +24,7 @@ public class CustomDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		log.info("username = {}", id);
-		System.out.println("여기 타는거 맞지?");
+		log.info("여기 타는거 맞지?");
 
 		UserDTO userEntity = registerMapper.findById(id);
 

@@ -1,4 +1,4 @@
-package com.project.myapp.security;
+package com.project.myapp.security.jwt;
 
 import lombok.Getter;
 

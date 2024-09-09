@@ -3,8 +3,8 @@ package com.project.myapp.security.config;
 import java.util.Arrays;
 import java.util.List;
 
-import com.project.myapp.security.JwtAuthenticationFilter;
-import com.project.myapp.security.JwtTokenProvider;
+import com.project.myapp.security.jwt.JwtAuthenticationFilter;
+import com.project.myapp.security.jwt.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +52,7 @@ public class SecurityConfig {
 	private final OAuth2Properties oAuth2Properties;
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private static List<String> clients = Arrays.asList("google");
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Bean
 	public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
@@ -59,7 +60,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+	public static BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
@@ -84,10 +85,9 @@ public class SecurityConfig {
 			.clientRegistrationRepository(clientRegistrationRepository())
 			.userInfoEndpoint()
 			.userService(customOAuth2UserService);
-		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
-
-		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+//		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
+//		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+//		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 
 		http.logout()
 			.logoutUrl("/login/logout")

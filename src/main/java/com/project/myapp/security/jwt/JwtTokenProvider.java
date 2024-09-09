@@ -1,7 +1,8 @@
-package com.project.myapp.security;
+package com.project.myapp.security.jwt;
 
 import com.project.myapp.security.auth.CustomDetails;
 import com.project.myapp.security.auth.CustomDetailsService;
+import com.project.myapp.utiles.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,12 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class JwtTokenProvider {
     private final CustomDetailsService customDetailsService;
-
+    private final JwtProperties jwtProperties;
     @Value("${jwt.token.key}")
     private String secretKey;
 
@@ -30,7 +31,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     public void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secretKey = Base64.getEncoder().encodeToString(jwtProperties.getJwtTokenKey().getBytes());
     }
 
     // JWT토큰 생성

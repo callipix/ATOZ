@@ -11,42 +11,42 @@
     </select>
 
     <select id="findById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
-        SELECT id,
-               pwd as password,
-               nickName,
-               email,
-               role,
-               type,
-               provider,
-               providerId,
-               status,
-               profile,
-               createdate
+     SELECT  id
+             ,pwd as password
+             ,nickName
+             ,email
+             ,role
+             ,type
+             ,provider
+             ,providerId
+             ,status
+             ,profile
+             ,createDate
         FROM user_info
-        WHERE id = #{id}
+       WHERE id = #{id}
     </select>
 
     <select id="findByEmail" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
         SELECT id, email
-        FROM user_info
-        WHERE email = #{email}
+          FROM user_info
+         WHERE email = #{email}
     </select>
 
     <select id="findByProviderAndProviderId" parameterType="map" resultType="com.project.myapp.dto.UserDTO">
-        SELECT id,
-               pwd as password,
-               nickName,
-               email,
-               role,
-               type,
-               provider,
-               providerId,
-               status,
-               profile,
-               createDate
-        FROM user_info
-        WHERE provider = #{provider}
-          AND providerId = #{providerId}
+        SELECT  id
+               ,pwd as password
+               ,nickName
+               ,email
+               ,role
+               ,type
+               ,provider
+               ,providerId
+               ,status
+               ,profile
+               ,createDate
+          FROM user_info
+         WHERE provider = #{provider}
+           AND providerId = #{providerId}
     </select>
 
     <insert id="insertUser" parameterType="com.project.myapp.dto.UserDTO">
@@ -71,18 +71,17 @@
 
     <update id="updateUser" parameterType="com.project.myapp.dto.UserDTO">
         UPDATE user_info
-        SET id         = #{id}
-          , pwd        = #{password}
-          , nickname   = #{nickName}
-          , email      = #{email}
-          , type       = #{type}
-          , status     = #{status}
-          , profile    = #{profile}
-          , role       = #{role}
-          , provider   = #{provider}
-          , providerId = #{providerId}
-          , createDate = #{createDate}
-        WHERE id = #{id}
+           SET  id         = #{id}
+               ,pwd        = #{password}
+               ,nickname   = #{nickName}
+               ,email      = #{email}
+               ,type       = #{type}
+               ,status     = #{status}
+               ,profile    = #{profile}
+               ,role       = #{role}
+               ,provider   = #{provider}
+               ,providerId = #{providerId}
+               ,createDate = #{createDate}
+         WHERE  id = #{id}
     </update>
-
 </mapper>
