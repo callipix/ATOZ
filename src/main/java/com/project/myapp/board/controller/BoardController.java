@@ -8,11 +8,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.project.myapp.security.auth.CustomDetails;
+import com.sun.security.auth.UserPrincipal;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.myapp.board.service.BoardService;
@@ -23,7 +32,7 @@ import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
 
 import lombok.RequiredArgsConstructor;
-
+@Slf4j
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -99,8 +108,11 @@ public class BoardController {
 	@PostMapping("/write")
 	public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session)
 		throws Exception {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String writer = authentication.getName();
+		log.info("writer = {}", writer);
 
-		String writer = (String)session.getAttribute("id");
+//		String writer = (String)session.getAttribute("id");
 		boardDTO.setWriter(writer);
 
 		int result = this.boardService.insertBoard(boardDTO);
@@ -118,9 +130,12 @@ public class BoardController {
 	@GetMapping("/read")
 	public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m) {
 		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String writer = authentication.getName();
 			BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 			List<CommentDTO> commentList = this.commentService.getCommentForBoard(bno);
 
+			m.addAttribute("loginId", writer);
 			m.addAttribute("commentList", commentList);
 			m.addAttribute("mode", "mod");
 			m.addAttribute(boardDTO);
@@ -147,6 +162,7 @@ public class BoardController {
 
 			Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
 			m.addAttribute("startOfToday", startOfToday.toEpochMilli());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			m.addAttribute("msg", "LIST_ERR");

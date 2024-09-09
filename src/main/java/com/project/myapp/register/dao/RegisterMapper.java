@@ -1,5 +1,6 @@
 package com.project.myapp.register.dao;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -23,7 +24,7 @@ public interface RegisterMapper {
 
 	UserDTO findById(String id);
 
-	Optional<UserDTO> findByProviderAndProviderId(String provider, String providerId);
+	Optional<UserDTO> findByProviderAndProviderId(Map<String,String> providerMap);
 
 	int save(UserDTO userDTO);
 

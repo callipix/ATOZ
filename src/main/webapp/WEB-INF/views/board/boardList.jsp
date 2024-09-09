@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="true"%>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal" var="principal"/>
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,10 +49,13 @@
         <input type="submit" class="search-button" value="검색">
         <br>
         <br>
-    <c:if test="${sessionScope.id ne null}">
-        <button id="writeBtn" type="button" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
-    </c:if>
+        <sec:authorize access="authenticated" var="authenticated"/>
+            <c:if test="${authenticated}">
+                <sec:authentication property="principal" var="principal"/>
+            <button id="writeBtn" type="button" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
+            </c:if>
     </form>
+            <h6>${principal.username}</h6>
 </div>
 <div class="table-container">
     <table>

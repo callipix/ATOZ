@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,10 +12,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import com.project.myapp.dto.UserDTO;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class CustomDetails implements UserDetails, OAuth2User {
 
 	private UserDTO user;  // 컴포지션

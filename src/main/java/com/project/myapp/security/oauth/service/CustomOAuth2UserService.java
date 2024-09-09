@@ -1,12 +1,12 @@
 package com.project.myapp.security.oauth.service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -22,29 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 
 	private final RegisterMapper registerMapper;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		System.out.println("왜 여길 안오는 거지 도대체");
-		OAuth2UserService delegate = new DefaultOAuth2UserService();
-		OAuth2User oAuth2User = delegate.loadUser(userRequest);
-		System.out.println("소셜 로그인 하면 여길 타야하는데?");
+		OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
 
-		String userNameAttributeName = userRequest.getClientRegistration()
-			.getProviderDetails()
-			.getUserInfoEndpoint()
-			.getUserNameAttributeName();
-
-		String registrationId = userRequest.getClientRegistration().getRegistrationId();
-		// String userIdentifier = oAuth2UserInfo.
-		Map<String, Object> attribute = oAuth2User.getAttributes();
-
-		// OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory
-
+		log.info("소셜 로그인시 여기 타는거 확인");
 		return processOAuth2User(userRequest, oAuth2User);
 	}
 
@@ -56,7 +43,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			log.info("구글 로그인 요청");
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
 		}
-
 		log.info("oAuth2UserInfo.getName() {}", oAuth2UserInfo.getName());
 		log.info("oAuth2UserInfo.getEmail() {}", oAuth2UserInfo.getEmail());
 		log.info("oAuth2UserInfo.getProvider()   {}", oAuth2UserInfo.getProvider());
@@ -65,10 +51,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		String provider = oAuth2UserInfo.getProvider();
 		String providerId = oAuth2UserInfo.getProviderId();
 
-		System.out.println("provider = " + provider);
-		System.out.println("providerId = " + providerId);
+		log.info("provider   = {}", provider);
+		log.info("providerId = {}", providerId);
+		Map<String, String> providerMap = new HashMap<>();
 
-		Optional<UserDTO> userOptional = registerMapper.findByProviderAndProviderId(provider, providerId);
+		providerMap.put("provider", provider);
+		providerMap.put("providerId", providerId);
+
+		Optional<UserDTO> userOptional = registerMapper.findByProviderAndProviderId(providerMap);
 
 		UserDTO userDTO;
 		if (userOptional.isPresent()) {
@@ -77,9 +67,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			userDTO.setEmail(oAuth2UserInfo.getEmail());
 			registerMapper.updateUser(userDTO);
 		} else {
-			userDTO = null;
-
-			// user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
+			userDTO = null; // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음
 			userDTO = UserDTO.builder()
 				.nickName(oAuth2UserInfo.getName())
 				.email(oAuth2UserInfo.getEmail())
@@ -88,8 +76,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 				.providerId(oAuth2UserInfo.getProviderId())
 				.build();
 
-			userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+			String id = provider+"_"+providerId;
+			String oAuth2Password = bCryptPasswordEncoder.encode(provider+"_"+providerId);
+
+			userDTO.setId(id);
+			userDTO.setPassword(oAuth2Password);
 			userDTO.setNickName(providerId);
+
+			log.info("userDTO for processOAuth2User = {}", userDTO);
 
 			registerMapper.save(userDTO);
 		}

@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.project.myapp.dto.UserDTO;
+import com.project.myapp.security.JwtTokenProvider;
+import com.project.myapp.security.UserRoleEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
 	private final LoginService loginService;
-	private static String authorizationRequestBaseUri = "oauth2/authorization";
 	private final Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
-	private final ClientRegistrationRepository clientRegistrationRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/logout")
 	public String logOut(HttpSession session, HttpServletRequest request) {
@@ -50,7 +52,7 @@ public class LoginController {
 
 	// @GetMapping("/oauth2/code/google")
 	public void signinKakao(@RequestParam String code) {
-		System.out.println("code = " + code);
+		log.info("code = {}", code);
 	}
 
 	@PostMapping("/login")
@@ -73,13 +75,25 @@ public class LoginController {
 		log.info("authentication = {}", customDetails.getUser());
 		log.info("userDetails = {}", userDetails.getUser());
 
-		System.out.println("PrincipalDetails = " + userDetails.getUser());
+		log.info("PrincipalDetails = {}", userDetails.getUser());
 
 		// 3.홈으로 이동
 		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
 		log.info("toURL = {}", toURL);
 		return "redirect:" + toURL;
 	}
+
+	public String jwtLogin(UserDTO userDTO , HttpServletResponse response){
+
+		UserDTO user = this.loginService.passCheckById("aa");
+		String checkEmail = user.getEmail();
+		String role = user.getRole();
+
+		String token = jwtTokenProvider.createToken(checkEmail , role);
+		response.setHeader("JWT", token);
+		return token;
+	}
+
 
 	public boolean loginCheck(String id, String password) {
 

@@ -3,6 +3,8 @@ package com.project.myapp.security.config;
 import java.util.Arrays;
 import java.util.List;
 
+import com.project.myapp.security.JwtAuthenticationFilter;
+import com.project.myapp.security.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +30,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
@@ -37,9 +40,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@EnableWebMvc        //
-@Configuration        // 환경설정 선언
-@EnableWebSecurity    //부트와 달리 일반스프링에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
+@EnableWebMvc
+@Configuration
+@EnableWebSecurity    // 부트와 달리 일반스프링에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
 @RequiredArgsConstructor
 @PropertySource("classpath:application-oauth2.properties")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -56,12 +59,12 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public BCryptPasswordEncoder encodePwd() {
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/user/**").authenticated()
@@ -81,6 +84,10 @@ public class SecurityConfig {
 			.clientRegistrationRepository(clientRegistrationRepository())
 			.userInfoEndpoint()
 			.userService(customOAuth2UserService);
+		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
+
+		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 
 		http.logout()
 			.logoutUrl("/login/logout")

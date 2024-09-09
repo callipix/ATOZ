@@ -32,7 +32,7 @@
         WHERE email = #{email}
     </select>
 
-    <select id="findByProviderAndProviderId" resultType="com.project.myapp.dto.UserDTO">
+    <select id="findByProviderAndProviderId" parameterType="map" resultType="com.project.myapp.dto.UserDTO">
         SELECT id,
                pwd as password,
                nickName,
@@ -73,7 +73,7 @@
         UPDATE user_info
         SET id         = #{id}
           , pwd        = #{password}
-          , nickname   = #{nickname}
+          , nickname   = #{nickName}
           , email      = #{email}
           , type       = #{type}
           , status     = #{status}
