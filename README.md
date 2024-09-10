@@ -1,25 +1,22 @@
-### http://54.180.133.61:8080/myApp/ ↔  http://www.myportfolio.p-e.kr/
+#### http://www.myportfolio.p-e.kr/
 ##### 2024.08.06 AM 09:00 ~ 현재 서버 실행중
 
 <div style="background-color: white;">
-
 <div> 
   <h2 style="color: #282d33;"> ✈️ 프로젝트 개요</h2>  
   <div style="font-weight: 700; font-size: 15px; color: #282d33;">
-    <h5>기초지만 중요한 내용을 스스로 다시 한번 환경 설정부터 배포까지 해보고 간단한 성능테스트 후<br> 개선까지 해보는 것을 목표로 하고자 한 개인프로젝트</h5>
+    <h5>기초지만 중요한 내용을 다시 한번 환경 설정부터 배포까지 해보고<br>간단한 성능테스트 후 개선까지 목표로 한 개인프로젝트</h5>
 <h6>
 1. 기본적인 CRUD 다시 한번 체크 및 재정리<br>
 2. 기존에 사용 해보지 않았던 DB 사용(기존 : Oracle → MySQL)<br>
 3. 페이징 및 검색 다시 한번 복습<br>
 4. 테스트툴 활용하기 → Junit4, Postman<br>
-5. Debugging 활용하여 에러 해결하기<br>
-6. DB 트랜잭션 적용 및 확인<br>
-7. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3)<br>
-8. 특정 기능 Rest API로 구현<br>
-9. 일부설정파일 properties로 관리<br>
-10. Validation으로 서버단 유효성 검증<br>
-11. 스프링 시큐리티 사용하여 접근권한 설정 → 보안강화<br>
-12. 부하테스트를 통한 성능 측정 후 개선(nGrinder)
+5. DB 트랜잭션 적용 및 확인<br>
+6. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3)<br>
+7. 특정 기능 Rest API로 구현<br>
+8. Validation으로 서버단 유효성 검증<br>
+9. 스프링 시큐리티 사용하여 접근권한 설정 → 보안강화<br>
+10. 부하테스트를 통한 성능 측정 후 개선(nGrinder)
 </h6>
   </div>
 <br>
