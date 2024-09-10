@@ -22,15 +22,20 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         // 헤더에서 JWT를 받아온다
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
-
         // 토큰 유효성 체크(유효한 토큰인가?)
         if(token != null && jwtTokenProvider.validateToken(token)) {
-            Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            setAuthentication(token);
+
+        } else {
 
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void setAuthentication(String token){
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
 }

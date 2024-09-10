@@ -24,15 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+
 	private final CustomDetailsService customDetailsService;
 	private final JwtProperties jwtProperties;
 	private String secretKey;
 
-	private Long tokenValidTile = 240 * 60 * 1000L;
+	private Long tokenValidTime = 240 * 60 * 1000L;
 
 	@PostConstruct
 	public void init() {
+		System.out.println("1 for JwtTokenProvider = " + 1);
 		secretKey = Base64.getEncoder().encodeToString(jwtProperties.getJwtTokenKey().getBytes());
+		System.out.println("jwtProperties.getJwtTokenKey = " + jwtProperties.getJwtTokenKey());
+		System.out.println("secretKey = " + secretKey);
 	}
 
 	// JWT토큰 생성
@@ -42,10 +46,11 @@ public class JwtTokenProvider {
 		Claims claims = Jwts.claims()
 			.setSubject("access_token")
 			.setIssuedAt(now)
-			.setExpiration(new Date(now.getTime() + tokenValidTile));
+			.setExpiration(new Date(now.getTime() + tokenValidTime));
 
 		claims.put("email", email);
 		claims.put("role", role);
+		System.out.println("2 for JwtTokenProvider = " + 2);
 		return Jwts.builder()
 			.setHeaderParam("typ", "JWT")
 			.setClaims(claims)

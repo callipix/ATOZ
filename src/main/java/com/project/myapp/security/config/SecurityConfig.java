@@ -3,15 +3,22 @@ package com.project.myapp.security.config;
 import java.util.Arrays;
 import java.util.List;
 
+import com.project.myapp.security.handler.CustomSuccessHandler;
+import com.project.myapp.security.jwt.JwtFilter;
+import com.project.myapp.security.jwt.JwtUtil;
+import com.project.myapp.security.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
@@ -24,6 +31,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,8 +39,6 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.project.myapp.security.jwt.JwtAuthenticationFilter;
-import com.project.myapp.security.jwt.JwtTokenProvider;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 import com.project.myapp.utiles.properties.OAuth2Properties;
 
@@ -49,10 +55,19 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.auth", "com.project.myapp"})
 public class SecurityConfig {
 
-	private final OAuth2Properties oAuth2Properties;
+	private final AuthenticationConfiguration authenticationConfiguration;
 	private final CustomOAuth2UserService customOAuth2UserService;
+	private final CustomSuccessHandler customSuccessHandler;
+	private final JwtUtil jwtUtil;
+
+	private final OAuth2Properties oAuth2Properties;
 	private static List<String> clients = Arrays.asList("google");
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+		return configuration.getAuthenticationManager();
+	}
 
 	@Bean
 	public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
@@ -65,38 +80,48 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
-			.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("/user/**").authenticated()
-				.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-				.requestMatchers("/admin/**").hasRole("ADMIN")
-				.anyRequest().permitAll()
-			);
+				.authorizeHttpRequests(authorize -> authorize
+						.requestMatchers("/user/**").authenticated()
+						.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+						.anyRequest().permitAll()
+				);
+
+		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+
+		http.addFilterBefore(new JwtFilter(jwtUtil) , UsernamePasswordAuthenticationFilter.class);
+		http.addFilterAfter(new JwtExceptionFilter() , JwtFilter.class);
+//		http.addFilterAfter(new JwtFilter(jwtUtil) , OAuth2LoginAuthenticationFilter.class);
+
+		http.sessionManagement((session) -> session
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		http.formLogin()
-			.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
-			.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
-			.usernameParameter("id")
-			.passwordParameter("password")
-			.defaultSuccessUrl("/");
+				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
+				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
+				.usernameParameter("id")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/");
 
-		http.oauth2Login()
-			.clientRegistrationRepository(clientRegistrationRepository())
-			.userInfoEndpoint()
-			.userService(customOAuth2UserService);
-
-		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+		http.oauth2Login((oauth2) -> oauth2
+				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+						.userService(customOAuth2UserService))
+				.successHandler(customSuccessHandler)
+				.clientRegistrationRepository(clientRegistrationRepository())
+		);
+//		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
+//		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+//		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 
 		http.logout()
-			.logoutUrl("/login/logout")
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true)
-			.deleteCookies("SESSION")
-			.deleteCookies("JSESSIONID")
-			.permitAll();
+				.logoutUrl("/login/logout")
+				.logoutSuccessUrl("/")
+				.invalidateHttpSession(true)
+				.deleteCookies("SESSION")
+				.deleteCookies("JSESSIONID")
+				.permitAll();
 
 		return http.build();
 	}
@@ -116,15 +141,15 @@ public class SecurityConfig {
 	public ClientRegistrationRepository clientRegistrationRepository() {
 
 		ClientRegistration googleClientRegistration = ClientRegistration.withRegistrationId("google")
-			.clientId(oAuth2Properties.getGoogle_client_id())
-			.clientSecret(oAuth2Properties.getGoogle_client_secret())
-			.scope(oAuth2Properties.getScope())
-			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-			.redirectUri(oAuth2Properties.getGoogle_redirect_url())
-			.authorizationUri("https://accounts.google.com/o/oauth2/auth")
-			.tokenUri("https://oauth2.googleapis.com/token")
-			.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-			.build();
+				.clientId(oAuth2Properties.getGoogle_client_id())
+				.clientSecret(oAuth2Properties.getGoogle_client_secret())
+				.scope(oAuth2Properties.getScope())
+				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+				.redirectUri(oAuth2Properties.getGoogle_redirect_url())
+				.authorizationUri("https://accounts.google.com/o/oauth2/auth")
+				.tokenUri("https://oauth2.googleapis.com/token")
+				.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+				.build();
 
 		return new InMemoryClientRegistrationRepository(googleClientRegistration);
 
@@ -132,31 +157,31 @@ public class SecurityConfig {
 
 	@Bean
 	public OAuth2AuthorizedClientService authorizedClientService() {
-		return new InMemoryOAuth2AuthorizedClientService(oAuth2Properties.clientRegistrationRepository());
+		return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
 	}
 
 	private static String CLIENT_PROPERTY_KEY
-		= "spring.security.oauth2.client.registration.";
+			= "spring.security.oauth2.client.registration.";
 
 	private final Environment env;
 
 	private ClientRegistration getRegistration(String client) {
 		String clientId = env.getProperty(
-			CLIENT_PROPERTY_KEY + client + ".client-id");
+				CLIENT_PROPERTY_KEY + client + ".client-id");
 
 		if (clientId == null) {
 			return null;
 		}
 		String clientSecret = env.getProperty(
-			CLIENT_PROPERTY_KEY + client + ".client-secret");
+				CLIENT_PROPERTY_KEY + client + ".client-secret");
 
 		if (client.equals("google")) {
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-				.clientId(clientId).clientSecret(clientSecret).build();
+					.clientId(clientId).clientSecret(clientSecret).build();
 		}
 		if (client.equals("facebook")) {
 			return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
-				.clientId(clientId).clientSecret(clientSecret).build();
+					.clientId(clientId).clientSecret(clientSecret).build();
 		}
 		return null;
 	}
