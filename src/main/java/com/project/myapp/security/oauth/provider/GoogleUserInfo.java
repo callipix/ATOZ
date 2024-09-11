@@ -6,7 +6,7 @@ import com.project.myapp.security.oauth.service.OAuth2UserInfo;
 
 public class GoogleUserInfo implements OAuth2UserInfo {
 
-	private Map<String, Object> attributes;
+	private final Map<String, Object> attributes;
 
 	public GoogleUserInfo(Map<String, Object> attributes) {
 		this.attributes = attributes;

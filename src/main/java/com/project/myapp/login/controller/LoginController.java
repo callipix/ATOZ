@@ -70,29 +70,12 @@ public class LoginController {
 		session.setAttribute("password", password);
 
 		log.info("==============================================================");
-		CustomDetails customDetails = (CustomDetails)authentication.getPrincipal();
-		log.info("authentication = {}", customDetails.getUser());
-		log.info("userDetails = {}", userDetails.getUser());
-
-		log.info("PrincipalDetails = {}", userDetails.getUser());
 
 		// 3.홈으로 이동
 		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
 		log.info("toURL = {}", toURL);
 		return "redirect:" + toURL;
 	}
-
-	public String jwtLogin(UserDTO userDTO , HttpServletResponse response){
-
-		UserDTO user = this.loginService.passCheckById("aa");
-		String checkEmail = user.getEmail();
-		String role = user.getRole();
-
-		String token = jwtTokenProvider.createToken(checkEmail , role);
-		response.setHeader("JWT", token);
-		return token;
-	}
-
 
 	public boolean loginCheck(String id, String password) {
 

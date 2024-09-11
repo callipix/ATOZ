@@ -86,24 +86,23 @@ public class SecurityConfig {
 						.requestMatchers("/user/**").authenticated()
 						.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
 						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.anyRequest().permitAll()
+						.requestMatchers("/login","/","join").permitAll()
+						.anyRequest()
 				);
 
-		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
-
-		http.addFilterBefore(new JwtFilter(jwtUtil) , UsernamePasswordAuthenticationFilter.class);
-		http.addFilterAfter(new JwtExceptionFilter() , JwtFilter.class);
-//		http.addFilterAfter(new JwtFilter(jwtUtil) , OAuth2LoginAuthenticationFilter.class);
+		http.addFilterBefore(new JwtFilter(jwtUtil) , LoginFilter.class);
+		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 		http.sessionManagement((session) -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-		http.formLogin()
-				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
-				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
-				.usernameParameter("id")
-				.passwordParameter("password")
-				.defaultSuccessUrl("/");
+//		http.httpBasic().disable();
+		http.formLogin().disable();
+//		http.formLogin()
+//				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
+//				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
+//				.usernameParameter("id")
+//				.passwordParameter("password")
+//				.defaultSuccessUrl("/");
 
 		http.oauth2Login((oauth2) -> oauth2
 				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
@@ -111,15 +110,12 @@ public class SecurityConfig {
 				.successHandler(customSuccessHandler)
 				.clientRegistrationRepository(clientRegistrationRepository())
 		);
-//		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider) , UsernamePasswordAuthenticationFilter.class);
-//		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-//		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
-
 		http.logout()
 				.logoutUrl("/login/logout")
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
 				.deleteCookies("SESSION")
+				.deleteCookies("Authorization")
 				.deleteCookies("JSESSIONID")
 				.permitAll();
 
@@ -145,7 +141,7 @@ public class SecurityConfig {
 				.clientSecret(oAuth2Properties.getGoogle_client_secret())
 				.scope(oAuth2Properties.getScope())
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.redirectUri(oAuth2Properties.getGoogle_redirect_url())
+				.redirectUri(oAuth2Properties.getGoogle_redirect_uri())
 				.authorizationUri("https://accounts.google.com/o/oauth2/auth")
 				.tokenUri("https://oauth2.googleapis.com/token")
 				.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")

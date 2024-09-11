@@ -2,7 +2,6 @@ package com.project.myapp.security.config;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             request.setAttribute("exception", e.getMessage());
         }
-
         filterChain.doFilter(request, response);
-        
+
     }
 }

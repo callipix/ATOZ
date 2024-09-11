@@ -194,7 +194,7 @@
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
 </div>
-<form action="<c:url value='/login/login'/>" method="post" id="loginForm">
+<form action="<c:url value='/login'/>" method="post" id="loginForm">
     <div class="container">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="아이디를 입력하세요" id="id" name="id" required>

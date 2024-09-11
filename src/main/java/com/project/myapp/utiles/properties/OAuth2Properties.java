@@ -24,7 +24,7 @@ public class OAuth2Properties {
 	private String google_client_secret;
 
 	@Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
-	private String google_redirect_url;
+	private String google_redirect_uri;
 
 	@Value("${spring.security.oauth2.client.registration.google.scope}")
 	private String scope;
@@ -34,7 +34,7 @@ public class OAuth2Properties {
 		return CommonOAuth2Provider.GOOGLE.getBuilder("google")
 			.clientId(google_client_id)
 			.clientSecret(google_client_secret)
-			.redirectUri(google_redirect_url)
+			.redirectUri(google_redirect_uri)
 			.scope(scope)
 			.build();
 	}
