@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Login</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
@@ -194,7 +195,7 @@
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
 </div>
-<form action="<c:url value='/login'/>" method="post" id="loginForm">
+<%--<form action="<c:url value='/login'/>" method="post" id="loginForm">--%>
     <div class="container">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="아이디를 입력하세요" id="id" name="id" required>
@@ -202,7 +203,7 @@
         <label for="password"><b>Password</b></label>
         <input type="password" placeholder="패스워드를 입력하세요" id="password" name="password" required>
 
-        <button type="submit">Login</button>
+        <button type="button" id="loginClick">Login</button>
         <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
@@ -219,7 +220,7 @@
         <button type="button" class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
-</form>
+<%--</form>--%>
 </div>
 <script>
     /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
@@ -228,8 +229,8 @@
     const overlay = document.querySelector("#overlay");
     const login = document.querySelector("#login");
 
-    let id = document.getElementById('id').value;
-    let password = document.getElementById('password').value;
+    // let id = document.getElementById('id').value;
+    // let password = document.getElementById('password').value;
 
     function myFunction() {
         if (x.className === "topnav") {
@@ -256,6 +257,43 @@
         form.style.display = "none";
         overlay.style.display = "none";
     }
+
+    const id = document.querySelector('#id');
+    const password = document.querySelector('#password');
+    const loginClick = document.querySelector('#loginClick');
+
+    loginClick.addEventListener('click', function (){
+
+        let idVal = id.value;
+        let passVal = password.value;
+
+        let data = {
+            "username": idVal,
+            "password" : passVal
+        };
+        $.ajax({
+            url : "/login",
+            type : "post",
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(data),
+            success:function (result, textStatus , jqXHR){
+
+                const token = jqXHR.getResponseHeader('Authorization')
+
+                if(token){
+                    alert(token);
+                    localStorage.setItem('token', token);
+                    location.href='/test';
+                } else {
+                    alert('토큰이 존재하지 않습니다.');
+                }
+            }
+        })
+    })
+
 </script>
 </body>
 </html>

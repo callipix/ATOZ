@@ -18,8 +18,8 @@ import com.project.myapp.utiles.properties.JwtProperties;
 
 import lombok.RequiredArgsConstructor;
 
-@Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 10)
+//@Configuration
+//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 10)
 @RequiredArgsConstructor
 public class RedisConfig {
 

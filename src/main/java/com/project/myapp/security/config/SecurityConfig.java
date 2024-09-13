@@ -1,6 +1,7 @@
 package com.project.myapp.security.config;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.project.myapp.security.handler.CustomSuccessHandler;
@@ -37,6 +38,9 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
@@ -44,6 +48,8 @@ import com.project.myapp.utiles.properties.OAuth2Properties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @EnableWebMvc
@@ -81,22 +87,35 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/user/**").authenticated()
-						.requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.requestMatchers("/login","/","join").permitAll()
-						.anyRequest()
-				);
 
-		http.addFilterBefore(new JwtFilter(jwtUtil) , LoginFilter.class);
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8080/*"));
+		configuration.setAllowedMethods(Collections.singletonList("*"));
+		configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+		configuration.setAllowCredentials(true);
+		configuration.setAllowedHeaders(Collections.singletonList("*"));
+		configuration.setMaxAge(3600L);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		http.cors().configurationSource(source);
+
+		http.csrf(AbstractHttpConfigurer::disable);
+		http.formLogin().disable();
+		http.httpBasic().disable();
+		http.authorizeHttpRequests((auth) -> auth
+				.requestMatchers("/js/**").permitAll()
+				.requestMatchers("/css/**").permitAll()
+				.requestMatchers("/test/**").permitAll()
+				.requestMatchers("/login/**", "/","/join").permitAll()
+				.anyRequest().authenticated()
+		);
+
 		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterAfter(new JwtFilter(jwtUtil) , LoginFilter.class);
 
 		http.sessionManagement((session) -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//		http.httpBasic().disable();
-		http.formLogin().disable();
 //		http.formLogin()
 //				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
 //				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
@@ -104,20 +123,20 @@ public class SecurityConfig {
 //				.passwordParameter("password")
 //				.defaultSuccessUrl("/");
 
-		http.oauth2Login((oauth2) -> oauth2
-				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-						.userService(customOAuth2UserService))
-				.successHandler(customSuccessHandler)
-				.clientRegistrationRepository(clientRegistrationRepository())
-		);
-		http.logout()
-				.logoutUrl("/login/logout")
-				.logoutSuccessUrl("/")
-				.invalidateHttpSession(true)
-				.deleteCookies("SESSION")
-				.deleteCookies("Authorization")
-				.deleteCookies("JSESSIONID")
-				.permitAll();
+//		http.oauth2Login((oauth2) -> oauth2
+//				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+//						.userService(customOAuth2UserService))
+//				.successHandler(customSuccessHandler)
+//				.clientRegistrationRepository(clientRegistrationRepository())
+//		);
+//		http.logout()
+//				.logoutUrl("/login/logout")
+//				.logoutSuccessUrl("/")
+//				.invalidateHttpSession(true)
+//				.deleteCookies("SESSION")
+//				.deleteCookies("Authorization")
+//				.deleteCookies("JSESSIONID")
+//				.permitAll();
 
 		return http.build();
 	}

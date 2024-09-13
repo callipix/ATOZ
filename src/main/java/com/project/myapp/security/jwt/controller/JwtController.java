@@ -5,6 +5,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtController {
 
     private final JwtUtil jwtUtil;
+
+    @PostMapping("/test")
+    public String adminP(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
+        System.out.println("authorization for JwtController = " + authorization);
+        return "Admin Controller";
+    }
 
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 

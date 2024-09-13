@@ -37,13 +37,13 @@ public class JwtUtil {
         try{
             return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
+            log.info("Invalid JWT Token {} ", e);
         } catch(ExpiredJwtException e){
-            log.info("Expired JWT Token", e);
+            log.info("Expired JWT Token {}", e);
         } catch(UnsupportedJwtException e){
-            log.info("Unsupported JWT Token", e);
+            log.info("Unsupported JWT Token {} ", e);
         } catch(IllegalArgumentException e){
-            log.info("JWT claims string is empty", e);
+            log.info("JWT claims string is empty {} ", e);
         }
         return false;
     }
@@ -60,7 +60,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiredMs))
+                .setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
