@@ -1,5 +1,7 @@
 #### http://www.myportfolio.p-e.kr/
-##### 2024.08.06 AM 09:00 ~ 현재 서버 실행중
+##### 2024.08.06 AM 09:00 ~ ~~현재 서버 실행중~~
+##### 2024.09.13 AM 11:42 ~ 서버 종료
+##### 기능 변경 및 운영 서버 변경 예정(AWS EC2 → Vultr)
 
 <div style="background-color: white;">
 <div> 
