@@ -5,23 +5,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.project.myapp.security.auth.CustomDetails;
-import com.sun.security.auth.UserPrincipal;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.myapp.board.service.BoardService;
@@ -30,8 +19,11 @@ import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
+import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -55,14 +47,18 @@ public class BoardController {
 	 *
 	 * @param bno     게시글 번호
 	 * @param sc      삭제 후에도 기존 페이지로 돌아가기 위해 사용
-	 * @param session 작성자 아이디를 가져오기 위한 세션
+	 * @param session 작성자 아이디를 가져오기 위한 세션 → 시큐리티 세션으로 변경
 	 * @param rattr   리다이렉트 하기 위한 변수
 	 * @return
 	 */
 	@PostMapping("/remove")
-	public String remove(Integer bno, SearchCondition sc, HttpSession session,
-		RedirectAttributes rattr) {
-		String writer = (String)session.getAttribute("id");
+	public String remove(Integer bno, SearchCondition sc, RedirectAttributes rattr) {
+
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+		String writer = userDetails.getName();
+
 		String msg = "DEL_OK";
 		try {
 			int result = this.boardService.deleteByIdNBno(bno, writer);
@@ -79,11 +75,13 @@ public class BoardController {
 
 	// 글수정
 	@PostMapping("/modify")
-	public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m,
-		HttpSession session) throws Exception {
-
-		String writer = (String)session.getAttribute("id");
+	public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m) throws Exception {
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+		String writer = userDetails.getName();
 		boardDTO.setWriter(writer);
+
 		int result = this.boardService.updateBoardByIdNBno(boardDTO);
 		try {
 			if (result != 1) {
@@ -102,17 +100,20 @@ public class BoardController {
 	@GetMapping("/write")
 	public String write(Model m) {
 		m.addAttribute("mode", "new");
-		return "board/write";
+		return "/board/write";
 	}
 
 	@PostMapping("/write")
-	public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m, HttpSession session)
+	public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m)
 		throws Exception {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String writer = authentication.getName();
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+		String writer = userDetails.getName();
+
 		log.info("writer = {}", writer);
 
-//		String writer = (String)session.getAttribute("id");
+		//		String writer = (String)session.getAttribute("id");
 		boardDTO.setWriter(writer);
 
 		int result = this.boardService.insertBoard(boardDTO);
@@ -130,12 +131,9 @@ public class BoardController {
 	@GetMapping("/read")
 	public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String writer = authentication.getName();
 			BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 			List<CommentDTO> commentList = this.commentService.getCommentForBoard(bno);
 
-			m.addAttribute("loginId", writer);
 			m.addAttribute("commentList", commentList);
 			m.addAttribute("mode", "mod");
 			m.addAttribute(boardDTO);
@@ -148,7 +146,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardList")
-	public String getBoardList(Model m, SearchCondition sc, HttpServletRequest request) {
+	public String getBoardList(Model m, SearchCondition sc) {
 		try {
 			int totalCnt = this.boardService.getSearchResultCount(sc);
 			m.addAttribute("totalCnt", totalCnt);
@@ -168,6 +166,6 @@ public class BoardController {
 			m.addAttribute("msg", "LIST_ERR");
 			m.addAttribute("totalCnt", 0);
 		}
-		return "board/boardList";
+		return "/board/boardList";
 	}
 }

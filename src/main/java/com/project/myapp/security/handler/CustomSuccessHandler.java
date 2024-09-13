@@ -1,84 +1,100 @@
 package com.project.myapp.security.handler;
 
-import com.project.myapp.security.auth.CustomDetails;
-import com.project.myapp.security.jwt.JwtUtil;
-import com.project.myapp.security.oauth.service.CustomOAuth2User;
-import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import com.project.myapp.security.auth.CustomDetails;
+import com.project.myapp.security.jwt.JwtUtil;
+import com.project.myapp.security.jwt.RefreshDTO;
+import com.project.myapp.security.jwt.mapper.RefreshMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@MapperScan("com.project.myapp.security.jwt.mapper")
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final JwtUtil jwtUtil;
+	private final JwtUtil jwtUtil;
+	private final RefreshMapper refreshMapper;
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+		Authentication authentication) throws IOException, ServletException {
 
-        System.out.println("여길 안와?");
-        CustomDetails customUserDetails = (CustomDetails) authentication.getPrincipal();
+		log.info("여길 안와?");
+		CustomDetails customUserDetails = (CustomDetails)authentication.getPrincipal();
+		log.info("customUserDetails = {}", customUserDetails);
 
-        String username = customUserDetails.getUsername();
+		String username = customUserDetails.getName();
+		log.info("username for onAuthenticationSuccess = {}", username);
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-        GrantedAuthority auth = iterator.next();
-        String role = auth.getAuthority();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
+		GrantedAuthority auth = iterator.next();
+		String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(username, role , 60 * 60 * 60L);
-        log.info("token = {}", token);
-        log.info("role =  {}", role);
-        log.info("auth =  {}", auth);
-        log.info("iterator = {}", iterator);
-        log.info("authorities = {}", authorities);
-        log.info("username = {}", username);
-        log.info("customUserDetails = {}", customUserDetails);
+		String access = jwtUtil.createJwt("access", username, role, 6000000L);
+		String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
 
-        response.addCookie(createCooke("Authorization" , token));
-        response.sendRedirect("/");
-//
-//        // 기본 리다이렉션 URL 설정
-//        String redirectUrl = "/";
-//
-//        log.info("authentication = {}", authentication.getAuthorities());
-//        List<String> roleNames = new ArrayList<String>();
-//        authentication.getAuthorities().forEach(authority->{
-//            roleNames.add(authority.getAuthority());
-//        });
-//        log.info("roleNames = {}", roleNames);
-//        // 사용자의 권한에 따라 리다이렉션할 URL 결정
-//        if (roleNames.contains("ROLE_ADMIN")) {
-//            redirectUrl = "/myApp/adminTest";
-//        } else if (roleNames.contains("ROLE_USER")) {
-//            redirectUrl = "/myApp/";
-//        }
-//        // 응답 객체를 사용해 리다이렉션
-//        log.info("redirectUrl = {}", redirectUrl);
-//        response.sendRedirect(redirectUrl);
-    }
+		// String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-    private Cookie createCooke(String key, String value) {
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(60 * 60 * 60);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
+		log.info("refresh for onAuthenticationSuccess = {}", refresh);
+		log.info("access for onAuthenticationSuccess = {}", access);
+		log.info(" ");
 
-        return cookie;
-    }
+		addRefreshToken(username, refresh, 888888888L);
+
+		log.info("CustomSuccessHandler 끝");
+		response.addHeader("access", access);
+		response.addCookie(createCookie("refresh", refresh));
+		response.setStatus(HttpStatus.OK.value());
+		response.sendRedirect("/");
+	}
+
+	private Cookie createCookie(String key, String value) {
+		Cookie cookie = new Cookie(key, value);
+		cookie.setMaxAge(60 * 60 * 60);
+		// cookie.setPath("/");
+		cookie.setHttpOnly(true);
+
+		return cookie;
+	}
+
+	private void addRefreshToken(String username, String refresh, Long expiredMs) {
+		Date date = new Date(System.currentTimeMillis() + expiredMs);
+
+		int result = 0;
+		RefreshDTO refreshDTO = new RefreshDTO();
+		refreshDTO.setRefresh(refresh);
+		refreshDTO.setUsername(username);
+		refreshDTO.setExpiration(date.toString());
+
+		log.info("refreshDTO = {}", refreshDTO);
+		log.info("refreshDTO.getId = {}", refreshDTO.getId());
+		log.info("refreshDTO.getRefresh = {}", refreshDTO.getRefresh());
+		log.info("refreshDTO.getUsername = {}", refreshDTO.getUsername());
+		log.info("refreshDTO.getExpiration = {}", refreshDTO.getExpiration());
+
+		result += this.refreshMapper.insertSave(refreshDTO);
+
+		System.out.println("result = " + result);
+
+	}
 }

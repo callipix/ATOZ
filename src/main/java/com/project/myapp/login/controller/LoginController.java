@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.project.myapp.dto.UserDTO;
-import com.project.myapp.security.jwt.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +31,6 @@ public class LoginController {
 	private final LoginService loginService;
 	private final Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/logout")
 	public String logOut(HttpSession session, HttpServletRequest request) {

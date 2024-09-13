@@ -4,10 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.project.myapp.security.handler.CustomSuccessHandler;
-import com.project.myapp.security.jwt.JwtFilter;
-import com.project.myapp.security.jwt.JwtUtil;
-import com.project.myapp.security.jwt.LoginFilter;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,24 +29,23 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.project.myapp.security.handler.CustomSuccessHandler;
+import com.project.myapp.security.jwt.JwtFilter;
+import com.project.myapp.security.jwt.JwtUtil;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 import com.project.myapp.utiles.properties.OAuth2Properties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @EnableWebMvc
@@ -58,10 +54,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @PropertySource("classpath:application-oauth2.properties")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.auth", "com.project.myapp"})
+@ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.auth"})
+@MapperScan("com.project.myapp.security.jwt.service")
 public class SecurityConfig {
 
-	private final AuthenticationConfiguration authenticationConfiguration;
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final CustomSuccessHandler customSuccessHandler;
 	private final JwtUtil jwtUtil;
@@ -104,39 +100,44 @@ public class SecurityConfig {
 		http.formLogin().disable();
 		http.httpBasic().disable();
 		http.authorizeHttpRequests((auth) -> auth
-				.requestMatchers("/js/**").permitAll()
-				.requestMatchers("/css/**").permitAll()
-				.requestMatchers("/test/**").permitAll()
-				.requestMatchers("/login/**", "/","/join").permitAll()
-				.anyRequest().authenticated()
+			.requestMatchers("/js/**").permitAll()
+			.requestMatchers("/css/**").permitAll()
+			.requestMatchers("/test/**").permitAll()
+			.requestMatchers("/bootstrap/**").permitAll()
+			.requestMatchers("/**", "/", "/join").permitAll()
+			.requestMatchers("/reissue").permitAll()
+			.anyRequest().authenticated()
 		);
 
-		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
-		http.addFilterAfter(new JwtFilter(jwtUtil) , LoginFilter.class);
+		// http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+		// 	UsernamePasswordAuthenticationFilter.class);
+		// http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
+
+		http.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 		http.sessionManagement((session) -> session
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//		http.formLogin()
-//				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
-//				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
-//				.usernameParameter("id")
-//				.passwordParameter("password")
-//				.defaultSuccessUrl("/");
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		//		http.formLogin()
+		//				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
+		//				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
+		//				.usernameParameter("id")
+		//				.passwordParameter("password")
+		//				.defaultSuccessUrl("/");
 
-//		http.oauth2Login((oauth2) -> oauth2
-//				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-//						.userService(customOAuth2UserService))
-//				.successHandler(customSuccessHandler)
-//				.clientRegistrationRepository(clientRegistrationRepository())
-//		);
-//		http.logout()
-//				.logoutUrl("/login/logout")
-//				.logoutSuccessUrl("/")
-//				.invalidateHttpSession(true)
-//				.deleteCookies("SESSION")
-//				.deleteCookies("Authorization")
-//				.deleteCookies("JSESSIONID")
-//				.permitAll();
+		http.oauth2Login((oauth2) -> oauth2
+			.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+				.userService(customOAuth2UserService))
+			.successHandler(customSuccessHandler)
+			.clientRegistrationRepository(clientRegistrationRepository())
+		);
+		http.logout()
+			.logoutUrl("/login/logout")
+			.logoutSuccessUrl("/")
+			.invalidateHttpSession(true)
+			.deleteCookies("SESSION")
+			.deleteCookies("Authorization")
+			.deleteCookies("JSESSIONID")
+			.permitAll();
 
 		return http.build();
 	}
@@ -156,15 +157,15 @@ public class SecurityConfig {
 	public ClientRegistrationRepository clientRegistrationRepository() {
 
 		ClientRegistration googleClientRegistration = ClientRegistration.withRegistrationId("google")
-				.clientId(oAuth2Properties.getGoogle_client_id())
-				.clientSecret(oAuth2Properties.getGoogle_client_secret())
-				.scope(oAuth2Properties.getScope())
-				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.redirectUri(oAuth2Properties.getGoogle_redirect_uri())
-				.authorizationUri("https://accounts.google.com/o/oauth2/auth")
-				.tokenUri("https://oauth2.googleapis.com/token")
-				.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-				.build();
+			.clientId(oAuth2Properties.getGoogle_client_id())
+			.clientSecret(oAuth2Properties.getGoogle_client_secret())
+			.scope(oAuth2Properties.getScope())
+			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+			.redirectUri(oAuth2Properties.getGoogle_redirect_uri())
+			.authorizationUri("https://accounts.google.com/o/oauth2/auth")
+			.tokenUri("https://oauth2.googleapis.com/token")
+			.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+			.build();
 
 		return new InMemoryClientRegistrationRepository(googleClientRegistration);
 
@@ -176,27 +177,27 @@ public class SecurityConfig {
 	}
 
 	private static String CLIENT_PROPERTY_KEY
-			= "spring.security.oauth2.client.registration.";
+		= "spring.security.oauth2.client.registration.";
 
 	private final Environment env;
 
 	private ClientRegistration getRegistration(String client) {
 		String clientId = env.getProperty(
-				CLIENT_PROPERTY_KEY + client + ".client-id");
+			CLIENT_PROPERTY_KEY + client + ".client-id");
 
 		if (clientId == null) {
 			return null;
 		}
 		String clientSecret = env.getProperty(
-				CLIENT_PROPERTY_KEY + client + ".client-secret");
+			CLIENT_PROPERTY_KEY + client + ".client-secret");
 
 		if (client.equals("google")) {
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-					.clientId(clientId).clientSecret(clientSecret).build();
+				.clientId(clientId).clientSecret(clientSecret).build();
 		}
 		if (client.equals("facebook")) {
 			return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
-					.clientId(clientId).clientSecret(clientSecret).build();
+				.clientId(clientId).clientSecret(clientSecret).build();
 		}
 		return null;
 	}

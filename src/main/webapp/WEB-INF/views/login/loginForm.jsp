@@ -195,7 +195,7 @@
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
 </div>
-<%--<form action="<c:url value='/login'/>" method="post" id="loginForm">--%>
+<form action="<c:url value='/login'/>" method="post" id="loginForm">
     <div class="container">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="아이디를 입력하세요" id="id" name="id" required>
@@ -209,18 +209,18 @@
         </label>
     </div>
     <div style="text-align: center">
-    <h4>소셜 로그인</h4>
-    <a href="<c:url value='/oauth2/authorization/google'/>">
-        <img src="<c:url value='/img/free-icon-google-300221.png'/>" alt="google"
-             width="50" height="50px"/>
-    </a>
+        <h4>소셜 로그인</h4>
+        <a href="<c:url value='/oauth2/authorization/google'/>">
+            <img src="<c:url value='/img/free-icon-google-300221.png'/>" alt="google"
+                 width="50" height="50px"/>
+        </a>
     </div>
     <br/>
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
-<%--</form>--%>
+</form>
 </div>
 <script>
     /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
@@ -262,31 +262,31 @@
     const password = document.querySelector('#password');
     const loginClick = document.querySelector('#loginClick');
 
-    loginClick.addEventListener('click', function (){
+    loginClick.addEventListener('click', function () {
 
         let idVal = id.value;
         let passVal = password.value;
 
         let data = {
             "username": idVal,
-            "password" : passVal
+            "password": passVal
         };
         $.ajax({
-            url : "/login",
-            type : "post",
-            headers:{
+            url: "/login",
+            type: "post",
+            headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify(data),
-            success:function (result, textStatus , jqXHR){
+            success: function (result, textStatus, jqXHR) {
 
                 const token = jqXHR.getResponseHeader('Authorization')
 
-                if(token){
+                if (token) {
                     alert(token);
                     localStorage.setItem('token', token);
-                    location.href='/test';
+                    location.href = '/test';
                 } else {
                     alert('토큰이 존재하지 않습니다.');
                 }

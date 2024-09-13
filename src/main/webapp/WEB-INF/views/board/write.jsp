@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page session="true"%>
+<%@ page session="true" %>
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal"/>
 </sec:authorize>
@@ -24,7 +24,7 @@
 
 </head>
 <body>
-<jsp:include page="../header.jsp" />
+<jsp:include page="../header.jsp"/>
 <script>
     let msg = "${msg}";
     let beforeImgAddressWrite = [];
@@ -37,28 +37,34 @@
                 <h2 class="writing-header">게시글 ${mode == "new" ? "쓰기" : "읽기"}</h2>
                 <div class="btnList">
                     <c:if test="${boardDTO.writer eq loginId}">
-                        <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제하기</button>
+                        <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제하기
+                        </button>
                     </c:if>
                     <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로</button>
-                    <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글등록</button>
+                    <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글등록
+                    </button>
                 </div>
             </div>
         </div>
         <input type="hidden" name="bno" value="${boardDTO.bno}">
 
-        <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post" enctype="multipart/form-data">
+        <form id="newForm" class="form" action="<c:url value='/board/write'/>" method="post"
+              enctype="multipart/form-data">
             <c:if test="${not empty boardDTO.bno}">
                 <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
             </c:if>
             <div class="form-group">
                 <label for="title">
-                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${boardDTO.title}'/>" placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}>
+                    <input class="form-control" name="title" id="title" type="text"
+                           value="<c:out value='${boardDTO.title}'/>"
+                           placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}>
                 </label>
             </div>
             <br>
             <div class="form-group">
                 <label for="content">
-                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
+                    <textarea name="content" id="content" rows="20"
+                              placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}></textarea>
                 </label><br>
             </div>
             <script type="importmap">
@@ -74,61 +80,64 @@
 
     </div>
 
-        <div id="commentList">
-            <ul>
-                <c:forEach var = "commentDTO" items="${commentList}">
-                    <li class="comment-item" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}">
+    <div id="commentList">
+        <ul>
+            <c:forEach var="commentDTO" items="${commentList}">
+                <li class="comment-item" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}">
                             <span class="comment-img">
                                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                             </span>
-                        <div class="comment-area">
-                            <div class="commenter">${commentDTO.commenter}</div>
-                            <div class="comment-content">${commentDTO.comment}
-                            </div>
-                            <div class="comment-bottom">
-                                <span class="up_date">${commentDTO.up_date}</span>
-                                <a href="#" class="btn-write"  data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">답글쓰기</a>
-                                <a href="#" class="btn-modify" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">수정</a>
-                                <a href="#" class="btn-delete" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}" data-pcno="${commentDTO.pcno}">삭제</a>
-                            </div>
+                    <div class="comment-area">
+                        <div class="commenter">${commentDTO.commenter}</div>
+                        <div class="comment-content">${commentDTO.comment}
                         </div>
-                    </li>
-                </c:forEach>
-            </ul>
-            <br>
-            <div id="comment-writebox">
-                <div class="commenter commenter-writebox">댓글인데 없네</div>
-                <div class="comment-writebox-content">
-                    <textarea name="comment-content" id="commentText" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
-                </div>
-                <div id="comment-writebox-bottom">
-                    <div class="register-box">
-                        <button type="button" class="btn" id="btn-write-comment">등록</button>
-                        <br>
+                        <div class="comment-bottom">
+                            <span class="up_date">${commentDTO.up_date}</span>
+                            <a href="#" class="btn-write" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}"
+                               data-pcno="${commentDTO.pcno}">답글쓰기</a>
+                            <a href="#" class="btn-modify" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}"
+                               data-pcno="${commentDTO.pcno}">수정</a>
+                            <a href="#" class="btn-delete" data-cno="${commentDTO.cno}" data-bno="${commentDTO.bno}"
+                               data-pcno="${commentDTO.pcno}">삭제</a>
+                        </div>
                     </div>
+                </li>
+            </c:forEach>
+        </ul>
+        <br>
+        <div id="comment-writebox">
+            <div class="commenter commenter-writebox">댓글인데 없네</div>
+            <div class="comment-writebox-content">
+                <textarea name="comment-content" id="commentText" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+            </div>
+            <div id="comment-writebox-bottom">
+                <div class="register-box">
+                    <button type="button" class="btn" id="btn-write-comment">등록</button>
+                    <br>
                 </div>
             </div>
         </div>
-    <jsp:include page="comment.jsp" />
+    </div>
+    <jsp:include page="comment.jsp"/>
 </div>
 <script>
     let bno = "${boardDTO.bno}";
     let listBtn = document.querySelector('#listBtn');
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        let formCheck = function() {
+        let formCheck = function () {
 
             let form = document.querySelector("#newForm");
 
             let content = editor.getData();
 
-            if(form.title.value === "") {
+            if (form.title.value === "") {
                 alert("제목을 입력해 주세요.");
                 form.title.focus();
                 return false;
             }
-            if(content === "") {
+            if (content === "") {
                 alert("내용을 입력해 주세요.");
                 form.content.focus();
                 return false;
@@ -136,20 +145,20 @@
             return true;
         }
 
-        $("#removeBtn").on("click", function(){
-            if(!confirm("정말로 삭제하시겠습니까?")){
+        $("#removeBtn").on("click", function () {
+            if (!confirm("정말로 삭제하시겠습니까?")) {
                 return;
             }
             let form = $("#form");
             form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");
-            form.attr("method" , "post");
+            form.attr("method", "post");
             form.submit();
         })
 
-        $("#writeNewBtn").on("click", function(){
-            location.href="<c:url value='/board/write'/>";
+        $("#writeNewBtn").on("click", function () {
+            location.href = "<c:url value='/board/write'/>";
         });
-        $("#writeBtn").on("click", function(){
+        $("#writeBtn").on("click", function () {
 
             // $("#contentDisplay").children().children().children().children().css('height','500px;');
 
@@ -157,24 +166,21 @@
             form.attr("action", "<c:url value='/board/write'/>");
             form.attr("method", "post");
 
-            if(formCheck()){
+            if (formCheck()) {
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
 
-                alert("afterImgAddressWrite = " + afterImgAddressWrite);
-                alert("beforeImgAddressWrite = " + beforeImgAddressWrite);
-
                 let imageAddress = {
-                    "beforeImgAddress" : beforeImgAddressWrite,
-                    "afterImgAddress" : afterImgAddressWrite
+                    "beforeImgAddress": beforeImgAddressWrite,
+                    "afterImgAddress": afterImgAddressWrite
                 }
                 $.ajax({
-                    url: '/myApp/contentImgCheck',
+                    url: '/contentImgCheck',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(imageAddress),
                     success: function (result) {
                         beforeImgAddressWrite = [];
-                        if(result != 1) return;
+                        if (result != 1) return;
                     }
                 })
                 form.submit();
@@ -184,6 +190,7 @@
     listBtn.addEventListener('click', function () {
         location.href = '<c:url value="/board/boardList"/>';
     })
+
     function getImageSrcFromData(data) {
         // 게시물 등록시 최종 주소값
         let afterImgAddress = [];

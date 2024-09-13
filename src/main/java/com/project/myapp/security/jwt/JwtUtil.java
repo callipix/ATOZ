@@ -1,67 +1,92 @@
 package com.project.myapp.security.jwt;
 
+import java.util.Date;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import lombok.extern.slf4j.Slf4j;
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import java.io.PrintWriter;
-import java.util.Date;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Component
 public class JwtUtil {
 
-    private SecretKey secretKey;
+	private SecretKey secretKey;
 
-    public JwtUtil(@Value("${jwt.token.key}")String secret) {
-        byte[] byteSecretKey = Decoders.BASE64.decode(secret);
-        secretKey = Keys.hmacShaKeyFor(byteSecretKey);
-    }
+	public JwtUtil(@Value("${jwt.token.key}") String secret) {
+		byte[] byteSecretKey = Decoders.BASE64.decode(secret);
+		secretKey = Keys.hmacShaKeyFor(byteSecretKey);
+	}
 
-    public String getUsername(String token) {
+	public String getUsername(String token) {
 
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("username", String.class);
-    }
+		return Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.get("username", String.class);
+	}
 
-    public String getRole(String token) {
+	public String getRole(String token) {
 
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("role", String.class);
-    }
+		return Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.get("role", String.class);
+	}
 
-    public Boolean isExpired(String token) {
+	public String getCategory(String token) {
 
-        try{
-            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token {} ", e);
-        } catch(ExpiredJwtException e){
-            log.info("Expired JWT Token {}", e);
-        } catch(UnsupportedJwtException e){
-            log.info("Unsupported JWT Token {} ", e);
-        } catch(IllegalArgumentException e){
-            log.info("JWT claims string is empty {} ", e);
-        }
-        return false;
-    }
+		return Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.get("category", String.class);
+	}
 
-    public String createJwt(String username, String role, Long expiredMs) {
-        System.out.println("username = " + username);
-        System.out.println("role = " + role);
-        System.out.println("expiredMs = " + expiredMs);
+	public Boolean isExpired(String token) {
 
-        Claims claims = Jwts.claims();
-        claims.put("username", username);
-        claims.put("role", role);
+		try {
+			return Jwts.parserBuilder()
+				.setSigningKey(secretKey)
+				.build()
+				.parseClaimsJws(token)
+				.getBody()
+				.getExpiration()
+				.before(new Date());
+		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+			log.info("Invalid JWT Token {} ", e);
+		} catch (ExpiredJwtException e) {
+			log.info("Expired JWT Token {}", e);
+		} catch (UnsupportedJwtException e) {
+			log.info("Unsupported JWT Token {} ", e);
+		} catch (IllegalArgumentException e) {
+			log.info("JWT claims string is empty {} ", e);
+		}
+		return false;
+	}
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
-    }
+	public String createJwt(String category, String username, String role, Long expiredMs) {
+
+		return Jwts.builder()
+			.claim("category", category)
+			.claim("username", username)
+			.claim("role", role)
+			.setIssuedAt(new Date(System.currentTimeMillis()))
+			.setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
+			.signWith(secretKey)
+			.compact();
+	}
 }

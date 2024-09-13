@@ -3,9 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="true" %>
-<sec:authorize access="isAuthenticated()">
-    <sec:authentication property="principal" var="principal"/>
-</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +10,9 @@
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
+<script>
+
+</script>
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
@@ -24,8 +24,8 @@
     <sec:authorize access="authenticated" var="authenticated"/>
     <c:choose>
         <c:when test="${authenticated}">
-            <sec:authentication property="name" var="id"/>
-            <a href="/login/logout">${id}님이 접속하였습니다</a>
+            <sec:authentication property="principal" var="id"/>
+            <a href="/login/logout">${id.name}님이 접속하였습니다</a>
         </c:when>
         <c:otherwise>
             <a href="<c:url value='/registerForm' />">회원가입</a>
