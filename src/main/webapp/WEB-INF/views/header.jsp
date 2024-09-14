@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="true" %>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal" var="principal"/>
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +27,8 @@
     <sec:authorize access="authenticated" var="authenticated"/>
     <c:choose>
         <c:when test="${authenticated}">
-            <sec:authentication property="principal" var="id"/>
-            <a href="/login/logout">${id.name}님이 접속하였습니다</a>
+            <sec:authentication property="principal" var="principal"/>
+            <a href="/login/logout">${principal.name}님이 접속하였습니다</a>
         </c:when>
         <c:otherwise>
             <a href="<c:url value='/registerForm' />">회원가입</a>

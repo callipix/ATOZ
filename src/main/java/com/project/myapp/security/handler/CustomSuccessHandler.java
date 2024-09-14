@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -42,7 +41,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		CustomDetails customUserDetails = (CustomDetails)authentication.getPrincipal();
 		log.info("customUserDetails = {}", customUserDetails);
 
-		String username = customUserDetails.getName();
+		String username = customUserDetails.getUsername();
 		log.info("username for onAuthenticationSuccess = {}", username);
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -50,28 +49,34 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		GrantedAuthority auth = iterator.next();
 		String role = auth.getAuthority();
 
-		String access = jwtUtil.createJwt("access", username, role, 6000000L);
-		String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
+		// String access = jwtUtil.createJwt("access", username, role, 6000000L);
+		// String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
 
-		// String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
+		String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-		log.info("refresh for onAuthenticationSuccess = {}", refresh);
-		log.info("access for onAuthenticationSuccess = {}", access);
-		log.info(" ");
+		// log.info("refresh for onAuthenticationSuccess = {}", refresh);
+		// log.info("access for onAuthenticationSuccess = {}", access);
+		// log.info(" ");
 
-		addRefreshToken(username, refresh, 888888888L);
+		log.info("token = {}", token);
+
+		// addRefreshToken(username, refresh, 888888888L);
 
 		log.info("CustomSuccessHandler 끝");
-		response.addHeader("access", access);
-		response.addCookie(createCookie("refresh", refresh));
-		response.setStatus(HttpStatus.OK.value());
-		response.sendRedirect("/");
+		// response.addHeader("access", access);
+		response.addCookie(createCookie("Authorization", token));
+		// response.setContentType("text/html");
+		// response.getWriter().write("<script>" +
+		// 	"localStorage.setItem('access', '" + access + "');" +
+		// 	"window.location.href = '/';" +
+		// 	"</script>");
+		response.sendRedirect("/addToken");
 	}
 
 	private Cookie createCookie(String key, String value) {
 		Cookie cookie = new Cookie(key, value);
 		cookie.setMaxAge(60 * 60 * 60);
-		// cookie.setPath("/");
+		cookie.setPath("/");
 		cookie.setHttpOnly(true);
 
 		return cookie;
@@ -94,7 +99,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 		result += this.refreshMapper.insertSave(refreshDTO);
 
-		System.out.println("result = " + result);
+		log.info("result for addRefreshToken = {}", result);
 
 	}
+
 }

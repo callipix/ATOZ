@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService extends DefaultOAuth2UserService{
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	private final RegisterMapper registerMapper;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,16 +43,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 			log.info("구글 로그인 요청");
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
 		}
-		log.info("oAuth2UserInfo.getName() {}", oAuth2UserInfo.getName());
-		log.info("oAuth2UserInfo.getEmail() {}", oAuth2UserInfo.getEmail());
-		log.info("oAuth2UserInfo.getProvider()   {}", oAuth2UserInfo.getProvider());
-		log.info("oAuth2UserInfo.getProviderId() {}", oAuth2UserInfo.getProviderId());
 
 		String provider = oAuth2UserInfo.getProvider();
 		String providerId = oAuth2UserInfo.getProviderId();
 
-		log.info("provider   = {}", provider);
-		log.info("providerId = {}", providerId);
 		Map<String, String> providerMap = new HashMap<>();
 
 		providerMap.put("provider", provider);
@@ -63,8 +57,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		UserDTO userDTO;
 		if (userOptional.isPresent()) {
 			userDTO = userOptional.get();
-			// user가 존재하면 update 해주기
+			// user 존재시 update
 			userDTO.setEmail(oAuth2UserInfo.getEmail());
+			log.info("userOptional = {}", userOptional);
+			log.info("userDTO = {}", userDTO);
 			registerMapper.updateUser(userDTO);
 		} else {
 			userDTO = null; // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음
@@ -76,14 +72,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 				.providerId(oAuth2UserInfo.getProviderId())
 				.build();
 
-			String id = provider+"_"+providerId;
-			String oAuth2Password = bCryptPasswordEncoder.encode(provider+"_"+providerId);
+			String id = provider + "_" + providerId;
+			String oAuth2Password = bCryptPasswordEncoder.encode(provider + "_" + providerId);
 
 			userDTO.setId(id);
 			userDTO.setPassword(oAuth2Password);
 			userDTO.setNickName(providerId);
-
-			log.info("userDTO for processOAuth2User = {}", userDTO);
 
 			registerMapper.save(userDTO);
 		}

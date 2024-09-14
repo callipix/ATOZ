@@ -89,4 +89,15 @@ public class JwtUtil {
 			.signWith(secretKey)
 			.compact();
 	}
+
+	public String createJwt(String username, String role, Long expiredMs) {
+
+		return Jwts.builder()
+			.claim("username", username)
+			.claim("role", role)
+			.setIssuedAt(new Date(System.currentTimeMillis()))
+			.setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
+			.signWith(secretKey)
+			.compact();
+	}
 }

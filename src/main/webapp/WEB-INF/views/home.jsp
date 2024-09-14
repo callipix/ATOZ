@@ -6,9 +6,6 @@
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal"/>
 </sec:authorize>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${empty loginId ? '/login/loginForm' : '/login/logout'}"/>
-<c:set var="loginOut" value="${empty loginId ? 'Login' : loginId +='님이 접속하였습니다.'}"/>
 <html>
 <head>
     <title>미니프로젝트</title>

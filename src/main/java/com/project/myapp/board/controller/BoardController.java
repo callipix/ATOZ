@@ -57,7 +57,9 @@ public class BoardController {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
-		String writer = userDetails.getName();
+		String writer = userDetails.getUser().getId();
+
+		log.info("writer for remove = {}", writer);
 
 		String msg = "DEL_OK";
 		try {
@@ -79,6 +81,7 @@ public class BoardController {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
+
 		String writer = userDetails.getName();
 		boardDTO.setWriter(writer);
 
@@ -109,8 +112,10 @@ public class BoardController {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
-		String writer = userDetails.getName();
 
+		log.info("userDetails.getUser().getId() = {}", userDetails.getUser().getId());
+
+		String writer = userDetails.getName();
 		log.info("writer = {}", writer);
 
 		//		String writer = (String)session.getAttribute("id");

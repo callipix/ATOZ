@@ -3,15 +3,19 @@ package com.project.myapp.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.project.myapp.board.dao.BoardDAO;
 import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.SearchCondition;
+import com.project.myapp.security.auth.CustomDetails;
 import com.project.myapp.utiles.StringUtils;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -72,6 +76,19 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int deleteByIdNBno(Integer bno, String writer) throws Exception {
+
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+
+		log.info("userDetails = {}", userDetails);
+		log.info("userDetails.getUser().getProviderId() = {}", userDetails.getUser().getProviderId());
+
+		if (userDetails.getUser().getProviderId() != null) {
+			writer = userDetails.getUser().getProvider() + "_" + userDetails.getUser().getProviderId();
+			log.info("writer = {}", writer);
+		}
+
 		int result = boardDAO.deleteByIdNBno(bno, writer);
 		return result;
 	}
