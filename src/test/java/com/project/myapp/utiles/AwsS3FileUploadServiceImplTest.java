@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.project.myapp.utiles.properties.AwsProperties;
+import com.project.myapp.properties.AwsProperties;
 
 import lombok.extern.slf4j.Slf4j;
 

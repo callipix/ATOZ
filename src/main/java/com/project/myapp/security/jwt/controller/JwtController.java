@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.myapp.dto.RefreshDTO;
 import com.project.myapp.security.jwt.JwtUtil;
-import com.project.myapp.security.jwt.RefreshDTO;
 import com.project.myapp.security.jwt.mapper.RefreshMapper;
 
 import io.jsonwebtoken.ExpiredJwtException;

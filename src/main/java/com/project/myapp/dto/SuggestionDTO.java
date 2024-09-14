@@ -9,8 +9,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 public class SuggestionDTO {
 
 	private int sno;

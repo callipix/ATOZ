@@ -1,4 +1,4 @@
-package com.project.myapp.utiles.properties;
+package com.project.myapp.properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

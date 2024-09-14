@@ -3,8 +3,6 @@ package com.project.myapp.register.service;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.project.myapp.dto.UserAuth;
-import com.project.myapp.dto.UserDTO;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +11,10 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import com.project.myapp.dto.RegisterDTO;
+import com.project.myapp.dto.UserAuth;
+import com.project.myapp.dto.UserDTO;
+import com.project.myapp.properties.ApiProperties;
 import com.project.myapp.register.dao.RegisterMapper;
-import com.project.myapp.utiles.properties.ApiProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

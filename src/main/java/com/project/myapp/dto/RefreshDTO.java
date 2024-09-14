@@ -1,4 +1,4 @@
-package com.project.myapp.security.jwt;
+package com.project.myapp.dto;
 
 import lombok.Getter;
 import lombok.Setter;

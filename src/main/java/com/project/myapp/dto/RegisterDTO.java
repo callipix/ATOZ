@@ -1,5 +1,12 @@
 package com.project.myapp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class RegisterDTO {
 
 	private UserDTO userDTO;
@@ -13,27 +20,4 @@ public class RegisterDTO {
 		this.memberDTO = memberDTO;
 	}
 
-	public UserDTO getUserDTO() {
-		return userDTO;
-	}
-
-	public void setUserDTO(UserDTO userDTO) {
-		this.userDTO = userDTO;
-	}
-
-	public MemberDTO getMemberDTO() {
-		return memberDTO;
-	}
-
-	public void setMemberDTO(MemberDTO memberDTO) {
-		this.memberDTO = memberDTO;
-	}
-
-	@Override
-	public String toString() {
-		return "RegisterDTO{" +
-			"userDTO=" + userDTO +
-			", memberDTO=" + memberDTO +
-			'}';
-	}
 }

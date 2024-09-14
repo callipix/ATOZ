@@ -26,7 +26,7 @@ import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.errorboard.service.ErrorBoardService;
 import com.project.myapp.fileupload.AwsS3FileUploadService;
 import com.project.myapp.fileupload.FileUpload;
-import com.project.myapp.utiles.properties.AwsProperties;
+import com.project.myapp.properties.AwsProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

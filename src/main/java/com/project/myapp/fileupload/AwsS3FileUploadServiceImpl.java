@@ -18,7 +18,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.project.myapp.dto.FilesDTO;
-import com.project.myapp.utiles.properties.AwsProperties;
+import com.project.myapp.properties.AwsProperties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

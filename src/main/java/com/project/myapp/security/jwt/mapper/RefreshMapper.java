@@ -2,7 +2,7 @@ package com.project.myapp.security.jwt.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.project.myapp.security.jwt.RefreshDTO;
+import com.project.myapp.dto.RefreshDTO;
 
 @Mapper
 public interface RefreshMapper {

@@ -1,4 +1,4 @@
-package com.project.myapp.security.handler;
+package com.project.myapp.security.oauth.handler;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,9 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.project.myapp.dto.RefreshDTO;
 import com.project.myapp.security.auth.CustomDetails;
 import com.project.myapp.security.jwt.JwtUtil;
-import com.project.myapp.security.jwt.RefreshDTO;
 import com.project.myapp.security.jwt.mapper.RefreshMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -49,34 +49,28 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		GrantedAuthority auth = iterator.next();
 		String role = auth.getAuthority();
 
-		// String access = jwtUtil.createJwt("access", username, role, 6000000L);
-		// String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
+		String access = jwtUtil.createJwt("access", username, role, 6000000L);
+		String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
 
 		String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-		// log.info("refresh for onAuthenticationSuccess = {}", refresh);
-		// log.info("access for onAuthenticationSuccess = {}", access);
-		// log.info(" ");
+		log.info("refresh for onAuthenticationSuccess = {}", refresh);
+		log.info("access for onAuthenticationSuccess = {}", access);
 
 		log.info("token = {}", token);
 
-		// addRefreshToken(username, refresh, 888888888L);
+		addRefreshToken(username, refresh, 888888888L);
 
 		log.info("CustomSuccessHandler 끝");
-		// response.addHeader("access", access);
-		response.addCookie(createCookie("Authorization", token));
-		// response.setContentType("text/html");
-		// response.getWriter().write("<script>" +
-		// 	"localStorage.setItem('access', '" + access + "');" +
-		// 	"window.location.href = '/';" +
-		// 	"</script>");
+		response.setHeader("access", access);
+		response.addCookie(createCookie("refresh", refresh));
 		response.sendRedirect("/addToken");
 	}
 
 	private Cookie createCookie(String key, String value) {
 		Cookie cookie = new Cookie(key, value);
 		cookie.setMaxAge(60 * 60 * 60);
-		cookie.setPath("/");
+		// cookie.setPath("/");
 		cookie.setHttpOnly(true);
 
 		return cookie;

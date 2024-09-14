@@ -38,11 +38,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.project.myapp.security.handler.CustomSuccessHandler;
+import com.project.myapp.properties.OAuth2Properties;
 import com.project.myapp.security.jwt.JwtFilter;
 import com.project.myapp.security.jwt.JwtUtil;
+import com.project.myapp.security.oauth.handler.CustomSuccessHandler;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
-import com.project.myapp.utiles.properties.OAuth2Properties;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -16,7 +16,7 @@
         WHERE refresh = #{refresh}
     </delete>
 
-    <insert id="insertSave" parameterType="com.project.myapp.security.jwt.RefreshDTO">
+    <insert id="insertSave" parameterType="com.project.myapp.dto.RefreshDTO">
         INSERT INTO refresh(username, refresh, expiration)
         VALUES (#{username}, #{refresh}, #{expiration})
     </insert>

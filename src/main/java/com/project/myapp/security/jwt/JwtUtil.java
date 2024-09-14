@@ -18,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JwtUtil {
+	/**
+	 * JWT 발급 클래스
+	 */
 
 	private SecretKey secretKey;
 

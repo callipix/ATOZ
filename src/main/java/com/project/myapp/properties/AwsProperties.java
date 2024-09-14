@@ -1,4 +1,4 @@
-package com.project.myapp.utiles.properties;
+package com.project.myapp.properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,9 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
+import lombok.Getter;
+
+@Getter
 @Configuration
 @PropertySource("classpath:aws-bucket_config.properties")
 public class AwsProperties {

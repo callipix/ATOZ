@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UploadConfig {
+public class UploadService {
 
 	private final AwsS3FileUploadService awsS3FileUploadService;
 
