@@ -32,6 +32,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -40,6 +41,7 @@ import com.project.myapp.properties.OAuth2Properties;
 import com.project.myapp.security.jwt.JwtFilter;
 import com.project.myapp.security.jwt.JwtUtil;
 import com.project.myapp.security.jwt.mapper.RefreshMapper;
+import com.project.myapp.security.oauth.handler.CustomLogoutFilter;
 import com.project.myapp.security.oauth.handler.CustomSuccessHandler;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 
@@ -115,7 +117,7 @@ public class SecurityConfig {
 		// 	UsernamePasswordAuthenticationFilter.class);
 		// http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
 		http.addFilterAt(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-		// http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
+		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
 
 		http.sessionManagement((session) -> session
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -59,7 +59,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 		log.info("token = {}", token);
 
-		// addRefreshToken(username, token, 888888888L);
+		addRefreshToken(username, refresh, 888888888L);
 
 		log.info("CustomSuccessHandler 끝");
 		// response.addHeader("access", token);
