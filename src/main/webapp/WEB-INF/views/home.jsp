@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
+
 <body>
 
 <jsp:include page="header.jsp"/>

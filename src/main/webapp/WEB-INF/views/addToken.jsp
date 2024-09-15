@@ -8,23 +8,49 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <script>
-    let cookies = document.cookie;
+
     $.ajax({
         url: "/secure-endpoint",
         type: "GET",
-        xhrFileds: {
+        xhrFields: {
             withCredentials: true
         },
         success: function (response, status, xhr) {
-            const token = xhr.getResponseHeader("Authorization")
-            alert("Authorization = " + token);
-            localStorage.setItem("Authorization", token);
-            location.href = "/";
+            const access = xhr.getResponseHeader("access")
+
+            localStorage.setItem("access", access);
+            addHeader();
+            // location.href = '/';
         },
         error: function (xhr, status, error) {
-            console.log("에러 발생: ", error);
+            console.log("에러 발생1: ", error);
         }
     });
+
+    function addHeader() {
+        let data = localStorage.getItem("access");
+
+        $.ajax({
+            url: "/header-endpoint",
+            type: "GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            headers: {
+                'access': data,
+                'Content-Type': 'application/json'
+            },
+            success: function (response) {
+
+                location.href = "/";
+            },
+            error: function (xhr, status, error) {
+                console.log("에러 발생2: ", error);
+            }
+        })
+
+    }
+
 </script>
 <body>
 

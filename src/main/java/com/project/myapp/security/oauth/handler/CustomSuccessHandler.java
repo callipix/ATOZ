@@ -54,15 +54,17 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 		String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-		log.info("refresh for onAuthenticationSuccess = {}", refresh);
-		log.info("access for onAuthenticationSuccess = {}", access);
+		// log.info("refresh for onAuthenticationSuccess = {}", refresh);
+		// log.info("access for onAuthenticationSuccess = {}", access);
 
 		log.info("token = {}", token);
 
-		addRefreshToken(username, refresh, 888888888L);
+		// addRefreshToken(username, token, 888888888L);
 
 		log.info("CustomSuccessHandler 끝");
-		response.setHeader("access", access);
+		// response.addHeader("access", token);
+		// response.addCookie(createCookie("access", token));
+		response.addCookie(createCookie("access", access));
 		response.addCookie(createCookie("refresh", refresh));
 		response.sendRedirect("/addToken");
 	}
@@ -70,7 +72,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	private Cookie createCookie(String key, String value) {
 		Cookie cookie = new Cookie(key, value);
 		cookie.setMaxAge(60 * 60 * 60);
-		// cookie.setPath("/");
+		cookie.setPath("/");
 		cookie.setHttpOnly(true);
 
 		return cookie;

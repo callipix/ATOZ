@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,7 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -41,6 +39,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.project.myapp.properties.OAuth2Properties;
 import com.project.myapp.security.jwt.JwtFilter;
 import com.project.myapp.security.jwt.JwtUtil;
+import com.project.myapp.security.jwt.mapper.RefreshMapper;
 import com.project.myapp.security.oauth.handler.CustomSuccessHandler;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 
@@ -60,6 +59,7 @@ public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final CustomSuccessHandler customSuccessHandler;
+	private final RefreshMapper refreshMapper;
 	private final JwtUtil jwtUtil;
 
 	private final OAuth2Properties oAuth2Properties;
@@ -86,10 +86,11 @@ public class SecurityConfig {
 
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8080/*"));
+		configuration.setAllowedHeaders(Collections.singletonList("*"));
 		configuration.setAllowedMethods(Collections.singletonList("*"));
 		configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+		configuration.setExposedHeaders(Collections.singletonList("access"));
 		configuration.setAllowCredentials(true);
-		configuration.setAllowedHeaders(Collections.singletonList("*"));
 		configuration.setMaxAge(3600L);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -105,6 +106,7 @@ public class SecurityConfig {
 			.requestMatchers("/test/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
 			.requestMatchers("/**", "/", "/join").permitAll()
+			.requestMatchers("/jwtLogin").permitAll()
 			.requestMatchers("/reissue").permitAll()
 			.anyRequest().authenticated()
 		);
@@ -112,8 +114,8 @@ public class SecurityConfig {
 		// http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
 		// 	UsernamePasswordAuthenticationFilter.class);
 		// http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
-
-		http.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterAt(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+		// http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
 
 		http.sessionManagement((session) -> session
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -130,14 +132,14 @@ public class SecurityConfig {
 			.successHandler(customSuccessHandler)
 			.clientRegistrationRepository(clientRegistrationRepository())
 		);
-		http.logout()
-			.logoutUrl("/login/logout")
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true)
-			.deleteCookies("SESSION")
-			.deleteCookies("Authorization")
-			.deleteCookies("JSESSIONID")
-			.permitAll();
+		// http.logout()
+		// 	.logoutUrl("/login/logout")
+		// 	.logoutSuccessUrl("/")
+		// 	.invalidateHttpSession(true)
+		// 	.deleteCookies("SESSION")
+		// 	.deleteCookies("Authorization")
+		// 	.deleteCookies("JSESSIONID")
+		// 	.permitAll();
 
 		return http.build();
 	}
@@ -162,9 +164,13 @@ public class SecurityConfig {
 			.scope(oAuth2Properties.getScope())
 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 			.redirectUri(oAuth2Properties.getGoogle_redirect_uri())
-			.authorizationUri("https://accounts.google.com/o/oauth2/auth")
-			.tokenUri("https://oauth2.googleapis.com/token")
+			.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+			.tokenUri("https://www.googleapis.com/oauth2/v4/token")
+			.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+			.userNameAttributeName("sub")
+			.issuerUri("https://accounts.google.com")
 			.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+			.clientName("Google")
 			.build();
 
 		return new InMemoryClientRegistrationRepository(googleClientRegistration);
@@ -174,31 +180,5 @@ public class SecurityConfig {
 	@Bean
 	public OAuth2AuthorizedClientService authorizedClientService() {
 		return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
-	}
-
-	private static String CLIENT_PROPERTY_KEY
-		= "spring.security.oauth2.client.registration.";
-
-	private final Environment env;
-
-	private ClientRegistration getRegistration(String client) {
-		String clientId = env.getProperty(
-			CLIENT_PROPERTY_KEY + client + ".client-id");
-
-		if (clientId == null) {
-			return null;
-		}
-		String clientSecret = env.getProperty(
-			CLIENT_PROPERTY_KEY + client + ".client-secret");
-
-		if (client.equals("google")) {
-			return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-				.clientId(clientId).clientSecret(clientSecret).build();
-		}
-		if (client.equals("facebook")) {
-			return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
-				.clientId(clientId).clientSecret(clientSecret).build();
-		}
-		return null;
 	}
 }

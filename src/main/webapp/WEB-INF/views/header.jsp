@@ -3,14 +3,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="true" %>
-<sec:authorize access="isAuthenticated()">
-    <sec:authentication property="principal" var="principal"/>
-</sec:authorize>
+<%--<sec:authorize access="isAuthenticated()">--%>
+<%--    <sec:authentication property="principal" var="principal"/>--%>
+<%--</sec:authorize>--%>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
 <script>
@@ -24,19 +25,16 @@
     <a href="<c:url value='/board/boardList' />">자유게시판</a>
     <a href="<c:url value='/information' />">프로젝트소개</a>
     <a href="<c:url value='/profile' />">프로필</a>
-    <sec:authorize access="authenticated" var="authenticated"/>
-    <c:choose>
-        <c:when test="${authenticated}">
-            <sec:authentication property="principal" var="principal"/>
-            <a href="/login/logout">${principal.name}님이 접속하였습니다</a>
-        </c:when>
-        <c:otherwise>
-            <a href="<c:url value='/registerForm' />">회원가입</a>
-            <a href="/login/loginForm">로그인</a>
-        </c:otherwise>
-    </c:choose>
+    <a href="<c:url value='/registerForm' />">회원가입</a>
+    <a href="<c:url value='/login/loginForm' />" id="loginOut">로그인</a>
+    <button id="testBtn" type="button">버튼 테스트</button>
 </div>
 <script>
+    const testBtn = document.querySelector('#testBtn');
+    const userInfoSpan = document.querySelector('#user-info');
+    const loginForm = document.querySelector('#loginOut');
+    const data = localStorage.getItem("access");
+
     // Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon
     const x1 = document.querySelector("#myTopnav");
 
@@ -60,6 +58,53 @@
             this.classList.add('active');
         });
     });
+
+    $.ajax({
+        url: '/jwtLogin',
+        type: "post",
+        xhrFields: {
+            withCredentials: true
+        },
+        headers: {
+            'access': data,
+            'Content-Type': 'application/json'
+        },
+        success: function (response) {
+            if (response) {
+                loginForm.innerHTML = `<a href="/logout" id="logout">\${response}님이 접속하였습니다</a>`;
+            } else {
+                // 로그아웃 상태일 때: 로그인 링크로 변경
+                loginForm.innerHTML = `<a href="<c:url value='/login/loginForm' />" id="loginOut">로그인</a>`;
+            }
+
+        },
+        error: function (xhr, status, error) {
+            console.log("에러 발생: ", error);
+        }
+    });
+
+    testBtn.addEventListener('click', function () {
+        $.ajax({
+            url: '/jwtLogin',
+            type: "post",
+            xhrFields: {
+                withCredentials: true
+            },
+            headers: {
+                'access': data,
+                'Content-Type': 'application/json'
+            },
+            success: function (response) {
+                if (response) {
+                    alert(response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("에러 발생: ", error);
+            }
+        });
+    })
+
 </script>
 </body>
 </html>

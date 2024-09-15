@@ -1,8 +1,6 @@
 package com.project.myapp.login.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
 	private final LoginService loginService;
-	private final Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/logout")
@@ -86,4 +83,5 @@ public class LoginController {
 			return false;
 		}
 	}
+
 }
