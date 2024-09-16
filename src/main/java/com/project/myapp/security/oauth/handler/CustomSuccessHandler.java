@@ -47,22 +47,21 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
 		GrantedAuthority auth = iterator.next();
+
 		String role = auth.getAuthority();
 
-		String access = jwtUtil.createJwt("access", username, role, 6000000L);
-		String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
+		String access = jwtUtil.createJwt("access", username, role, 6000L);
+		String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
-		String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
+		// String access = jwtUtil.createJwt("access", username, role, 600000L);
+		// String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
-		// log.info("refresh for onAuthenticationSuccess = {}", refresh);
-		// log.info("access for onAuthenticationSuccess = {}", access);
+		// String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-		log.info("token = {}", token);
-
-		addRefreshToken(username, refresh, 888888888L);
+		addRefreshToken(username, refresh, 86400000L);
 
 		log.info("CustomSuccessHandler 끝");
-		// response.addHeader("access", token);
+		response.addHeader("access", access);
 		// response.addCookie(createCookie("access", token));
 		response.addCookie(createCookie("access", access));
 		response.addCookie(createCookie("refresh", refresh));
@@ -73,6 +72,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		Cookie cookie = new Cookie(key, value);
 		cookie.setMaxAge(60 * 60 * 60);
 		cookie.setPath("/");
+		// cookie.setSecure(true);
 		cookie.setHttpOnly(true);
 
 		return cookie;
@@ -80,21 +80,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 	private void addRefreshToken(String username, String refresh, Long expiredMs) {
 		Date date = new Date(System.currentTimeMillis() + expiredMs);
-
 		int result = 0;
+
 		RefreshDTO refreshDTO = new RefreshDTO();
 		refreshDTO.setRefresh(refresh);
 		refreshDTO.setUsername(username);
 		refreshDTO.setExpiration(date.toString());
 
 		log.info("refreshDTO = {}", refreshDTO);
-		log.info("refreshDTO.getId = {}", refreshDTO.getId());
-		log.info("refreshDTO.getRefresh = {}", refreshDTO.getRefresh());
-		log.info("refreshDTO.getUsername = {}", refreshDTO.getUsername());
-		log.info("refreshDTO.getExpiration = {}", refreshDTO.getExpiration());
-
 		result += this.refreshMapper.insertSave(refreshDTO);
-
 		log.info("result for addRefreshToken = {}", result);
 
 	}

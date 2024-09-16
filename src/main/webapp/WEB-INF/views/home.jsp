@@ -12,12 +12,19 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/cursorEffect.css'/>">
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
+    <script>
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                const token = localStorage.getItem('access'); // 로컬 스토리지에서 JWT 토큰을 가져옴
+                if (token) {
+                    xhr.setRequestHeader('access', token);
+                }
+            }
+        });
+    </script>
 </head>
-
 <body>
-
 <jsp:include page="header.jsp"/>
-
 <jsp:include page="updateList.jsp"/>
 </body>
 </html>

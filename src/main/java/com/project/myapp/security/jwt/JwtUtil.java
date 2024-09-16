@@ -7,10 +7,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -61,24 +58,13 @@ public class JwtUtil {
 
 	public Boolean isExpired(String token) {
 
-		try {
-			return Jwts.parserBuilder()
-				.setSigningKey(secretKey)
-				.build()
-				.parseClaimsJws(token)
-				.getBody()
-				.getExpiration()
-				.before(new Date());
-		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-			log.info("Invalid JWT Token {} ", e);
-		} catch (ExpiredJwtException e) {
-			log.info("Expired JWT Token {}", e);
-		} catch (UnsupportedJwtException e) {
-			log.info("Unsupported JWT Token {} ", e);
-		} catch (IllegalArgumentException e) {
-			log.info("JWT claims string is empty {} ", e);
-		}
-		return false;
+		return Jwts.parserBuilder()
+			.setSigningKey(secretKey)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.getExpiration()
+			.before(new Date());
 	}
 
 	public String createJwt(String category, String username, String role, Long expiredMs) {
@@ -88,7 +74,8 @@ public class JwtUtil {
 			.claim("username", username)
 			.claim("role", role)
 			.setIssuedAt(new Date(System.currentTimeMillis()))
-			.setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
+			// .setExpiration(new Date(System.currentTimeMillis()))
+			.setExpiration(new Date(System.currentTimeMillis() + expiredMs))
 			.signWith(secretKey)
 			.compact();
 	}
@@ -99,7 +86,7 @@ public class JwtUtil {
 			.claim("username", username)
 			.claim("role", role)
 			.setIssuedAt(new Date(System.currentTimeMillis()))
-			.setExpiration(new Date(System.currentTimeMillis() + expiredMs + 100000000000L))
+			.setExpiration(new Date(System.currentTimeMillis() + expiredMs))
 			.signWith(secretKey)
 			.compact();
 	}
