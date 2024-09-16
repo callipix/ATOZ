@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.myapp.login.service.LoginService;
 import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -23,18 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RestApiController {
 
-	private final LoginService loginService;
-
-	@GetMapping("/home")
-	public String home(HttpServletResponse response) {
-		log.info("response for RestApiController = {}", response.getHeader("access"));
-		return "/";
-	}
-
 	@GetMapping("/addToken")
 	public String addToken(HttpServletResponse response, HttpServletRequest request) {
 		Cookie[] cookie = request.getCookies();
+		String test = request.getHeader("access");
 		log.info("cookie = {}", cookie);
+		log.info("test = {}", test);
 
 		return "/addToken";
 	}
@@ -63,7 +56,6 @@ public class RestApiController {
 		log.info("cookies = {}", cookies);
 		log.info("access = {}", access);
 		log.info("refresh = {}", refresh);
-		log.info("");
 
 		// response.setHeader("Authorization", "Bearer " + authorization);
 		response.addHeader("access", access);
@@ -76,7 +68,10 @@ public class RestApiController {
 	public String headerPoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		String accessToken = request.getHeader("access");
-
+		Cookie cookie = new Cookie("access", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
 		return accessToken;
 	}
 
@@ -101,7 +96,24 @@ public class RestApiController {
 	@PostMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 
+		log.info("logout시 CustomLogoutFilter에 의해 처리되어서 여기에 안와야 정상");
+
 		return "logout?";
+	}
+
+	@ResponseBody
+	@GetMapping("/tokenCheck")
+	public String tokenCheck(HttpServletResponse response, HttpServletRequest request) {
+
+		String access = request.getHeader("access");
+		String isUser = "";
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+		if (access != null || userDetails != null) {
+			isUser = userDetails.getName();
+		}
+		return isUser;
 	}
 
 }

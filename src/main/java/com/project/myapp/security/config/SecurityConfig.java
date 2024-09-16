@@ -8,7 +8,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,12 +50,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EnableWebMvc
 @Configuration
-@EnableWebSecurity    // 부트와 달리 일반스프링에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
+@EnableWebSecurity    // non-Boot 에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
 @RequiredArgsConstructor
-@PropertySource("classpath:application-oauth2.properties")
+@MapperScan("com.project.myapp.security.jwt.mapper")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.auth"})
-@MapperScan("com.project.myapp.security.jwt.service")
 public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
@@ -107,6 +105,7 @@ public class SecurityConfig {
 			.requestMatchers("/css/**").permitAll()
 			.requestMatchers("/test/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
+			.requestMatchers("http://localhost:8080").permitAll()
 			.requestMatchers("/**", "/", "/join").permitAll()
 			.requestMatchers("/jwtLogin").permitAll()
 			.requestMatchers("/reissue").permitAll()

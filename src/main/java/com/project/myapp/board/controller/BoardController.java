@@ -51,29 +51,6 @@ public class BoardController {
 	 * @param rattr   리다이렉트 하기 위한 변수
 	 * @return
 	 */
-	@PostMapping("/remove")
-	public String remove(Integer bno, SearchCondition sc, RedirectAttributes rattr) {
-
-		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
-			.getAuthentication()
-			.getPrincipal();
-		String writer = userDetails.getUser().getId();
-
-		log.info("writer for remove = {}", writer);
-
-		String msg = "DEL_OK";
-		try {
-			int result = this.boardService.deleteByIdNBno(bno, writer);
-			if (result != 1) {
-				throw new Exception("Delete failed");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			msg = "DEL_ERR";
-		}
-		rattr.addFlashAttribute("msg", msg);
-		return "redirect:/board/boardList" + sc.getQueryString();
-	}
 
 	// 글수정
 	@PostMapping("/modify")
@@ -135,6 +112,7 @@ public class BoardController {
 
 	@GetMapping("/read")
 	public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m) {
+
 		try {
 			BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 			List<CommentDTO> commentList = this.commentService.getCommentForBoard(bno);
