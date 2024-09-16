@@ -50,12 +50,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 		String role = auth.getAuthority();
 
-		String access = jwtUtil.createJwt("access", username, role, 6000L);
+		String access = jwtUtil.createJwt("access", username, role, 6000000L);
 		String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
 		// String access = jwtUtil.createJwt("access", username, role, 600000L);
 		// String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
-
 		// String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
 		addRefreshToken(username, refresh, 86400000L);
@@ -73,19 +72,20 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		cookie.setMaxAge(60 * 60 * 60);
 		cookie.setPath("/");
 		// cookie.setSecure(true);
+		// setSecure 사용하면 https 프로토콜로만 전송 가능
 		cookie.setHttpOnly(true);
 
 		return cookie;
 	}
 
 	private void addRefreshToken(String username, String refresh, Long expiredMs) {
-		Date date = new Date(System.currentTimeMillis() + expiredMs);
+		Date dateByOAuth2 = new Date(System.currentTimeMillis() + expiredMs);
 		int result = 0;
 
 		RefreshDTO refreshDTO = new RefreshDTO();
 		refreshDTO.setRefresh(refresh);
 		refreshDTO.setUsername(username);
-		refreshDTO.setExpiration(date.toString());
+		refreshDTO.setExpiration(dateByOAuth2.toString());
 
 		log.info("refreshDTO = {}", refreshDTO);
 		result += this.refreshMapper.insertSave(refreshDTO);

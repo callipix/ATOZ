@@ -3,9 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="true" %>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${empty loginId ? '/login/login' : '/login/logOut'}"/>
-<c:set var="loginOut" value="${empty loginId ? 'Login' : loginId}"/>
 <html>
 <head>
     <title>Login</title>
@@ -183,6 +180,16 @@
         margin: 0 200px;
     }
 </style>
+<script>
+    const token = localStorage.getItem('access'); // 로컬 스토리지에서 JWT 토큰을 가져옴
+    if (token) {
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('access', token);
+            }
+        });
+    }
+</script>
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
@@ -195,7 +202,7 @@
         <a href="<c:url value='/registerForm' />">회원가입</a>
     </c:if>
 </div>
-<form action="<c:url value='/login'/>" method="post" id="loginForm">
+<form action="#" id="loginForm">
     <div class="container">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="아이디를 입력하세요" id="id" name="id" required>
@@ -227,7 +234,6 @@
     const x = document.querySelector("#myTopnav");
     const form = document.querySelector("#loginForm");
     const overlay = document.querySelector("#overlay");
-    const login = document.querySelector("#login");
 
     // let id = document.getElementById('id').value;
     // let password = document.getElementById('password').value;
@@ -262,35 +268,43 @@
     const password = document.querySelector('#password');
     const loginClick = document.querySelector('#loginClick');
 
-    loginClick.addEventListener('click', function () {
+    $(document).ready(function () {
 
-        let idVal = id.value;
-        let passVal = password.value;
+        loginClick.addEventListener('click', function (event) {
+            event.preventDefault();
+            let idVal = id.value;
+            let passVal = password.value;
 
-        let data = {
-            "username": idVal,
-            "password": passVal
-        };
-        $.ajax({
-            url: "/login",
-            type: "post",
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(data),
-            success: function (result, textStatus, jqXHR) {
+            let data = {
+                "username": idVal,
+                "password": passVal
+            };
 
-                const token = jqXHR.getResponseHeader('Authorization')
+            alert("username = " + data.username);
+            alert("password = " + data.password);
 
-                if (token) {
-                    alert(token);
-                    localStorage.setItem('token', token);
-                    location.href = '/test';
-                } else {
-                    alert('토큰이 존재하지 않습니다.');
+            $.ajax({
+                url: "/login",
+                type: "post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                contentType: "application/json", // Content type 설정
+                data: JSON.stringify(data),
+                success: function (result, textStatus, jqXHR) {
+                    localStorage.setItem("access", jqXHR.getResponseHeader("access"));
+                    location.href = "/";
+                    // alert(tt);
+                },
+                error: function (xhr, status, error) {
+                    console.log("에러 발생 generalLogin xhr: ", xhr);
+                    console.log("에러 발생 generalLogin status: ", status);
+                    console.log("에러 발생 generalLogin error: ", error);
                 }
-            }
+            })
         })
     })
 

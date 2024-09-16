@@ -1,8 +1,8 @@
 package com.project.myapp.dto;
 
 import java.util.Date;
-import java.util.Objects;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,13 +10,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FilesDTO {
-
+	@EqualsAndHashCode.Include
 	private int file_no;                 // 파일번호 -> DB에서 auto_increment
 	private String original_name;        // 파일의 오리지날명
 	private String stored_name;          // UUID로 생성한 파일명
 	private String file_type;            // 파일의 타입(여기선 이미지 파일 종류)
 	private long file_size;              // 파일사이즈
+	@EqualsAndHashCode.Include
 	private String file_path;            // 파일 경로
 	private Date uploaded_at;            // 업로드 날짜
 	private String id;                   // 업로드 id
@@ -50,41 +52,7 @@ public class FilesDTO {
 		this.id = id;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		FilesDTO filesDTO = (FilesDTO)o;
-		return file_no == filesDTO.file_no && Objects.equals(original_name, filesDTO.original_name) && Objects.equals(
-			stored_name, filesDTO.stored_name) && Objects.equals(file_type, filesDTO.file_type) && Objects.equals(
-			file_size, filesDTO.file_size) && Objects.equals(file_path, filesDTO.file_path);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(file_no, original_name, stored_name, file_type, file_size, file_path);
-	}
-
 	public ErrorBoardDTO getErrorBoardDTO() {
 		return errorBoardDTO;
-	}
-
-	@Override
-	public String toString() {
-		return "FilesDTO{" +
-			"file_no=" + file_no +
-			", category_no=" + category_no +
-			", post_no=" + post_no +
-			", original_name='" + original_name + '\'' +
-			", stored_name='" + stored_name + '\'' +
-			", file_type='" + file_type + '\'' +
-			", file_size=" + file_size +
-			", file_path='" + file_path + '\'' +
-			", uploaded_at=" + uploaded_at +
-			", id='" + id + '\'' +
-			", associated_object_id='" + associated_object_id + '\'' +
-			'}';
 	}
 }

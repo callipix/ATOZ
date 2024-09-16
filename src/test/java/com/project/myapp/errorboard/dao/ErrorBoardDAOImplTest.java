@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.project.myapp.dto.ErrNFilesDTO;
 import com.project.myapp.dto.ErrorBoardDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,7 @@ public class ErrorBoardDAOImplTest {
 	@Test
 	public void delete() {
 		int errBno = 112;
-		List<ErrNFilesDTO> deleteList = sqlSession.selectList(namespace + "getDeleteList", errBno);
+		List<ErrorBoardDTO> deleteList = sqlSession.selectList(namespace + "getDeleteList", errBno);
 		log.info("deleteList = {}", deleteList);
 	}
 

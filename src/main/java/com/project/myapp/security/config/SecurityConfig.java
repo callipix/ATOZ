@@ -1,8 +1,6 @@
 package com.project.myapp.security.config;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +37,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.project.myapp.properties.OAuth2Properties;
 import com.project.myapp.security.jwt.JwtFilter;
 import com.project.myapp.security.jwt.JwtUtil;
+import com.project.myapp.security.jwt.LoginFilter;
 import com.project.myapp.security.jwt.mapper.RefreshMapper;
 import com.project.myapp.security.oauth.handler.CustomLogoutFilter;
 import com.project.myapp.security.oauth.handler.CustomSuccessHandler;
@@ -54,17 +53,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @MapperScan("com.project.myapp.security.jwt.mapper")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.auth"})
+@ComponentScan(basePackages = {"com.project.myapp", "com.project.myapp.security.**"})
 public class SecurityConfig {
 
-	private final CustomOAuth2UserService customOAuth2UserService;
-	private final CustomSuccessHandler customSuccessHandler;
-	private final RefreshMapper refreshMapper;
 	private final JwtUtil jwtUtil;
-
+	private final RefreshMapper refreshMapper;
 	private final OAuth2Properties oAuth2Properties;
-	private static List<String> clients = Arrays.asList("google");
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final CustomSuccessHandler customSuccessHandler;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final AuthenticationConfiguration authenticationConfiguration;
 
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -88,7 +85,6 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8080/*"));
 		configuration.setAllowedHeaders(Collections.singletonList("*"));
 		configuration.setAllowedMethods(Collections.singletonList("*"));
-		configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 		configuration.setExposedHeaders(Collections.singletonList("access"));
 		configuration.setAllowCredentials(true);
 		configuration.setMaxAge(3600L);
@@ -103,29 +99,35 @@ public class SecurityConfig {
 		http.authorizeHttpRequests((auth) -> auth
 			.requestMatchers("/js/**").permitAll()
 			.requestMatchers("/css/**").permitAll()
-			.requestMatchers("/test/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
-			.requestMatchers("http://localhost:8080").permitAll()
-			.requestMatchers("/**", "/", "/join").permitAll()
 			.requestMatchers("/jwtLogin").permitAll()
 			.requestMatchers("/reissue").permitAll()
+			.requestMatchers("/login/loginForm").permitAll()
+			.requestMatchers("/generalLogin").authenticated()
+			.requestMatchers("/login").authenticated()
+			.requestMatchers("/**").permitAll()
 			.anyRequest().authenticated()
 		);
 
+		// http
+		// 	.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+		// 		UsernamePasswordAuthenticationFilter.class)
+		// 	.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+		// http
+		// 	.addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+		// 		UsernamePasswordAuthenticationFilter.class);
+		// http.addFilterAfter(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
 		// http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
 		// 	UsernamePasswordAuthenticationFilter.class);
-		// http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
-		http.addFilterAt(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
+		// http.addFilterAt(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(
+				new LoginFilter(authenticationManager(authenticationConfiguration), refreshMapper, jwtUtil),
+				UsernamePasswordAuthenticationFilter.class)
+			.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
 
-		http.sessionManagement((session) -> session
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		//		http.formLogin()
-		//				.loginPage("/login/loginForm")        // 실제 로그인 폼페이지
-		//				.loginProcessingUrl("/login/login") // 실제 로그인 처리경로
-		//				.usernameParameter("id")
-		//				.passwordParameter("password")
-		//				.defaultSuccessUrl("/");
+		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
 
 		http.oauth2Login((oauth2) -> oauth2
 			.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
@@ -133,14 +135,9 @@ public class SecurityConfig {
 			.successHandler(customSuccessHandler)
 			.clientRegistrationRepository(clientRegistrationRepository())
 		);
-		// http.logout()
-		// 	.logoutUrl("/login/logout")
-		// 	.logoutSuccessUrl("/")
-		// 	.invalidateHttpSession(true)
-		// 	.deleteCookies("SESSION")
-		// 	.deleteCookies("Authorization")
-		// 	.deleteCookies("JSESSIONID")
-		// 	.permitAll();
+
+		http.sessionManagement((session) -> session
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		return http.build();
 	}

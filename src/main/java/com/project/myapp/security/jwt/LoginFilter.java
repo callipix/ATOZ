@@ -3,6 +3,7 @@ package com.project.myapp.security.jwt;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,21 +26,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.util.StreamUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.myapp.dto.RefreshDTO;
 import com.project.myapp.security.auth.CustomDetails;
+import com.project.myapp.security.jwt.mapper.RefreshMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@MapperScan("com.project.myapp.security.jwt.mapper")
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
+	private final RefreshMapper refreshMapper;
 	private final JwtUtil jwtUtil;
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws
 		AuthenticationException {
+
+		log.info("일반로그인은 여길 타야하는데");
 
 		Map<String, String> login;
 
@@ -77,13 +85,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 		String role = authority.getAuthority();
 		String access = jwtUtil.createJwt("access", username, role, 6000000L);
-		String refresh = jwtUtil.createJwt("refresh", username, role, 88888888L);
+		String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
-		// response.addHeader("Authorization", "Bearer " + token);
+		addRefreshToken(username, refresh, 86400000L);
 
+		log.info("access for successfulAuthentication = {}", access);
 		response.setHeader("access", access);
 		response.addCookie(createCookie("refresh", refresh));
-		response.setStatus(HttpStatus.OK.value());
+		response.setStatus(HttpStatus.OK.value(), response.getHeader("access"));
 
 	}
 
@@ -101,5 +110,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		cookie.setHttpOnly(true);
 
 		return cookie;
+	}
+
+	private void addRefreshToken(String username, String refresh, Long expiredMs) {
+		Date dateByGeneralLogin = new Date(System.currentTimeMillis() + expiredMs);
+		int result = 0;
+
+		RefreshDTO refreshDTO = new RefreshDTO();
+		refreshDTO.setRefresh(refresh);
+		refreshDTO.setUsername(username);
+		refreshDTO.setExpiration(dateByGeneralLogin.toString());
+
+		log.info("refreshDTO = {}", refreshDTO);
+		result += this.refreshMapper.insertSave(refreshDTO);
+		log.info("result for addRefreshToken = {}", result);
+
 	}
 }

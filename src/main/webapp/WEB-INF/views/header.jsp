@@ -71,6 +71,8 @@
                 'access': data,
                 'Content-Type': 'application/json'
             },
+            contentType: "application/json; charset=UTF-8", // Content-Type을 UTF-8로 설정
+            dataType: "text", // 서버가 문자열을 반환하는 경우
             success: function (response) {
                 if (response) {
                     loginLink.innerHTML = '';
@@ -111,7 +113,7 @@
             },
             error: function (xhr) {
                 if (xhr.status === 401) {
-                    alert("error Code 401 : 토큰 만료되서 재발급됨" + xhr.status)
+                    console.log("error Code 401 : 토큰 만료되서 재발급됨 " + xhr.responseText)
                     $.ajax({
                         url: "/reissue",
                         type: "post",
@@ -129,6 +131,7 @@
                         },
                     })
                 }
+                console.log("에러 발생 for header.jsp xhr: ", xhr.responseText);
             }
         });
     }
@@ -139,7 +142,7 @@
 
             $.ajax({
                 url: '/jwtLogin',
-                type: "post",
+                type: 'post',
                 xhrFields: {
                     withCredentials: true
                 },

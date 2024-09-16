@@ -1,8 +1,14 @@
 package com.project.myapp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
+@Setter
+@ToString
 public class PageHandler {
 
 	private int totalCnt;           // 전체 게시물 개수 -> 255
@@ -53,86 +59,6 @@ public class PageHandler {
 		this.showNext = endPage != totalPage;
 	}
 
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public SearchCondition getSc() {
-		return sc;
-	}
-
-	public void setSc(SearchCondition sc) {
-		this.sc = sc;
-	}
-
-	public int getTotalCnt() {
-		return totalCnt;
-	}
-
-	public void setTotalCnt(int totalCnt) {
-		this.totalCnt = totalCnt;
-	}
-
-	public int getNaviSize() {
-		return naviSize;
-	}
-
-	public void setNaviSize(int naviSize) {
-		this.naviSize = naviSize;
-	}
-
-	public int getTotalPage() {
-		return totalPage;
-	}
-
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
-	public int getBeginPage() {
-		return beginPage;
-	}
-
-	public void setBeginPage(int beginPage) {
-		this.beginPage = beginPage;
-	}
-
-	public int getEndPage() {
-		return endPage;
-	}
-
-	public void setEndPage(int endPage) {
-		this.endPage = endPage;
-	}
-
-	public boolean isShowPrev() {
-		return showPrev;
-	}
-
-	public void setShowPrev(boolean showPrev) {
-		this.showPrev = showPrev;
-	}
-
-	public boolean isShowNext() {
-		return showNext;
-	}
-
-	public void setShowNext(boolean showNext) {
-		this.showNext = showNext;
-	}
-
 	public void print() {
 		log.info("page = {}", sc.getPage());
 		log.info(showPrev ? "[PREV] " : " ");
@@ -145,21 +71,5 @@ public class PageHandler {
 
 		log.info(showNext ? "[NEXT] " : "");
 
-	}
-
-	@Override
-	public String toString() {
-		return "PageHandler{" +
-			"totalCnt=" + totalCnt +
-			", naviSize=" + naviSize +
-			", totalPage=" + totalPage +
-			", beginPage=" + beginPage +
-			", endPage=" + endPage +
-			", showPrev=" + showPrev +
-			", showNext=" + showNext +
-			", page=" + page +
-			", pageSize=" + pageSize +
-			", sc=" + sc +
-			'}';
 	}
 }

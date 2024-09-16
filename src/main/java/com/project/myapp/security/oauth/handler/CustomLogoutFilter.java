@@ -95,6 +95,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
 		if (!isExist) {
 
 			//response status code
+			log.info("isExist 여기서 안뜨는듯 = {}");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}

@@ -6,6 +6,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,17 +37,13 @@ public class RestApiController {
 	@ResponseBody
 	@GetMapping("/secure-endpoint")
 	public String secureEndpoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		String authorization = null;
 		String access = null;
 		String refresh = null;
 
 		Cookie[] cookies = request.getCookies();
 
 		for (Cookie cookie : cookies) {
-			log.info("cookie.getName() = {}", cookie.getName());
-			if (cookie.getName().equals("Authorization")) {
-				authorization = cookie.getValue();
-			}
+			log.info("cookie.getName() for secureEndpoint = {}", cookie.getName());
 			if (cookie.getName().equals("access")) {
 				access = cookie.getValue();
 			}
@@ -60,7 +58,7 @@ public class RestApiController {
 		// response.setHeader("Authorization", "Bearer " + authorization);
 		response.addHeader("access", access);
 
-		return authorization;
+		return access;
 	}
 
 	@ResponseBody
@@ -77,7 +75,7 @@ public class RestApiController {
 
 	@ResponseBody
 	@PostMapping("/jwtLogin")
-	public String jwtLogin(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<String> jwtLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		log.info("jwtLogin 호출");
 
@@ -88,6 +86,25 @@ public class RestApiController {
 			.getPrincipal();
 
 		log.info("userDetails.getName() = {}", userDetails.getName());
+
+		return ResponseEntity.ok()
+			.contentType(MediaType.APPLICATION_JSON_UTF8)
+			.body(userDetails.getName());
+	}
+
+	@ResponseBody
+	@PostMapping("/generalLogin")
+	public String general(HttpServletRequest request, HttpServletResponse response) {
+
+		log.info("general 호출");
+
+		String access = request.getHeader("access");
+		log.info("access for general = {}", access);
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+
+		log.info("userDetails.getName() for general = {}", userDetails.getName());
 
 		return userDetails.getName();
 	}

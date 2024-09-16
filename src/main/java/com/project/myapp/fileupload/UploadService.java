@@ -39,7 +39,7 @@ public class UploadService {
 			if (successURL == null) {
 				throw new Exception("uploadCK failed");
 			}
-			log.info("successURL = {} ", successURL);
+			log.info("successURL = {}", successURL);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("uploaded", true);
 			map.put("url", successURL);
@@ -63,11 +63,11 @@ public class UploadService {
 		int result = 0;
 		for (String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
 			beforeAddress.add(beforeImgAddress);
-			log.info("beforeImgAddress = {} ", beforeImgAddress);
+			log.info("beforeImgAddress = {}", beforeImgAddress);
 		}
 		for (String afterImgAddress : imageAddress.get("afterImgAddress")) {
 			afterAddress.add(afterImgAddress);
-			log.info("afterImgAddress = {} ", afterImgAddress);
+			log.info("afterImgAddress = {}", afterImgAddress);
 		}
 		if (!imageAddress.isEmpty()) {
 			// 이미지 업로드 여부 → 업로드 존재시
@@ -77,7 +77,7 @@ public class UploadService {
 
 			resultMap.put("result", result);
 			resultMap.put("afterAddress", afterAddress);
-			log.info("deletedImg = {} ", endImgList);
+			log.info("deletedImg = {}", endImgList);
 		}
 		if (result != 0) {
 			return ResponseEntity.ok(resultMap);
