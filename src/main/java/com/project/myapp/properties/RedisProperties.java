@@ -8,9 +8,13 @@ import lombok.Getter;
 
 @Getter
 @Configuration
-@PropertySource("classpath:application-jwt.properties")
-public class JwtProperties {
+@PropertySource("classpath:redis-config.properties")
+public class RedisProperties {
 
-	@Value("${jwt.token.key}")
-	private String jwtTokenKey;
+	@Value("${spring.redis.host}")
+	private String host;
+	@Value("${spring.redis.port}")
+	private int port;
+	@Value("${spring.session.store-type}")
+	private String sessionStoreType;
 }

@@ -15,6 +15,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
     <title>자유게시판 게시글조회</title>
 </head>
+<script>
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            const token = localStorage.getItem('access'); // 로컬 스토리지에서 JWT 토큰을 가져옴
+            if (token) {
+                xhr.setRequestHeader('access', token);
+            }
+        }
+    });
+</script>
 <style>
     #removeBtn, #modifyBtn {
         display: none;
@@ -25,7 +35,6 @@
 <script>
     let msg = "${msg}";
     const tokenData = localStorage.getItem("access");
-    <%--let username = ${principal.name};--%>
 </script>
 <div>
     <div class="board-container">
@@ -141,7 +150,6 @@
                     location.href = response;
                 }
             })
-
             // let form = $("#form");
             <%--form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");--%>
             // form.attr("method", "post");

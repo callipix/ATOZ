@@ -4,21 +4,26 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.myapp.board.service.BoardService;
 import com.project.myapp.board.service.CommentService;
 import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
+import com.project.myapp.register.dao.RegisterMapper;
 import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +37,7 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final CommentService commentService;
+	private final RegisterMapper registerMapper;
 
 	@GetMapping("/modify")
 	public String modify(Integer bno, Model m) {
@@ -51,6 +57,39 @@ public class BoardController {
 	 * @param rattr   리다이렉트 하기 위한 변수
 	 * @return
 	 */
+	@ResponseBody
+	@PostMapping("/remove")
+	public String remove(@RequestBody Map<String, Object> removeData, RedirectAttributes rattr) {
+
+		Integer bno = Integer.parseInt((String)removeData.get("bno"));
+
+		ObjectMapper mapper = new ObjectMapper();
+		SearchCondition sc = mapper.convertValue(removeData.get("sc"), SearchCondition.class);
+
+		log.info("sc = {}", sc);
+		log.info("bno = {}", bno);
+
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+			.getAuthentication()
+			.getPrincipal();
+		String writer = userDetails.getUser().getId();
+
+		log.info("writer for remove = {}", writer);
+		log.info("writer for bno = {}", bno);
+
+		String msg = "DEL_OK";
+		try {
+			int result = this.boardService.deleteByIdNBno(bno, writer);
+			if (result != 1) {
+				throw new Exception("Delete failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "DEL_ERR";
+		}
+		rattr.addFlashAttribute("msg", msg);
+		return "/board/boardList" + sc.getQueryString();
+	}
 
 	// 글수정
 	@PostMapping("/modify")

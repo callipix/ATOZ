@@ -3,6 +3,7 @@ package com.project.myapp.redis;
 import java.time.Duration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -11,17 +12,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-import com.project.myapp.properties.JwtProperties;
+import com.project.myapp.properties.RedisProperties;
 
 import lombok.RequiredArgsConstructor;
 
-//@Configuration
-//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 10)
+@Configuration
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 10)
 @RequiredArgsConstructor
 public class RedisConfig {
 
-	private final JwtProperties jwtProperties;
+	private final RedisProperties redisProperties;
 
 	/**
 	 * Redis 서버와 연결을 생성하고 관리하는 역할
@@ -30,7 +32,7 @@ public class RedisConfig {
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(jwtProperties.getHost(), jwtProperties.getPort());
+		return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
 	}
 
 	/**

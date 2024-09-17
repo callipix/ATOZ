@@ -156,7 +156,6 @@
                 contentType: "application/json; charset=UTF-8", // Content-Type을 UTF-8로 설정
                 dataType: "text",                               // 서버가 문자열을 반환하는 경우
                 success: function (response) {
-                    alert(response)
                     if (response) {
                         writeBtn.style.display = 'block';
                         return;
