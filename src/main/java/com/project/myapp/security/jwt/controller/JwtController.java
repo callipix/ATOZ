@@ -28,13 +28,6 @@ public class JwtController {
 	private final JwtUtil jwtUtil;
 	private final RefreshMapper refreshMapper;
 
-	@PostMapping("/test")
-	public String adminP(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
-		log.info("authorization for JwtController = {}", authorization);
-		return "Admin Controller";
-	}
-
 	@PostMapping("/reissue")
 	public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) throws IOException {
 

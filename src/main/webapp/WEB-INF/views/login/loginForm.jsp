@@ -9,8 +9,7 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<%--<link rel="stylesheet" href="<c:url value='/css/header.css'/>">--%>
-<%--<link rel="stylesheet" href="/resources/css/header.css">--%>
+<link rel="stylesheet" href="<c:url value='/css/header.css'/>">
 <style>
     /* Bordered form */
     form {
@@ -180,16 +179,6 @@
         margin: 0 200px;
     }
 </style>
-<script>
-    const token = localStorage.getItem('access'); // 로컬 스토리지에서 JWT 토큰을 가져옴
-    if (token) {
-        $.ajaxSetup({
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('access', token);
-            }
-        });
-    }
-</script>
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>
@@ -234,9 +223,9 @@
     const x = document.querySelector("#myTopnav");
     const form = document.querySelector("#loginForm");
     const overlay = document.querySelector("#overlay");
-
-    // let id = document.getElementById('id').value;
-    // let password = document.getElementById('password').value;
+    const id = document.querySelector('#id');
+    const password = document.querySelector('#password');
+    const loginClick = document.querySelector('#loginClick');
 
     function myFunction() {
         if (x.className === "topnav") {
@@ -255,7 +244,7 @@
             });
 
             // Add the active class to the clicked link
-            this.classList.add('active');
+            link.classList.add('active');
         });
     });
 
@@ -263,10 +252,6 @@
         form.style.display = "none";
         overlay.style.display = "none";
     }
-
-    const id = document.querySelector('#id');
-    const password = document.querySelector('#password');
-    const loginClick = document.querySelector('#loginClick');
 
     $(document).ready(function () {
 
@@ -279,9 +264,6 @@
                 "username": idVal,
                 "password": passVal
             };
-
-            alert("username = " + data.username);
-            alert("password = " + data.password);
 
             $.ajax({
                 url: "/login",
@@ -297,12 +279,11 @@
                 success: function (result, textStatus, jqXHR) {
                     localStorage.setItem("access", jqXHR.getResponseHeader("access"));
                     location.href = "/";
-                    // alert(tt);
                 },
                 error: function (xhr, status, error) {
-                    console.log("에러 발생 generalLogin xhr: ", xhr);
-                    console.log("에러 발생 generalLogin status: ", status);
-                    console.log("에러 발생 generalLogin error: ", error);
+                    console.log("에러 발생 loginForm xhr: ", xhr);
+                    console.log("에러 발생 loginForm status: ", status);
+                    console.log("에러 발생 loginForm error: ", error);
                 }
             })
         })

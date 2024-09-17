@@ -33,7 +33,7 @@
 
     const testBtn = document.querySelector('#testBtn');
     const userInfoSpan = document.querySelector('#user-info');
-    const data = localStorage.getItem("access");
+    const accessToken = localStorage.getItem("access");
     const loginLink = document.querySelector('#loginLink');
     const registerLink = document.querySelector('#registerLink');
     // Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon
@@ -59,7 +59,7 @@
         });
     });
 
-    if (data) {
+    if (accessToken) {
 
         $.ajax({
             url: '/jwtLogin',
@@ -68,11 +68,11 @@
                 withCredentials: true
             },
             headers: {
-                'access': data,
+                'access': accessToken,
                 'Content-Type': 'application/json'
             },
             contentType: "application/json; charset=UTF-8", // Content-Type을 UTF-8로 설정
-            dataType: "text", // 서버가 문자열을 반환하는 경우
+            dataType: "text",                               // 서버가 문자열을 반환하는 경우
             success: function (response) {
                 if (response) {
                     loginLink.innerHTML = '';
@@ -93,7 +93,7 @@
                                 withCredentials: true
                             },
                             headers: {
-                                'access': data,
+                                'access': accessToken,
                                 'Content-Type': 'application/json'
                             },
                             success: function (response) {
@@ -138,7 +138,7 @@
 
     testBtn.addEventListener('click', function () {
 
-        if (data) {
+        if (accessToken) {
 
             $.ajax({
                 url: '/jwtLogin',
@@ -147,7 +147,7 @@
                     withCredentials: true
                 },
                 headers: {
-                    'access': data,
+                    'access': accessToken,
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {

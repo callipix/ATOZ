@@ -1,4 +1,4 @@
-package com.project.myapp.security.oauth.handler;
+package com.project.myapp.security.customhandler;
 
 import java.io.IOException;
 import java.util.Collection;

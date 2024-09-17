@@ -1,11 +1,13 @@
 package com.project.myapp.security.jwt.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +37,7 @@ public class RestApiController {
 	}
 
 	@ResponseBody
-	@GetMapping("/secure-endpoint")
+	@GetMapping("/secureEndpoint")
 	public String secureEndpoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
 		String access = null;
 		String refresh = null;
@@ -55,14 +57,13 @@ public class RestApiController {
 		log.info("access = {}", access);
 		log.info("refresh = {}", refresh);
 
-		// response.setHeader("Authorization", "Bearer " + authorization);
 		response.addHeader("access", access);
 
 		return access;
 	}
 
 	@ResponseBody
-	@GetMapping("/header-endpoint")
+	@GetMapping("/headerEndpoint")
 	public String headerPoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		String accessToken = request.getHeader("access");
@@ -93,23 +94,6 @@ public class RestApiController {
 	}
 
 	@ResponseBody
-	@PostMapping("/generalLogin")
-	public String general(HttpServletRequest request, HttpServletResponse response) {
-
-		log.info("general 호출");
-
-		String access = request.getHeader("access");
-		log.info("access for general = {}", access);
-		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
-			.getAuthentication()
-			.getPrincipal();
-
-		log.info("userDetails.getName() for general = {}", userDetails.getName());
-
-		return userDetails.getName();
-	}
-
-	@ResponseBody
 	@PostMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 
@@ -119,7 +103,7 @@ public class RestApiController {
 	}
 
 	@ResponseBody
-	@GetMapping("/tokenCheck")
+	@GetMapping(value = "/tokenCheck", produces = "application/json; charset=utf-8")
 	public String tokenCheck(HttpServletResponse response, HttpServletRequest request) {
 
 		String access = request.getHeader("access");
@@ -127,10 +111,18 @@ public class RestApiController {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
-		if (access != null || userDetails != null) {
+
+		log.info("access for tokenCheck= {}", access);
+		log.info("userDetails for tokenCheck = {}", userDetails);
+		if (access != null && userDetails != null) {
 			isUser = userDetails.getName();
 		}
+
+		log.info("isUser for tokenCheck= {}", isUser);
+		isUser = StringUtils.newStringUtf8(isUser.getBytes(StandardCharsets.UTF_8));
+		log.info("isUser.utf8 for tokenCheck= {}", isUser);
+
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return isUser;
 	}
-
 }

@@ -6,52 +6,34 @@
 </head>
 <script>
     $.ajax({
-        url: "/secure-endpoint",
+        url: "/secureEndpoint",
         type: "GET",
         xhrFields: {
             withCredentials: true
         },
         success: function (response, status, xhr) {
-            const access = xhr.getResponseHeader("access")
+            let access = xhr.getResponseHeader("access")
             localStorage.setItem("access", access);
             addHeader();
-            // location.href = '/';
         },
         error: function (xhr) {
-            // if (xhr.status === 401) {
-            //     $.ajax({
-            //         url: "/reissue",
-            //         type: "post",
-            //         xhrFields: {
-            //             withCredentials: true
-            //         },
-            //         success: function (response) {
-            //             alert(response)
-            //         },
-            //         error: function (xhr, status, error) {
-            //             console.log("에러 발생 for header-endpoint xhr: ", xhr);
-            //             console.log("에러 발생 for header-endpoint status: ", status);
-            //             console.log("에러 발생 for header-endpoint error: ", error);
-            //         },
-            //     })
-            // }
         }
     });
 
     function addHeader() {
-        let data = localStorage.getItem("access");
+        let access = localStorage.getItem("access");
 
         $.ajax({
-            url: "/header-endpoint",
+            url: "/headerEndpoint",
             type: "GET",
             xhrFields: {
                 withCredentials: true
             },
             headers: {
-                'access': data,
+                'access': access,
                 'Content-Type': 'application/json'
             },
-            success: function (response) {
+            success: function () {
                 location.href = "/";
             },
             error: function (xhr) {

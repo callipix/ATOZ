@@ -35,12 +35,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.myapp.properties.OAuth2Properties;
-import com.project.myapp.security.jwt.JwtFilter;
+import com.project.myapp.security.customhandler.CustomLogoutFilter;
+import com.project.myapp.security.customhandler.CustomSuccessHandler;
+import com.project.myapp.security.customhandler.JwtFilter;
+import com.project.myapp.security.customhandler.LoginFilter;
 import com.project.myapp.security.jwt.JwtUtil;
-import com.project.myapp.security.jwt.LoginFilter;
 import com.project.myapp.security.jwt.mapper.RefreshMapper;
-import com.project.myapp.security.oauth.handler.CustomLogoutFilter;
-import com.project.myapp.security.oauth.handler.CustomSuccessHandler;
 import com.project.myapp.security.oauth.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -81,6 +81,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+		/** CORS 설정 시작 */
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8080/*"));
 		configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -92,10 +93,18 @@ public class SecurityConfig {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		http.cors().configurationSource(source);
+		/** CORS 설정 끝 */
 
+		/** CSRF 설정 : 비활성화 */
 		http.csrf(AbstractHttpConfigurer::disable);
+
+		/** 폼 로그인 : 비활성화 */
 		http.formLogin().disable();
+
+		/** HTTP Basic 인증 : 비활성화(기존 : 요청헤더에 사용자명 + 비밀번호 포함 인증) */
 		http.httpBasic().disable();
+
+		/** 특정 URL에 대한 접근 권한 설정 */
 		http.authorizeHttpRequests((auth) -> auth
 			.requestMatchers("/js/**").permitAll()
 			.requestMatchers("/css/**").permitAll()
@@ -103,39 +112,31 @@ public class SecurityConfig {
 			.requestMatchers("/jwtLogin").permitAll()
 			.requestMatchers("/reissue").permitAll()
 			.requestMatchers("/login/loginForm").permitAll()
-			.requestMatchers("/generalLogin").authenticated()
 			.requestMatchers("/login").authenticated()
 			.requestMatchers("/**").permitAll()
+			// .requestMatchers("/**").permitAll() 이 코드 제거하니까 무한 리디렉션 뜬다?
 			.anyRequest().authenticated()
 		);
 
-		// http
-		// 	.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
-		// 		UsernamePasswordAuthenticationFilter.class)
-		// 	.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
-		// http
-		// 	.addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
-		// 		UsernamePasswordAuthenticationFilter.class);
-		// http.addFilterAfter(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
-		// http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
-		// 	UsernamePasswordAuthenticationFilter.class);
-		// http.addFilterAt(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+		/** 로그인관련 필터 설정 시작 */
 		http.addFilterBefore(
 				new LoginFilter(authenticationManager(authenticationConfiguration), refreshMapper, jwtUtil),
 				UsernamePasswordAuthenticationFilter.class)
 			.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
 
 		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
+		/** 로그인관련 필터 설정 끝 */
 
+		/** OAuth2 인증 설정 시작 */
 		http.oauth2Login((oauth2) -> oauth2
 			.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
 				.userService(customOAuth2UserService))
 			.successHandler(customSuccessHandler)
 			.clientRegistrationRepository(clientRegistrationRepository())
 		);
+		/** OAuth2 인증 설정 끝 */
 
+		/** session정책 설정 : stateless */
 		http.sessionManagement((session) -> session
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

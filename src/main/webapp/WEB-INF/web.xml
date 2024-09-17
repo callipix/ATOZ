@@ -12,10 +12,6 @@
         <param-value>/WEB-INF/spring/root-context.xml
         </param-value>
     </context-param>
-<!--    <error-page>-->
-<!--        <error-code>404</error-code>-->
-<!--        <location>/WEB-INF/views/errorPage/error404.jsp</location>-->
-<!--    </error-page>-->
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

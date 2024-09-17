@@ -169,6 +169,7 @@
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
+                    alert(response);
                     let writer = "${boardDTO.writer}";
                     if (response === writer) {
                         removeBtn.style.display = 'block';

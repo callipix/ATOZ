@@ -11,7 +11,6 @@ import com.project.myapp.register.dao.RegisterMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-// 시큐리티 설정에서 loginProcessingUrl("/login");
 // login 요청이 오면 자동으로 UserDetailsService 타입으로 IoC 되어있는 loadUserByUsername 함수가 실행
 @Slf4j
 @Service

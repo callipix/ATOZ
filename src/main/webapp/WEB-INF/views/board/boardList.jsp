@@ -32,6 +32,7 @@
 </style>
 <body>
 <script>
+    const tokenData = localStorage.getItem("access");
     let msg = "${msg}";
     if (msg === "LIST_ERR") alert("게시물 목록을 가져오는데 실패했습니다. 다시 시도해 주세요.");
     if (msg === "READ_ERR") alert("삭제되었거나 없는 게시물입니다.");
@@ -41,7 +42,6 @@
     if (msg === "WRT_OK") alert("성공적으로 등록되었습니다.");
     if (msg === "MOD_OK") alert("성공적으로 수정되었습니다.");
 
-    const tokenData = localStorage.getItem("access");
 </script>
 <jsp:include page="../header.jsp"/>
 <br>
@@ -151,9 +151,12 @@
                 },
                 headers: {
                     'access': tokenData,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json; charset=utf-8'
                 },
+                contentType: "application/json; charset=UTF-8", // Content-Type을 UTF-8로 설정
+                dataType: "text",                               // 서버가 문자열을 반환하는 경우
                 success: function (response) {
+                    alert(response)
                     if (response) {
                         writeBtn.style.display = 'block';
                         return;

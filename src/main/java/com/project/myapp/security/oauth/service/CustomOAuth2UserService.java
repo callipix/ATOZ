@@ -15,6 +15,7 @@ import com.project.myapp.dto.UserDTO;
 import com.project.myapp.register.dao.RegisterMapper;
 import com.project.myapp.security.auth.CustomDetails;
 import com.project.myapp.security.oauth.provider.GoogleUserInfo;
+import com.project.myapp.security.oauth.provider.OAuth2UserInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
