@@ -6,12 +6,56 @@
 
     <select id="findAll" resultMap="noticeMap">
         SELECT id, title, content, who, create_date, update_date
-          FROM notice LIMIT 200
+        FROM notice LIMIT 200
     </select>
 
     <select id="findByPage" parameterType="Integer" resultMap="noticeMap">
         SELECT id, title, content, who, create_date, update_date
-          FROM notice LIMIT #{startIdx},10
+        FROM notice LIMIT #{startIdx},10
+    </select>
+
+    <select id="getNoticeTotalCount" resultType="int">
+        SELECT count(*)
+        FROM notice
+    </select>
+
+    <select id="noticeSearchSelectPage" parameterType="com.project.myapp.dto.SearchCondition" resultMap="noticeMap">
+        SELECT id, title, content, who, create_date, update_date
+        FROM notice
+        WHERE TRUE
+        <choose>
+            <when test='option=="T"'>
+                and title like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="W"'>
+                and who like concat('%' , #{keyword} , '%')
+            </when>
+            <otherwise>
+                and (title like concat('%', #{keyword} , '%')
+                or content like concat('%', #{keyword} , '%'))
+            </otherwise>
+        </choose>
+        ORDER BY create_date DESC , id DESC
+        LIMIT #{offset} , #{pageSize}
+    </select>
+
+    <select id="getSearchNoticeResultCount" parameterType="com.project.myapp.dto.SearchCondition" resultType="int">
+        SELECT COUNT(*)
+        FROM notice
+        WHERE TRUE
+        <choose>
+            <when test='option=="T"'>
+                and title like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="W"'>
+                and who like concat('%' , #{keyword} , '%')
+            </when>
+            <otherwise>
+                and (title like concat('%', #{keyword} , '%')
+                or content like concat('%', #{keyword} , '%'))
+            </otherwise>
+        </choose>
+        ORDER BY create_date DESC , id DESC
     </select>
 
     <resultMap type="com.project.myapp.dto.NoticeDTO" id="noticeMap">

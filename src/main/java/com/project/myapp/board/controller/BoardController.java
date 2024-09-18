@@ -23,7 +23,7 @@ import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
-import com.project.myapp.register.dao.RegisterMapper;
+import com.project.myapp.notice.controller.Timer;
 import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,6 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final CommentService commentService;
-	private final RegisterMapper registerMapper;
 
 	@GetMapping("/modify")
 	public String modify(Integer bno, Model m) {
@@ -167,6 +166,7 @@ public class BoardController {
 		return "/board/board";
 	}
 
+	@Timer
 	@GetMapping("/boardList")
 	public String getBoardList(Model m, SearchCondition sc) {
 		try {

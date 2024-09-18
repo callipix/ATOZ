@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.myapp.dto.NoticeDTO;
+import com.project.myapp.dto.PageHandler;
+import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.notice.service.NoticeService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +39,8 @@ public class NoticeController {
 
 	@Timer
 	@GetMapping("/{page}")
-	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) throws InterruptedException {
+	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) throws
+		InterruptedException {
 		List<NoticeDTO> noticeDTO = noticeService.findByPage(request, page);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
@@ -51,4 +55,51 @@ public class NoticeController {
 		);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
+
+	@Timer
+	@GetMapping("/count")
+	public ResponseEntity<Integer> getNoticesCount(String option, String keyword) {
+		SearchCondition sc = new SearchCondition();
+		sc.setOption(option);
+		sc.setKeyword(keyword);
+		Integer totalNotice = this.noticeService.getSearchNoticeResultCount(sc);
+		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
+	}
+
+	@Timer
+	@GetMapping("/totalCount")
+	public ResponseEntity<Integer> getNoticeTotalCount() {
+		Integer totalNotice = this.noticeService.getNoticeTotalCount();
+		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
+	}
+
+	@Timer
+	@GetMapping("/noticeList")
+	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
+		if (page == null || page == 0) {
+			page = 1;
+		}
+		if (pageSize == null || pageSize == 0) {
+			pageSize = 10;
+		}
+		if (option.isEmpty() || option == null) {
+			option = "";
+		}
+		if (keyword.isEmpty() || keyword == null) {
+			keyword = "";
+		}
+		SearchCondition sc = new SearchCondition();
+		sc.setOption(option);
+		sc.setKeyword(keyword);
+		sc.setPage(page);
+		sc.setPageSize(pageSize);
+
+		int totalCnt = this.noticeService.getSearchNoticeResultCount(sc);
+		PageHandler pageHandler = new PageHandler(totalCnt, sc);
+
+		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
+
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+	}
+
 }

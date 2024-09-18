@@ -38,7 +38,6 @@ public interface BoardService {
 	public int deleteByIdNBno(Integer bno, String writer) throws Exception;
 
 	// 댓글 수 업데이트
-
 	public List<BoardDTO> getSearchSelectPage(SearchCondition sc);
 
 	public int getSearchResultCount(SearchCondition sc);

@@ -1,15 +1,16 @@
 package com.project.myapp.security.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 public class AppConfig {
-	/**
-	 @Bean(name = "mvcHandlerMappingIntrospector")
-	 public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
-	 return new HandlerMappingIntrospector();
-	 }
-	 */
+	@Bean(name = "mvcHandlerMappingIntrospector")
+	public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+		return new HandlerMappingIntrospector();
+	}
+
 	/**
 	 * 해당 빈을 별도 클래스 작성 없이 사용하려면 @EnableWebMvc 어노테이션 사용하면 됨!
 	 * HandlerMappingIntrospector는 Spring MVC에서 요청을 처리할 수 있는 핸들러를 찾기 위해 사용되는 유틸리티 클래스

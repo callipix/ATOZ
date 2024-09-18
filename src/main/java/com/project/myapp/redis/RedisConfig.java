@@ -19,7 +19,7 @@ import com.project.myapp.properties.RedisProperties;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 10)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)
 @RequiredArgsConstructor
 public class RedisConfig {
 

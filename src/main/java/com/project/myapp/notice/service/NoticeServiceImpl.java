@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.myapp.dto.NoticeDTO;
+import com.project.myapp.dto.SearchCondition;
 import com.project.myapp.notice.mapper.NoticeMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public class NoticeServiceImpl implements NoticeService {
 	private final NoticeMapper noticeMapper;
 
 	@Override
-	@Cacheable(value = "NoticeMapper.findAll")
+	// @Cacheable(value = "NoticeMapper.findAll")
 	public List<NoticeDTO> getAllNotices() {
-		return noticeMapper.findAll();
+		return this.noticeMapper.findAll();
 	}
 
 	@Override
-	@Cacheable(value = "NoticeMapper.findByPage", key = "#request.requestURI + '-' + #pageNumber", condition = "#pageNumber <= 5")
+	// @Cacheable(value = "NoticeMapper.findByPage", key = "#request.requestURI + '-' + #pageNumber", condition = "#pageNumber <= 5")
 	public List<NoticeDTO> findByPage(HttpServletRequest request, int pageNumber) {
 		int startIdx = (pageNumber - 1) * 10;
 		return noticeMapper.findByPage(startIdx);
@@ -36,6 +36,25 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate) {
-		return noticeMapper.findNoticesByDates(startDate, endDate);
+		return this.noticeMapper.findNoticesByDates(startDate, endDate);
+	}
+
+	@Override
+	public Integer getNoticeTotalCount() {
+		return this.noticeMapper.getNoticeTotalCount();
+	}
+
+	@Override
+	public Integer getSearchNoticeResultCount(SearchCondition sc) {
+
+		return this.noticeMapper.getSearchNoticeResultCount(sc);
+	}
+
+	@Override
+	public List<NoticeDTO> noticeSearchSelectPage(SearchCondition sc) {
+
+		List<NoticeDTO> noticeList = this.noticeMapper.noticeSearchSelectPage(sc);
+
+		return noticeList;
 	}
 }
