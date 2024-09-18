@@ -8,8 +8,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.project.myapp.security.auth.CustomDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +35,11 @@ public class UploadService {
 
 		MultipartFile uploadImg = request.getFile("upload");
 		log.info("uploadImg = {}", uploadImg);
-		String id = (String)session.getAttribute("id");
+//		String id = (String)session.getAttribute("id");
+
+		CustomDetails customDetails = (CustomDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id = customDetails.getName();
+
 		try {
 			String successURL = this.awsS3FileUploadService.saveFileToS3(uploadImg, id);
 			if (successURL == null) {

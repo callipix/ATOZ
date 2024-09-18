@@ -19,7 +19,7 @@
 <body>
 <div class="allHeader">
     <div class="mainHeader">
-            <h1>업데이트 내역</h1>
+        <h1>업데이트 내역</h1>
 
         <div class="uplistBtn">
             <button id="reverseOrder"><b>역순보기</b></button>
@@ -294,7 +294,7 @@
                 </div>
             </div>
         </div>
-    <div class="accordion-main">
+        <div class="accordion-main">
             <button class="accordion"><b>2024.08.05</b></button>
             <div class="panel">
                 <h5>게시글 삭제시 DB에서 삭제 안되던 문제 진행중..</h5>
@@ -306,7 +306,7 @@
                 </div>
             </div>
         </div>
-    <div class="accordion-main">
+        <div class="accordion-main">
             <button class="accordion"><b>2024.08.06</b></button>
             <div class="panel">
                 <h5>게시글 삭제&수정시 DB/AWS 에서 반영 안되던 문제 일부 해결</h5>
@@ -317,17 +317,226 @@
                 </div>
             </div>
         </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.01</b></button>
+            <div class="panel">
+                <h5>기존 코드 리팩토링</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    <a href="https://github.com/callipix/myApp/commit/90cc7a0c837319a1910a3434b5273fcedd4d067f"><h5>로깅 코드 변경(sout → slf4j) 및 일부 클래스 패키지 구조 변경</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.02-03</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 설정 및 의존성 추가</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/16f2c38e31093a9421fa2dd105999467df859959"><h5>부하테스트용 notice 테이블 추가 및 일부 DTO 변경</h5></a>
+                </div>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/561f09247b093b98937fa1030c0792f12d5b9b2d"><h5>시큐리티 관련 의존성 추가 및 시큐리티 필터 설정 및 DTO 수정(Getter&Setter 롬복 어노테이션 사용)</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.04</b></button>
+            <div class="panel">
+                <h5>시큐리티 OAuth2 인증 로그인</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/1beee5aba8b2646962eec308bdf485d73563e392"><h5>OAuth2 인증 properties 클래스 추가 및 OAuth2 커스텀 객체 작성</h5></a>
+                </div>
+
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/c37a5c81bb6aca0a7fcfc2ef4af988801cbce754"><h5>비밀번호 암호화, 뷰 페이지 일부 수정</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.06</b></button>
+            <div class="panel">
+                <h5>시큐리티 OAuth2 인증 로그인</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/afb0e08d6f2ed3e369d51179acdaf809fd6d78c9"><h5>유효성 검증(Validation) 일부 수정 및 </h5></a>
+                </div>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/7a993b2cde7902bda033919380115877be4b459a"><h5>시큐리티 활성화 이후 권한에 따른 페이지 접근 테스트(ok)</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.07</b></button>
+            <div class="panel">
+                <h5>시큐리티 OAuth2 연동 구글 로그인</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/df6d07b3e0021a099e6c541a53aaeeb6d2cb5e8f"><h5>OAuth2 구글 연동 로그인 및 jsp 세션체크 변경(Security tag 사용)</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.08</b></button>
+            <div class="panel">
+                <h5>시큐리티 OAuth2 연동 문제 일부 해결(로그인시 loadUser 호출 안되던 문제)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/d174be64d1fcefdb367f82e1bad0bb792836ba4a"><h5>loadUser 호출 안되던 문제 해결</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.09</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 JWT 설정(필터 및 토큰 생성 로직 작성)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/881d565637e04b1508d2f5c18e88fe0e1bc16bf7"><h5>jwt 관련 의존성 추가 및 시큐리티 필터 설정, 토큰 발행 클래스 작성</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.10</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 JWT : Redis 설정</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/4051a2ad9c06fed9a21818eb7c97f8ebd96c4254"><h5>Redis 서버 구축 및 테스트(ok) jwt 발행 및 Custom LoginFilter 작성</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.11</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 JWT 발행 설정 및 필터 작성중(기본로그인 + 소셜)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/1e4597e6f04f54c5c940fba6b3fc62c94ed681c0"><h5>건의사항 페이징, 게시물 삭제/업데이트시 오류 일부 해결</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.12 - 13</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 JWT 발행 설정 및 필터 작성중(기본로그인 + 소셜)</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/e8059647975ac13b697ccdab7a4e45712c0878b0"><h5>refresh token 발급 및 뷰 페이지 수정 및 token 발급 DB 저장 확인, Redis 서버 실행 임시 중단</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.14</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 JWT 기본로그인 + 소셜로그인</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/cf2619eaad2a41b3e85728bd1f43ea3dd232ff56"><h5>OAuth2 로그인 후 헤더에 토큰값 전송 체크</h5></a>
+                </div>
+
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/3c7d1ecbc569160d05528ba509b4a52842e2a9d4"><h5>패키지 경로 변경 및 설정 과정 중 불필요한 클래스 제거 및 중복코드 삭제</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.15</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 로그아웃</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/2856111710001c08ad60ec78270d42a56840faaa"><h5>Logout Custom Filter 작성, 로그아웃시 DB에 있던 refresh token 삭제까지 완료</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.16</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 jwt 로그아웃</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/dc950d92c5aad582a1c1a335d93ade7743a0a1f0"><h5>뷰 페이지 수정 및 체크</h5></a>
+                </div>
+
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/dc950d92c5aad582a1c1a335d93ade7743a0a1f0"><h5>토큰 만료시 재발행 컨트롤러 추가 및 뷰 페이지 수정</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.17</b></button>
+            <div class="panel">
+                <h5>스프링 시큐리티 jwt 로그아웃</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/881d565637e04b1508d2f5c18e88fe0e1bc16bf7"><h5>일반로그인도 jwt 발급 방식의 로그아웃, 로그아웃시 서버 : DB 토큰 제거<br>클라이언트 : 로컬스토리지(access token), 쿠키(refresh token) 제거<br>DTO 수정 : equals, hashcode 오버라이드 메서드 삭제 후 @EqualsAndHashCode 어노테이션 추가</h5></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-main">
+            <button class="accordion"><b>2024.09.18</b></button>
+            <div class="panel">
+                <h5>Spring security OAuth2 인증, jwt 발급 로그인 마무리</h5>
+                <div style="align-items: center; display: flex">
+                    <img src="<c:url value='/img/github.png'/>"/>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/callipix/myApp/commit/1680da996d8c553a7538b841e8dba2776fa02fe7"><h5>BoardController 일부 메서드 오류 및 뷰 페이지 수정</h5></a>
+                </div>
+            </div>
+        </div>
+
     </div>
-    </div>
-    <div class="bottomHeader">
-        <h1>업데이트 예정</h1>
-        <h4>스프링 시큐리티 적용해서 인증 & 권한설정 수정 및 보안강화 기본적인사항 끝나면 바로 적용 예정 → 우선순위 중상</h4>
-        <h4>게시판 비동기 처리로 변경하기 → 급하긴 한데 가능할지..</h4>
-        <h4>아이디 비밀번호 찾기 추가 → 우선순위 중</h4>
-        <h4>좋아요 기능 추가 → 우선순위 중하 </h4>
-        <h4>소셜 로그인(선택) → 우선순위 하</h4>
-        <h4 style="text-decoration: line-through;">무한 대댓글 → 우선순위 하</h4>
-    </div>
+
+</div>
+<div class="bottomHeader">
+    <h1>업데이트 예정</h1>
+    <h4>스프링 시큐리티 적용해서 인증 & 권한설정 수정 및 보안강화 기본적인사항 끝나면 바로 적용 예정 → 우선순위 중상</h4>
+    <h4>게시판 비동기 처리로 변경하기 → 급하긴 한데 가능할지..</h4>
+    <h4>아이디 비밀번호 찾기 추가 → 우선순위 중</h4>
+    <h4>좋아요 기능 추가 → 우선순위 중하 </h4>
+    <h4>소셜 로그인(선택) → 우선순위 하</h4>
+    <h4 style="text-decoration: line-through;">무한 대댓글 → 우선순위 하</h4>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

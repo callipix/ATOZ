@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import com.project.myapp.dto.NoticeDTO;
 import com.project.myapp.notice.service.NoticeService;
 
 import lombok.RequiredArgsConstructor;
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/notices")
@@ -26,14 +27,16 @@ public class NoticeController {
 
 	private final NoticeService noticeService;
 
+	@Timer
 	@GetMapping("")
 	public ResponseEntity<Object> findAll() {
 		List<NoticeDTO> noticeDTO = noticeService.getAllNotices();
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
+	@Timer
 	@GetMapping("/{page}")
-	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) {
+	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) throws InterruptedException {
 		List<NoticeDTO> noticeDTO = noticeService.findByPage(request, page);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}

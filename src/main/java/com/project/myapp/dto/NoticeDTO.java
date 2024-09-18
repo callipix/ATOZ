@@ -1,25 +1,24 @@
 package com.project.myapp.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class NoticeDTO {
+
 	@EqualsAndHashCode.Include
 	private long id;
 	private String title;
 	private String content;
 	private String who;
-	private Date create_date;
-	private Date update_date;
+	private Timestamp create_date;
+	private Timestamp update_date;
 
 }

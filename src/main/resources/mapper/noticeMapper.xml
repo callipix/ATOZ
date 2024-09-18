@@ -4,14 +4,23 @@
 
 <mapper namespace="com.project.myapp.notice.mapper.NoticeMapper">
 
-    <select id="findAll" resultType="com.project.myapp.dto.NoticeDTO">
-        SELECT *
-        FROM noticeDTO limit 5000
+    <select id="findAll" resultMap="noticeMap">
+        SELECT id, title, content, who, create_date, update_date
+          FROM notice LIMIT 200
     </select>
 
-    <select id="findByPage" parameterType="Integer" resultType="com.project.myapp.dto.NoticeDTO">
-        SELECT *
-        FROM noticeDTO LIMIT #{startIdx},10
+    <select id="findByPage" parameterType="Integer" resultMap="noticeMap">
+        SELECT id, title, content, who, create_date, update_date
+          FROM notice LIMIT #{startIdx},10
     </select>
+
+    <resultMap type="com.project.myapp.dto.NoticeDTO" id="noticeMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="who" column="who"/>
+        <result property="create_date" column="create_date"/>
+        <result property="update_date" column="update_date"/>
+    </resultMap>
 
 </mapper>
