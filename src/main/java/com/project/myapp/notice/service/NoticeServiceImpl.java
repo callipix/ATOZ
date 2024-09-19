@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.myapp.dto.NoticeDTO;
@@ -40,6 +41,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+	@Cacheable(value = "NoticeMapper.getNoticeTotalCount")
 	public Integer getNoticeTotalCount() {
 		return this.noticeMapper.getNoticeTotalCount();
 	}
@@ -51,7 +53,16 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+//	@Cacheable(value = "NoticeMapper.noticeSearchSelectPage")
 	public List<NoticeDTO> noticeSearchSelectPage(SearchCondition sc) {
+
+		List<NoticeDTO> noticeList = this.noticeMapper.noticeSearchSelectPage(sc);
+
+		return noticeList;
+	}
+	@Override
+	@Cacheable(value = "NoticeMapper.noticeSearchSelectPage")
+	public List<NoticeDTO> getNoticeListByEhcache(SearchCondition sc) {
 
 		List<NoticeDTO> noticeList = this.noticeMapper.noticeSearchSelectPage(sc);
 

@@ -19,6 +19,8 @@ public interface NoticeService {
 
 	Integer getSearchNoticeResultCount(SearchCondition sc);
 
+	List<NoticeDTO> getNoticeListByEhcache(SearchCondition sc);
+
 	List<NoticeDTO> noticeSearchSelectPage(SearchCondition sc);
 
 }

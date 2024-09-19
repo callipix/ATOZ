@@ -32,18 +32,15 @@ public class JwtFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		log.info("로그인 후 토큰 검증 확인");
-
-		// String Authorization = request.getHeader("Authorization");
 		String accessToken = request.getHeader("access");
 
-		// log.info("Authorization = {}", Authorization);
-		log.info("accessToken for 1 = {}", accessToken);
+		log.info("accessToken for doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		if (accessToken == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		log.info("accessToken for 2 = {}", accessToken);
+		log.info("accessToken for doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		try {
 			jwtUtil.isExpired(accessToken);
@@ -70,8 +67,8 @@ public class JwtFilter extends OncePerRequestFilter {
 		userDTO.setId(username);
 		userDTO.setRole(role);
 
-		log.info("userDTO = {}", userDTO);
-		log.info("token = {}", accessToken);
+		log.info("userDTO for doFilterInternal.JwtFilter.class = {}", userDTO);
+		log.info("token for doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		// userDetails에 회원 정보 객체 추가
 		CustomDetails customDetails = new CustomDetails(userDTO);
@@ -83,7 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		// 세션에 사용자 등록
 		SecurityContextHolder.getContext().setAuthentication(authToken);
 
-		log.info("authToken 다 됐으면 여기서 객체 생성 해야하는데? = {}", authToken);
+		log.info("다 됐으면 여기서 객체 생성 해야 하는데? for doFilterInternal.JwtFilter.class = {}", authToken);
 		filterChain.doFilter(request, response);
 	}
 }

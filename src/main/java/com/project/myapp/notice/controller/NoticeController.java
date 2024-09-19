@@ -67,7 +67,7 @@ public class NoticeController {
 	}
 
 	@Timer
-	@GetMapping("/totalCount")
+	@GetMapping(value = "/totalCount", produces = "application/json;charset=utf-8")
 	public ResponseEntity<Integer> getNoticeTotalCount() {
 		Integer totalNotice = this.noticeService.getNoticeTotalCount();
 		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
@@ -76,6 +76,25 @@ public class NoticeController {
 	@Timer
 	@GetMapping("/noticeList")
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
+
+		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
+
+		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
+
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+	}
+
+	@Timer
+	@GetMapping("/noticeListByEhcache")
+	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page, Integer pageSize) {
+
+		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
+		List<NoticeDTO> noticeDTO = noticeService.getNoticeListByEhcache(sc);
+
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+	}
+
+	private SearchCondition isParameterDefault(String option, String keyword, Integer page, Integer pageSize) {
 		if (page == null || page == 0) {
 			page = 1;
 		}
@@ -96,10 +115,7 @@ public class NoticeController {
 
 		int totalCnt = this.noticeService.getSearchNoticeResultCount(sc);
 		PageHandler pageHandler = new PageHandler(totalCnt, sc);
-
-		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
-
-		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+		return sc;
 	}
 
 }

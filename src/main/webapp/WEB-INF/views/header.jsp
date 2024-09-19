@@ -10,9 +10,6 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
 </head>
-<script>
-
-</script>
 <body>
 <div class="topnav" id="myTopnav">
     <a href="<c:url value='/' />" class="active">Home</a>

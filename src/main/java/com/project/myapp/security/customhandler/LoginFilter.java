@@ -47,7 +47,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws
 		AuthenticationException {
 
-		log.info("일반로그인은 여길 타야하는데");
+		log.info("일반 로그인 여길 타야 하는데?");
 
 		Map<String, String> login;
 
@@ -66,31 +66,31 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password,
 			null);
-		log.info("attemptAuthentication {} =", authToken);
+		log.info("attemptAuthentication for attemptAuthentication.LoginFilter.class {} =", authToken);
 		return authenticationManager.authenticate(authToken);
 	}
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-		Authentication auth) throws IOException, ServletException {
+		Authentication authentication) throws IOException, ServletException {
 
-		CustomDetails userDetails = (CustomDetails)auth.getPrincipal();
-		log.info("userDetails = {}", userDetails);
+		CustomDetails userDetails = (CustomDetails)authentication.getPrincipal();
+		log.info("userDetails for successfulAuthentication.LoginFilter.class = {}", userDetails);
 
 		String username = userDetails.getUsername();
-		log.info("username = {}", username);
+		log.info("username for successfulAuthentication.LoginFilter.class = {}", username);
 
-		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-		GrantedAuthority authority = iterator.next();
+		GrantedAuthority auth = iterator.next();
 
-		String role = authority.getAuthority();
+		String role = auth.getAuthority();
 		String access = jwtUtil.createJwt("access", username, role, 6000000L);
 		String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
 		addRefreshToken(username, refresh, 86400000L);
 
-		log.info("access for successfulAuthentication = {}", access);
+		log.info("access for successfulAuthentication.LoginFilter.class = {}", access);
 		response.setHeader("access", access);
 		response.addCookie(createCookie("refresh", refresh));
 		response.setStatus(HttpStatus.OK.value(), response.getHeader("access"));
@@ -122,9 +122,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		refreshDTO.setUsername(username);
 		refreshDTO.setExpiration(dateByGeneralLogin.toString());
 
-		log.info("refreshDTO = {}", refreshDTO);
+		log.info("refreshDTO for addRefreshToken.LoginFilter.class = {}", refreshDTO);
 		result += this.refreshMapper.insertSave(refreshDTO);
-		log.info("result for addRefreshToken = {}", result);
+		log.info("result for addRefreshToken.LoginFilter.class = {}", result);
 
 	}
 }

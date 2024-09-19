@@ -1,8 +1,8 @@
 package com.project.myapp.dto;
 
-import java.sql.Timestamp;
-
 import lombok.*;
+
+import java.sql.Timestamp;
 
 @Getter
 @Setter

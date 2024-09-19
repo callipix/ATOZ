@@ -6,6 +6,7 @@ import static java.util.Objects.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class SearchCondition {
+	
 	private Integer page = 1;
 	private Integer pageSize = DEFAULT_PAGE_SIZE;
 	private String option = "";

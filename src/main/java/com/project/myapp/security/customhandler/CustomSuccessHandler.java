@@ -37,12 +37,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 
-		log.info("여길 안와?");
+		log.info("소셜 로그인 CustomSuccessHandler for onAuthenticationSuccess.CustomSuccessHandler.class");
 		CustomDetails customUserDetails = (CustomDetails)authentication.getPrincipal();
-		log.info("customUserDetails = {}", customUserDetails);
+		log.info("customUserDetails for onAuthenticationSuccess.CustomSuccessHandler.class = {}", customUserDetails);
 
 		String username = customUserDetails.getUsername();
-		log.info("username for onAuthenticationSuccess = {}", username);
+		log.info("username for onAuthenticationSuccess.CustomSuccessHandler.class = {}", username);
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -53,15 +53,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		String access = jwtUtil.createJwt("access", username, role, 6000000L);
 		String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
-		// String access = jwtUtil.createJwt("access", username, role, 600000L);
-		// String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
-		// String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
-
 		addRefreshToken(username, refresh, 86400000L);
 
-		log.info("CustomSuccessHandler 끝");
+		log.info("CustomSuccessHandler for onAuthenticationSuccess.CustomSuccessHandler.class 끝");
 		response.addHeader("access", access);
-		// response.addCookie(createCookie("access", token));
 		response.addCookie(createCookie("access", access));
 		response.addCookie(createCookie("refresh", refresh));
 		response.sendRedirect("/addToken");
@@ -71,8 +66,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		Cookie cookie = new Cookie(key, value);
 		cookie.setMaxAge(60 * 60 * 60);
 		cookie.setPath("/");
-		// cookie.setSecure(true);
-		// setSecure 사용하면 https 프로토콜로만 전송 가능
+		// cookie.setSecure(true); setSecure 설정 : https 프로토콜로만 전송 가능
 		cookie.setHttpOnly(true);
 
 		return cookie;
@@ -87,9 +81,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		refreshDTO.setUsername(username);
 		refreshDTO.setExpiration(dateByOAuth2.toString());
 
-		log.info("refreshDTO = {}", refreshDTO);
+		log.info("refreshDTO for addRefreshToken.CustomSuccessHandler.class = {}", refreshDTO);
 		result += this.refreshMapper.insertSave(refreshDTO);
-		log.info("result for addRefreshToken = {}", result);
+		log.info("result for addRefreshToken.CustomSuccessHandler.class = {}", result);
 
 	}
 
