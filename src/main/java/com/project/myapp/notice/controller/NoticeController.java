@@ -78,19 +78,17 @@ public class NoticeController {
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
 
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
-
 		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
-
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
 	@Timer
 	@GetMapping("/noticeListByEhcache")
-	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page, Integer pageSize) {
+	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page,
+		Integer pageSize) {
 
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
 		List<NoticeDTO> noticeDTO = noticeService.getNoticeListByEhcache(sc);
-
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 

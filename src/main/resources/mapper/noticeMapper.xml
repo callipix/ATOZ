@@ -35,7 +35,7 @@
                 or content like concat('%', #{keyword} , '%'))
             </otherwise>
         </choose>
-        ORDER BY create_date DESC , id DESC
+        ORDER BY id DESC
         LIMIT #{offset} , #{pageSize}
     </select>
 
@@ -55,7 +55,7 @@
                 or content like concat('%', #{keyword} , '%'))
             </otherwise>
         </choose>
-        ORDER BY create_date DESC , id DESC
+        ORDER BY id DESC
     </select>
 
     <resultMap type="com.project.myapp.dto.NoticeDTO" id="noticeMap">

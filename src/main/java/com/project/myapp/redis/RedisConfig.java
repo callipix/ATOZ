@@ -71,7 +71,7 @@ public class RedisConfig {
 		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
 			.serializeValuesWith(RedisSerializationContext.SerializationPair
 				.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-			.entryTtl(Duration.ofMinutes(5));
+			.entryTtl(Duration.ofMinutes(30));
 		builder.cacheDefaults(configuration);
 		return builder.build();
 	}
