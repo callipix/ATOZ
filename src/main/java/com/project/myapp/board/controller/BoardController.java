@@ -3,9 +3,11 @@ package com.project.myapp.board.controller;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -121,9 +123,13 @@ public class BoardController {
 		return "/board/write";
 	}
 
+	@ResponseBody
 	@PostMapping("/write")
-	public String write(BoardDTO boardDTO, RedirectAttributes rattr, Model m)
+	public ResponseEntity<Map<String, String>> write(BoardDTO boardDTO, RedirectAttributes rattr, Model m)
 		throws Exception {
+
+		log.info("boardDTO for write from BoardController = {}", boardDTO);
+
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
@@ -138,13 +144,18 @@ public class BoardController {
 
 		int result = this.boardService.insertBoard(boardDTO);
 
+		Map<String, String> responseMap = new HashMap<>();
 		if (result != 1) {
 			m.addAttribute("mode", "new");
-			rattr.addAttribute("msg", "WRT_ERR");
-			return "/board/board";
+			// rattr.addAttribute("msg", "WRT_ERR");
+			responseMap.put("msg", "WRT_ERR");
+			responseMap.put("redirectURL", "/board/board");
+			return ResponseEntity.badRequest().body(responseMap);
 		} else {
-			rattr.addFlashAttribute("msg", "WRT_OK");
-			return "redirect:/board/boardList";
+			// rattr.addFlashAttribute("msg", "WRT_OK");
+			responseMap.put("msg", "WRT_OK");
+			responseMap.put("redirectURL", "/board/boardList");
+			return ResponseEntity.ok(responseMap);  // JSON으로 응답
 		}
 	}
 

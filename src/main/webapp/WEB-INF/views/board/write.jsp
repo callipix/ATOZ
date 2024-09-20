@@ -7,10 +7,6 @@
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal"/>
 </sec:authorize>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +17,6 @@
     <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
-
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
@@ -123,12 +118,13 @@
 <script>
     let bno = "${boardDTO.bno}";
     let listBtn = document.querySelector('#listBtn');
+    const form = document.querySelector("#newForm");
 
     $(document).ready(function () {
 
         let formCheck = function () {
 
-            let form = document.querySelector("#newForm");
+            // let form = document.querySelector("#newForm");
 
             let content = editor.getData();
 
@@ -160,33 +156,66 @@
         });
         $("#writeBtn").on("click", function () {
 
-            // $("#contentDisplay").children().children().children().children().css('height','500px;');
+            let content = editor.getData();
+            let formData = new FormData();
 
-            let form = $("#newForm");
-            form.attr("action", "<c:url value='/board/write'/>");
-            form.attr("method", "post");
+            formData.append("title", form.title.value);
+            formData.append("content", content);
 
             if (formCheck()) {
-                let afterImgAddressWrite = getImageSrcFromData(editor.getData());
 
+                $.ajax({
+                    url: '/board/write',
+                    type: 'post',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    headers: {
+                        'access': accessToken,
+                    },
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        if (response.msg === "WRT_OK") {
+                            alert("성공적으로 등록되었습니다.");
+                            location.href = response.redirectURL;
+                        }
+                    },
+                    error: function (response) {
+                        if (response.msg === "WRT_ERR") {
+                            alert("글쓰기가 실패하였습니다.");
+                            location.href = response.redirectURL;
+                        }
+                    }
+                })
+
+                let afterImgAddressWrite = getImageSrcFromData(editor.getData());
                 let imageAddress = {
                     "beforeImgAddress": beforeImgAddressWrite,
                     "afterImgAddress": afterImgAddressWrite
                 }
+
                 $.ajax({
                     url: '/contentImgCheck',
                     type: 'post',
-                    contentType: 'application/json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    headers: {
+                        'access': accessToken,
+                        'Content-Type': 'application/json'
+                    },
                     data: JSON.stringify(imageAddress),
                     success: function (result) {
                         beforeImgAddressWrite = [];
                         if (result != 1) return;
                     }
                 })
-                form.submit();
             }
         })
     });
+
     listBtn.addEventListener('click', function () {
         location.href = '<c:url value="/board/boardList"/>';
     })

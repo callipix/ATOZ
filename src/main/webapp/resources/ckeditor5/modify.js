@@ -1,5 +1,4 @@
 import {
-    ClassicEditor,
     AccessibilityHelp,
     Alignment,
     Autoformat,
@@ -9,8 +8,13 @@ import {
     BlockQuote,
     BlockToolbar,
     Bold,
+    CKFinder,
+    CKFinderUploadAdapter,
+    ClassicEditor,
     Code,
     CodeBlock,
+    CodeBlockEditing,
+    CodeBlockUI,
     Essentials,
     FindAndReplace,
     FontBackgroundColor,
@@ -21,6 +25,11 @@ import {
     Heading,
     Highlight,
     HorizontalLine,
+    Image,
+    ImageCaption,
+    ImageStyle,
+    ImageToolbar,
+    ImageUpload,
     Indent,
     IndentBlock,
     Italic,
@@ -48,16 +57,7 @@ import {
     TextPartLanguage,
     TextTransformation,
     Underline,
-    Undo,
-    CKFinder,
-    CKFinderUploadAdapter,
-    Image,  // 추가
-    ImageCaption,  // 추가
-    ImageStyle,  // 추가
-    ImageToolbar,  // 추가
-    ImageUpload,
-    CodeBlockEditing,
-    CodeBlockUI  // 추가
+    Undo
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/ko.js';
@@ -154,7 +154,7 @@ const editorConfig = {
         CodeBlockUI
     ],
     image: {
-        toolbar : [
+        toolbar: [
             'imageStyle:inline',
             'imageStyle:wrapText',
             'imageStyle:breakText', '|',
@@ -310,8 +310,8 @@ const editorConfig = {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
     },
     translations: [translations],
-    ckfinder :{
-        uploadUrl:'/myApp/upload/uploadCK'
+    ckfinder: {
+        uploadUrl: '/upload/uploadCK'
     },
 
 };
@@ -322,21 +322,67 @@ ClassicEditor.create(document.querySelector('#modifyContent'), editorConfig)
         editor.plugins.get('FileRepository').createUploadAdapter = loader => {
             return {
                 upload() {
-                    return loader.file
-                        .then(file => {
-                            const data = new FormData();
-                            data.append('upload', file);
-                            return fetch('/myApp/upload/uploadCK', {
-                                method: 'POST',
-                                body: data
+                    const sendRequest = (file) => {
+                        const data = new FormData();
+                        data.append('upload', file);
+
+                        const accessToken = localStorage.getItem("access");
+
+                        return fetch('/upload/uploadCK', {
+                            method: 'POST',
+                            body: data,
+                            headers: {
+                                "access": accessToken,
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        throw new Error('Unauthorized');
+                                    } else {
+                                        throw new Error('HTTP error: ' + response.status);
+                                    }
+                                }
+                                return response.json();
                             })
-                                .then(response => response.json())
-                                .then(responseData => {
-                                    beforeImgAddress.push(responseData.url);
-                                    return {
-                                        default: responseData.url
-                                    };
-                                });
+                            .then(responseData => {
+                                beforeImgAddressWrite.push(responseData.url);
+                                return {
+                                    default: responseData.url
+                                };
+                            });
+                    };
+
+                    return loader.file
+                        .then(file => sendRequest(file)) // 처음 요청
+                        .catch(error => {
+                            if (error.message === 'Unauthorized') {
+                                alert("토큰 만료");
+
+                                // 토큰 재발급 요청
+                                return fetch("/reissue", {
+                                    method: "POST",
+                                    credentials: "include" // withCredentials와 유사
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Failed to reissue token');
+                                        }
+                                        return response.text(); // 응답이 텍스트로 오는 경우
+                                    })
+                                    .then(newAccessToken => {
+                                        localStorage.setItem("access", newAccessToken);
+                                        // 재요청
+                                        return loader.file.then(file => sendRequest(file)); // 파일 업로드 요청 다시 보내기
+                                    })
+                                    .catch(reissueError => {
+                                        console.log("에러 발생 for reissue xhr: ", reissueError);
+                                        // 추가 오류 처리
+                                    });
+                            } else {
+                                // 다른 오류 처리
+                                console.log("다른 오류 발생:", error);
+                            }
                         });
                 }
             };

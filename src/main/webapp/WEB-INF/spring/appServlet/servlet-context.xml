@@ -14,7 +14,7 @@
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
     <!-- Enables the Spring MVC @Controller programming model -->
-    
+
     <annotation-driven/>
 
     <annotation-driven validator="globalValidator"/>
@@ -57,13 +57,15 @@
     <view-controller path="/" view-name="/home"/>
     <view-controller path="/registerForm" view-name="/register/registerForm"/>
     <view-controller path="/resultPage" view-name="/register/resultPage"/>
-<!--    <view-controller path="/login/loginFailPage" view-name="/login/loginFailPage"/>-->
-<!--    <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess"/>-->
+    <!--    <view-controller path="/login/loginFailPage" view-name="/login/loginFailPage"/>-->
+    <!--    <view-controller path="/login/logoutSuccess" view-name="/login/logoutSuccess"/>-->
     <view-controller path="/board/boardList" view-name="/board/boardList"/>
     <view-controller path="/information" view-name="/projectInfomation"/>
     <view-controller path="/member" view-name="/test/member"/>
     <view-controller path="/profile" view-name="/etc/profile"/>
     <view-controller path="/adminTest" view-name="/admin/adminPage"/>
+    <view-controller path="/test" view-name="/headerTest"/>
+    <view-controller path="/test2" view-name="/header2"/>
 
     <aop:aspectj-autoproxy/>
     <context:component-scan base-package="com.project.myapp"/>
