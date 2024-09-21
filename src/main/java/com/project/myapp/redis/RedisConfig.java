@@ -3,7 +3,6 @@ package com.project.myapp.redis;
 import java.time.Duration;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -12,14 +11,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import com.project.myapp.properties.RedisProperties;
 
 import lombok.RequiredArgsConstructor;
 
-@Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)
+// @Configuration
+// @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)
 @RequiredArgsConstructor
 public class RedisConfig {
 

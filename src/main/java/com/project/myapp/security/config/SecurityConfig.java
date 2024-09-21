@@ -109,7 +109,6 @@ public class SecurityConfig {
 			.requestMatchers("/js/**").permitAll()
 			.requestMatchers("/css/**").permitAll()
 			.requestMatchers("/img/**").permitAll()
-			.requestMatchers("/resources/**").permitAll()
 			.requestMatchers("/ckeditor5/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
 			.requestMatchers("/jwtLogin").permitAll()

@@ -7,8 +7,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/header.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/cursorEffect.css'/>">
-    <%--    <link rel="stylesheet" type="text/css" href="<c:url value='/bootstrap/assets/css/styles.css'/>"/>--%>
     <script src="<c:url value='/js/cursorEffect.js'/>"></script>
+    <%--    <link rel="stylesheet" type="text/css" href="<c:url value='/bootstrap/assets/css/styles.css'/>"/>--%>
     <%--    <link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>"/>--%>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
