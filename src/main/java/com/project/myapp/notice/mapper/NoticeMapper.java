@@ -12,6 +12,8 @@ import com.project.myapp.dto.SearchCondition;
 @Mapper
 public interface NoticeMapper {
 	List<NoticeDTO> findAll();
+	
+	List<NoticeDTO> findAllByEhcache();
 
 	List<NoticeDTO> findByPage(int startIdx);
 

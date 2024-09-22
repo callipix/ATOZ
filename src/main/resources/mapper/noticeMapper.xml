@@ -6,7 +6,7 @@
 
     <select id="findAll" resultMap="noticeMap">
         SELECT id, title, content, who, create_date, update_date
-        FROM notice LIMIT 200
+        FROM notice
     </select>
 
     <select id="findByPage" parameterType="Integer" resultMap="noticeMap">

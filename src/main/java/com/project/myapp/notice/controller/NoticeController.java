@@ -38,6 +38,13 @@ public class NoticeController {
 	}
 
 	@Timer
+	@GetMapping("/findAllByEhcache")
+	public ResponseEntity<Object> findAllByEhcache() {
+		List<NoticeDTO> noticeDTO = noticeService.findAllByEhcache();
+		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+	}
+
+	@Timer
 	@GetMapping("/{page}")
 	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) throws
 		InterruptedException {
@@ -73,23 +80,32 @@ public class NoticeController {
 		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
 	}
 
-	@Timer
+	// @Timer
+	@Timer2
 	@GetMapping("/noticeList")
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
 
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
+		Integer tt = Integer.parseInt(String.valueOf(page));
 		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
-	@Timer
+	// @Timer
+	@Timer2
 	@GetMapping("/noticeListByEhcache")
 	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page,
 		Integer pageSize) {
 
+		log.info("option = {}", option);
+		log.info("keyword = {}", keyword);
+		log.info("page = {}", page);
+		log.info("pageSize = {}", pageSize);
+
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
 		List<NoticeDTO> noticeDTO = noticeService.getNoticeListByEhcache(sc);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+
 	}
 
 	private SearchCondition isParameterDefault(String option, String keyword, Integer page, Integer pageSize) {

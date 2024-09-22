@@ -11,6 +11,8 @@ import com.project.myapp.dto.SearchCondition;
 public interface NoticeService {
 	List<NoticeDTO> getAllNotices();
 
+	List<NoticeDTO> findAllByEhcache();
+
 	List<NoticeDTO> findByPage(HttpServletRequest request, int pageNumber);
 
 	List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate);

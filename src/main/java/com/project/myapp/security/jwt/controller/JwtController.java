@@ -72,7 +72,7 @@ public class JwtController {
 		String role = jwtUtil.getRole(refresh);
 
 		//make new jwt
-		String newAccess = jwtUtil.createJwt("access", username, role, 6000L);
+		String newAccess = jwtUtil.createJwt("access", username, role, 6000000L);
 		String newRefresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
 		refreshMapper.deleteByRefreshToken(refresh);
