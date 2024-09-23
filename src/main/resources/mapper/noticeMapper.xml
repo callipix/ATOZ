@@ -39,6 +39,26 @@
         LIMIT #{offset} , #{pageSize}
     </select>
 
+    <select id="noticeSearchSelectPage2" parameterType="com.project.myapp.dto.SearchCondition" resultMap="noticeMap">
+        SELECT id, title, content, who, create_date, update_date
+        FROM notice
+        WHERE TRUE
+        <choose>
+            <when test='option=="T"'>
+                and title like concat('%', #{keyword} , '%')
+            </when>
+            <when test='option=="W"'>
+                and who like concat('%' , #{keyword} , '%')
+            </when>
+            <otherwise>
+                and (title like concat('%', #{keyword} , '%')
+                or content like concat('%', #{keyword} , '%'))
+            </otherwise>
+        </choose>
+        ORDER BY id DESC
+        LIMIT #{offset} , #{pageSize}
+    </select>
+
     <select id="getSearchNoticeResultCount" parameterType="com.project.myapp.dto.SearchCondition" resultType="int">
         SELECT COUNT(*)
         FROM notice

@@ -1,4 +1,4 @@
-package com.project.myapp.notice.controller;
+package com.project.myapp.notice.annotation;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,9 +16,9 @@ public class TimerAop {
 
 	private final int repeatCount = 51; // 평균을 낼 최소 실행 횟수
 
-	@Pointcut("@annotation(com.project.myapp.notice.controller.Timer)")
+	@Pointcut("@annotation(com.project.myapp.notice.annotation.Timer)")
 	private void enableTimer() {
-		//     @Pointcut("@annotation(com.project.myapp.notice.controller.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
+		//     @Pointcut("@annotation(com.project.myapp.notice.annotation.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
 
 	}
 

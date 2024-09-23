@@ -1,4 +1,4 @@
-package com.project.myapp.notice.controller;
+package com.project.myapp.notice.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

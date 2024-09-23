@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.project.myapp.notice.annotation.Timer;
+import com.project.myapp.notice.annotation.Timer2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,18 +82,17 @@ public class NoticeController {
 		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
 	}
 
-	// @Timer
+//	 @Timer
 	@Timer2
 	@GetMapping("/noticeList")
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
 
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
-		Integer tt = Integer.parseInt(String.valueOf(page));
-		List<NoticeDTO> noticeDTO = noticeService.noticeSearchSelectPage(sc);
+		List<NoticeDTO> noticeDTO = this.noticeService.noticeSearchSelectPage2(sc);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
-	// @Timer
+//	 @Timer
 	@Timer2
 	@GetMapping("/noticeListByEhcache")
 	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page,
@@ -103,7 +104,7 @@ public class NoticeController {
 		log.info("pageSize = {}", pageSize);
 
 		SearchCondition sc = isParameterDefault(option, keyword, page, pageSize);
-		List<NoticeDTO> noticeDTO = noticeService.getNoticeListByEhcache(sc);
+		List<NoticeDTO> noticeDTO = this.noticeService.getNoticeListByEhcache(sc);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 
 	}

@@ -25,7 +25,7 @@ import com.project.myapp.dto.BoardDTO;
 import com.project.myapp.dto.CommentDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
-import com.project.myapp.notice.controller.Timer;
+import com.project.myapp.notice.annotation.Timer;
 import com.project.myapp.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.project.myapp.notice.controller;
+package com.project.myapp.notice.annotation;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class TimerAop2 {
 
-	@Pointcut("@annotation(com.project.myapp.notice.controller.Timer2)")
+	@Pointcut("@annotation(com.project.myapp.notice.annotation.Timer2)")
 	private void enableTimer() {
-		//     @Pointcut("@annotation(com.project.myapp.notice.controller.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
+		//     @Pointcut("@annotation(com.project.myapp.notice.annotation.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
 
 	}
 

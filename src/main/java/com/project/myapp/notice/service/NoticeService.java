@@ -23,6 +23,6 @@ public interface NoticeService {
 
 	List<NoticeDTO> getNoticeListByEhcache(SearchCondition sc);
 
-	List<NoticeDTO> noticeSearchSelectPage(SearchCondition sc);
+	List<NoticeDTO> noticeSearchSelectPage2(SearchCondition sc);
 
 }

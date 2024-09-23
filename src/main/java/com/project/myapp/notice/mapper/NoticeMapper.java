@@ -12,8 +12,6 @@ import com.project.myapp.dto.SearchCondition;
 @Mapper
 public interface NoticeMapper {
 	List<NoticeDTO> findAll();
-	
-	List<NoticeDTO> findAllByEhcache();
 
 	List<NoticeDTO> findByPage(int startIdx);
 
@@ -23,6 +21,8 @@ public interface NoticeMapper {
 	Integer getNoticeTotalCount();
 
 	List<NoticeDTO> noticeSearchSelectPage(SearchCondition sc);
+
+	List<NoticeDTO> noticeSearchSelectPage2(SearchCondition sc);
 
 	Integer getSearchNoticeResultCount(SearchCondition sc);
 }
