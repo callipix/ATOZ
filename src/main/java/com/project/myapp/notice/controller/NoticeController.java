@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.project.myapp.notice.annotation.Timer;
-import com.project.myapp.notice.annotation.Timer2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.myapp.dto.NoticeDTO;
 import com.project.myapp.dto.PageHandler;
 import com.project.myapp.dto.SearchCondition;
+import com.project.myapp.notice.annotation.Timer;
+import com.project.myapp.notice.annotation.Timer2;
 import com.project.myapp.notice.service.NoticeService;
 
 import lombok.RequiredArgsConstructor;
@@ -82,7 +82,7 @@ public class NoticeController {
 		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
 	}
 
-//	 @Timer
+	// @Timer
 	@Timer2
 	@GetMapping("/noticeList")
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
@@ -92,7 +92,7 @@ public class NoticeController {
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
-//	 @Timer
+	// @Timer
 	@Timer2
 	@GetMapping("/noticeListByEhcache")
 	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page,

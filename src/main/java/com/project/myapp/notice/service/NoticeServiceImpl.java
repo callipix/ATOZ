@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.myapp.dto.NoticeDTO;
@@ -33,7 +32,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-//	@Cacheable(value = "NoticeMapper.findAll")
+	//	@Cacheable(value = "NoticeMapper.findAll")
 	public List<NoticeDTO> findAllByEhcache() {
 		return this.noticeMapper.findAll();
 	}
@@ -54,14 +53,14 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-//	@Cacheable(value = "NoticeMapper.getNoticeTotalCount")
+	@Cacheable(value = "NoticeMapper.getNoticeTotalCount")
 	public Integer getNoticeTotalCount() {
 		return this.noticeMapper.getNoticeTotalCount();
 	}
 
 	@Override
 	@Transactional
-	@Cacheable(value = "NoticeMapper.getSearchNoticeResultCount", key = "#sc.keyword+'-'+#sc.option+'-'+#sc.page+'-'+#sc.pageSize")
+	// @Cacheable(value = "NoticeMapper.getSearchNoticeResultCount", key = "#sc.keyword+'-'+#sc.option")
 	public Integer getSearchNoticeResultCount(SearchCondition sc) {
 
 		return this.noticeMapper.getSearchNoticeResultCount(sc);
