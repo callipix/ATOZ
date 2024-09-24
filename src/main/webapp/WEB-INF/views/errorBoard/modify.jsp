@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page session="true"%>
+<%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
@@ -14,25 +14,25 @@
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <title>에러게시판 게시글수정</title>
 <body>
-<jsp:include page="../header.jsp" />
+<jsp:include page="../header.jsp"/>
 <script>
     let msg = "${msg}";
     let errBno = "${errorBoardDTO.errBno}";
     let beforeImgAddressWrite = [];
     let sessionId = "${sessionScope.get("id")}";
-    if(!sessionId){
+    if (!sessionId) {
         alert("로그인 후 이용하세요");
-        location.href = '/myApp/errorBoard/list';
-    } else{
+        location.href = '/errorBoard/list';
+    } else {
         let data = {
             errBno, sessionId
         }
         $.ajax({
-            url : '/myApp/errorBoard/isCheckWriter',
-            method : 'post',
-            data : data,
-            success : function (result){
-                if(result === 'notEqualsWriter'){
+            url: '/errorBoard/isCheckWriter',
+            method: 'post',
+            data: data,
+            success: function (result) {
+                if (result === 'notEqualsWriter') {
                     alert("잘못된 접근입니다.");
                     history.back();
                 }
@@ -41,8 +41,8 @@
     }
 </script>
 <style>
-    .btnList > *{
-        padding: 8px 12px ;
+    .btnList > * {
+        padding: 8px 12px;
     }
 </style>
 <div>
@@ -51,34 +51,42 @@
             <div class="test-container">
                 <h2 class="writing-header">게시글 수정</h2>
                 <div class="btnList">
-                    <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i class="fa fa-trash"></i> 삭제하기</button>
+                    <button type="button" id="removeBtn" class="btn bg-primary-subtle text-primary"><i
+                            class="fa fa-trash"></i> 삭제하기
+                    </button>
                     <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로</button>
-                    <button type="button" id="modifyBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글수정</button>
+                    <button type="button" id="modifyBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 게시글수정
+                    </button>
                 </div>
             </div>
         </div>
         <input type="hidden" name="errBno" value="${errorBoardDTO.errBno}">
 
-        <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post" enctype="multipart/form-data">
+        <form id="newForm" class="form" action="<c:url value='/errorBoard/write'/>" method="post"
+              enctype="multipart/form-data">
             <c:if test="${not empty errorBoardDTO.errBno}">
                 <input type="hidden" id="errBno" name="errBno" value="<c:out value='${errorBoardDTO.errBno}'/>">
             </c:if>
             <input type="hidden" id="afterList" name="afterList">
             <div class="form-group">
                 <label for="title">
-                    <input class="form-control" name="title" id="title" type="text" value="<c:out value='${errorBoardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
+                    <input class="form-control" name="title" id="title" type="text"
+                           value="<c:out value='${errorBoardDTO.title}'/>" placeholder="  제목을 입력해 주세요.">
                 </label>
             </div>
             <br>
             <div class="form-group">
                 <label for="errCode">
-                    <input class="form-control" name="errCode" id="errCode" type="text" value="<c:out value='${errorBoardDTO.errCode}'/>" placeholder="  에러코드를 입력해주세요.">
+                    <input class="form-control" name="errCode" id="errCode" type="text"
+                           value="<c:out value='${errorBoardDTO.errCode}'/>" placeholder="  에러코드를 입력해주세요.">
                 </label>
             </div>
             <br>
             <div class="form-group">
                 <label for="content">
-                    <textarea name="content" id="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out value="${errorBoardDTO.content}"/></textarea>
+                    <textarea name="content" id="content" rows="20"
+                              placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out
+                            value="${errorBoardDTO.content}"/></textarea>
                 </label><br>
             </div>
             <script type="importmap">
@@ -96,20 +104,20 @@
 <script>
     const listBtn = document.querySelector('#listBtn');
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         let afterList = document.querySelector('#afterList');
-        let formCheck = function() {
+        let formCheck = function () {
 
             let form = document.querySelector("#newForm");
 
             let content = editor.getData();
 
-            if(form.title.value === "") {
+            if (form.title.value === "") {
                 alert("제목을 입력해 주세요.");
                 form.title.focus();
                 return false;
             }
-            if(content === "") {
+            if (content === "") {
                 alert("내용을 입력해 주세요.");
                 form.content.focus();
                 return false;
@@ -117,40 +125,40 @@
             return true;
         }
 
-        $("#removeBtn").on("click", function(){
-            if(!confirm("정말로 삭제하시겠습니까?")){
+        $("#removeBtn").on("click", function () {
+            if (!confirm("정말로 삭제하시겠습니까?")) {
                 return;
             }
             let form = $("#form");
             form.attr("action", "<c:url value='/errorBoard/remove${searchCondition.queryString}'/>");
-            form.attr("method" , "post");
+            form.attr("method", "post");
             form.submit();
         })
 
-        $("#writeNewBtn").on("click", function(){
-            location.href="<c:url value='/errorBoard/write'/>";
+        $("#writeNewBtn").on("click", function () {
+            location.href = "<c:url value='/errorBoard/write'/>";
         });
-        $("#modifyBtn").on("click", function(){
+        $("#modifyBtn").on("click", function () {
 
             let form = $("#newForm");
             form.attr("action", "<c:url value='/errorBoard/modify'/>");
             form.attr("method", "post");
 
-            if(formCheck()){
+            if (formCheck()) {
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
                 let imageAddress = {
-                    "beforeImgAddress" : beforeImgAddressWrite,
-                    "afterImgAddress" : afterImgAddressWrite
+                    "beforeImgAddress": beforeImgAddressWrite,
+                    "afterImgAddress": afterImgAddressWrite
                 }
 
                 $.ajax({
-                    url: '/myApp/contentImgCheck',
+                    url: '/contentImgCheck',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(imageAddress),
                     success: function (result) {
                         beforeImgAddressWrite = [];
-                        if(result != 1) return;
+                        if (result != 1) return;
                     },
                 });
                 afterList.value = afterImgAddressWrite;
@@ -161,6 +169,7 @@
     listBtn.addEventListener('click', function () {
         location.href = '<c:url value="/errorBoard/list"/>';
     })
+
     function getImageSrcFromData(data) {
         // 게시물 등록시 최종 주소값
         let afterImgAddress = [];

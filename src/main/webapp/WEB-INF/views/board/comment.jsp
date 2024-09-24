@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ page session="true"%>
+<%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? 'Login' : loginId}"/>
@@ -9,25 +9,25 @@
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <style>
     * {
-        border : 0;
-        padding : 0;
+        border: 0;
+        padding: 0;
     }
 
     ul {
-        border:  1px solid rgb(235,236,239);
-        border-bottom : 0;
+        border: 1px solid rgb(235, 236, 239);
+        border-bottom: 0;
     }
 
     li {
         background-color: #f9f9fa;
         list-style-type: none;
-        border-bottom : 1px solid rgb(235,236,239);
-        padding : 18px 18px 0 18px;
+        border-bottom: 1px solid rgb(235, 236, 239);
+        padding: 18px 18px 0 18px;
     }
 
     #commentList {
-        width : 70%;
-        margin : auto;
+        width: 70%;
+        margin: auto;
     }
 
     .comment-content {
@@ -35,48 +35,49 @@
     }
 
     .comment-bottom {
-        font-size:9pt;
-        color : rgb(97,97,97);
+        font-size: 9pt;
+        color: rgb(97, 97, 97);
         padding: 8px 0 8px 0;
     }
 
     .comment-bottom > a {
-        color : rgb(97,97,97);
+        color: rgb(97, 97, 97);
         text-decoration: none;
-        margin : 0 6px 0 0;
+        margin: 0 6px 0 0;
     }
 
     .comment-area {
-        padding : 0 0 0 46px;
+        padding: 0 0 0 46px;
     }
 
     .commenter {
-        font-size:12pt;
-        font-weight:bold;
+        font-size: 12pt;
+        font-weight: bold;
     }
 
     .commenter-writebox {
-        padding : 15px 20px 20px 20px;
+        padding: 15px 20px 20px 20px;
     }
 
     .comment-img {
-        font-size:36px;
+        font-size: 36px;
         position: absolute;
     }
 
     .comment-item {
-        position:relative;
+        position: relative;
     }
 
     .up_date {
-        margin : 0 8px 0 0;
+        margin: 0 8px 0 0;
     }
 
     #comment-writebox {
         background-color: #e2e2e2;
-        border : 1px solid #e5e5e5;
+        border: 1px solid #e5e5e5;
         border-radius: 5px;
     }
+
     textarea {
         display: block;
         width: 100%;
@@ -94,63 +95,63 @@
     }
 
     #comment-writebox-bottom {
-        padding : 3px 10px 10px 10px;
-        min-height : 35px;
+        padding: 3px 10px 10px 10px;
+        min-height: 35px;
     }
 
     .btn {
-        font-size:10pt;
-        color : black;
+        font-size: 10pt;
+        color: black;
         background-color: #d2d4d7;
         text-decoration: none;
-        padding : 9px 10px 9px 10px;
+        padding: 9px 10px 9px 10px;
         margin: 10px 0px 10px 5px;
         border-radius: 5px;
-        float : right;
+        float: right;
     }
 
     #btn-write-comment, #btn-write-reply {
-        color : #009f47;
+        color: #009f47;
         background-color: #e0f8eb;
     }
 
     #btn-cancel-reply {
         background-color: #eff0f2;
-        margin-right : 10px;
+        margin-right: 10px;
     }
 
     #btn-write-modify {
-        color : #009f47;
+        color: #009f47;
         background-color: #e0f8eb;
     }
 
     #btn-cancel-modify {
-        margin-right : 10px;
+        margin-right: 10px;
     }
 
     #reply-writebox {
-        display : none;
+        display: none;
         background-color: white;
-        border : 1px solid #e5e5e5;
+        border: 1px solid #e5e5e5;
         border-radius: 5px;
-        margin : 10px;
+        margin: 10px;
     }
 
     #reply-writebox-bottom {
-        padding : 3px 10px 10px 10px;
-        min-height : 35px;
+        padding: 3px 10px 10px 10px;
+        min-height: 35px;
     }
 
     #modify-writebox {
         background-color: white;
-        border : 1px solid #e5e5e5;
+        border: 1px solid #e5e5e5;
         border-radius: 5px;
-        margin : 10px;
+        margin: 10px;
     }
 
     #modify-writebox-bottom {
-        padding : 3px 10px 10px 10px;
-        min-height : 35px;
+        padding: 3px 10px 10px 10px;
+        min-height: 35px;
     }
 
     /* The Modal (background) */
@@ -164,8 +165,8 @@
         width: 100%; /* Full width */
         height: 100%; /* Full height */
         overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
     }
 
     /* Modal Content */
@@ -191,6 +192,7 @@
         text-decoration: none;
         cursor: pointer;
     }
+
     .paging {
         color: black;
         width: 100%;
@@ -211,10 +213,10 @@
     }
 
     .paging-container {
-        width:100%;
+        width: 100%;
         height: 70px;
         margin-top: 50px;
-        margin : auto;
+        margin: auto;
     }
 </style>
 </head>
@@ -259,11 +261,11 @@
 
 <script>
 
-    let addZero = function(value=1){
-        return value > 9 ? value : "0"+value;
+    let addZero = function (value = 1) {
+        return value > 9 ? value : "0" + value;
     }
 
-    let dateToString = function(ms=0) {
+    let dateToString = function (ms = 0) {
         let date = new Date(ms);
 
         let yyyy = date.getFullYear();
@@ -274,29 +276,29 @@
         let MM = addZero(date.getMinutes());
         let ss = addZero(date.getSeconds());
 
-        return yyyy+"."+mm+"."+dd+ " " + HH + ":" + MM + ":" + ss;
+        return yyyy + "." + mm + "." + dd + " " + HH + ":" + MM + ":" + ss;
     }
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        $("#btn-write-comment").on("click", function(){
+        $("#btn-write-comment").on("click", function () {
 
             let comment = document.querySelector("#commentText");
             let commentDTO = {
-                "bno" : "${boardDTO.bno}",
-                "comment" : comment.value
+                "bno": "${boardDTO.bno}",
+                "comment": comment.value
             }
-            if(!confirm("등록하시겠습니까?"))   return;
+            if (!confirm("등록하시겠습니까?")) return;
             $.ajax({
-                url : '/myApp/comments',
-                type : 'post',
-                data : commentDTO,
-                success : function(comment){
+                url: '/comments',
+                type: 'post',
+                data: commentDTO,
+                success: function (comment) {
                     $("#commentList ul").append(toHTML(comment));
                 }
             })
         })
         // $("#a.btn-write").on("click", function(){
-        $(document).on("click","a.btn-write", function(e){
+        $(document).on("click", "a.btn-write", function (e) {
             let target = e.target;
             let cno = target.getAttribute("data-cno");
             let bno = target.getAttribute("data-bno");
@@ -305,31 +307,31 @@
 
             console.log("답글쓰기 버튼 클릭");
             let repForm = $("#reply-writebox");
-            repForm.appendTo($("li[data-cno="+cno+"]"));
+            repForm.appendTo($("li[data-cno=" + cno + "]"));
             repForm.css("display", "block");
             repForm.attr("data-pcno", pcno);
-            repForm.attr("data-bno",  bno);
+            repForm.attr("data-bno", bno);
 
-            $("btn-write-reply").on("click", function(){
+            $("btn-write-reply").on("click", function () {
 
                 $.ajax({
-                    url : "/myApp/write"
+                    url: "/write"
                 })
 
             })
 
         });
 
-        $(document).on("click","#btn-cancel-reply",function(e){
+        $(document).on("click", "#btn-cancel-reply", function (e) {
             $("#reply-writebox").css("display", "none");
         });
 
-        $(document).on("click" , "a.btn-modify", function(e){
+        $(document).on("click", "a.btn-modify", function (e) {
             let target = e.target;
             let cno = target.getAttribute("data-cno");
             let bno = target.getAttribute("data-bno");
             let pcno = target.getAttribute("data-pcno");
-            let li = $("li[data-cno="+cno+"]");
+            let li = $("li[data-cno=" + cno + "]");
             let commenter = $(".commenter", li).first().text();
             let comment = $(".comment-content", li).first().text();
 
@@ -342,39 +344,39 @@
             $("#btn-write-modify").attr("data-bno", bno);
 
             // 팝업창을 열고 내용을 보여준다.
-            $("#modalWin").css("display","block");
+            $("#modalWin").css("display", "block");
         });
 
-        $(document).on("click", "a.btn-delete",function(e){
+        $(document).on("click", "a.btn-delete", function (e) {
 
             let target = e.target;
             let cno = target.getAttribute("data-cno");
 
-            if(!confirm("삭제하시겠습니까?")) return;
+            if (!confirm("삭제하시겠습니까?")) return;
 
             $.ajax({
-                url : '/myApp/comments/'+cno + '?bno=' + bno,
-                type : 'delete',
-                success : function(result){
+                url: '/comments/' + cno + '?bno=' + bno,
+                type: 'delete',
+                success: function (result) {
                     alert(result);
-                    location.href = '/myApp/board/read?bno='+bno;
+                    location.href = '/board/read?bno=' + bno;
                 }
             })
         });
 
-        $("#btn-write-modify").click(function(){
+        $("#btn-write-modify").click(function () {
             // 1. 변경된 내용을 서버로 전송
             // 2. 모달 창을 닫는다.
             $(".close").trigger("click");
         });
 
-        $(".close").click(function(){
-            $("#modalWin").css("display","none");
+        $(".close").click(function () {
+            $("#modalWin").css("display", "none");
         });
     });
 
 
-    let toHTML = function(comment){
+    let toHTML = function (comment) {
         let tmp = "<ul>";
 
         tmp += '<li class="comment-item" data-cno=' + comment.cno;
@@ -387,16 +389,16 @@
         tmp += ' <span class="up_date">' + comment.up_date + '</span>';
 
         tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
-        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        tmp += ' > 답글쓰기' +'</a>';
+        tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+        tmp += ' > 답글쓰기' + '</a>';
 
         tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
-        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        tmp += ' > 수정' +'</a>';
+        tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+        tmp += ' > 수정' + '</a>';
 
         tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
-        tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-        tmp += ' > 삭제' +'</a>';
+        tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+        tmp += ' > 삭제' + '</a>';
 
         tmp += ' </div>';
         tmp += ' </div>';
@@ -404,11 +406,11 @@
         tmp += "</ul>";
         return tmp;
     }
-    let toListHTML = function(comments){
+    let toListHTML = function (comments) {
 
         let tmp = "<ul>";
 
-        comments.forEach(function(comment){
+        comments.forEach(function (comment) {
 
             tmp += '<li class="comment-item" data-cno=' + comment.cno;
             tmp += ' data-pcno=' + comment.pcno;
@@ -420,16 +422,16 @@
             tmp += ' <span class="up_date">' + comment.up_date + '</span>';
 
             tmp += ' <a href="#" class="btn-write" data-cno=' + comment.cno;
-            tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-            tmp += ' > 답글쓰기' +'</a>';
+            tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+            tmp += ' > 답글쓰기' + '</a>';
 
             tmp += ' <a href="#" class="btn-modify" data-cno=' + comment.cno;
-            tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-            tmp += ' > 수정' +'</a>';
+            tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+            tmp += ' > 수정' + '</a>';
 
             tmp += ' <a href="#" class="btn-delete" data-cno=' + comment.cno;
-            tmp += ' data-bno=' + comment.bno +' data-pcno=' + comment.pcno;
-            tmp += ' > 삭제' +'</a>';
+            tmp += ' data-bno=' + comment.bno + ' data-pcno=' + comment.pcno;
+            tmp += ' > 삭제' + '</a>';
 
             tmp += ' </div>';
             tmp += ' </div>';

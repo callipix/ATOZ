@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "ATOZ",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/callipix/myApp.git"
+    "url": "https://github.com/callipix/ATOZ.git"
   },
   "private": true,
   "dependencies": {

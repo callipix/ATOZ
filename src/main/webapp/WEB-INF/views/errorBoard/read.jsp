@@ -166,7 +166,7 @@
                 }
                 alert("imageAddress" + imageAddress);
                 $.ajax({
-                    url: '/myApp/contentImgCheck',
+                    url: '/contentImgCheck',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(imageAddress),
