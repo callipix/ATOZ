@@ -1,39 +1,41 @@
 #### http://www.myportfolio.p-e.kr/
-##### 2024.08.06 AM 09:00 ~ ~~현재 서버 실행중~~
-##### 2024.09.13 AM 11:42 ~ 서버 종료
-##### 기능 변경 및 운영 서버 변경 예정(AWS EC2 → Vultr)
+##### 2024.08.06 AM 09:00 ~ ~~현재 서버 실행중~~ → 2024.09.13 AM 11:42 - 서버 종료
+###### 2024.09.24 PM 13:24 기준 서버 종료, 기능 변경 및 운영 서버 변경 예정(AWS EC2 → Vultr)
 
 <div style="background-color: white;">
 <div> 
   <h2 style="color: #282d33;"> ✈️ 프로젝트 개요</h2>  
   <div style="font-weight: 700; font-size: 15px; color: #282d33;">
-    <h5>기초지만 중요한 내용을 다시 한번 환경 설정부터 배포까지 해보고<br>간단한 성능테스트 후 개선까지 목표로 한 개인프로젝트</h5>
-<h6>
+    <h5>기초지만 중요한 내용을 다시 한번 환경 설정부터 배포까지 직접 해보며 이후 부하 테스트와 성능 개선까지 목표로 한 개인프로젝트</h5>
+    <br>
+  </div>
+</div>
+<h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
+<h4>2024.07.17 - 2024.08.06 1차</h4>
+  <h6>
 1. 기본적인 CRUD 다시 한번 체크 및 재정리<br>
 2. 기존에 사용 해보지 않았던 DB 사용(기존 : Oracle → MySQL)<br>
 3. 페이징 및 검색 다시 한번 복습<br>
-4. 테스트툴 활용하기 → Junit4, Postman<br>
+4. 테스트 툴 활용하기 → Junit4, Postman<br>
 5. DB 트랜잭션 적용 및 확인<br>
-6. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3)<br>
+6. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3, Vultr)<br>
 7. 특정 기능 Rest API로 구현<br>
 8. Validation으로 서버단 유효성 검증<br>
-9. 스프링 시큐리티 사용하여 접근권한 설정 → 보안강화<br>
-10. 부하테스트를 통한 성능 측정 후 개선(nGrinder)
 </h6>
-  </div>
-<br>
-</div>
-<h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
-<h4>
-2024.07.17 - 2024.08.06
+  <h4>
+2024.09.01 - 2024.09.24 2차
 </h4>
+<h6>
+1. 스프링 시큐리티 기반의 JWT를 사용한 OAuth2.0 인증 로그인 구현 <br>
+2. 부하테스트를 통한 성능 측정(nGrinder)<br>
+3. 캐시(Ehcache)을 적용하여 페이징 성능 개선 및 시스템 최적화
+</h6>
 <div align="center">  
 </div>
-
-<br><br>
+<br>
 <h2 style="color: #282d33;"> 🗂️ ERD </h2>
 <div align="center">
-  <img style="width:70%" src="https://github.com/user-attachments/assets/4ad12a1a-6495-4109-9bb7-1a291af80d22">
+  <img style="width:70%" src="https://github.com/user-attachments/assets/63785c64-387f-4cf3-935b-fa6f7b3962a8">
 </div>
   <br>
 <br>
