@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.security.jwt.mapper.RefreshMapper">
+<mapper namespace="com.project.atoz.security.jwt.mapper.RefreshMapper">
 
     <select id="existsByRefreshToken" parameterType="string" resultType="boolean">
         SELECT CASE WHEN COUNT(1) > 0 THEN TRUE ELSE FALSE END
@@ -16,7 +16,7 @@
         WHERE refresh = #{refresh}
     </delete>
 
-    <insert id="insertSave" parameterType="com.project.myapp.dto.RefreshDTO">
+    <insert id="insertSave" parameterType="com.project.atoz.dto.RefreshDTO">
         INSERT INTO refresh(username, refresh, expiration)
         VALUES (#{username}, #{refresh}, #{expiration})
     </insert>

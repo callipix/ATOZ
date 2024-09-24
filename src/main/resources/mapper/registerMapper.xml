@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.register.dao.RegisterMapper">
+<mapper namespace="com.project.atoz.register.dao.RegisterMapper">
 
     <select id="idCheck" resultType="int" parameterType="string">
         SELECT EXISTS(SELECT id
@@ -10,7 +10,7 @@
                       WHERE id = #{id})
     </select>
 
-    <select id="findById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+    <select id="findById" parameterType="string" resultType="com.project.atoz.dto.UserDTO">
         SELECT id
              , pwd as password
              , nickName
@@ -26,13 +26,13 @@
         WHERE id = #{id}
     </select>
 
-    <select id="findByEmail" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+    <select id="findByEmail" parameterType="string" resultType="com.project.atoz.dto.UserDTO">
         SELECT id, email
         FROM user_info
         WHERE email = #{email}
     </select>
 
-    <select id="findByProviderAndProviderId" parameterType="map" resultType="com.project.myapp.dto.UserDTO">
+    <select id="findByProviderAndProviderId" parameterType="map" resultType="com.project.atoz.dto.UserDTO">
         SELECT id
              , pwd as password
              , nickName
@@ -49,27 +49,27 @@
           AND providerId = #{providerId}
     </select>
 
-    <insert id="insertUser" parameterType="com.project.myapp.dto.UserDTO">
+    <insert id="insertUser" parameterType="com.project.atoz.dto.UserDTO">
         INSERT INTO user_info(id, pwd, nickname, email)
         VALUES (#{id}, #{password}, #{nickName}, #{email})
     </insert>
 
-    <insert id="insertMember" parameterType="com.project.myapp.dto.MemberDTO">
+    <insert id="insertMember" parameterType="com.project.atoz.dto.MemberDTO">
         INSERT INTO member(mem_id, name, phone)
         VALUES (#{id}, #{name}, #{phoneNo})
     </insert>
 
-    <insert id="insertAuth" parameterType="com.project.myapp.dto.UserAuth">
+    <insert id="insertAuth" parameterType="com.project.atoz.dto.UserAuth">
         INSERT INTO user_auth(id)
         VALUES (#{id})
     </insert>
 
-    <insert id="save" parameterType="com.project.myapp.dto.UserDTO">
+    <insert id="save" parameterType="com.project.atoz.dto.UserDTO">
         INSERT INTO user_info(id, pwd, nickname, email, provider, providerId)
         VALUES (#{id}, #{password}, #{nickName}, #{email}, #{provider}, #{providerId})
     </insert>
 
-    <update id="updateUser" parameterType="com.project.myapp.dto.UserDTO">
+    <update id="updateUser" parameterType="com.project.atoz.dto.UserDTO">
         UPDATE user_info
         SET pwd        = #{password}
           , nickname   = #{nickName}

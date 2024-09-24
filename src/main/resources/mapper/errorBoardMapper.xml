@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.errorboard.dao.ErrorBoardMapper">
+<mapper namespace="com.project.atoz.errorboard.dao.ErrorBoardMapper">
 
     <insert id="insert" parameterType="ErrorBoardDTO">
             /** 게시글 등록 */
@@ -70,7 +70,7 @@
         <include refid="selectByAll" />
     </select>
 
-    <select id="getSearchSelectPage" parameterType="com.project.myapp.dto.SearchCondition" resultType="ErrorBoardDTO">
+    <select id="getSearchSelectPage" parameterType="com.project.atoz.dto.SearchCondition" resultType="ErrorBoardDTO">
         <include refid="selectByAll" />
         WHERE TRUE
         <choose>
@@ -96,7 +96,7 @@
         LIMIT #{offset} , #{pageSize}
     </select>
 
-    <select id="getSearchResultCount" parameterType="com.project.myapp.dto.SearchCondition" resultType="int">
+    <select id="getSearchResultCount" parameterType="com.project.atoz.dto.SearchCondition" resultType="int">
         SELECT COUNT(*)
         FROM ERR_LOG_BOARD
         WHERE TRUE

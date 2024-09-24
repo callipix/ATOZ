@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.board.dao.MemberMapper">
+<mapper namespace="com.project.atoz.board.dao.MemberMapper">
 
     <select id="memberList" resultMap="MemberResultMap">
         /** 여기 실행된거 맞나*/
@@ -24,12 +24,12 @@
          WHERE MEM_ID = #{MEM_ID}
     </select>
 
-    <insert id="save" parameterType="com.project.myapp.dto.TestMember">
+    <insert id="save" parameterType="com.project.atoz.dto.TestMember">
         INSERT INTO MYMEMBER(MEM_ID , MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR)
               VALUES (#{MEM_ID} , #{MEM_PASS}, #{MEM_NAME}, #{MEM_TEL}, #{MEM_ADDR})
     </insert>
 
-    <resultMap id="MemberResultMap" type="com.project.myapp.dto.TestMember">
+    <resultMap id="MemberResultMap" type="com.project.atoz.dto.TestMember">
         <result property="MEM_ID" column="MEM_ID"/>
         <result property="MEM_PASS" column="MEM_PASS"/>
         <result property="MEM_NAME" column="MEM_NAME"/>

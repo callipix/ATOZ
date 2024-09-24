@@ -18,7 +18,7 @@
     <annotation-driven/>
 
     <annotation-driven validator="globalValidator"/>
-    <beans:bean id="globalValidator" class="com.project.myapp.utiles.GlobalValidator"/>
+    <beans:bean id="globalValidator" class="com.project.atoz.utiles.GlobalValidator"/>
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/**" location="/resources/"/>
@@ -42,7 +42,7 @@
         <beans:property name="defaultErrorView" value="error"/>
         <beans:property name="exceptionMappings">
             <beans:props>
-                <beans:prop key="com.project.myapp.utiles.ExceptionHandlerController">error404</beans:prop>
+                <beans:prop key="com.project.atoz.utiles.ExceptionHandlerController">error404</beans:prop>
             </beans:props>
         </beans:property>
         <beans:property name="statusCodes">
@@ -68,6 +68,6 @@
     <view-controller path="/test2" view-name="/header2"/>
 
     <aop:aspectj-autoproxy/>
-    <context:component-scan base-package="com.project.myapp"/>
+    <context:component-scan base-package="com.project.atoz"/>
 
 </beans:beans>

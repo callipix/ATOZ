@@ -7,9 +7,9 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <typeAlias alias="ErrorBoardDTO" type="com.project.myapp.dto.ErrorBoardDTO"/>
-        <typeAlias alias="SuggestionDTO" type="com.project.myapp.dto.SuggestionDTO"/>
-        <typeAlias alias="FilesDTO" type="com.project.myapp.dto.FilesDTO"/>
+        <typeAlias alias="ErrorBoardDTO" type="com.project.atoz.dto.ErrorBoardDTO"/>
+        <typeAlias alias="SuggestionDTO" type="com.project.atoz.dto.SuggestionDTO"/>
+        <typeAlias alias="FilesDTO" type="com.project.atoz.dto.FilesDTO"/>
     </typeAliases>
 
 </configuration>

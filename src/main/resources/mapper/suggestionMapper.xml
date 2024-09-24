@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.suggestion.dao.SuggestionMapper">
+<mapper namespace="com.project.atoz.suggestion.dao.SuggestionMapper">
 
     <select id="isEqualsIdNPass" parameterType="map" resultType="int">
         /** 코멘트 삭제시 작성자명과 패스워드가 일치 하는지 */

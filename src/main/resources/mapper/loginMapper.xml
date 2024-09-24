@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.myapp.login.dao.LoginMapper">
+<mapper namespace="com.project.atoz.login.dao.LoginMapper">
 
     <select id="loginCheck" parameterType="map" resultType="int">
         SELECT EXISTS(
@@ -12,13 +12,13 @@
         )
     </select>
 
-    <select id="passCheckById" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+    <select id="passCheckById" parameterType="string" resultType="com.project.atoz.dto.UserDTO">
         SELECT pwd as password
           FROM user_info
          WHERE id = #{id}
     </select>
 
-    <select id="boardUserInfo" parameterType="string" resultType="com.project.myapp.dto.UserDTO">
+    <select id="boardUserInfo" parameterType="string" resultType="com.project.atoz.dto.UserDTO">
         SELECT u.nickname
           FROM err_log_board E LEFT OUTER JOIN user_info U
             on e.writer = u.id
