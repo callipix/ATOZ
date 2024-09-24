@@ -82,8 +82,8 @@ public class NoticeController {
 		return new ResponseEntity<>(totalNotice, HttpStatus.OK);
 	}
 
-	// @Timer
-	@Timer2
+	// @Timer	// 50회 반복 메서드 속도 측정
+	@Timer2        // 1번 반복 -> 부하테스트 측정
 	@GetMapping("/noticeList")
 	public ResponseEntity<Object> getNoticeList(String option, String keyword, Integer page, Integer pageSize) {
 
@@ -92,8 +92,8 @@ public class NoticeController {
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
-	// @Timer
-	@Timer2
+	// @Timer // 50회 반복 메서드 속도 측정
+	@Timer2   // 1번 반복 -> 부하테스트 측정
 	@GetMapping("/noticeListByEhcache")
 	public ResponseEntity<Object> getNoticeListByEhcache(String option, String keyword, Integer page,
 		Integer pageSize) {

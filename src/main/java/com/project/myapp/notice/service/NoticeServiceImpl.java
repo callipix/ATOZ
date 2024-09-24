@@ -60,7 +60,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-	// @Cacheable(value = "NoticeMapper.getSearchNoticeResultCount", key = "#sc.keyword+'-'+#sc.option")
+	@Cacheable(value = "NoticeMapper.getSearchNoticeResultCount", key = "#sc.keyword+'-'+#sc.option")
 	public Integer getSearchNoticeResultCount(SearchCondition sc) {
 
 		return this.noticeMapper.getSearchNoticeResultCount(sc);
