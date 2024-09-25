@@ -29,9 +29,9 @@ public class RestApiController {
 	@GetMapping("/addToken")
 	public String addToken(HttpServletResponse response, HttpServletRequest request) {
 		Cookie[] cookie = request.getCookies();
-		String test = request.getHeader("access");
-		log.info("cookie = {}", cookie);
-		log.info("test = {}", test);
+		String access = request.getHeader("access");
+		log.info("cookie from addToken.RestApiController.class = {}", cookie);
+		log.info("access from addToken.RestApiController.class = {}", access);
 
 		return "/addToken";
 	}

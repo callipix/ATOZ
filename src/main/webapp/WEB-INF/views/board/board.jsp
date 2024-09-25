@@ -7,23 +7,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>자유게시판 게시글조회</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
-    <title>자유게시판 게시글조회</title>
 </head>
-<script>
-    $.ajaxSetup({
-        beforeSend: function (xhr) {
-            const token = localStorage.getItem('access'); // 로컬 스토리지에서 JWT 토큰을 가져옴
-            if (token) {
-                xhr.setRequestHeader('access', token);
-            }
-        }
-    });
-</script>
 <style>
     #removeBtn, #modifyBtn {
         display: none;
@@ -33,7 +25,6 @@
 <jsp:include page="../header.jsp"/>
 <script>
     let msg = "${msg}";
-    const tokenData = localStorage.getItem("access");
 </script>
 <div>
     <div class="board-container">
@@ -111,33 +102,6 @@
     const modifyBtn = document.querySelector('#modifyBtn');
     const listBtn = document.querySelector('#listBtn');
 
-    if (tokenData) {
-
-        $.ajax({
-            url: '/tokenCheck',
-            type: "get",
-            xhrFields: {
-                withCredentials: true
-            },
-            headers: {
-                'access': tokenData,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            success: function (response) {
-                alert(response);
-                console.log(response);
-                let ss = `${response.isUser}`;
-                let writer = `${boardDTO.writer}`;
-
-                if (response === writer) {
-                    removeBtn.style.display = 'block';
-                    modifyBtn.style.display = 'block';
-                    listBtn.style.display = 'block';
-                }
-            }
-        })
-    }
-
     $(document).ready(function () {
 
         let data = `${boardDTO.content}`;
@@ -160,7 +124,6 @@
                 "bno": bno,
                 "sc": sc
             }
-
             $.ajax({
                 url: '/board/remove',
                 type: "post",
@@ -176,11 +139,8 @@
                     location.href = response;
                 }
             })
-            // let form = $("#form");
-            <%--form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");--%>
-            // form.attr("method", "post");
-            // form.submit();
         })
+        
         $("#modifyBtn").on("click", function () {
             location.href = "<c:url value='/board/modify?bno=${boardDTO.bno}'/>";
         })
@@ -190,9 +150,7 @@
         $("#listBtn").on("click", function () {
             location.href = "<c:url value='/board/boardList${searchCondition.queryString}'/>";
         });
-
     })
-
     let showList = function (bno) {
         $.ajax({
             type: 'get',       // 요청 메서드
@@ -202,7 +160,7 @@
             },
             error: function () {
                 alert("error")
-            } // 에러가 발생했을 때, 호출될 함수
+            }
         }) // $.ajax()
     }
 </script>

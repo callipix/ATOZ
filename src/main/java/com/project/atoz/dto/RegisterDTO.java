@@ -1,7 +1,9 @@
 package com.project.atoz.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,17 +11,11 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterDTO {
 
 	private UserDTO userDTO;
 	private MemberDTO memberDTO;
-
-	public RegisterDTO() {
-	}
-
-	public RegisterDTO(UserDTO userDTO, MemberDTO memberDTO) {
-		this.userDTO = userDTO;
-		this.memberDTO = memberDTO;
-	}
 
 }

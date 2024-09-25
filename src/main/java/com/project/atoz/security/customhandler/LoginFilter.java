@@ -66,7 +66,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password,
 			null);
-		log.info("attemptAuthentication for attemptAuthentication.LoginFilter.class {} =", authToken);
+		log.info("attemptAuthentication from attemptAuthentication.LoginFilter.class {} =", authToken);
 		return authenticationManager.authenticate(authToken);
 	}
 
@@ -75,10 +75,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		Authentication authentication) throws IOException, ServletException {
 
 		CustomDetails userDetails = (CustomDetails)authentication.getPrincipal();
-		log.info("userDetails for successfulAuthentication.LoginFilter.class = {}", userDetails);
+		log.info("userDetails from successfulAuthentication.LoginFilter.class = {}", userDetails);
 
 		String username = userDetails.getUsername();
-		log.info("username for successfulAuthentication.LoginFilter.class = {}", username);
+		log.info("username from successfulAuthentication.LoginFilter.class = {}", username);
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -90,7 +90,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 		addRefreshToken(username, refresh, 86400000L);
 
-		log.info("access for successfulAuthentication.LoginFilter.class = {}", access);
+		log.info("access from successfulAuthentication.LoginFilter.class = {}", access);
 		response.setHeader("access", access);
 		response.addCookie(createCookie("refresh", refresh));
 		response.setStatus(HttpStatus.OK.value(), response.getHeader("access"));
@@ -122,9 +122,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		refreshDTO.setUsername(username);
 		refreshDTO.setExpiration(dateByGeneralLogin.toString());
 
-		log.info("refreshDTO for addRefreshToken.LoginFilter.class = {}", refreshDTO);
+		log.info("refreshDTO from addRefreshToken.LoginFilter.class = {}", refreshDTO);
 		result += this.refreshMapper.insertSave(refreshDTO);
-		log.info("result for addRefreshToken.LoginFilter.class = {}", result);
+		log.info("result from addRefreshToken.LoginFilter.class = {}", result);
 
 	}
 }

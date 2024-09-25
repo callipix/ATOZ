@@ -25,7 +25,6 @@ import com.project.atoz.dto.BoardDTO;
 import com.project.atoz.dto.CommentDTO;
 import com.project.atoz.dto.PageHandler;
 import com.project.atoz.dto.SearchCondition;
-import com.project.atoz.notice.annotation.Timer;
 import com.project.atoz.security.auth.CustomDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -46,7 +45,7 @@ public class BoardController {
 		BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 		m.addAttribute("boardDTO", boardDTO);
 		m.addAttribute("mode", "mod");
-		return "board/modify";
+		return "/board/modify";
 	}
 
 	/**
@@ -75,8 +74,8 @@ public class BoardController {
 			.getPrincipal();
 		String writer = userDetails.getUser().getId();
 
-		log.info("writer for remove = {}", writer);
-		log.info("writer for bno = {}", bno);
+		log.info("writer from remove = {}", writer);
+		log.info("bno from remove = {}", bno);
 
 		String msg = "DEL_OK";
 		try {
@@ -108,12 +107,12 @@ public class BoardController {
 				throw new Exception("Modify Error");
 			}
 			rattr.addFlashAttribute("msg", "MOD_OK");
-			return "redirect:/board/boardList" + sc.getQueryString();
+			return "/board/boardList" + sc.getQueryString();
 		} catch (Exception e) {
 			e.printStackTrace();
 			m.addAttribute(boardDTO);
 			rattr.addAttribute("msg", "MOD_ERR");
-			return "board/board";
+			return "/board/board";
 		}
 	}
 
@@ -177,7 +176,6 @@ public class BoardController {
 		return "/board/board";
 	}
 
-	@Timer
 	@GetMapping("/boardList")
 	public String getBoardList(Model m, SearchCondition sc) {
 		try {

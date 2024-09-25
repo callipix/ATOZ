@@ -26,8 +26,6 @@ public class FilesDTO {
 	private int category_no;             // 카테고리번호(pk)
 	private int post_no;                 // 게시글번호(pk)
 
-	private ErrorBoardDTO errorBoardDTO;
-
 	public FilesDTO() {
 	}
 
@@ -50,9 +48,5 @@ public class FilesDTO {
 		this.file_size = file_size;
 		this.file_path = file_path;
 		this.id = id;
-	}
-
-	public ErrorBoardDTO getErrorBoardDTO() {
-		return errorBoardDTO;
 	}
 }
