@@ -1,7 +1,7 @@
 #### http://www.myportfolio.p-e.kr/
 ##### 2024.08.06 AM 09:00 ~ ~~현재 서버 실행중~~ → 2024.09.13 AM 11:42 - 서버 종료
 ###### 2024.09.24 PM 13:24 기준 서버 종료, 기능 변경 및 운영 서버 변경 예정(AWS EC2 → Vultr)
-
+<br>
 <div style="background-color: white;">
 <div> 
   <h2 style="color: #282d33;"> ✈️ 프로젝트 개요</h2>  
@@ -38,7 +38,7 @@
   <img style="width:70%" src="https://github.com/user-attachments/assets/63785c64-387f-4cf3-935b-fa6f7b3962a8">
 </div>
   <br>
-<br>
+<br><br><br>
 <div>
   <h2 style="color: #282d33;"> 🛠️ 사용기술 및 개발환경</h2>
 </div>
@@ -66,9 +66,8 @@
   <img src="https://img.shields.io/badge/Javascript ES6-F7DF1E?style=Plastic&logo=Javascript&logoColor=white" />
   <br>
 </div>
-
+<br>
 <h3>Tools & ETC </h3>
-
 <img src="https://img.shields.io/badge/IntelliJ IDEA IDE 2024.1.4-000000?style=Plastic&logo=intellijidea&logoColor=white" />
 <img src="https://img.shields.io/badge/AmazonS3-569A31?style=Plastic&logo=amazons3&logoColor=white" />
 <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=Plastic&logo=amazonec2&logoColor=white" />
@@ -82,8 +81,16 @@
 <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=Plastic&logo=apachemaven&logoColor=white" />
 </div>
 </div>
-<br>
-
+<br><br><br>
+<h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
+<h3>1. Spring Security 기반의 JWT 방식의 OAuth2.0 인증로그인 </h3>
+  <details>
+            <summary>펼쳐보기</summary>
+  <div align="center">
+         <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
+  <img style="width:100%" src="https://github.com/user-attachments/assets/a3b6e66d-0de4-4679-a9de-035dafd8c345">
+    </div>
+  </details>
 <br>
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
