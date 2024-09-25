@@ -4,8 +4,8 @@ import com.project.atoz.dto.UserDTO;
 
 public interface LoginService {
 
-	public int loginCheck(String id, String password);
+	int loginCheck(String id, String password);
 
-	public UserDTO passCheckById(String id);
+	UserDTO passCheckById(String id);
 
 }

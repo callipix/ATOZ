@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class AwsS3FileUploadServiceImplTest {
+public class AwsS3FileMapperServiceImplTest {
 
 	@Autowired
 	private AmazonS3 amazonS3;

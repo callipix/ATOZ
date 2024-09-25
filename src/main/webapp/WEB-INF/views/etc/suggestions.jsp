@@ -189,11 +189,14 @@
     }
     $(document).ready(function () {
 
+
         writeBtn.addEventListener('click', function () {
 
             let inputContent = content.value;
             let inputWriter = suggestWriter.value;
             let inputPassword = suggestPassword.value;
+
+            let accessToken = localStorage.getItem("access");
 
             if (inputContent.trim() === '') {
                 alert("내용을 입력하세요");
@@ -214,26 +217,30 @@
             }
             let str = '';
             let ms = Date.now();
-            let contextPath = <%=application.getContextPath() + "/"%>
-                $.ajax({
-                    url: "/suggestions",
-                    method: 'post',
-                    data: suggestDTO,
-                    success: function (result) {
-                        str += '<div class="p-4 rounded-2 text-bg-light mb-3">';
-                        str += '    <div class="d-flex align-items-center gap-3">';
-                        str += '        <img src="' + contextPath + '/bootstrap/assets/images/profile/user-3.jpg" alt="xtreme-img" class="rounded-circle" width="33" height="33">';
-                        str += '        <h6 class="mb-0 fs-4">' + result.writer + '</h6>';
-                        str += '        <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>';
-                        str += (dateToString(ms)).substring(11, 16);
-                        str += '    </div>';
-                        str += '    <p class="my-3">' + result.content + '</p>';
-                        str += '    <div class="d-flex align-items-center gap-2">';
-                        str += '    </div>';
-                        str += '</div>';
-                        $("#suggestionList").prepend(str);
-                    }
-                })
+
+            alert("작성자명" + suggestDTO.writer);
+            alert("패스워드" + suggestDTO.password);
+            alert("내용" + suggestDTO.content);
+
+            $.ajax({
+                url: "/suggestions",
+                method: 'post',
+                data: suggestDTO,
+                success: function (result) {
+                    str += '<div class="p-4 rounded-2 text-bg-light mb-3">';
+                    str += '    <div class="d-flex align-items-center gap-3">';
+                    str += '        <img src="/bootstrap/assets/images/profile/user-3.jpg" alt="xtreme-img" class="rounded-circle" width="33" height="33">';
+                    str += '        <h6 class="mb-0 fs-4">' + result.writer + '</h6>';
+                    str += '        <span class="p-1 text-bg-muted rounded-circle d-inline-block"></span>';
+                    str += (dateToString(ms)).substring(11, 16);
+                    str += '    </div>';
+                    str += '    <p class="my-3">' + result.content + '</p>';
+                    str += '    <div class="d-flex align-items-center gap-2">';
+                    str += '    </div>';
+                    str += '</div>';
+                    $("#suggestionList").prepend(str);
+                }
+            })
         });
 
         modifyBtn.addEventListener('click', function () {
@@ -245,14 +252,19 @@
     })
 
     modifyCheckPass.forEach(function (button) {
+        <%
         // 1. deleteBtn을 가진 모든 요소를 선택
         // 2. 선택된 모든 요소에 대해 반복문을 실행(forEach문)
+        %>
+
         button.addEventListener('click', function () {
             // 3. 각 요소에 클릭이벤트를 추가
             const parentDiv = button.closest('.mod-del-pass');
             const modifyCheckPassword = parentDiv.querySelector('input[name="modifyCheckPassword"]');
             let password = modifyCheckPassword.value;
+
             let sno = this.dataset.sno;
+
             // 4. 클릭된 버튼 요소의 data-sno값을 가져옴
             if (password === '' || password.trim() === '') {
                 alert("패스워드를 입력하세요");

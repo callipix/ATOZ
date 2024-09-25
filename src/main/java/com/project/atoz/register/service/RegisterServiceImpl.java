@@ -14,7 +14,7 @@ import com.project.atoz.dto.RegisterDTO;
 import com.project.atoz.dto.UserAuth;
 import com.project.atoz.dto.UserDTO;
 import com.project.atoz.properties.ApiProperties;
-import com.project.atoz.register.dao.RegisterMapper;
+import com.project.atoz.register.mapper.RegisterMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

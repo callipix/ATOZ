@@ -1,19 +1,22 @@
-package com.project.atoz.suggestion.service;
+package com.project.atoz.suggestion.mapper;
 
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.project.atoz.dto.SuggestionDTO;
 
-public interface SuggestionService {
+@Mapper
+public interface SuggestionMapper {
 
 	List<SuggestionDTO> getSelectPage(Map map);
 
-	SuggestionDTO suggestCommentInsert(SuggestionDTO suggestionDTO);
+	int suggestCommentInsert(SuggestionDTO suggestionDTO);
 
 	int updateSuggestComment(SuggestionDTO suggestionDTO);
 
-	int suggestCommentDelete(String password, int sno);
+	int suggestCommentDelete(Map map);
 
 	int suggestCommentCount();
 

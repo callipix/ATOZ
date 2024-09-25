@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.project.atoz.board.dao.BoardDAO;
+import com.project.atoz.board.mapper.BoardMapper;
 import com.project.atoz.dto.BoardDTO;
 import com.project.atoz.dto.SearchCondition;
 import com.project.atoz.security.auth.CustomDetails;
@@ -19,31 +19,31 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
-	private final BoardDAO boardDAO;
+	private final BoardMapper boardMapper;
 
 	@Override
 	public List<BoardDTO> getBoardList() {
-		List<BoardDTO> getBoardList = boardDAO.getBoardList();
+		List<BoardDTO> getBoardList = boardMapper.getBoardList();
 		return getBoardList;
 	}
 
 	@Override
 	public List<BoardDTO> getSelectPage(Map map) {
-		List<BoardDTO> getSelectPage = boardDAO.getSelectPage(map);
+		List<BoardDTO> getSelectPage = boardMapper.getSelectPage(map);
 		return getSelectPage;
 	}
 
 	@Override
 	public int getBoardCount() {
 
-		int getBoardCount = boardDAO.getBoardCount();
+		int getBoardCount = boardMapper.getBoardCount();
 		return getBoardCount;
 	}
 
 	@Override
 	public BoardDTO getBoardByBno(int bno) {
-		BoardDTO boardDTO = boardDAO.getBoardByBno(bno);
-		boardDAO.increaseViewCount(bno);
+		BoardDTO boardDTO = boardMapper.getBoardByBno(bno);
+		boardMapper.increaseViewCount(bno);
 		return boardDTO;
 	}
 
@@ -51,26 +51,26 @@ public class BoardServiceImpl implements BoardService {
 	public int insertBoard(BoardDTO board) throws Exception {
 
 		board.setContent(StringUtils.escapeDollorSign(board.getContent()));
-		int result = boardDAO.insertBoard(board);
+		int result = boardMapper.insertBoard(board);
 		return result;
 	}
 
 	@Override
 	public int updateBoardByIdNBno(BoardDTO board) throws Exception {
 		board.setContent(StringUtils.escapeDollorSign(board.getContent()));
-		int result = boardDAO.updateBoardByIdNBno(board);
+		int result = boardMapper.updateBoardByIdNBno(board);
 		return result;
 	}
 
 	@Override
 	public int deleteForAdmin(int id) throws Exception {
-		int result = boardDAO.deleteForAdmin(id);
+		int result = boardMapper.deleteForAdmin(id);
 		return result;
 	}
 
 	@Override
 	public int deleteAll() throws Exception {
-		int result = boardDAO.deleteAll();
+		int result = boardMapper.deleteAll();
 		return result;
 	}
 
@@ -89,18 +89,18 @@ public class BoardServiceImpl implements BoardService {
 			log.info("writer = {}", writer);
 		}
 
-		int result = boardDAO.deleteByIdNBno(bno, writer);
+		int result = boardMapper.deleteByIdNBno(bno, writer);
 		return result;
 	}
 
 	@Override
 	public List<BoardDTO> getSearchSelectPage(SearchCondition sc) {
-		return this.boardDAO.getSearchSelectPage(sc);
+		return this.boardMapper.getSearchSelectPage(sc);
 	}
 
 	@Override
 	public int getSearchResultCount(SearchCondition sc) {
-		return this.boardDAO.getSearchResultCount(sc);
+		return this.boardMapper.getSearchResultCount(sc);
 	}
 
 }

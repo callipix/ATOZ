@@ -1,12 +1,15 @@
-package com.project.atoz.board.dao;
+package com.project.atoz.board.mapper;
 
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.project.atoz.dto.BoardDTO;
 import com.project.atoz.dto.SearchCondition;
 
-public interface BoardDAO {
+@Mapper
+public interface BoardMapper {
 	// 게시물 전체리스트
 	List<BoardDTO> getBoardList();
 

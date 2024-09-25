@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.atoz.register.dao.RegisterMapper">
+<mapper namespace="com.project.atoz.register.mapper.RegisterMapper">
 
     <select id="idCheck" resultType="int" parameterType="string">
         SELECT EXISTS(SELECT id

@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.project.atoz.dto.UserDTO;
-import com.project.atoz.register.dao.RegisterMapper;
+import com.project.atoz.register.mapper.RegisterMapper;
 import com.project.atoz.security.auth.CustomDetails;
 import com.project.atoz.security.oauth.provider.GoogleUserInfo;
 import com.project.atoz.security.oauth.provider.OAuth2UserInfo;

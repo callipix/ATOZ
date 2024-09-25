@@ -64,10 +64,14 @@ public class UploadService {
 	@ResponseBody
 	@PostMapping("/contentImgCheck")
 	public ResponseEntity removeImage(@RequestBody Map<String, List<String>> imageAddress) throws IOException {
+
 		List<String> beforeAddress = new ArrayList<>();
 		List<String> afterAddress = new ArrayList<>();
+
 		Map<String, Object> resultMap = new HashMap<>();
+
 		int result = 0;
+
 		for (String beforeImgAddress : imageAddress.get("beforeImgAddress")) {
 			beforeAddress.add(beforeImgAddress);
 			log.info("beforeImgAddress = {}", beforeImgAddress);

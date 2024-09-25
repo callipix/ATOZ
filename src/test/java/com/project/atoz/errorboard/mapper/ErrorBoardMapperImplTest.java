@@ -1,4 +1,4 @@
-package com.project.atoz.errorboard.dao;
+package com.project.atoz.errorboard.mapper;
 
 import static org.junit.Assert.*;
 
@@ -18,10 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ErrorBoardDAOImplTest {
+public class ErrorBoardMapperImplTest {
 
 	@Autowired
-	private ErrorBoardDAO errorBoardDAO;
+	private ErrorBoardMapper errorBoardMapper;
 	@Autowired
 	private SqlSession sqlSession;
 	private static final String namespace = "com.project.myapp.errorboard.dao.ErrorBoardMapper.";
@@ -43,21 +43,21 @@ public class ErrorBoardDAOImplTest {
 			errorBoardDTO.setTitle("에러코드 테스트" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
 		}
 		for (int i = 0; i < 50; i++) {
 			errorBoardDTO.setErrCode("bbbb" + i);
 			errorBoardDTO.setTitle("제목에러로만" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
 		}
 		for (int i = 20; i < 30; i++) {
 			errorBoardDTO.setErrCode("cccc" + i);
 			errorBoardDTO.setTitle("테스트용" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
 		}
 		assertTrue(result == 150);
 	}

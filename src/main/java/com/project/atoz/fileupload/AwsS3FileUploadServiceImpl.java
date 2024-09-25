@@ -18,6 +18,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.project.atoz.dto.FilesDTO;
+import com.project.atoz.fileupload.mapper.FileMapper;
 import com.project.atoz.properties.AwsProperties;
 
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 
-	private final AmazonS3 amazonS3;
 	private final AwsProperties awsProperties;
-	private final FileUpload fileUpload;
+	private final FileMapper fileMapper;
+	private final AmazonS3 amazonS3;
 
 	// UUID를 사용해서 저장할 파일 이름을 생성(중복방지)
 	private String makeFileName(String originName) {
@@ -87,7 +88,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 	public int uploadImages(FilesDTO filesDTO) throws IOException {
 		// DB에 파일 정보를 저장하는 메서드
 		log.info("filesDTO = {}", filesDTO);
-		int result = this.fileUpload.uploadFile(filesDTO);
+		int result = this.fileMapper.insertFileInfo(filesDTO);
 		return result;
 	}
 
@@ -108,7 +109,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 				log.info("imgURL = {}", imgURL);
 				amazonS3.deleteObject(awsProperties.getBucketName(), imgURL);
 
-				result += this.fileUpload.deleteFile(imgURL);
+				result += this.fileMapper.deleteFileInfoByStoredName(imgURL);
 				log.info("파일정보 삭제 결과 for deleteImageFile = {}", result);
 
 				if (result == 0) {
@@ -143,7 +144,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 				log.info("imgURL for deleteFileAWS = {}", imgURL);
 				amazonS3.deleteObject(awsProperties.getBucketName(), imgURL);
 
-				result += this.fileUpload.deleteFile(imgURL);
+				result += this.fileMapper.deleteFileInfoByStoredName(imgURL);
 				log.info("파일정보 삭제 결과 for deleteFileAwsS3 = {}", result);
 
 				if (result == 0) {

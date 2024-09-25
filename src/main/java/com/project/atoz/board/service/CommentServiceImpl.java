@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.atoz.board.dao.BoardDAO;
-import com.project.atoz.board.dao.CommentDAO;
+import com.project.atoz.board.mapper.BoardMapper;
+import com.project.atoz.board.mapper.CommentMapper;
 import com.project.atoz.dto.CommentDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-	private final CommentDAO commentDAO;
-	private final BoardDAO boardDAO;
+	private final CommentMapper commentMapper;
+	private final BoardMapper boardMapper;
 
 	@Override
 	public int commentCount(int bno) throws Exception {
-		int result = commentDAO.commentCount(bno);
+		int result = this.commentMapper.commentCount(bno);
 		return result;
 	}
 
@@ -32,11 +32,11 @@ public class CommentServiceImpl implements CommentService {
 		log.info("bno = {}", bno);
 		log.info("commenter = {}", commenter);
 
-		int result = this.boardDAO.updateCommentCount(bno, -1);
+		int result = this.boardMapper.updateCommentCount(bno, -1);
 
 		log.info("result = {}", result);
 
-		result = this.commentDAO.deleteComment(cno, commenter);
+		result = this.commentMapper.deleteComment(cno, commenter);
 
 		log.info("result = {}", result);
 
@@ -47,8 +47,8 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional(rollbackFor = Exception.class)
 	public CommentDTO insertComment(CommentDTO commentDTO) throws Exception {
 
-		int result = this.boardDAO.updateCommentCount(commentDTO.getBno(), 1);
-		result += this.commentDAO.insertComment(commentDTO);
+		int result = this.boardMapper.updateCommentCount(commentDTO.getBno(), 1);
+		result += this.commentMapper.insertComment(commentDTO);
 
 		log.info("insertComment for result = {}", result);
 		log.info("insertComment for commentDTO = {}", commentDTO);
@@ -57,13 +57,13 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<CommentDTO> getCommentForBoard(int bno) throws Exception {
-		List<CommentDTO> commentList = commentDAO.getCommentForBoard(bno);
+		List<CommentDTO> commentList = this.commentMapper.getCommentForBoard(bno);
 		return commentList;
 	}
 
 	@Override
 	public CommentDTO getCommentByCno(int cno) throws Exception {
-		CommentDTO commentDTO = commentDAO.getCommentByCno(cno);
+		CommentDTO commentDTO = this.commentMapper.getCommentByCno(cno);
 		return commentDTO;
 	}
 
@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional(rollbackFor = Exception.class)
 	public int updateComment(CommentDTO commentDTO) throws Exception {
 		log.info("updateComment for commentDTO = {}", commentDTO);
-		int result = commentDAO.updateComment(commentDTO);
+		int result = this.commentMapper.updateComment(commentDTO);
 		return result;
 	}
 }

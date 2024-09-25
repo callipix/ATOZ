@@ -29,13 +29,11 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.project.atoz.notice.mapper"/>
+        <property name="basePackage" value="com.project.atoz.**.*mapper"/>
     </bean>
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.project.atoz.security.jwt.mapper"/>
-    </bean>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.project.atoz.register.dao"/>
     </bean>
 
     <context:component-scan base-package="com.project.atoz.**"/>

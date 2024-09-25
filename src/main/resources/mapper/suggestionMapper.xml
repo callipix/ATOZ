@@ -2,15 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.atoz.suggestion.dao.SuggestionMapper">
+<mapper namespace="com.project.atoz.suggestion.mapper.SuggestionMapper">
 
     <select id="isEqualsIdNPass" parameterType="map" resultType="int">
         /** 코멘트 삭제시 작성자명과 패스워드가 일치 하는지 */
-        SELECT EXISTS(
-                        SELECT sno , password
-                          FROM SUGGESTION
-                         WHERE sno = #{sno} AND password = #{password}
-        )
+        SELECT EXISTS(SELECT sno, password
+                      FROM SUGGESTION
+                      WHERE sno = #{sno}
+                        AND password = #{password})
     </select>
 
     <!-- 전체 댓글 삭제 -> 관리자용 -->
@@ -34,32 +33,30 @@
     </delete>
     <!-- 코멘트 등록-->
     <insert id="suggestCommentInsert" parameterType="SuggestionDTO">
-        INSERT INTO
-            suggestion(writer, password ,content, reg_date, up_date)
-        VALUES
-            (#{writer} , #{password} , #{content} , now() , now())
+        INSERT INTO suggestion(writer, password, content, reg_date, up_date)
+        VALUES (#{writer}, #{password}, #{content}, now(), now())
     </insert>
     <!-- 리스트 가져오기-->
     <select id="getSuggestList" parameterType="int" resultType="SuggestionDTO">
-        SELECT sno , writer ,content, reg_date, up_date
+        SELECT sno, writer, content, reg_date, up_date
         FROM suggestion
         ORDER BY reg_date DESC, sno DESC
     </select>
     <!-- 코멘트 수정 -->
     <update id="updateSuggestComment" parameterType="SuggestionDTO">
-        UPDATE  suggestion
-           SET  content   = #{content}
-              , up_date   = now()
-         WHERE true
-           AND sno = #{sno}
-           AND password = #{password}
+        UPDATE suggestion
+        SET content = #{content}
+          , up_date = now()
+        WHERE true
+          AND sno = #{sno}
+          AND password = #{password}
     </update>
 
     <select id="getSelectPage" parameterType="map" resultType="SuggestionDTO">
         /** 게시물 페이징 */
-        SELECT ROW_NUMBER() OVER(ORDER BY sno) AS rownum, sno , content , writer , reg_date , up_date
+        SELECT ROW_NUMBER() OVER(ORDER BY sno) AS rownum, sno, content, writer, reg_date, up_date
         FROM suggestion
-        ORDER BY reg_date DESC , sno DESC
-            LIMIT #{offset} , #{pageSize}
+        ORDER BY reg_date DESC, sno DESC
+            LIMIT #{offset}, #{pageSize}
     </select>
 </mapper>

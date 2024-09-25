@@ -76,7 +76,7 @@ public class RestApiController {
 
 	@ResponseBody
 	@PostMapping("/jwtLogin")
-	public ResponseEntity<String> jwtLogin(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<String> jwtLogin(HttpServletRequest request) {
 
 		log.info("jwtLogin 호출");
 
@@ -104,7 +104,7 @@ public class RestApiController {
 
 	@ResponseBody
 	@GetMapping(value = "/tokenCheck", produces = "application/json; charset=utf-8")
-	public String tokenCheck(HttpServletResponse response, HttpServletRequest request) {
+	public String tokenCheck(HttpServletRequest request, HttpServletResponse response) {
 
 		String access = request.getHeader("access");
 		String isUser = "";
@@ -112,17 +112,16 @@ public class RestApiController {
 			.getAuthentication()
 			.getPrincipal();
 
-		log.info("access for tokenCheck= {}", access);
-		log.info("userDetails for tokenCheck = {}", userDetails);
+		log.info("access from tokenCheck = {}", access);
+		log.info("userDetails from tokenCheck = {}", userDetails);
 		if (access != null && userDetails != null) {
 			isUser = userDetails.getName();
 		}
 
-		log.info("isUser for tokenCheck= {}", isUser);
+		log.info("isUser from tokenCheck = {}", isUser);
 		isUser = StringUtils.newStringUtf8(isUser.getBytes(StandardCharsets.UTF_8));
-		log.info("isUser.utf8 for tokenCheck= {}", isUser);
-
-		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+		log.info("isUser.utf8 from tokenCheck = {}", isUser);
+		response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));
 		return isUser;
 	}
 }

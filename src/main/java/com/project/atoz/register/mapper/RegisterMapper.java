@@ -1,4 +1,4 @@
-package com.project.atoz.register.dao;
+package com.project.atoz.register.mapper;
 
 import java.util.Map;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public interface RegisterMapper {
 
 	UserDTO findById(String id);
 
-	Optional<UserDTO> findByProviderAndProviderId(Map<String,String> providerMap);
+	Optional<UserDTO> findByProviderAndProviderId(Map<String, String> providerMap);
 
 	int save(UserDTO userDTO);
 

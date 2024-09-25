@@ -111,6 +111,33 @@
     const modifyBtn = document.querySelector('#modifyBtn');
     const listBtn = document.querySelector('#listBtn');
 
+    if (tokenData) {
+
+        $.ajax({
+            url: '/tokenCheck',
+            type: "get",
+            xhrFields: {
+                withCredentials: true
+            },
+            headers: {
+                'access': tokenData,
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            success: function (response) {
+                alert(response);
+                console.log(response);
+                let ss = `${response.isUser}`;
+                let writer = `${boardDTO.writer}`;
+
+                if (response === writer) {
+                    removeBtn.style.display = 'block';
+                    modifyBtn.style.display = 'block';
+                    listBtn.style.display = 'block';
+                }
+            }
+        })
+    }
+
     $(document).ready(function () {
 
         let data = `${boardDTO.content}`;
@@ -164,28 +191,6 @@
             location.href = "<c:url value='/board/boardList${searchCondition.queryString}'/>";
         });
 
-        if (tokenData) {
-            $.ajax({
-                url: '/tokenCheck',
-                type: "get",
-                xhrFields: {
-                    withCredentials: true
-                },
-                headers: {
-                    'access': tokenData,
-                    'Content-Type': 'application/json'
-                },
-                success: function (response) {
-                    alert(response);
-                    let writer = "${boardDTO.writer}";
-                    if (response === writer) {
-                        removeBtn.style.display = 'block';
-                        modifyBtn.style.display = 'block';
-                        listBtn.style.display = 'block';
-                    }
-                }
-            })
-        }
     })
 
     let showList = function (bno) {

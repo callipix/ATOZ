@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 public class SuggestionController {
+
 	private final SuggestionService suggestionService;
 
 	@ResponseBody
@@ -37,7 +38,7 @@ public class SuggestionController {
 	public ResponseEntity<SuggestionDTO> write(SuggestionDTO suggestionDTO) {
 		log.info("suggestionDTO = {}", suggestionDTO);
 		try {
-			suggestionDTO = this.suggestionService.insert(suggestionDTO);
+			suggestionDTO = this.suggestionService.suggestCommentInsert(suggestionDTO);
 			if (suggestionDTO == null) {
 				throw new Exception("Write failed");
 			}
@@ -54,7 +55,7 @@ public class SuggestionController {
 	public ResponseEntity<String> modify(@PathVariable Integer sno, @RequestBody SuggestionDTO suggestionDTO) {
 		suggestionDTO.setSno(sno);
 		try {
-			int result = this.suggestionService.update(suggestionDTO);
+			int result = this.suggestionService.updateSuggestComment(suggestionDTO);
 			if (result != 1) {
 				throw new Exception("modify failed");
 			}
@@ -73,14 +74,14 @@ public class SuggestionController {
 		log.info("sno = {}", sno);
 		log.info("password = {}", password);
 		try {
-			int result = this.suggestionService.passCheck(sno, password);
+			int result = this.suggestionService.isEqualsIdNPass(sno, password);
 			log.info("passCheck result = {}", result);
 
 			if (result != 1) {
 				return new ResponseEntity<>("passNotEqual", HttpStatus.OK);
 			}
 
-			result = this.suggestionService.delete(password, sno);
+			result = this.suggestionService.suggestCommentDelete(password, sno);
 
 			if (result != 1) {
 				throw new Exception("Delete failed");
@@ -102,14 +103,14 @@ public class SuggestionController {
 		}
 
 		try {
-			int suggestCount = this.suggestionService.getSuggestListCount();
+			int suggestCount = this.suggestionService.suggestCommentCount();
 			PageHandler2 pageHandler = new PageHandler2(suggestCount, page, pageSize);
 
 			Map map = new HashMap();
 			map.put("offset", (page - 1) * pageSize);
 			map.put("pageSize", pageSize);
 
-			List<SuggestionDTO> suggestionList = this.suggestionService.getSuggestList(map);
+			List<SuggestionDTO> suggestionList = this.suggestionService.getSelectPage(map);
 
 			model.addAttribute("suggestionList", suggestionList);
 			model.addAttribute("suggestCount", suggestCount);

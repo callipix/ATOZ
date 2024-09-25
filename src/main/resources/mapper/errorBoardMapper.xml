@@ -2,76 +2,87 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.atoz.errorboard.dao.ErrorBoardMapper">
+<mapper namespace="com.project.atoz.errorboard.mapper.ErrorBoardMapper">
 
     <insert id="insert" parameterType="ErrorBoardDTO">
-            /** 게시글 등록 */
+        /** 게시글 등록 */
         INSERT INTO ERR_LOG_BOARD
-            (
-             ERR_CODE, TITLE, CONTENT, WRITER
-                 <if test="errBoardThum  != null">
-                    , ERR_BOARD_THUM
-                 </if>
-             )
+        (
+        ERR_CODE, TITLE, CONTENT, WRITER
+        <if test="errBoardThum  != null">
+            , ERR_BOARD_THUM
+        </if>
+        )
         VALUES
-            (
-             #{errCode} , #{title} , #{content} , #{writer}
-                <if test="errBoardThum != null">
-                   , #{errBoardThum}
-                </if>
-            )
+        (
+        #{errCode} , #{title} , #{content} , #{writer}
+        <if test="errBoardThum != null">
+            , #{errBoardThum}
+        </if>
+        )
     </insert>
     <update id="modify" parameterType="ErrorBoardDTO">
-<!-- 게시글 수정 -->
+        <!-- 게시글 수정 -->
         UPDATE ERR_LOG_BOARD
-           SET
-                ERR_CODE = #{errCode}
-              , TITLE = #{title}
-              , CONTENT = #{content}
-              , UP_DATE = now()
+        SET
+        ERR_CODE = #{errCode}
+        , TITLE = #{title}
+        , CONTENT = #{content}
+        , UP_DATE = now()
         <if test="errBoardThum != null">
-              , ERR_BOARD_THUM = #{errBoardThum}
+            , ERR_BOARD_THUM = #{errBoardThum}
         </if>
-         WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
+        WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
     </update>
-<!-- 게시글 삭제 -->
-<!-- 게시글 리스트조회 -->
+    <!-- 게시글 삭제 -->
+    <!-- 게시글 리스트조회 -->
 
     <update id="increaseViewCount" parameterType="int">
-<!-- 게시글 조회수증가 -->
+        <!-- 게시글 조회수증가 -->
         UPDATE ERR_LOG_BOARD
-           SET view_cnt = view_cnt + 1
-         WHERE ERR_BNO = #{errBno}
+        SET view_cnt = view_cnt + 1
+        WHERE ERR_BNO = #{errBno}
     </update>
 
     <delete id="delete" parameterType="map">
         DELETE
-          FROM ERR_LOG_BOARD
-         WHERE WRITER = #{writer} AND ERR_BNO = #{errBno}
+        FROM ERR_LOG_BOARD
+        WHERE WRITER = #{writer}
+          AND ERR_BNO = #{errBno}
     </delete>
 
     <select id="getErrorBoardByErrBno" parameterType="int" resultType="ErrorBoardDTO">
-<!-- 특정게시글 조회 -->
-        <include refid="selectByAll" />
-     WHERE ERR_BNO = #{errBno}
+        <!-- 특정게시글 조회 -->
+        <include refid="selectByAll"/>
+        WHERE ERR_BNO = #{errBno}
     </select>
 
     <select id="getErrorBoardCount" resultType="int">
         SELECT COUNT(*)
-          FROM ERR_LOG_BOARD
+        FROM ERR_LOG_BOARD
     </select>
 
     <sql id="selectByAll">
-        SELECT ROW_NUMBER() OVER(ORDER BY ERR_BNO) AS ROWNUM , ERR_BNO , ERR_CODE, TITLE , CONTENT , WRITER , VIEW_CNT , COMMENT_CNT , REG_DATE , UP_DATE , CATEGORY_NO , ERR_BOARD_THUM
-          FROM ERR_LOG_BOARD
+        SELECT ROW_NUMBER() OVER(ORDER BY ERR_BNO) AS ROWNUM , ERR_BNO,
+               ERR_CODE,
+               TITLE,
+               CONTENT,
+               WRITER,
+               VIEW_CNT,
+               COMMENT_CNT,
+               REG_DATE,
+               UP_DATE,
+               CATEGORY_NO,
+               ERR_BOARD_THUM
+        FROM ERR_LOG_BOARD
     </sql>
 
     <select id="getErrBoardList" resultType="ErrorBoardDTO">
-        <include refid="selectByAll" />
+        <include refid="selectByAll"/>
     </select>
 
     <select id="getSearchSelectPage" parameterType="com.project.atoz.dto.SearchCondition" resultType="ErrorBoardDTO">
-        <include refid="selectByAll" />
+        <include refid="selectByAll"/>
         WHERE TRUE
         <choose>
             <when test='option=="T"'>
@@ -84,7 +95,7 @@
                 and WRITER like concat('%' , #{keyword} , '%')
             </when>
             <when test='option=="eAndT"'>
-                and (TITLE  like concat('%', #{keyword} , '%')
+                and (TITLE like concat('%', #{keyword} , '%')
                 or ERR_CODE like concat('%', #{keyword} , '%'))
             </when>
             <otherwise>
@@ -111,7 +122,7 @@
                 and WRITER like concat('%' , #{keyword} , '%')
             </when>
             <when test='option=="eAndT"'>
-                and (TITLE  like concat('%', #{keyword} , '%')
+                and (TITLE like concat('%', #{keyword} , '%')
                 or ERR_CODE like concat('%', #{keyword} , '%'))
             </when>
             <otherwise>
@@ -123,10 +134,10 @@
     </select>
 
     <select id="isCheckWriter" parameterType="map" resultType="int">
-        SELECT EXISTS( SELECT writer , err_bno
+        SELECT EXISTS(SELECT writer, err_bno
                       FROM ERR_LOG_BOARD
-                     WHERE writer = #{writer} AND err_bno = #{errBno}
-           )
+                      WHERE writer = #{writer}
+                        AND err_bno = #{errBno})
     </select>
 
     <select id="getSelectKey" resultType="int">

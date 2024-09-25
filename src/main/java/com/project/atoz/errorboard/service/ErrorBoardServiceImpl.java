@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.atoz.dto.ErrorBoardDTO;
 import com.project.atoz.dto.FilesDTO;
 import com.project.atoz.dto.SearchCondition;
-import com.project.atoz.errorboard.dao.ErrorBoardDAO;
-import com.project.atoz.fileupload.FileUpload;
+import com.project.atoz.errorboard.mapper.ErrorBoardMapper;
+import com.project.atoz.fileupload.mapper.FileMapper;
 import com.project.atoz.utiles.StringUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ErrorBoardServiceImpl implements ErrorBoardService {
 
-	private final ErrorBoardDAO errorBoardDAO;
-	private final FileUpload fileUpload;
+	private final ErrorBoardMapper errorBoardMapper;
+	private final FileMapper fileMapper;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -32,20 +32,20 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 
 		List<Integer> fileNoList = new ArrayList<>();
 		for (String fileKeyList : afterList) {
-			fileNoList.add(this.fileUpload.getFileNoKeyList(fileKeyList));
+			fileNoList.add(this.fileMapper.getFileNoKey(fileKeyList));
 		}
 
-		int result = errorBoardDAO.insertErrorBoardMapper(errorBoardDTO);
+		int result = errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
 
 		// 최근에 작업했던(auto_increment값 가져오기)
-		int selectKey = this.fileUpload.selectKey();
+		int selectKey = this.fileMapper.getSelectKey();
 
 		for (Integer fileNo : fileNoList) {
 			FilesDTO filesDTO = new FilesDTO();
 			filesDTO.setFile_no(fileNo);
 			filesDTO.setPost_no(selectKey);
 			filesDTO.setCategory_no(errorBoardDTO.getCategoryNo());
-			result += this.fileUpload.updateImages(filesDTO);
+			result += this.fileMapper.updateFileInfo(filesDTO);
 		}
 		return result;
 	}
@@ -53,21 +53,21 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 	@Override
 	public List<ErrorBoardDTO> getSearchSelectPage(SearchCondition sc) throws Exception {
 		// 게시글 페이징 + 검색
-		return this.errorBoardDAO.getSearchSelectPage(sc);
+		return this.errorBoardMapper.getSearchSelectPage(sc);
 	}
 
 	@Override
 	public int getSearchResultCount(SearchCondition sc) throws Exception {
 		// 전체 게시글 수
-		return this.errorBoardDAO.getSearchResultCount(sc);
+		return this.errorBoardMapper.getSearchResultCount(sc);
 	}
 
 	@Override
 	public ErrorBoardDTO getErrorBoardByErrBno(int errBno) {
 		// 특정 게시글 조회
-		ErrorBoardDTO errorBoardDTO = this.errorBoardDAO.getErrorBoardByErrBno(errBno);
+		ErrorBoardDTO errorBoardDTO = this.errorBoardMapper.getErrorBoardByErrBno(errBno);
 		// 게시글을 조회하면 조회수가 증가
-		errorBoardDAO.increaseViewCount(errBno);
+		errorBoardMapper.increaseViewCount(errBno);
 		return errorBoardDTO;
 	}
 
@@ -76,7 +76,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 	public int delete(Integer errBno, String writer) throws Exception {
 		log.info("errBno = {}", errBno);
 		// 게시글 삭제
-		int result = errorBoardDAO.delete(errBno, writer);
+		int result = errorBoardMapper.delete(errBno, writer);
 		log.info("게시글 삭제결과 1 나와야함 = {}", result);
 		return result;
 	}
@@ -87,12 +87,12 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 		// 게시글 업데이트
 		errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
 
-		int result = errorBoardDAO.update(errorBoardDTO);
+		int result = errorBoardMapper.update(errorBoardDTO);
 
 		List<Integer> fileNoList = new ArrayList<>();
 
 		for (String fileKeyList : afterList) {
-			fileNoList.add(this.fileUpload.getFileNoKeyList(fileKeyList));
+			fileNoList.add(this.fileMapper.getFileNoKey(fileKeyList));
 		}
 
 		for (Integer fileNo : fileNoList) {
@@ -100,7 +100,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 			fileDTO.setFile_no(fileNo);
 			fileDTO.setPost_no(errorBoardDTO.getErrBno());
 			fileDTO.setCategory_no(errorBoardDTO.getCategoryNo());
-			result += this.fileUpload.updateImages(fileDTO);
+			result += this.fileMapper.updateFileInfo(fileDTO);
 		}
 		log.info("result = {}", result);
 
@@ -111,7 +111,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 	@Transactional(rollbackFor = Exception.class)
 	public int isCheckWriter(String writer, int errBno) {
 		log.info("service errBno = {}", errBno);
-		int result = this.errorBoardDAO.isCheckWriter(writer, errBno);
+		int result = this.errorBoardMapper.isCheckWriter(writer, errBno);
 		log.info("service result = {}", result);
 		return result;
 	}

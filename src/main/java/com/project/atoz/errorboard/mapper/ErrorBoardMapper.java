@@ -1,11 +1,14 @@
-package com.project.atoz.errorboard.dao;
+package com.project.atoz.errorboard.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 
 import com.project.atoz.dto.ErrorBoardDTO;
 import com.project.atoz.dto.SearchCondition;
 
-public interface ErrorBoardDAO {
+@Mapper
+public interface ErrorBoardMapper {
 
 	// 게시글 등록
 	int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO);

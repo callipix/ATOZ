@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.atoz.board.dao.MemberMapper">
+<mapper namespace="com.project.atoz.board.mapper.MemberMapper">
 
     <select id="memberList" resultMap="MemberResultMap">
         /** 여기 실행된거 맞나*/
@@ -11,22 +11,20 @@
     </select>
 
     <select id="idCheck" parameterType="string" resultType="int">
-        SELECT EXISTS(
-            SELECT MEM_ID
-             FROM MYMEMBER
-             WHERE MEM_ID = #{MEM_ID}
-        )
+        SELECT EXISTS(SELECT MEM_ID
+                      FROM MYMEMBER
+                      WHERE MEM_ID = #{MEM_ID})
     </select>
 
     <select id="getMember" parameterType="string" resultMap="MemberResultMap">
-        SELECT MEM_ID , MEM_PASS, MEM_NAME , MEM_TEL , MEM_ADDR
-          FROM MYMEMBER
-         WHERE MEM_ID = #{MEM_ID}
+        SELECT MEM_ID, MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR
+        FROM MYMEMBER
+        WHERE MEM_ID = #{MEM_ID}
     </select>
 
     <insert id="save" parameterType="com.project.atoz.dto.TestMember">
-        INSERT INTO MYMEMBER(MEM_ID , MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR)
-              VALUES (#{MEM_ID} , #{MEM_PASS}, #{MEM_NAME}, #{MEM_TEL}, #{MEM_ADDR})
+        INSERT INTO MYMEMBER(MEM_ID, MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR)
+        VALUES (#{MEM_ID}, #{MEM_PASS}, #{MEM_NAME}, #{MEM_TEL}, #{MEM_ADDR})
     </insert>
 
     <resultMap id="MemberResultMap" type="com.project.atoz.dto.TestMember">

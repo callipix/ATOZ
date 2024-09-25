@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.atoz.dto.UserDTO;
-import com.project.atoz.register.dao.RegisterMapper;
+import com.project.atoz.register.mapper.RegisterMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

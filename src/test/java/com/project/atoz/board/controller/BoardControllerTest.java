@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.project.atoz.board.dao.BoardDAO;
+import com.project.atoz.board.mapper.BoardMapper;
 import com.project.atoz.dto.BoardDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardControllerTest {
 
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardMapper boardMapper;
 
 	@Test
 	public void getBoardList() {
-		List<BoardDTO> boardList = boardDAO.getBoardList();
+		List<BoardDTO> boardList = boardMapper.getBoardList();
 
 		for (BoardDTO boardDTO : boardList) {
 			log.info("boardList = {}", boardDTO);

@@ -37,9 +37,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 
-		log.info("소셜 로그인 CustomSuccessHandler for onAuthenticationSuccess.CustomSuccessHandler.class");
+		log.info("소셜 로그인 CustomSuccessHandler from onAuthenticationSuccess.CustomSuccessHandler.class");
 		CustomDetails customUserDetails = (CustomDetails)authentication.getPrincipal();
-		log.info("customUserDetails for onAuthenticationSuccess.CustomSuccessHandler.class = {}", customUserDetails);
+		log.info("customUserDetails from onAuthenticationSuccess.CustomSuccessHandler.class = {}", customUserDetails);
 
 		String username = customUserDetails.getUsername();
 		log.info("username for onAuthenticationSuccess.CustomSuccessHandler.class = {}", username);
@@ -55,7 +55,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 		addRefreshToken(username, refresh, 86400000L);
 
-		log.info("CustomSuccessHandler for onAuthenticationSuccess.CustomSuccessHandler.class 끝");
+		log.info("CustomSuccessHandler from onAuthenticationSuccess.CustomSuccessHandler.class 끝");
 		response.addHeader("access", access);
 		response.addCookie(createCookie("access", access));
 		response.addCookie(createCookie("refresh", refresh));
@@ -81,9 +81,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		refreshDTO.setUsername(username);
 		refreshDTO.setExpiration(dateByOAuth2.toString());
 
-		log.info("refreshDTO for addRefreshToken.CustomSuccessHandler.class = {}", refreshDTO);
+		log.info("refreshDTO from addRefreshToken.CustomSuccessHandler.class = {}", refreshDTO);
 		result += this.refreshMapper.insertSave(refreshDTO);
-		log.info("result for addRefreshToken.CustomSuccessHandler.class = {}", result);
+		log.info("result from addRefreshToken.CustomSuccessHandler.class = {}", result);
 
 	}
 

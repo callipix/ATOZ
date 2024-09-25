@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.atoz.login.service.LoginService;
 import com.project.atoz.security.auth.CustomDetails;
@@ -26,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LoginController {
 
-	private final LoginService loginService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final LoginService loginService;
 
 	@GetMapping("/logout")
 	public String logOut(HttpSession session, HttpServletRequest request) {
@@ -40,11 +39,6 @@ public class LoginController {
 	@GetMapping("/loginForm")
 	public String loginForm() {
 		return "login/loginForm";
-	}
-
-	// @GetMapping("/oauth2/code/google")
-	public void signinKakao(@RequestParam String code) {
-		log.info("code = {}", code);
 	}
 
 	@PostMapping("/login")

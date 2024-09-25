@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.project.atoz.dto.SuggestionDTO;
-import com.project.atoz.suggestion.dao.SuggestionDAO;
+import com.project.atoz.suggestion.mapper.SuggestionMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,51 +17,51 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class SuggestionServiceImpl implements SuggestionService {
 
-	private final SuggestionDAO suggestionDAO;
+	private final SuggestionMapper suggestionMapper;
 
 	@Override
-	public List<SuggestionDTO> getSuggestList(Map map) {
-		List<SuggestionDTO> suggestionDTOList = suggestionDAO.getSuggestList(map);
+	public List<SuggestionDTO> getSelectPage(Map map) {
+		List<SuggestionDTO> suggestionDTOList = this.suggestionMapper.getSelectPage(map);
 		log.info("getSuggestList for serviceImpl");
 		return suggestionDTOList;
 	}
 
 	@Override
-	public SuggestionDTO insert(SuggestionDTO suggestionDTO) {
+	public SuggestionDTO suggestCommentInsert(SuggestionDTO suggestionDTO) {
 
-		int result = this.suggestionDAO.insert(suggestionDTO);
+		int result = this.suggestionMapper.suggestCommentInsert(suggestionDTO);
 		log.info("insert for serviceImpl{}", result);
 		log.info("suggestionDTO {}", suggestionDTO);
 		return suggestionDTO;
 	}
 
 	@Override
-	public int update(SuggestionDTO suggestionDTO) {
-		int result = this.suggestionDAO.update(suggestionDTO);
+	public int updateSuggestComment(SuggestionDTO suggestionDTO) {
+		int result = this.suggestionMapper.updateSuggestComment(suggestionDTO);
 		log.info("update for serviceImpl{}", result);
 		log.info("suggestionDTO {}2", suggestionDTO);
 		return result;
 	}
 
 	@Override
-	public int delete(String password, int sno) {
+	public int suggestCommentDelete(String password, int sno) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("password", password);
 		map.put("sno", sno);
-		int result = suggestionDAO.delete(map);
+		int result = this.suggestionMapper.suggestCommentDelete(map);
 		return result;
 	}
 
 	@Override
-	public int getSuggestListCount() {
-		int result = suggestionDAO.getSuggestListCount();
+	public int suggestCommentCount() {
+		int result = this.suggestionMapper.suggestCommentCount();
 		log.info("getSuggestListCount for serviceImpl{}", result);
 		return result;
 	}
 
 	@Override
-	public int passCheck(int sno, String password) {
-		int result = suggestionDAO.passCheck(sno, password);
+	public int isEqualsIdNPass(int sno, String password) {
+		int result = this.suggestionMapper.isEqualsIdNPass(sno, password);
 		return result;
 	}
 }

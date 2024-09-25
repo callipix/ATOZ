@@ -25,8 +25,7 @@ import com.project.atoz.dto.PageHandler;
 import com.project.atoz.dto.SearchCondition;
 import com.project.atoz.errorboard.service.ErrorBoardService;
 import com.project.atoz.fileupload.AwsS3FileUploadService;
-import com.project.atoz.fileupload.FileUpload;
-import com.project.atoz.properties.AwsProperties;
+import com.project.atoz.fileupload.mapper.FileMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,10 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ErrorBoardController {
 
-	private final ErrorBoardService errorBoardService;
-	private final FileUpload fileUpload;
-	private final AwsProperties awsProperties;
 	private final AwsS3FileUploadService awsS3FileUploadService;
+	private final ErrorBoardService errorBoardService;
+	private final FileMapper fileMapper;
 
 	@ResponseBody
 	@PostMapping("/isCheckWriter")
@@ -98,7 +96,7 @@ public class ErrorBoardController {
 		RedirectAttributes ratts, Model model, HttpSession session) {
 		String writer = (String)session.getAttribute("id");
 		errorBoardDTO.setWriter(writer);
-		List<FilesDTO> filesDTOList = this.fileUpload.getDeleteList(errorBoardDTO.getErrBno());
+		List<FilesDTO> filesDTOList = this.fileMapper.getDeleteList(errorBoardDTO.getErrBno());
 		for (FilesDTO filesDTO : filesDTOList) {
 			log.info("filesDTO = {}", filesDTO);
 		}
@@ -128,7 +126,7 @@ public class ErrorBoardController {
 
 		int result = 0;
 
-		List<FilesDTO> filesDTOList = this.fileUpload.getDeleteList(errBno);
+		List<FilesDTO> filesDTOList = this.fileMapper.getDeleteList(errBno);
 		try {
 			result = this.errorBoardService.delete(errBno, writer);
 			if (result == 0) {
@@ -176,7 +174,7 @@ public class ErrorBoardController {
 			m.addAttribute("ph", pageHandler);
 
 			for (ErrorBoardDTO errorBoardDTO : boardList) {
-				log.info("errorBoardDTO = {}", errorBoardDTO);
+				log.info("errorBoardDTO from getBoardList = {}", errorBoardDTO);
 			}
 			Instant startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
 			m.addAttribute("startOfToday", startOfToday.toEpochMilli());
