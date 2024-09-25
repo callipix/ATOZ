@@ -83,7 +83,16 @@
 </div>
 </div>
 <br>
-
+<h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
+<h5>이하 펼쳐보기 부분 전부 플로우차트 및 시퀀스 다이어그램, 클래스 다이어그램으로 수정 예정</h5>
+<h3>1. Spring Security 기반의 JWT 방식의 OAuth2.0 인증로그인 </h3>
+  <details>
+            <summary>펼쳐보기</summary>
+  <div align="center">
+         <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
+  <img style="width:100%" src="https://github.com/user-attachments/assets/a3b6e66d-0de4-4679-a9de-035dafd8c345">
+    </div>
+  </details>
 <br>
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
