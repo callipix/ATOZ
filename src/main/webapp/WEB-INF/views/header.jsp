@@ -146,6 +146,7 @@
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
+                    console.log("response = "+ response)
                     if (response) {
                         alert(response);
                     }

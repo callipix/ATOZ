@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @Configuration
 @PropertySource("classpath:error_message.properties")
-public class ErrorMesageProperties {
+public class ErrorMessageProperties {
 
 	@Value("${required.userDTO.id}")
 	private String errorId;

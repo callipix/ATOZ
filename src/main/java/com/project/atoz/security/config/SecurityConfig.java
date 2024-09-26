@@ -101,7 +101,7 @@ public class SecurityConfig {
 		/** 폼 로그인 : 비활성화 */
 		http.formLogin().disable();
 
-		/** HTTP Basic 인증 : 비활성화(기존 : 요청헤더에 사용자명 + 비밀번호 포함 인증) */
+		/** HTTP Basic 인증 : 비활성화(기존 : 요청 헤더에 사용자명 + 비밀번호 포함 인증) */
 		http.httpBasic().disable();
 
 		/** 특정 URL에 대한 접근 권한 설정 */
@@ -121,14 +121,14 @@ public class SecurityConfig {
 			.anyRequest().authenticated()
 		);
 
-		/** 로그인관련 필터 설정 시작 */
+		/** 로그인 관련 필터 설정 시작 */
 		http.addFilterBefore(
 			new LoginFilter(authenticationManager(authenticationConfiguration), refreshMapper, jwtUtil),
 			UsernamePasswordAuthenticationFilter.class);
 		http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
 		http.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
-		/** 로그인관련 필터 설정 끝 */
+		/** 로그인 관련 필터 설정 끝 */
 
 		/** OAuth2 인증 설정 시작 */
 		http.oauth2Login((oauth2) -> oauth2
@@ -139,7 +139,7 @@ public class SecurityConfig {
 		);
 		/** OAuth2 인증 설정 끝 */
 
-		/** session정책 설정 : stateless */
+		/** session 정책 설정 : stateless */
 		http.sessionManagement((session) -> session
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

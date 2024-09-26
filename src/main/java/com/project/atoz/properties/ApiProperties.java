@@ -15,5 +15,7 @@ public class ApiProperties {
 	private String apiKey;
 	@Value("${api_secret}")
 	private String apiSecret;
+	@Value("${api_admin_phoneNo}")
+	private String apiAdminNo;
 
 }

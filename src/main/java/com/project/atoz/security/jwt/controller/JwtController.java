@@ -24,12 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 public class JwtController {
-
+	/**
+	 * Access Token 만료시 재발급 하기 위한 컨트롤러
+	 */
 	private final JwtUtil jwtUtil;
 	private final RefreshMapper refreshMapper;
 
 	@PostMapping("/reissue")
-	public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 
 		log.info("jwt Controller 시작");
 		// get refresh token
@@ -51,10 +53,10 @@ public class JwtController {
 		try {
 			jwtUtil.isExpired(refresh);
 		} catch (ExpiredJwtException e) {
-			return new ResponseEntity<>("refresh token expired for ExpiredJwtException", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("refresh token expired from ExpiredJwtException", HttpStatus.BAD_REQUEST);
 		}
 
-		// 토큰이 refresh인지 확인(발급시 페이로드에 명시)
+		// Refresh 토큰인지 확인(발급시 페이로드에 명시)
 		String category = jwtUtil.getCategory(refresh);
 		log.info("category = {}", category);
 
@@ -62,10 +64,10 @@ public class JwtController {
 			return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
 		}
 
-		// DB에 저장되어 있는지 확인
+		// DB에 저장 되어 있는지 확인
 		Boolean isExits = refreshMapper.existsByRefreshToken(refresh);
 		if (!isExits) {
-			return new ResponseEntity<>("refresh token expired for database", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("refresh token expired in database", HttpStatus.BAD_REQUEST);
 		}
 
 		String username = jwtUtil.getUsername(refresh);

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RestApiController {
 
 	@GetMapping("/addToken")
-	public String addToken(HttpServletResponse response, HttpServletRequest request) {
+	public String addToken(HttpServletRequest request) {
 		Cookie[] cookie = request.getCookies();
 		String access = request.getHeader("access");
 		log.info("cookie from addToken.RestApiController.class = {}", cookie);
@@ -38,7 +38,7 @@ public class RestApiController {
 
 	@ResponseBody
 	@GetMapping("/secureEndpoint")
-	public String secureEndpoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public String secureEndpoint(HttpServletResponse response, HttpServletRequest request) {
 		String access = null;
 		String refresh = null;
 
@@ -64,7 +64,7 @@ public class RestApiController {
 
 	@ResponseBody
 	@GetMapping("/headerEndpoint")
-	public String headerPoint(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public String headerPoint(HttpServletResponse response, HttpServletRequest request) {
 
 		String accessToken = request.getHeader("access");
 		Cookie cookie = new Cookie("access", null);
@@ -75,7 +75,7 @@ public class RestApiController {
 	}
 
 	@ResponseBody
-	@PostMapping("/jwtLogin")
+	@PostMapping(value = "/jwtLogin", produces = "application/json; charset=utf-8")
 	public ResponseEntity<String> jwtLogin(HttpServletRequest request) {
 
 		log.info("jwtLogin 호출");
@@ -92,16 +92,6 @@ public class RestApiController {
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
 			.body(userDetails.getName());
 	}
-
-	@ResponseBody
-	@PostMapping("/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
-
-		log.info("logout시 CustomLogoutFilter에 의해 처리되어서 여기에 안와야 정상");
-
-		return "logout?";
-	}
-
 	@ResponseBody
 	@GetMapping(value = "/tokenCheck", produces = "application/json; charset=utf-8")
 	public String tokenCheck(HttpServletRequest request, HttpServletResponse response) {
@@ -123,5 +113,13 @@ public class RestApiController {
 		log.info("isUser.utf8 from tokenCheck = {}", isUser);
 		response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));
 		return isUser;
+	}
+	@ResponseBody
+	@PostMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+
+		log.info("logout시 CustomLogoutFilter에 의해 처리되어서 여기에 안와야 정상");
+
+		return "logout?";
 	}
 }

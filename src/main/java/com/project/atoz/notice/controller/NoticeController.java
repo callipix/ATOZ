@@ -32,7 +32,7 @@ public class NoticeController {
 
 	private final NoticeService noticeService;
 
-	@Timer
+	@Timer2
 	@GetMapping("")
 	public ResponseEntity<Object> findAll() {
 		List<NoticeDTO> noticeDTO = noticeService.getAllNotices();

@@ -35,7 +35,7 @@ public class RegisterServiceImpl implements RegisterService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertUser(RegisterDTO registerDTO) throws Exception {
+	public int insertUser(RegisterDTO registerDTO) {
 		int result = this.registerMapper.insertUser(registerDTO.getUserDTO());
 		result += this.registerMapper.insertMember(registerDTO.getMemberDTO());
 		UserAuth userAuth = new UserAuth(registerDTO.getUserDTO().getId());
@@ -65,19 +65,20 @@ public class RegisterServiceImpl implements RegisterService {
 
 		String apiKey = apiProperties.getApiKey();
 		String apiSecret = apiProperties.getApiSecret();
+		String fromNo = apiProperties.getApiAdminNo();
 
 		Message coolsms = new Message(apiKey, apiSecret);
 
 		// 4 params(to, from, type, text) are mandatory. must be filled
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phoneNo);    // 수신전화번호
-		params.put("from", "01083354487");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+		params.put("from", fromNo);    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
 		params.put("type", "SMS");
 		params.put("text", "문자메세지 테스트 : 인증번호는" + "[" + noStr + "]" + "입니다.");
 		params.put("app_version", "test app 1.2"); // application name and version
 
 		try {
-			JSONObject obj = (JSONObject)coolsms.send(params);
+			JSONObject obj = coolsms.send(params);
 			log.info(" {} ", obj.toString());
 		} catch (CoolsmsException e) {
 			log.info(" {} ", e.getMessage());
