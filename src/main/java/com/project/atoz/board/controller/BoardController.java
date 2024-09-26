@@ -42,7 +42,7 @@ public class BoardController {
 	private final CommentService commentService;
 
 	@GetMapping("/modify")
-	public String modify(Integer bno, Model m, HttpServletRequest request) {
+	public String modify(Integer bno, Model m) {
 		BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 		m.addAttribute("boardDTO", boardDTO);
 		m.addAttribute("mode", "mod");
@@ -52,7 +52,7 @@ public class BoardController {
 	// 글수정
 	@ResponseBody
 	@PostMapping("/modify")
-	public ResponseEntity<Map<String, String>> modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m) throws Exception {
+	public ResponseEntity<Map<String, String>> modify(BoardDTO boardDTO, SearchCondition sc, Model m) throws Exception {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 				.getAuthentication()
 				.getPrincipal();
