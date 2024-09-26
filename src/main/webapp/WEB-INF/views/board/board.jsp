@@ -25,7 +25,6 @@
 <jsp:include page="../header.jsp"/>
 <script>
     let msg = "${msg}";
-
 </script>
 <div>
     <div class="board-container">

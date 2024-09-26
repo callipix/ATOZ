@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <html>
 <title>프로젝트 개요</title>
 <head>
@@ -70,7 +70,7 @@
         </div>
         <div class="card-body p-4">
             <span class="badge text-bg-light mt-3">Infomation</span>
-            <h2 class="fs-9 fw-semibold my-4">일하고 싶은데.. 공부하면서 만들어본 미니 프로젝트</h2>
+            <h2 class="fs-9 fw-semibold my-4">공부하려고 만들어본 미니 프로젝트</h2>
             <div class="d-flex align-items-center gap-4">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ti ti-eye text-dark fs-5"></i>여긴 조회수 들어갈 곳
@@ -97,14 +97,13 @@
             <%--            --%>
             <div class="border-top mt-7 pt-7">
                 <div style="text-align:center">
-                    <h4>처음엔 가계부 관련된 프로젝트를 해보고 싶었는데.. 막상 설계 해보니 고려해야할 요소들이
-                        <br>너무 많아서 기본기도 없는데 이것저것 해보자는 생각보단 기존에 배웠던 내용들을 바탕으로
-                        <br>알고있는 내용들을 다시 한번 재점검 하고자 시작한 미니 프로젝트
+                    <h4>처음엔 가계부 관련된 프로젝트를 해보고 싶었는데 설계 과정에서 고려해야할 요소들이 너무 많아 이것저것 해보자는 생각보단
+                        <br>기존에 배웠던 내용들을 바탕으로 알고있는 내용들을 다시 한번 재점검 하고자 시작한 미니 프로젝트
                     </h4>
                 </div>
                 <br>
                 <div style="display: flex; align-items: center">
-                    <h3 class="fw-semibold">미니프로젝트 목표 : <h4 class="fw-semibold">&nbsp;2024.08.04 기준 1-9 달성</h4></h3>
+                    <h3 class="fw-semibold">프로젝트 주요 체크항목<h4 class="fw-semibold"></h4></h3>
                 </div>
                 <ol class="my-3 text-dark">
                     <li>기본적인 CRUD 다시 한번 체크 및 재정리</li>
@@ -125,12 +124,12 @@
                 <span style="text-decoration: line-through;"></span>
             </p>
             <p class="text-dark mb-0">
-                <strong>현재 페이지도 나중에 내용들을 DB화 해서 데이터 별도 저장 예정(관리자만 등록↔수정)</strong>
+                <strong>현재 페이지도 나중에 내용들 DB화하여 별도 저장 예정</strong>
             </p>
             <div class="border-top mt-7 pt-7">
                 <h3 class="fw-semibold">개발기간 및 과정</h3>
                 <ul class="my-3 ps-4 text-dark">
-                    <h4>2024.07.17 - 2024.08.02 현재 진행중 계속 업데이트 예정</h4>
+                    <h4>2024.07.17 - 2024.08.06 1차 마무리</h4>
                     <li class="d-flex align-items-center gap-2">
                         <span class="p-1 text-bg-dark rounded-circle"></span>기본적인 가입 인증 로직 설계
                     </li>
@@ -138,7 +137,18 @@
                         <span class="p-1 text-bg-dark rounded-circle"></span>간단한 게시판 CRUD, 검색 & 페이징 처리
                     </li>
                     <li class="d-flex align-items-center gap-2">
-                        <span class="p-1 text-bg-dark rounded-circle"></span>AWS를 활용한 별도 서버 구축해보기
+                        <span class="p-1 text-bg-dark rounded-circle"></span>AWS를 활용한 별도 서버 구축 및 AWS S3 파일업로드
+                    </li>
+                    <br>
+                     <h4>2024.09.01 - 2024.09.24 2차 마무리 </h4>
+                    <li class="d-flex align-items-center gap-2">
+                        <span class="p-1 text-bg-dark rounded-circle"></span>Spring Seucurity 기반 JWT방식의 OAuth2.0 인증 로그인 구현(일반+소셜 로그인)
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <span class="p-1 text-bg-dark rounded-circle"></span>성능 테스트용 더미데이터 추가
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <span class="p-1 text-bg-dark rounded-circle"></span>부하테스트 및 성능 개선을 위한 캐싱
                     </li>
                 </ul>
             </div>

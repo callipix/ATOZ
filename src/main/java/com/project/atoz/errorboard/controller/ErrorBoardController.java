@@ -63,11 +63,13 @@ public class ErrorBoardController {
 
 		log.info("errorBoardDTO = {}", errorBoardDTO);
 		log.info("afterList = {}", afterList);
+
 		String writer = (String)session.getAttribute("id");
 		errorBoardDTO.setWriter(writer);
+
 		int result = 0;
 		try {
-			result = this.errorBoardService.insertErrorBoardMapper(errorBoardDTO, afterList);
+			result = this.errorBoardService.insert(errorBoardDTO, afterList);
 
 			if (result == 0) {
 				model.addAttribute("mode", "new");
@@ -102,7 +104,7 @@ public class ErrorBoardController {
 		}
 		int result = 0;
 		try {
-			result = this.errorBoardService.update(errorBoardDTO, afterList);
+			result = this.errorBoardService.modify(errorBoardDTO, afterList);
 			if (result == 0) {
 				throw new Exception("Modify Error");
 			}

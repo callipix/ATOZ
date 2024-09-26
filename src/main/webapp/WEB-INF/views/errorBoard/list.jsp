@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ page session="true"%>
-<!-- Core Css -->
 <title>에러게시판 게시글 리스트</title>
 <link rel="shortcut icon" type="image/png" href="<c:url value='/bootstrap/assets/images/logos/favicon.png'/>" />
 <link rel="stylesheet" href="<c:url value='/bootstrap/assets/css/styles.css'/>" />

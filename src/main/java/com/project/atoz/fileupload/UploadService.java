@@ -34,7 +34,6 @@ public class UploadService {
 
 		MultipartFile uploadImg = request.getFile("upload");
 		log.info("uploadImg = {}", uploadImg);
-		//		String id = (String)session.getAttribute("id");
 
 		CustomDetails customDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()

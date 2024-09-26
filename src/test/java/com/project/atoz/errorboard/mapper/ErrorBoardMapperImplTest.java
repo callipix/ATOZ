@@ -43,21 +43,21 @@ public class ErrorBoardMapperImplTest {
 			errorBoardDTO.setTitle("에러코드 테스트" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insert(errorBoardDTO);
 		}
 		for (int i = 0; i < 50; i++) {
 			errorBoardDTO.setErrCode("bbbb" + i);
 			errorBoardDTO.setTitle("제목에러로만" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insert(errorBoardDTO);
 		}
 		for (int i = 20; i < 30; i++) {
 			errorBoardDTO.setErrCode("cccc" + i);
 			errorBoardDTO.setTitle("테스트용" + i);
 			errorBoardDTO.setContent("내용은 이렇고" + i);
 			errorBoardDTO.setWriter("aaaa1234");
-			result += errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
+			result += errorBoardMapper.insert(errorBoardDTO);
 		}
 		assertTrue(result == 150);
 	}

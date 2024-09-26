@@ -2,10 +2,10 @@ package com.project.atoz.board.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
+import com.project.atoz.security.auth.CustomDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +31,15 @@ public class CommentController {
 
 	@ResponseBody
 	@PatchMapping("/comments/{cno}")
-	public ResponseEntity<String> modify(@PathVariable Integer cno, @RequestBody CommentDTO commentDTO,
-		HttpSession session) {
+	public ResponseEntity<String> modify(@PathVariable Integer cno, @RequestBody CommentDTO commentDTO) {
 
 		log.info("commentDTO = {}", commentDTO);
+		SecurityContextHolder.getContext().getAuthentication().getName();
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+				.getAuthentication()
+				.getPrincipal();
 
-		String commenter = (String)session.getAttribute("id");
+		String commenter = userDetails.getName();
 
 		commentDTO.setCno(cno);
 		commentDTO.setCommenter(commenter);
@@ -56,14 +59,19 @@ public class CommentController {
 	/**
 	 * 댓글 등록 메서드
 	 * @param commentDTO 댓글
-	 * @param session 댓글 작성자 아이디를 가져오기 위한 세션
+	 * @param session 댓글 작성자 아이디를 가져오기 위한 세션 → 시큐리티 세션(JWT)으로 변경
 	 * @return 작성된 댓글 DTO 반환
 	 */
 	@ResponseBody
 	@PostMapping("/comments")
-	public ResponseEntity<CommentDTO> write(CommentDTO commentDTO, HttpSession session) {
+	public ResponseEntity<CommentDTO> write(CommentDTO commentDTO) {
 
-		String commenter = (String)session.getAttribute("id");
+		SecurityContextHolder.getContext().getAuthentication().getName();
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+				.getAuthentication()
+				.getPrincipal();
+
+		String commenter = userDetails.getName();
 		commentDTO.setCommenter(commenter);
 		try {
 			CommentDTO result = this.commentService.insertComment(commentDTO);
@@ -80,10 +88,14 @@ public class CommentController {
 	// 지정된 댓글을 삭제하는 메서드
 	@ResponseBody
 	@DeleteMapping("/comments/{cno}")
-	public ResponseEntity<String> remove(@PathVariable Integer cno, Integer bno, HttpSession session) {
+	public ResponseEntity<String> remove(@PathVariable Integer cno, Integer bno) {
 
-		String commenter = (String)session.getAttribute("id");
+		SecurityContextHolder.getContext().getAuthentication().getName();
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+				.getAuthentication()
+				.getPrincipal();
 
+		String commenter = userDetails.getName();
 		try {
 			int result = this.commentService.deleteComment(cno, bno, commenter);
 
@@ -104,12 +116,12 @@ public class CommentController {
 		List<CommentDTO> list = null;
 		try {
 			list = this.commentService.getCommentForBoard(bno);
-			// 댓글 리스트를 정상적으로 가져왔을시에 http 상태코드를 200으로 설정
+			// 댓글리스트 정상적으로 로드 : http 상태코드 200으로 설정
 			m.addAttribute("list", list);
 			return new ResponseEntity<List<CommentDTO>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//  에러 발생시 http의 상태코드를 400으로 변경
+			//  에러 발생시 http 상태코드 400으로 변경
 			return new ResponseEntity<List<CommentDTO>>(list, HttpStatus.BAD_REQUEST);
 		}
 	}

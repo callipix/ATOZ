@@ -33,13 +33,22 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 	private final FileMapper fileMapper;
 	private final AmazonS3 amazonS3;
 
-	// UUID를 사용해서 저장할 파일 이름을 생성(중복방지)
+	/**
+	 * 업로드될 파일이 기존 파일과 파일명이 중복될 경우를 방지하기 위해 파일명을 생성하는 메서드
+	 * @param originName 원본파일명
+	 * @return 새로 생성된 파일명(UUID로 생성된 파일명 + "_"+원본파일명)
+	 */
 	private String makeFileName(String originName) {
 		String uuidName = UUID.randomUUID().toString();
 		log.info("makeFileName uuidName = {}", uuidName);
 		return uuidName + "_" + originName;
 	}
 
+	/**
+	 * 확장자를 반환하는 메서드
+	 * @param fileName 원본파일명
+	 * @return
+	 */
 	// 확장자를 반환하는 메서드
 	private String getFileExtension(String fileName) {
 		int dotIndex = fileName.lastIndexOf(".");

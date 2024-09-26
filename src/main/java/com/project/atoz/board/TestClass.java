@@ -1,7 +1,10 @@
 package com.project.atoz.board;
 
 public class TestClass {
-
+	/**
+	 * 심심할때 공부하는 정렬메서드 짜보기
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		int[] arr = {64, 25, 12, 22, 11};

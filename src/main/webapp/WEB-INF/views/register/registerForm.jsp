@@ -3,25 +3,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page session="true" %>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <link rel="stylesheet" href="<c:url value='/css/register.css'/>">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<%--<jsp:include page="../header.jsp" />--%>
 <script>
 </script>
 <body>
 <br>
 <div id="formDiv" class="formDiv">
-    <!-- 폼 필드들 -->
-    <!-- 폼 필드들 -->
-    <%--    <form:form modelAttribute="registerDTO" method="post" id="signUpForm" action="${pageContext.request.contextPath}/register">--%>
     <form id="signUpForm" method="post" action="<c:url value='/register/'/>">
         <div class="container">
             <h1>회원가입</h1>
@@ -38,7 +30,6 @@
                 </div>
                 <input type="text" placeholder="아이디를 입력하세요." name="id" id="id" required value="<c:out value='${id}'/>">
                 <div id="msg" class="msg">
-                    <%--                    <form:errors path="id" cssClass="error" />--%>
                 </div>
             </div>
             <br>
