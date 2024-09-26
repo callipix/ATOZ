@@ -117,7 +117,7 @@
 </div>
 <script>
     let bno = "${boardDTO.bno}";
-    let listBtn = document.querySelector('#listBtn');
+    const listBtn = document.querySelector('#listBtn');
     const form = document.querySelector("#newForm");
 
     $(document).ready(function () {

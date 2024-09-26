@@ -315,6 +315,7 @@ const editorConfig = {
     },
 
 };
+
 ClassicEditor.create(document.querySelector('#content'), editorConfig)
     .then(editor => {
         window.editor = editor;

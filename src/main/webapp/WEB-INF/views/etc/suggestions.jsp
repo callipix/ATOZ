@@ -217,11 +217,6 @@
             }
             let str = '';
             let ms = Date.now();
-
-            alert("작성자명" + suggestDTO.writer);
-            alert("패스워드" + suggestDTO.password);
-            alert("내용" + suggestDTO.content);
-
             $.ajax({
                 url: "/suggestions",
                 method: 'post',
@@ -245,7 +240,7 @@
 
         modifyBtn.addEventListener('click', function () {
 
-            if (!confirm("수정하시겠습니까?")) {
+            if (!confirm("수정 하시겠습니까?")) {
             }
 
         })

@@ -3,30 +3,50 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page session="true" %>
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal"/>
 </sec:authorize>
-<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>자유게시판 게시글수정</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.2/translations/ko.js"></script>
-    <title>자유게시판 게시글수정</title>
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
 <script>
+    let boardWriter = "${boardDTO.writer}";
+    let beforeImgAddressModify = [];
     let msg = "${msg}";
-    let beforeImgAddress = [];
-    let username = ${principal.name};
-    if (!username) {
+
+    if(accessToken){
+        $.ajax({
+            url : '/tokenCheck',
+            method : 'get',
+            xhrFields: {
+                withCredentials: true
+            },
+            headers :{
+                'access': accessToken,
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            dataType: "text",
+            success : function(response){
+                if(boardWriter != response){
+                    alert("잘못된 접근입니다");
+                    history.back();
+                }
+            }
+        })
+    } else {
         alert("로그인 후 이용하세요");
-        location.href = '/errorBoard/list';
+        history.back();
     }
 </script>
 
@@ -39,26 +59,12 @@
                 <%--                    <button type="button" id="writeNewBtn" class="btn btn-write"><i class="fa fa-pencil"></i>글쓰기</button>--%>
                 <%--                </c:if>--%>
                 <div class="btnList">
-                    <sec:authorize access="authenticated" var="authenticated"/>
-                    <c:choose>
-                        <c:when test="${authenticated}">
-                            <sec:authentication property="principal" var="id"/>
                             <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제하기
                             </button>
                             <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정등록
                             </button>
                             <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로
                             </button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로
-                            </button>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:if test="${mode eq 'new'}">
-                        <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 글쓰기
-                        </button>
-                    </c:if>
                 </div>
             </div>
         </div>
@@ -140,7 +146,8 @@
 </div>
 <script>
     let bno = "${boardDTO.bno}";
-    let listBtn = document.querySelector('#listBtn');
+    const listBtn = document.querySelector('#listBtn');
+    const form = document.querySelector("#form");
     let isReadonly = $("input[name=title]").attr('readonly');
 
     if (isReadonly === 'readonly') {
@@ -152,15 +159,14 @@
 
         let formCheck = function () {
 
-            let form = document.querySelector("#form");
             let modifyContent = editor.getData();
 
-            if (form.title.value === '') {
+            if (form.title.value === "") {
                 alert("제목을 입력해 주세요.");
                 form.title.focus();
                 return false;
             }
-            if (modifyContent.value === '') {
+            if (modifyContent.value === "") {
                 alert("내용을 입력해 주세요.");
                 form.content.focus();
                 return false;
@@ -169,7 +175,7 @@
         }
 
         $("#removeBtn").on("click", function () {
-            if (!confirm("정말로 삭제하시겠습니까?")) {
+            if (!confirm("정말로 삭제 하시겠습니까?")) {
                 return;
             }
             let form = $("#form");
@@ -179,28 +185,65 @@
         })
 
         $("#modifyBtn").on("click", function () {
-            let form = $("#form");
 
-            form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
-            form.attr("method", "post");
+            <%--form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");--%>
+            // form.attr("method", "post");
+            let content = editor.getData();
+            let formData = new FormData();
+
+            formData.append("title", form.title.value);
+            formData.append("content", content);
+            formData.append("bno", bno);
 
             if (formCheck()) {
                 let afterImgAddress = getImageSrcFromData(editor.getData());
-
                 let imageAddress = {
-                    "beforeImgAddress": beforeImgAddress,
+                    "beforeImgAddress": beforeImgAddressModify,
                     "afterImgAddress": afterImgAddress
                 }
                 $.ajax({
                     url: '/contentImgCheck',
                     type: 'post',
-                    contentType: 'application/json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    headers :{
+                        'access': accessToken,
+                        'Content-Type': 'application/json'
+                    },
                     data: JSON.stringify(imageAddress),
                     success: function (result) {
-                        beforeImgAddress = [];
+                        beforeImgAddressModify = [];
                         if (result != 1) return;
                     }
                 })
+                $.ajax({
+                    url : '/board/modify',
+                    method : 'post',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    headers :{
+                        'access': accessToken,
+                    },
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        if (response.msg === "MOD_OK") {
+                            alert("성공적으로 수정되었습니다.");
+                            location.href = response.redirectURL;
+                        }
+                    },
+                    error: function (response) {
+                        alert(response);
+                        if (response.msg === "MOD_ERR") {
+                            alert("글수정이 실패하였습니다.");
+                            location.href = response.redirectURL;
+                        }
+                    }
+                })
+
                 $('#modifyContent').attr('name', 'content');
                 form.submit();
             }

@@ -30,6 +30,8 @@ import com.project.atoz.security.auth.CustomDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -40,14 +42,40 @@ public class BoardController {
 	private final CommentService commentService;
 
 	@GetMapping("/modify")
-	public String modify(Integer bno, Model m) {
-
+	public String modify(Integer bno, Model m, HttpServletRequest request) {
 		BoardDTO boardDTO = this.boardService.getBoardByBno(bno);
 		m.addAttribute("boardDTO", boardDTO);
 		m.addAttribute("mode", "mod");
+		log.info("boardDTO = {}", boardDTO);
 		return "/board/modify";
 	}
+	// 글수정
+	@ResponseBody
+	@PostMapping("/modify")
+	public ResponseEntity<Map<String, String>> modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m) throws Exception {
+		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
+				.getAuthentication()
+				.getPrincipal();
+		String writer = userDetails.getName();
+		boardDTO.setWriter(writer);
 
+		int result = this.boardService.updateBoardByIdNBno(boardDTO);
+		Map<String, String> responseMap = new HashMap<>();
+		try {
+			if (result != 1) {
+				throw new Exception("Modify Error");
+			}
+			responseMap.put("msg", "MOD_OK");
+			responseMap.put("redirectURL", "/board/boardList" + sc.getQueryString());
+			return ResponseEntity.ok(responseMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			m.addAttribute(boardDTO);
+			responseMap.put("msg", "MOD_ERR");
+			responseMap.put("redirectURL", "/board/board");
+			return ResponseEntity.badRequest().body(responseMap);
+		}
+	}
 	/**
 	 * 게시글 삭제 메서드
 	 *
@@ -55,6 +83,10 @@ public class BoardController {
 	 * @param sc      삭제 후에도 기존 페이지로 돌아가기 위해 사용
 	 * @param session 작성자 아이디를 가져오기 위한 세션 → 시큐리티 세션으로 변경
 	 * @param rattr   리다이렉트 하기 위한 변수
+	 * @return
+	 * ↓ 변경
+	 * @param removeData
+	 * @param rattr
 	 * @return
 	 */
 	@ResponseBody
@@ -65,9 +97,6 @@ public class BoardController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		SearchCondition sc = mapper.convertValue(removeData.get("sc"), SearchCondition.class);
-
-		log.info("sc = {}", sc);
-		log.info("bno = {}", bno);
 
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
@@ -91,31 +120,6 @@ public class BoardController {
 		return "/board/boardList" + sc.getQueryString();
 	}
 
-	// 글수정
-	@PostMapping("/modify")
-	public String modify(BoardDTO boardDTO, SearchCondition sc, RedirectAttributes rattr, Model m) throws Exception {
-		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
-			.getAuthentication()
-			.getPrincipal();
-
-		String writer = userDetails.getName();
-		boardDTO.setWriter(writer);
-
-		int result = this.boardService.updateBoardByIdNBno(boardDTO);
-		try {
-			if (result != 1) {
-				throw new Exception("Modify Error");
-			}
-			rattr.addFlashAttribute("msg", "MOD_OK");
-			return "/board/boardList" + sc.getQueryString();
-		} catch (Exception e) {
-			e.printStackTrace();
-			m.addAttribute(boardDTO);
-			rattr.addAttribute("msg", "MOD_ERR");
-			return "/board/board";
-		}
-	}
-
 	@GetMapping("/write")
 	public String write(Model m) {
 		m.addAttribute("mode", "new");
@@ -124,7 +128,7 @@ public class BoardController {
 
 	@ResponseBody
 	@PostMapping("/write")
-	public ResponseEntity<Map<String, String>> write(BoardDTO boardDTO, RedirectAttributes rattr, Model m)
+	public ResponseEntity<Map<String, String>> write(BoardDTO boardDTO, Model m)
 		throws Exception {
 
 		log.info("boardDTO for write from BoardController = {}", boardDTO);
@@ -146,12 +150,10 @@ public class BoardController {
 		Map<String, String> responseMap = new HashMap<>();
 		if (result != 1) {
 			m.addAttribute("mode", "new");
-			// rattr.addAttribute("msg", "WRT_ERR");
 			responseMap.put("msg", "WRT_ERR");
 			responseMap.put("redirectURL", "/board/board");
 			return ResponseEntity.badRequest().body(responseMap);
 		} else {
-			// rattr.addFlashAttribute("msg", "WRT_OK");
 			responseMap.put("msg", "WRT_OK");
 			responseMap.put("redirectURL", "/board/boardList");
 			return ResponseEntity.ok(responseMap);  // JSON으로 응답
@@ -171,7 +173,7 @@ public class BoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			rattr.addAttribute("msg", "READ_ERR");
-			return "redirect:boardList" + sc.getQueryString();
+			return "/board/boardList" + sc.getQueryString();
 		}
 		return "/board/board";
 	}

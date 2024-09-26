@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/42.0.1/translations/ko.js"></script>
 </head>
 <style>
-    #removeBtn, #modifyBtn {
+    #removeBtn, #modifyBtn, #writeBtn {
         display: none;
     }
 </style>
@@ -25,6 +25,7 @@
 <jsp:include page="../header.jsp"/>
 <script>
     let msg = "${msg}";
+
 </script>
 <div>
     <div class="board-container">
@@ -32,11 +33,13 @@
             <div class="test-container">
                 <h2 class="writing-header">게시글 ${mode eq "new" ? "쓰기" : "읽기"}</h2>
                 <div class="btnList">
-                    <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제하기
+                    <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 글삭제
                     </button>
-                    <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정하기
+                    <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 글수정
                     </button>
-                    <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록으로
+                    <button type="button" id="writeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 글쓰기
+                    </button>
+                    <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 게시글목록
                     </button>
                 </div>
             </div>
@@ -97,6 +100,7 @@
 </div>
 <script>
     let bno = "${boardDTO.bno}";
+    let data = `${boardDTO.content}`;
 
     const removeBtn = document.querySelector('#removeBtn');
     const modifyBtn = document.querySelector('#modifyBtn');
@@ -104,7 +108,28 @@
 
     $(document).ready(function () {
 
-        let data = `${boardDTO.content}`;
+        if(accessToken){
+            $.ajax({
+                url : '/tokenCheck',
+                method : 'get',
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers :{
+                    'access': accessToken,
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                dataType: "text",
+                success : function(response){
+                    if(response === "${boardDTO.writer}"){
+                        removeBtn.style.display = 'block';
+                        modifyBtn.style.display = 'block';
+                        writeBtn.style.display = 'block';
+                    }
+                }
+            })
+        }
+
         $("#contentDisplay").html(data);
         $("#contentDisplay").children().children().children().css('max-width', '100%');
 
@@ -131,7 +156,7 @@
                     withCredentials: true
                 },
                 headers: {
-                    'access': tokenData,
+                    'access': accessToken,
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(removeData),
@@ -144,7 +169,7 @@
         $("#modifyBtn").on("click", function () {
             location.href = "<c:url value='/board/modify?bno=${boardDTO.bno}'/>";
         })
-        $("#writeNewBtn").on("click", function () {
+        $("#writeBtn").on("click", function () {
             location.href = "<c:url value='/board/write'/>";
         });
         $("#listBtn").on("click", function () {

@@ -32,7 +32,6 @@
 </style>
 <body>
 <script>
-    const tokenData = localStorage.getItem("access");
     let msg = "${msg}";
     if (msg === "LIST_ERR") alert("게시물 목록을 가져오는데 실패했습니다. 다시 시도해 주세요.");
     if (msg === "READ_ERR") alert("삭제되었거나 없는 게시물입니다.");
@@ -62,13 +61,6 @@
         <button id="writeBtn" type="button" class="btn-write"
                 onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기
         </button>
-        <sec:authorize access="authenticated" var="authenticated"/>
-        <c:if test="${authenticated}">
-            <sec:authentication property="principal" var="principal"/>
-            <button id="writeBtn" type="button" class="btn-write"
-                    onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기
-            </button>
-        </c:if>
     </form>
     <h6>${principal.username}</h6>
 </div>
@@ -139,10 +131,9 @@
 </nav>
 <script>
     const writeBtn = document.querySelector('#writeBtn');
-
     $(document).ready(function () {
 
-        if (tokenData) {
+        if (accessToken) {
             $.ajax({
                 url: '/tokenCheck',
                 type: "get",
@@ -150,10 +141,9 @@
                     withCredentials: true
                 },
                 headers: {
-                    'access': tokenData,
+                    'access': accessToken,
                     'Content-Type': 'application/json; charset=utf-8'
                 },
-                contentType: "application/json; charset=UTF-8", // Content-Type을 UTF-8로 설정
                 dataType: "text",                               // 서버가 문자열을 반환하는 경우
                 success: function (response) {
                     if (response) {
