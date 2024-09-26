@@ -45,11 +45,11 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.findByPage(startIdx);
 	}
 
-	@Override
-	@Transactional
-	public List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate) {
-		return this.noticeMapper.findNoticesByDates(startDate, endDate);
-	}
+//	@Override
+//	@Transactional
+//	public List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate) {
+//		return this.noticeMapper.findNoticesByDates(startDate, endDate);
+//	}
 
 	@Override
 	@Transactional

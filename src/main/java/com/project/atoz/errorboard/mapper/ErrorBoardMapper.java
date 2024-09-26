@@ -11,7 +11,7 @@ import com.project.atoz.dto.SearchCondition;
 public interface ErrorBoardMapper {
 
 	// 게시글 등록
-	int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO);
+	int insert(ErrorBoardDTO errorBoardDTO);
 
 	// 게시글 리스트
 	List<ErrorBoardDTO> getSearchSelectPage(SearchCondition sc);
@@ -26,7 +26,7 @@ public interface ErrorBoardMapper {
 	int delete(Integer errBno, String writer);
 
 	// 게시글 업데이트
-	int update(ErrorBoardDTO errorBoardDTO);
+	int modify(ErrorBoardDTO errorBoardDTO);
 
 	int increaseViewCount(int errBno);
 

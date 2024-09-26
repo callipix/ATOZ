@@ -7,7 +7,7 @@ import com.project.atoz.dto.SearchCondition;
 
 public interface ErrorBoardService {
 	// 게시글 등록
-	int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception;
+	int insert(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception;
 
 	// 게시글 리스트
 	List<ErrorBoardDTO> getSearchSelectPage(SearchCondition sc) throws Exception;
@@ -22,7 +22,7 @@ public interface ErrorBoardService {
 	int delete(Integer errBno, String writer) throws Exception;
 
 	// 게시글 업데이트
-	int update(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception;
+	int modify(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception;
 
 	int isCheckWriter(String writer, int errBno);
 

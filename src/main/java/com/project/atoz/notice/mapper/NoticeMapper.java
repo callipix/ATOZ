@@ -15,8 +15,8 @@ public interface NoticeMapper {
 
 	List<NoticeDTO> findByPage(int startIdx);
 
-	List<NoticeDTO> findNoticesByDates(@Param("startDate") LocalDateTime startDate,
-		@Param("endDate") LocalDateTime endDate);
+//	List<NoticeDTO> findNoticesByDates(@Param("startDate") LocalDateTime startDate,
+//		@Param("endDate") LocalDateTime endDate);
 
 	Integer getNoticeTotalCount();
 

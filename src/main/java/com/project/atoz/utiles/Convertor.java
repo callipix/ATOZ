@@ -12,12 +12,10 @@ public class Convertor {
 	}
 
 	public static String toLowerConvertor(String string) {
-		// 소문자를 대문자로 변환해주는
 		return string.toLowerCase();
 	}
 
 	public static String toUpperConvertor(String string) {
-		// 대문자를 소문자로 변환해주는
 		return string.toUpperCase();
 	}
 }

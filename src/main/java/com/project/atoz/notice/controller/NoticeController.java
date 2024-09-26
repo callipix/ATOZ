@@ -54,16 +54,16 @@ public class NoticeController {
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/dates")
-	public ResponseEntity<Object> findNoticesByDates(@RequestParam("startDate") String startDate,
-		@RequestParam("endDate") String endDate) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		List<NoticeDTO> noticeDTO = noticeService.findNoticesByDates(
-			LocalDateTime.parse(startDate, formatter),
-			LocalDateTime.parse(endDate, formatter)
-		);
-		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
-	}
+//	@GetMapping("/dates")
+//	public ResponseEntity<Object> findNoticesByDates(@RequestParam("startDate") String startDate,
+//		@RequestParam("endDate") String endDate) {
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		List<NoticeDTO> noticeDTO = noticeService.findNoticesByDates(
+//			LocalDateTime.parse(startDate, formatter),
+//			LocalDateTime.parse(endDate, formatter)
+//		);
+//		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+//	}
 
 	@Timer
 	@GetMapping("/count")

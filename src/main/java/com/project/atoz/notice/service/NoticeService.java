@@ -15,7 +15,7 @@ public interface NoticeService {
 
 	List<NoticeDTO> findByPage(HttpServletRequest request, int pageNumber);
 
-	List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate);
+//	List<NoticeDTO> findNoticesByDates(LocalDateTime startDate, LocalDateTime endDate);
 
 	Integer getNoticeTotalCount();
 

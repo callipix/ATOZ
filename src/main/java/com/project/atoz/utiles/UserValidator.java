@@ -27,11 +27,6 @@ public class UserValidator implements Validator {
 		String email = userDTO.getEmail();
 		String nickName = userDTO.getNickName();
 
-		// String idPattern = "^[a-zA-Z0-9]+$";
-		// String passwordPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]$";
-		// String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-		// String nickNamePattern = "^(?=.*[가-힣])?(?=.*[a-zA-Z])?(?=.*\\d)?[가-힣a-zA-Z\\d]$";
-
 		String idPattern = "^[a-zA-Z0-9]{8,12}$";
 		String passwordPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,20}$";
 		String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";

@@ -26,7 +26,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertErrorBoardMapper(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception {
+	public int insert(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception {
 		// 게시글 등록
 		errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
 
@@ -35,7 +35,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 			fileNoList.add(this.fileMapper.getFileNoKey(fileKeyList));
 		}
 
-		int result = errorBoardMapper.insertErrorBoardMapper(errorBoardDTO);
+		int result = errorBoardMapper.insert(errorBoardDTO);
 
 		// 최근에 작업했던(auto_increment값 가져오기)
 		int selectKey = this.fileMapper.getSelectKey();
@@ -83,11 +83,11 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int update(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception {
+	public int modify(ErrorBoardDTO errorBoardDTO, List<String> afterList) throws Exception {
 		// 게시글 업데이트
 		errorBoardDTO.setContent(StringUtils.escapeDollorSign(errorBoardDTO.getContent()));
 
-		int result = errorBoardMapper.update(errorBoardDTO);
+		int result = errorBoardMapper.modify(errorBoardDTO);
 
 		List<Integer> fileNoList = new ArrayList<>();
 
