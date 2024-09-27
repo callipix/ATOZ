@@ -83,9 +83,11 @@
 </div>
 <br><br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
+<br>
 <h3>1. Spring Security 기반의 JWT 방식의 OAuth2.0 인증로그인 </h3>
-  <details>
-            <summary>펼쳐보기</summary>
+<br>
+<!--   <details> -->
+<!--             <summary>펼쳐보기</summary> -->
   <div align="center">
          <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
   <img style="width:100%" src="https://github.com/user-attachments/assets/63e2a5c0-0491-4017-a2af-b07fb937a22e">
