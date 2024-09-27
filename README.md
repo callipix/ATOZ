@@ -88,7 +88,7 @@
             <summary>펼쳐보기</summary>
   <div align="center">
          <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
-  <img style="width:100%" src="https://github.com/user-attachments/assets/67d83eca-40ac-4a45-b2d0-91ca8fd8290f">
+  <img style="width:100%" src="https://github.com/user-attachments/assets/63e2a5c0-0491-4017-a2af-b07fb937a22e">
     </div>
   </details>
 <br>
