@@ -111,12 +111,12 @@ public class SecurityConfig {
 			.requestMatchers("/img/**").permitAll()
 			.requestMatchers("/ckeditor5/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
-			.requestMatchers("/jwtLogin").permitAll()
 			.requestMatchers("/reissue").permitAll()
 			.requestMatchers("/suggestions/**").permitAll()
 			.requestMatchers("/login/loginForm").permitAll()
-			.requestMatchers("/login").authenticated()
 			.requestMatchers("/**").permitAll()
+			.requestMatchers("/jwtLogin").authenticated()
+			.requestMatchers("/login").authenticated()
 			// .requestMatchers("/**").permitAll() 이 코드 제거하니까 무한 리디렉션 뜬다?
 			.anyRequest().authenticated()
 		);

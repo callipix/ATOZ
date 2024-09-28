@@ -34,13 +34,13 @@ public class JwtFilter extends OncePerRequestFilter {
 		log.info("로그인 후 토큰 검증 확인");
 		String accessToken = request.getHeader("access");
 
-		log.info("accessToken from doFilterInternal.JwtFilter.class = {}", accessToken);
+		log.info("accessToken1 from doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		if (accessToken == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		log.info("accessToken from doFilterInternal.JwtFilter.class = {}", accessToken);
+		log.info("accessToken2 from doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		try {
 			jwtUtil.isExpired(accessToken);

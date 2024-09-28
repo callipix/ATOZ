@@ -45,7 +45,7 @@ public class AwsS3FileUploadServiceImpl implements AwsS3FileUploadService {
 	}
 
 	/**
-	 * 확장자를 반환하는 메서드
+	 * 확장자 반환 메서드
 	 * @param fileName 원본파일명
 	 * @return
 	 */

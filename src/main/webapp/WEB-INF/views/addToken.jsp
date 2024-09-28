@@ -14,33 +14,11 @@
         success: function (response, status, xhr) {
             let access = xhr.getResponseHeader("access")
             localStorage.setItem("access", access);
-            addHeader();
+            location.href = '/';
         },
         error: function (xhr) {
         }
     });
-
-    function addHeader() {
-        let access = localStorage.getItem("access");
-
-        $.ajax({
-            url: "/headerEndpoint",
-            type: "GET",
-            xhrFields: {
-                withCredentials: true
-            },
-            headers: {
-                'access': access,
-                'Content-Type': 'application/json'
-            },
-            success: function () {
-                location.href = "/";
-            },
-            error: function (xhr) {
-
-            }
-        })
-    }
 </script>
 <body>
 </body>

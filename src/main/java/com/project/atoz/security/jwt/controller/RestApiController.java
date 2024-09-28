@@ -26,16 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RestApiController {
 
-	@GetMapping("/addToken")
-	public String addToken(HttpServletRequest request) {
-		Cookie[] cookie = request.getCookies();
-		String access = request.getHeader("access");
-		log.info("cookie from addToken.RestApiController.class = {}", cookie);
-		log.info("access from addToken.RestApiController.class = {}", access);
-
-		return "/addToken";
-	}
-
 	@ResponseBody
 	@GetMapping("/secureEndpoint")
 	public String secureEndpoint(HttpServletResponse response, HttpServletRequest request) {
@@ -58,15 +48,8 @@ public class RestApiController {
 		log.info("refresh = {}", refresh);
 
 		response.addHeader("access", access);
-
-		return access;
-	}
-
-	@ResponseBody
-	@GetMapping("/headerEndpoint")
-	public String headerPoint(HttpServletResponse response, HttpServletRequest request) {
-
 		String accessToken = request.getHeader("access");
+
 		Cookie cookie = new Cookie("access", null);
 		cookie.setMaxAge(0);
 		cookie.setPath("/");
