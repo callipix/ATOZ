@@ -275,7 +275,7 @@
                 },
                 contentType: "application/json", // Content type 설정
                 data: JSON.stringify(data),
-                success: function (result, textStatus, jqXHR) {
+                success: function (response, textStatus, jqXHR) {
                     localStorage.setItem("access", jqXHR.getResponseHeader("access"));
                     location.href = "/";
                 },

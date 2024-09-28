@@ -98,7 +98,7 @@
     <jsp:include page="comment.jsp"/>
 </div>
 <script>
-    let bno = "${boardDTO.bno}";
+    let bno = `${boardDTO.bno}`;
     let data = `${boardDTO.content}`;
 
     const removeBtn = document.querySelector('#removeBtn');
@@ -107,35 +107,38 @@
 
     $(document).ready(function () {
 
-        if(accessToken){
+        if (accessToken) {
             $.ajax({
-                url : '/tokenCheck',
-                method : 'get',
+                url: '/tokenCheck',
+                method: 'get',
                 xhrFields: {
                     withCredentials: true
                 },
-                headers :{
+                headers: {
                     'access': accessToken,
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 dataType: "text",
-                success : function(response){
-                    if(response === "${boardDTO.writer}"){
+                success: function (response) {
+                    if (response === `${boardDTO.writer}`) {
                         removeBtn.style.display = 'block';
                         modifyBtn.style.display = 'block';
                         writeBtn.style.display = 'block';
                     }
                 }
             })
+        } else {
+
         }
 
-        $("#contentDisplay").html(data);
         $("#contentDisplay").children().children().children().css('max-width', '100%');
+        $("#contentDisplay").html(data);
 
         $("#removeBtn").on("click", function (event) {
             if (!confirm("정말로 삭제하시겠습니까?")) {
                 return;
             }
+
             event.preventDefault();
             let sc = {
                 "page": "${searchCondition.page}",
@@ -148,6 +151,7 @@
                 "bno": bno,
                 "sc": sc
             }
+
             $.ajax({
                 url: '/board/remove',
                 type: "post",
@@ -164,7 +168,7 @@
                 }
             })
         })
-        
+
         $("#modifyBtn").on("click", function () {
             location.href = "<c:url value='/board/modify?bno=${boardDTO.bno}'/>";
         })

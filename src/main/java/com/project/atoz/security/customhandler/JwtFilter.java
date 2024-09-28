@@ -40,6 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
+
 		log.info("accessToken2 from doFilterInternal.JwtFilter.class = {}", accessToken);
 
 		try {

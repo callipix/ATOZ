@@ -2,6 +2,8 @@ package com.project.atoz.dto;
 
 import java.util.Date;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,9 @@ public class CommentDTO {
 	private Integer cno;
 	private Integer bno;
 	private Integer pcno;
+	@NotNull
 	private String comment;
+	@NotNull
 	private String commenter;
 
 	@EqualsAndHashCode.Exclude

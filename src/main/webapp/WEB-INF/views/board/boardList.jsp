@@ -57,6 +57,7 @@
         <button id="writeBtn" type="button" class="btn-write"
                 onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기
         </button>
+        </button>
     </form>
     <h6>${principal.username}</h6>
 </div>
@@ -127,30 +128,11 @@
 </nav>
 <script>
     const writeBtn = document.querySelector('#writeBtn');
-    $(document).ready(function () {
-
-        if (accessToken) {
-            $.ajax({
-                url: '/tokenCheck',
-                type: "get",
-                xhrFields: {
-                    withCredentials: true
-                },
-                headers: {
-                    'access': accessToken,
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
-                dataType: "text",                               // 서버가 문자열을 반환하는 경우
-                success: function (response) {
-                    if (response) {
-                        writeBtn.style.display = 'block';
-                        return;
-                    }
-                }
-            })
-        }
-
-    })
+    if (accessToken) {
+        writeBtn.style.display = 'block';
+    } else {
+        alert("토큰 없음");
+    }
 </script>
 </body>
 </html>

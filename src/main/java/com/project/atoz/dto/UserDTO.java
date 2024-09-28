@@ -3,6 +3,8 @@ package com.project.atoz.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,11 +20,14 @@ import lombok.ToString;
 @AllArgsConstructor
 public class UserDTO implements Serializable {
 
+	@NotNull
 	private String id;
+	@NotNull
 	private String password;
 	private String nickName;
 	private String email;
 
+	@NotNull
 	private String role;
 	private String type;
 

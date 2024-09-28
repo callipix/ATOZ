@@ -2,6 +2,8 @@ package com.project.atoz.dto;
 
 import java.util.Date;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,16 +16,22 @@ import lombok.ToString;
 public class FilesDTO {
 	@EqualsAndHashCode.Include
 	private int file_no;                 // 파일번호 -> DB에서 auto_increment
+	@NotNull
 	private String original_name;        // 파일의 오리지날명
+	@NotNull
 	private String stored_name;          // UUID로 생성한 파일명
+	@NotNull
 	private String file_type;            // 파일의 타입(여기선 이미지 파일 종류)
+	@NotNull
 	private long file_size;              // 파일사이즈
 	@EqualsAndHashCode.Include
 	private String file_path;            // 파일 경로
 	private Date uploaded_at;            // 업로드 날짜
 	private String id;                   // 업로드 id
 	private String associated_object_id;
+	@NotNull
 	private int category_no;             // 카테고리번호(pk)
+	@NotNull
 	private int post_no;                 // 게시글번호(pk)
 
 	public FilesDTO() {

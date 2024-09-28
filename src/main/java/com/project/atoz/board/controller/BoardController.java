@@ -30,8 +30,6 @@ import com.project.atoz.security.auth.CustomDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -49,13 +47,14 @@ public class BoardController {
 		log.info("boardDTO = {}", boardDTO);
 		return "/board/modify";
 	}
+
 	// 글수정
 	@ResponseBody
 	@PostMapping("/modify")
 	public ResponseEntity<Map<String, String>> modify(BoardDTO boardDTO, SearchCondition sc, Model m) throws Exception {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
-				.getAuthentication()
-				.getPrincipal();
+			.getAuthentication()
+			.getPrincipal();
 		String writer = userDetails.getName();
 		boardDTO.setWriter(writer);
 
@@ -76,6 +75,7 @@ public class BoardController {
 			return ResponseEntity.badRequest().body(responseMap);
 		}
 	}
+
 	/**
 	 * 게시글 삭제 메서드
 	 *
@@ -121,7 +121,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/write")
-	public String write(Model m) {
+	public String write(Model m) throws Exception {
 		m.addAttribute("mode", "new");
 		return "/board/write";
 	}

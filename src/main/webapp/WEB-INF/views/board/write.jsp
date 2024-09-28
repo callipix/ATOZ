@@ -17,6 +17,10 @@
 <body>
 <jsp:include page="../header.jsp"/>
 <script>
+    if (!accessToken) {
+        alert("잘못된 접근!!");
+        history.back();
+    }
     let msg = "${msg}";
     let beforeImgAddressWrite = [];
 </script>

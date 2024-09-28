@@ -111,10 +111,15 @@ public class SecurityConfig {
 			.requestMatchers("/img/**").permitAll()
 			.requestMatchers("/ckeditor5/**").permitAll()
 			.requestMatchers("/bootstrap/**").permitAll()
+			.requestMatchers("/mycustom/**").permitAll()
+			.requestMatchers("/").permitAll()
 			.requestMatchers("/reissue").permitAll()
+			.requestMatchers("/secureEndpoint").permitAll()
+			.requestMatchers("/addToken").permitAll()
+			.requestMatchers("/board/**").permitAll()
+			.requestMatchers("/board/write").hasRole("USER")
 			.requestMatchers("/suggestions/**").permitAll()
 			.requestMatchers("/login/loginForm").permitAll()
-			.requestMatchers("/**").permitAll()
 			.requestMatchers("/jwtLogin").authenticated()
 			.requestMatchers("/login").authenticated()
 			// .requestMatchers("/**").permitAll() 이 코드 제거하니까 무한 리디렉션 뜬다?
@@ -126,7 +131,6 @@ public class SecurityConfig {
 			new LoginFilter(authenticationManager(authenticationConfiguration), refreshMapper, jwtUtil),
 			UsernamePasswordAuthenticationFilter.class);
 		http.addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
-		http.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshMapper), LogoutFilter.class);
 		/** 로그인 관련 필터 설정 끝 */
 

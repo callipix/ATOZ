@@ -2,6 +2,8 @@ package com.project.atoz.dto;
 
 import java.util.Date;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +20,11 @@ import lombok.ToString;
 public class SuggestionDTO {
 
 	private int sno;
+	@NotNull
 	private String writer;
+	@NotNull
 	private String password;
+	@NotNull
 	private String content;
 	private Date regDate;
 	private Date upDate;

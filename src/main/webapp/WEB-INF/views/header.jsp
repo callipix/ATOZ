@@ -129,6 +129,8 @@
                 console.log("에러 발생 for header.jsp xhr: ", xhr.responseText);
             }
         });
+    } else {
+
     }
 
     testBtn.addEventListener('click', function () {
@@ -146,7 +148,7 @@
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
-                    console.log("response = "+ response)
+                    console.log("response = " + response)
                     if (response) {
                         alert(response);
                     }
