@@ -35,7 +35,7 @@ public interface BoardMapper {
 	int deleteAll();
 
 	// 게시물 삭제(본인)
-	int deleteByIdNBno(Integer bno, String writer);
+	int deleteByIdNBno(Map<String, Object> deleteInfo);
 
 	// 조회수 증가
 	int increaseViewCount(int bno);

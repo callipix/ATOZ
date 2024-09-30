@@ -17,7 +17,6 @@ public class TimerAop2 {
 	@Pointcut("@annotation(com.project.atoz.notice.annotation.Timer2)")
 	private void enableTimer() {
 		//     @Pointcut("@annotation(com.project.myapp.notice.annotation.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
-
 	}
 
 	@Around("enableTimer()")

@@ -22,11 +22,9 @@ public class UserDTO implements Serializable {
 
 	@NotNull
 	private String id;
-	@NotNull
 	private String password;
 	private String nickName;
 	private String email;
-
 	@NotNull
 	private String role;
 	private String type;

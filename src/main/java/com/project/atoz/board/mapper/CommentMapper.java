@@ -2,13 +2,14 @@ package com.project.atoz.board.mapper;
 
 import java.util.List;
 
-import com.project.atoz.dto.CommentDTO;
 import org.apache.ibatis.annotations.Mapper;
+
+import com.project.atoz.dto.CommentDTO;
 
 @Mapper
 public interface CommentMapper {
 
-	int deleteAllComment(int bno);
+	// int deleteAllComment(int bno);
 
 	int commentCount(int bno);
 

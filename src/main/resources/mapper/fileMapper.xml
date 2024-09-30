@@ -6,8 +6,7 @@
 
     <insert id="insertFileInfo" parameterType="com.project.atoz.dto.FilesDTO" useGeneratedKeys="true"
             keyProperty="file_no">
-        INSERT INTO files
-        (original_name, stored_name, file_type, file_size, file_path, uploaded_at, user_id)
+        INSERT INTO files (original_name, stored_name, file_type, file_size, file_path, uploaded_at, user_id)
         VALUES (#{original_name}, #{stored_name}, #{file_type}, #{file_size}, #{file_path}, now(), #{id})
     </insert>
 

@@ -79,8 +79,12 @@ public class UploadService {
 			afterAddress.add(afterImgAddress);
 			log.info("afterImgAddress = {}", afterImgAddress);
 		}
-		if (!imageAddress.isEmpty()) {
-			// 이미지 업로드 여부 → 업로드 존재시
+
+		log.info("beforeAddress = {}", beforeAddress.size());
+		log.info("afterAddress = {}", afterAddress.size());
+
+		if (beforeAddress.size() != afterAddress.size()) {
+			// 글 작성 전후 이미지 변화가 있을때
 			List<String> endImgList = new ArrayList<>(beforeAddress);
 			endImgList.removeAll(afterAddress);
 			result = this.awsS3FileUploadService.deleteImageFile(endImgList, afterAddress);

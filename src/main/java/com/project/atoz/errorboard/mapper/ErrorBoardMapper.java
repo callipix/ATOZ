@@ -30,7 +30,7 @@ public interface ErrorBoardMapper {
 
 	int increaseViewCount(int errBno);
 
-	int getSelectKey();
+	// int getSelectKey();
 
 	int isCheckWriter(String writer, int errBno);
 }

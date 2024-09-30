@@ -19,7 +19,6 @@ public class TimerAop {
 	@Pointcut("@annotation(com.project.atoz.notice.annotation.Timer)")
 	private void enableTimer() {
 		//     @Pointcut("@annotation(com.project.myapp.notice.annotation.Timer)") : Timer 어노테이션이 붙은 메서드에만 적용
-
 	}
 
 	@Around("enableTimer()")
@@ -49,7 +48,7 @@ public class TimerAop {
 		}
 
 		double averageExecutionTime = totalExecutionTime / repeatCount;
-		log.info("평균 메서드 동작 시간 ({}회 실행) = {}", repeatCount, averageExecutionTime);
+		log.info("평균 메서드 동작 시간 (총 {}회 실행) = {}", repeatCount, averageExecutionTime);
 		return null; //
 	}
 

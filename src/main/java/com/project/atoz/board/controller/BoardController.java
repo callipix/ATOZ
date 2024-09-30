@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import com.project.atoz.dto.CommentDTO;
 import com.project.atoz.dto.PageHandler;
 import com.project.atoz.dto.SearchCondition;
 import com.project.atoz.security.auth.CustomDetails;
+import com.project.atoz.utiles.IpAddressUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +58,7 @@ public class BoardController {
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
 			.getPrincipal();
+
 		String writer = userDetails.getName();
 		boardDTO.setWriter(writer);
 
@@ -78,16 +82,15 @@ public class BoardController {
 
 	/**
 	 * 게시글 삭제 메서드
-	 *
 	 * @param bno     게시글 번호
 	 * @param sc      삭제 후에도 기존 페이지로 돌아가기 위해 사용
 	 * @param session 작성자 아이디를 가져오기 위한 세션 → 시큐리티 세션으로 변경
 	 * @param rattr   리다이렉트 하기 위한 변수
 	 * @return
 	 * ↓ 변경
-	 * @param removeData
-	 * @param rattr
-	 * @return
+	 * @param removeData 삭제할 데이터
+	 * @param rattr redirect시 사용할 속성값(한번만 사용)
+	 * @return 경로명을 리턴(페이지 이동)
 	 */
 	@ResponseBody
 	@PostMapping("/remove")
@@ -128,10 +131,14 @@ public class BoardController {
 
 	@ResponseBody
 	@PostMapping("/write")
-	public ResponseEntity<Map<String, String>> write(BoardDTO boardDTO, Model m)
+	public ResponseEntity<Map<String, String>> write(@RequestBody Map<String, Object> boardMap, Model m)
 		throws Exception {
 
+		ObjectMapper mapper = new ObjectMapper();
+		BoardDTO boardDTO = mapper.convertValue(boardMap.get("boardDTO"), BoardDTO.class);
 		log.info("boardDTO for write from BoardController = {}", boardDTO);
+		List<String> afterList = mapper.convertValue(boardMap.get("afterList"), List.class);
+		log.info("afterList = {}", afterList);
 
 		CustomDetails userDetails = (CustomDetails)SecurityContextHolder.getContext()
 			.getAuthentication()
@@ -142,13 +149,14 @@ public class BoardController {
 		String writer = userDetails.getName();
 		log.info("writer = {}", writer);
 
-		//		String writer = (String)session.getAttribute("id");
 		boardDTO.setWriter(writer);
 
-		int result = this.boardService.insertBoard(boardDTO);
+		int result = this.boardService.insertBoard(boardDTO, afterList);
+
+		log.info("result for write.BoardController.class = {}", result);
 
 		Map<String, String> responseMap = new HashMap<>();
-		if (result != 1) {
+		if (result == 0) {
 			m.addAttribute("mode", "new");
 			responseMap.put("msg", "WRT_ERR");
 			responseMap.put("redirectURL", "/board/board");
@@ -179,7 +187,13 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardList")
-	public String getBoardList(Model m, SearchCondition sc) {
+	public String getBoardList(Model m, SearchCondition sc, HttpServletRequest request) {
+
+		String ipAddress = IpAddressUtils.getClientIp(request);
+		String originIpAddress = IpAddressUtils.getLocalIpAddress();
+
+		log.info("ipAddress = {}", ipAddress);
+		log.info("originIpAddress = {}", originIpAddress);
 		try {
 			int totalCnt = this.boardService.getSearchResultCount(sc);
 			m.addAttribute("totalCnt", totalCnt);
@@ -201,4 +215,5 @@ public class BoardController {
 		}
 		return "/board/boardList";
 	}
+
 }

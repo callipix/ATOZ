@@ -48,6 +48,7 @@
             <c:if test="${not empty boardDTO.bno}">
                 <input type="hidden" id="bno" name="bno" value="<c:out value='${boardDTO.bno}'/>">
             </c:if>
+            <input type="hidden" id="afterList" name="afterList">
             <div class="form-group">
                 <label for="title">
                     <input class="form-control" name="title" id="title" type="text"
@@ -119,15 +120,11 @@
     let bno = "${boardDTO.bno}";
     const listBtn = document.querySelector('#listBtn');
     const form = document.querySelector("#newForm");
+    const afterList = document.querySelector('#afterList');
 
     $(document).ready(function () {
-
         let formCheck = function () {
-
-            // let form = document.querySelector("#newForm");
-
             let content = editor.getData();
-
             if (form.title.value === "") {
                 alert("제목을 입력해 주세요.");
                 form.title.focus();
@@ -140,7 +137,6 @@
             }
             return true;
         }
-
         $("#removeBtn").on("click", function () {
             if (!confirm("정말로 삭제하시겠습니까?")) {
                 return;
@@ -157,63 +153,99 @@
         $("#writeBtn").on("click", function () {
 
             let content = editor.getData();
-            let formData = new FormData();
-
-            formData.append("title", form.title.value);
-            formData.append("content", content);
 
             if (formCheck()) {
-
-                $.ajax({
-                    url: '/board/write',
-                    type: 'post',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    headers: {
-                        'access': accessToken,
-                    },
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (response) {
-                        if (response.msg === "WRT_OK") {
-                            alert("성공적으로 등록되었습니다.");
-                            location.href = response.redirectURL;
-                        }
-                    },
-                    error: function (response) {
-                        if (response.msg === "WRT_ERR") {
-                            alert("글쓰기가 실패하였습니다.");
-                            location.href = response.redirectURL;
-                        }
-                    }
-                })
-
                 let afterImgAddressWrite = getImageSrcFromData(editor.getData());
                 let imageAddress = {
                     "beforeImgAddress": beforeImgAddressWrite,
                     "afterImgAddress": afterImgAddressWrite
                 }
+                afterList.value = afterImgAddressWrite;
 
-                $.ajax({
-                    url: '/contentImgCheck',
-                    type: 'post',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    headers: {
-                        'access': accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    data: JSON.stringify(imageAddress),
-                    success: function (result) {
-                        beforeImgAddressWrite = [];
-                        if (result != 1) return;
+                let boardDTO = {
+                    "title": form.title.value,
+                    "content": content
+                }
+
+                if (isImageAddressEmpty(imageAddress)) {
+
+                    let boardMap = {
+                        "boardDTO": boardDTO,
+                        "afterList": afterImgAddressWrite
                     }
-                })
+                    $.ajax({
+                        url: '/contentImgCheck',
+                        type: 'post',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        headers: {
+                            'access': accessToken,
+                            'Content-Type': 'application/json'
+                        },
+                        data: JSON.stringify(imageAddress),
+                        success: function (result) {
+                            if (result != 1) {
+                                return;
+                            }
+                            boardWrite(boardMap);
+                            beforeImgAddressWrite = [];
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
+                    })
+                } else {
+                    let boardMap = {
+                        "boardDTO": boardDTO,
+                    }
+                    boardWrite(boardMap);
+                }
             }
         })
+
+        function boardWrite(parameter) {
+            $.ajax({
+                url: '/board/write',
+                type: 'post',
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers: {
+                    'access': accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(parameter),
+                success: function (response) {
+                    if (response.msg === "WRT_OK") {
+                        alert("성공적으로 등록되었습니다.");
+                        location.href = response.redirectURL;
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                    if (response.msg === "WRT_ERR") {
+                        alert("글쓰기가 실패하였습니다.");
+                        location.href = response.redirectURL;
+                    }
+                }
+            })
+        }
+
+        // 각 배열의 길이가 0인지 확인
+        function isImageAddressEmpty(imageAddress) {
+
+            const {beforeImgAddress, afterImgAddress} = imageAddress;
+
+            // if (!Array.isArray(beforeImgAddress) || !Array.isArray(afterImgAddress)) {
+            //     // 배열이 아닌경우
+            //     return false;
+            // }
+            const isBeforeImgEmpty = beforeImgAddress.length === 0;
+            const isAfterImgEmpty = afterImgAddress.length === 0;
+            // 배열이 비어있는지 확인
+            return isBeforeImgEmpty && isAfterImgEmpty ? false : true;
+        }
     });
 
     listBtn.addEventListener('click', function () {
