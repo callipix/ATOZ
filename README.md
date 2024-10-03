@@ -43,8 +43,7 @@
   <h2 style="color: #282d33;"> 🛠️ 사용기술 및 개발환경</h2>
 </div>
 
-<div align="center">
-<h3>Programming Language</h3>
+<div align="">
 <div>
 <div>
   <h4>Back-end</h4>
@@ -65,7 +64,7 @@
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=Plastic&logo=Javascript&logoColor=white" />
   <br>
 </div>
-<h3>Tools & ETC </h3>
+<h4>Tools & ETC </h4>
 <img src="https://img.shields.io/badge/IntelliJ IDEA IDE-000000?style=Plastic&logo=intellijidea&logoColor=white" />
 <img src="https://img.shields.io/badge/AmazonS3-569A31?style=Plastic&logo=amazons3&logoColor=white" />
 <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=Plastic&logo=amazonec2&logoColor=white" />
@@ -77,8 +76,7 @@
 </div>
 <br><br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
-<br>
-<h3>1. Spring Security 기반의 JWT 방식의 OAuth2.0 인증로그인 </h3>
+<h3>1. Spring Security 기반의 JWT를 사용한 OAuth2.0 인증로그인 </h3>
 <br>
 <!--   <details> -->
 <!--             <summary>펼쳐보기</summary> -->
