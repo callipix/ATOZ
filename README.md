@@ -77,7 +77,7 @@
 <br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
 
-<h3>Spring Security 기반 JWT 인증 로그인(OAuth2.0 인증)</h3>
+<h3>Spring Security 기반 OAuth2.0 인증 로그인(JWT 사용)</h3>
 
 #### 개요
 - Spring Security로 보안을 강화하고, JWT로 Stateless한 서비스 확장을 구현.
@@ -90,16 +90,16 @@
 
 2. **토큰 저장 위치 관리**  
    - **Access 토큰**: 로컬 스토리지 (짧은 수명).  
-   - **Refresh 토큰**: 쿠키 저장 (HttpOnly, 긴 수명).  
+   - **Refresh 토큰**: 쿠키 저장 (HttpOnly 설정, 긴 수명).  
 
 3. **Refresh 토큰 서버 관리**  
-   - 발급된 Refresh 토큰은 서버에 저장하고 블랙리스트로 재사용 방지.
+   - 발급된 Refresh 토큰을 서버에 저장하고 무효화 처리해 재사용 방지
 
 #### 추가 보안 대책
 - **HTTPS** 적용 (TLS 프로토콜).  
 - **XSS 방지**: <code>&lt;c:out&gt;</code> 태그 사용, <code>Script</code> 코드 검사, <code>XSS Filter</code>로 사용자 입력 검증
-- **CSRF 방지**: Secure 옵션 설정.  
-- **IP 인증 강화**: 의심스러운 접속 시 추가 인증 및 토큰 무효화.
+- **CSRF 방지**: 쿠키에 Secure 옵션 설정
+- **IP 인증 강화**: 의심스러운 접속 시 추가 인증 및 토큰 무효화
 
   <div align="center">
          <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
@@ -124,7 +124,7 @@
       <li><strong>LIKE 검색</strong>에서 <code>%</code> 위치에 따라 인덱스 효과가 제한됨을 확인</li>
     </ul>
   </li>
-  <li><strong>해결책</strong>: 인덱스 최적화 외에 <strong>Ehcache</strong>를 도입해 메모리 기반 캐싱 사용</li>
+  <li><strong>해결방안</strong>: 인덱스 최적화 외에 <strong>Ehcache</strong>를 도입해 메모리 기반 캐싱 사용</li>
 </ul>
 
 <h4>3. 캐시 전략 및 결과</h4>
