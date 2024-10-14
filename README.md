@@ -15,12 +15,12 @@
   <h6>
 1. 기본적인 CRUD 다시 한번 체크 및 재정리<br>
 2. 기존에 사용 해보지 않았던 DB 사용(기존 : Oracle → MySQL)<br>
-3. 페이징 및 검색 다시 한번 복습<br>
+3. 페이지네이션 및 검색 기능 구현(쿼리) 다시 한번 복습<br>
 4. 테스트 툴 활용하기 → Junit4, Postman<br>
-5. DB 트랜잭션 적용 및 확인<br>
-6. 별도의 서버 구축 및 파일업로드 활용(AWS EC2, S3, Vultr)<br>
-7. 특정 기능 Rest API로 구현<br>
-8. Validation으로 서버단 유효성 검증<br>
+5. DB 트랜잭션 적용 및 확인(servlet-context.xml에서 aop 및 트랜잭션 설정, @Transactional로 적용 및 확인)<br>
+6. 별도의 서버 구축 및 파일업로드 활용(Amazon EC2 & S3, Vultr)<br>
+7. 특정 기능 Rest API 구현(댓글기능, 건의사항기능, JWT 토큰 요청 부분)<br>
+8. Validation 서버단 유효성 검증(가입시 유효성 검증)<br>
 </h6>
   <h4>
 2024.09.01 - 2024.09.24 2차
@@ -77,10 +77,30 @@
 <br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
 
-<h3>Spring Security 기반의 JWT를 사용한 OAuth2.0 인증로그인</h3>
-<br>
-<!--   <details> -->
-<!--             <summary>펼쳐보기</summary> -->
+<h3>Spring Security 기반 JWT 인증 로그인(OAuth2.0 인증)</h3>
+
+#### 개요
+- Spring Security로 보안을 강화하고, JWT로 Stateless한 서비스 확장을 구현.
+- OAuth2.0 소셜 로그인으로 가입 및 로그인 인증을 간소화, 일반 로그인에도 JWT를 적용.
+
+#### 보안 대책
+1. **다중 토큰 발급**  
+   - Access/Refresh 토큰 발급.  
+   - Access 토큰 만료 시 Refresh 토큰으로 재발급 후 기존 Refresh 토큰 무효화.
+
+2. **토큰 저장 위치 관리**  
+   - **Access 토큰**: 로컬 스토리지 (짧은 수명).  
+   - **Refresh 토큰**: 쿠키 저장 (HttpOnly, 긴 수명).  
+
+3. **Refresh 토큰 서버 관리**  
+   - 발급된 Refresh 토큰은 서버에 저장하고 블랙리스트로 재사용 방지.
+
+#### 추가 보안 대책
+- **HTTPS** 적용 (TLS 프로토콜).  
+- **XSS 방지**: <code>&lt;c:out&gt;</code> 태그 사용, <code>Script</code> 코드 검사, <code>XSS Filter</code>로 사용자 입력 검증
+- **CSRF 방지**: Secure 옵션 설정.  
+- **IP 인증 강화**: 의심스러운 접속 시 추가 인증 및 토큰 무효화.
+
   <div align="center">
          <h6>소셜 로그인시 로그인 까지의 인증 및 시큐리티 필터 동작 과정</h6>
   <img style="width:100%" src="https://github.com/user-attachments/assets/009c5583-2580-4206-b9c9-41798dc7dae5">
