@@ -76,7 +76,8 @@
 </div>
 <br><br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
-<h3>1. Spring Security 기반의 JWT를 사용한 OAuth2.0 인증로그인 </h3>
+
+<h3>Spring Security 기반의 JWT를 사용한 OAuth2.0 인증로그인</h3>
 <br>
 <!--   <details> -->
 <!--             <summary>펼쳐보기</summary> -->
@@ -86,44 +87,51 @@
     </div>
   </details>
 <br>
-<h3>2. 성능 측정 및 부하 테스트 </h3>
-<h6>
-        다음과 같은 절차를 통해 대용량 트래픽 환경에서의 쿼리 성능과 부하를 체계적으로 평가하고자 했습니다.
-</h6>
-  <div class="section">
-    <div class="content">
-        <strong>1. 대용량 트래픽 환경 구성</strong><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>목적</strong>: 실제 서비스 경험 부족으로 인해, 대용량 트래픽 환경을 구성하기 위해 더미 데이터를 생성<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>데이터 생성</strong>: DBMS 프로시저를 통해 500만 건의 더미 데이터 생성<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>쿼리 성능 측정</strong>: 전체 데이터 중 마지막 50건을 조회하는 쿼리의 성능을 측정<br>
-    </div>
-</div>
-<br>
-<div class="section">
-    <strong>2. 부하 테스트</strong><br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 도구</strong>: nGrinder를 사용하여 가상 사용자 환경을 구성<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 환경</strong>: Vultr에서 구축한 서버에서 테스트 실행<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>AOP 적용</strong>: 커스텀 어노테이션을 통해 응답 시간을 측정<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 방법</strong>:<br>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 50회씩 10번, 총 500번의 테스트를 수행하여 평균 응답 시간 산출<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 가상 사용자 100명을 가정하고, 1분간 요청을 보내어 부하 테스트 진행<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 각 테스트 후 평균 수치 산출<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>결과</strong>:<br>
-</div>
-<br>
-<div class="section">
-    <strong>3. 성능 개선</strong><br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 도구</strong>: nGrinder를 사용하여 가상 사용자 환경을 구성<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 환경</strong>: Vultr에서 구축한 서버에서 테스트 실행<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>AOP 적용</strong>: 커스텀 어노테이션을 통해 응답 시간을 측정<br>
-     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 방법</strong>:<br>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 50회씩 10번, 총 500번의 테스트를 수행하여 평균 응답 시간 산출<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 가상 사용자 100명을 가정하고, 1분간 요청을 보내어 부하 테스트 진행<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 각 테스트 후 평균 수치 산출<br>
-</div>
+<h3>대용량 트래픽 대비 부하 테스트 및 페이지네이션 성능 개선</h3>
+
+<h4>1. 배경 및 목표</h4>
+<ul>
+  <li>실무 경험 부족을 보완하고자 <strong>500만 건의 더미 데이터</strong>를 생성 후 성능 및 부하 테스트 수행</li>
+  <li>대용량 트래픽 환경에서 <strong>쿼리 최적화와 캐싱</strong>을 통해 페이지네이션 성능 개선 목표</li>
+</ul>
+
+<h4>2. 성능 측정 및 개선 시도</h4>
+<ul>
+  <li><strong>기존 쿼리 성능 측정</strong>:
+    <ul>
+      <li>마지막 <strong>50개 데이터 조회 쿼리</strong>를 <strong>500회</strong> 측정한 결과, 평균 응답 시간 <strong>3.267초</strong></li>
+      <li><strong>인덱스 및 복합 인덱스</strong>를 추가했으나 성능 개선 효과가 미미하고, 오히려 성능이 저하되는 경우도 발생</li>
+      <li><strong>LIKE 검색</strong>에서 <code>%</code> 위치에 따라 인덱스 효과가 제한됨을 확인</li>
+    </ul>
+  </li>
+  <li><strong>해결책</strong>: 인덱스 최적화 외에 <strong>Ehcache</strong>를 도입해 메모리 기반 캐싱 사용</li>
+</ul>
+
+<h4>3. 캐시 전략 및 결과</h4>
+<ul>
+  <li>1. <strong>전체 데이터 수</strong>만 캐싱</li>
+  <li>2. <strong>page</strong>와 <strong>pageSize</strong>를 캐시 키로 사용</li>
+  <li>3. <strong>전체 데이터 수와 page, pageSize</strong> 모두 캐싱</li>
+</ul>
+<p><strong>결과</strong>: 3번 전략에서 <strong>94% 응답 시간 개선</strong>을 확인</p>
+
+<h4>4. 부하 테스트 및 모니터링</h4>
+<ul>
+  <li><strong>테스트 도구</strong>: nGrinder(부하 테스트), Scouter(모니터링).</li>
+  <li><strong>환경 구성</strong>: Vultr 서버 내에서 <strong>100명 가상 사용자</strong>가 <strong>1분간 10회 요청</strong>.</li>
+  <li><strong>결과 요약</strong>:
+    <ul>
+      <li><strong>캐시 미적용 시</strong>: CPU 사용량 <strong>100% 초과</strong>, 다수의 요청 오류 발생.</li>
+      <li><strong>1번(전체 데이터 수 캐싱) 적용 시</strong>: 성능 소폭 개선되었으나 CPU 부하 여전히 높음.</li>
+      <li><strong>2번, 3번(전체 데이터 수와 page,pageSize 캐싱)적용 시</strong>: CPU 사용량 감소, 오류 빈도 대폭 감소.</li>
+    </ul>
+  </li>
+</ul>
+<h5>성능 측정 및 부하 테스트 결과</h5>
+  <img style="width:60%" src="https://github.com/user-attachments/assets/ffca29d6-7dfa-4019-82e6-d69d873c812c">
+<div>
 <h5>테스트 서버 사양 및 성능지표 용어</h5>
   <img style="width:60%" src="https://github.com/user-attachments/assets/00e8f9b4-1258-494e-8b84-1d20a9cf04d0">
-
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
 </div>
