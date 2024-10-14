@@ -74,7 +74,7 @@
 <img src="https://img.shields.io/badge/Github-181717?style=Plastic&logo=github&logoColor=white" />
 </div>
 </div>
-<br><br><br>
+<br><br>
 <h2 style="color: #282d33;"> 🔎 주요 문제 상황 및 해결 과정 </h2>
 
 <h3>Spring Security 기반의 JWT를 사용한 OAuth2.0 인증로그인</h3>
