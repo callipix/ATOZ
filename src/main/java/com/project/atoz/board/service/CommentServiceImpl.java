@@ -20,12 +20,6 @@ public class CommentServiceImpl implements CommentService {
 	private final BoardMapper boardMapper;
 
 	@Override
-	public int commentCount(int bno) throws Exception {
-		int result = this.commentMapper.commentCount(bno);
-		return result;
-	}
-
-	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteComment(Integer cno, Integer bno, String commenter) throws Exception {
 		log.info("cno = {}", cno);
@@ -59,12 +53,6 @@ public class CommentServiceImpl implements CommentService {
 	public List<CommentDTO> getCommentForBoard(int bno) throws Exception {
 		List<CommentDTO> commentList = this.commentMapper.getCommentForBoard(bno);
 		return commentList;
-	}
-
-	@Override
-	public CommentDTO getCommentByCno(int cno) throws Exception {
-		CommentDTO commentDTO = this.commentMapper.getCommentByCno(cno);
-		return commentDTO;
 	}
 
 	@Override

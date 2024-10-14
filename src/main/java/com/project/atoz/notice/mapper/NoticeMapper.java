@@ -1,10 +1,8 @@
 package com.project.atoz.notice.mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.project.atoz.dto.NoticeDTO;
 import com.project.atoz.dto.SearchCondition;

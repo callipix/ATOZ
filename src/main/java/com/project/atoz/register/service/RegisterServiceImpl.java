@@ -24,65 +24,59 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
 
-	private final ApiProperties apiProperties;
-	private final RegisterMapper registerMapper;
+    private final ApiProperties apiProperties;
+    private final RegisterMapper registerMapper;
 
-	@Override
-	public int idCheck(String id) {
-		int result = this.registerMapper.idCheck(id);
-		return result;
-	}
+    @Override
+    public int idCheck(String id) {
+        int result = this.registerMapper.idCheck(id);
+        return result;
+    }
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public int insertUser(RegisterDTO registerDTO) {
-		int result = this.registerMapper.insertUser(registerDTO.getUserDTO());
-		result += this.registerMapper.insertMember(registerDTO.getMemberDTO());
-		UserAuth userAuth = new UserAuth(registerDTO.getUserDTO().getId());
-		result += this.registerMapper.insertAuth(userAuth);
-		return result;
-	}
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insertUser(RegisterDTO registerDTO) {
+        int result = this.registerMapper.insertUser(registerDTO.getUserDTO());
+        result += this.registerMapper.insertMember(registerDTO.getMemberDTO());
+        UserAuth userAuth = new UserAuth(registerDTO.getUserDTO().getId());
+        result += this.registerMapper.insertAuth(userAuth);
+        return result;
+    }
 
-	@Override
-	public UserDTO findByEmail(String email) {
-		UserDTO result = this.registerMapper.findByEmail(email);
-		return result;
-	}
+    @Override
+    public String sendSMS(String phoneNo) {
+        Random ranNo = new Random();
+        String noStr = "";
+        for (int i = 0; i < 6; i++) {
+            noStr += ranNo.nextInt(10);
+        }
+        certifiedPhoneNumber(phoneNo, noStr);
+        log.info("noStr = {}", noStr);
+        return noStr;
+    }
 
-	@Override
-	public String sendSMS(String phoneNo) {
-		Random ranNo = new Random();
-		String noStr = "";
-		for (int i = 0; i < 6; i++) {
-			noStr += ranNo.nextInt(10);
-		}
-		certifiedPhoneNumber(phoneNo, noStr);
-		log.info("noStr = {}", noStr);
-		return noStr;
-	}
+    private void certifiedPhoneNumber(String phoneNo, String noStr) {
 
-	private void certifiedPhoneNumber(String phoneNo, String noStr) {
+        String apiKey = apiProperties.getApiKey();
+        String apiSecret = apiProperties.getApiSecret();
+        String fromNo = apiProperties.getApiAdminNo();
 
-		String apiKey = apiProperties.getApiKey();
-		String apiSecret = apiProperties.getApiSecret();
-		String fromNo = apiProperties.getApiAdminNo();
+        Message coolsms = new Message(apiKey, apiSecret);
 
-		Message coolsms = new Message(apiKey, apiSecret);
+        // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", phoneNo);    // 수신 전화번호
+        params.put("from", fromNo);    // 발신 전화번호. 테스트 시 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("type", "SMS");
+        params.put("text", "문자 메세지 테스트 : 인증 번호는" + "[" + noStr + "]" + "입니다.");
+        params.put("app_version", "test app 1.2"); // application name and version
 
-		// 4 params(to, from, type, text) are mandatory. must be filled
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("to", phoneNo);    // 수신전화번호
-		params.put("from", fromNo);    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
-		params.put("type", "SMS");
-		params.put("text", "문자메세지 테스트 : 인증번호는" + "[" + noStr + "]" + "입니다.");
-		params.put("app_version", "test app 1.2"); // application name and version
-
-		try {
-			JSONObject obj = coolsms.send(params);
-			log.info(" {} ", obj.toString());
-		} catch (CoolsmsException e) {
-			log.info(" {} ", e.getMessage());
-			log.info(" {} ", e.getCode());
-		}
-	}
+        try {
+            JSONObject obj = coolsms.send(params);
+            log.info(" {} ", obj.toString());
+        } catch (CoolsmsException e) {
+            log.info(" {} ", e.getMessage());
+            log.info(" {} ", e.getCode());
+        }
+    }
 }

@@ -10,7 +10,7 @@ import com.project.atoz.dto.SearchCondition;
 
 @Mapper
 public interface BoardMapper {
-	// 게시물 전체리스트
+	// 게시물 전체 리스트
 	List<BoardDTO> getBoardList();
 
 	// 게시물 페이징
@@ -19,7 +19,7 @@ public interface BoardMapper {
 	// 전체 게시물 수 가져오기
 	int getBoardCount();
 
-	// 특정게시물 조회
+	// 특정 게시물 조회
 	BoardDTO getBoardByBno(int bno);
 
 	// 게시물 등록
@@ -31,7 +31,7 @@ public interface BoardMapper {
 	// 게시물 삭제(관리자용)
 	int deleteForAdmin(int id);
 
-	// 게시물 전체삭제(테스트용)
+	// 게시물 전체 삭제(테스트용)
 	int deleteAll();
 
 	// 게시물 삭제(본인)

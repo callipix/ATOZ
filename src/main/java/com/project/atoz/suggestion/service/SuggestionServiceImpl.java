@@ -30,7 +30,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	public SuggestionDTO suggestCommentInsert(SuggestionDTO suggestionDTO) {
 
 		int result = this.suggestionMapper.suggestCommentInsert(suggestionDTO);
-		log.info("insert for serviceImpl{}", result);
+		log.info("insert from serviceImpl{}", result);
 		log.info("suggestionDTO {}", suggestionDTO);
 		return suggestionDTO;
 	}
@@ -38,7 +38,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public int updateSuggestComment(SuggestionDTO suggestionDTO) {
 		int result = this.suggestionMapper.updateSuggestComment(suggestionDTO);
-		log.info("update for serviceImpl{}", result);
+		log.info("update from serviceImpl{}", result);
 		log.info("suggestionDTO {}2", suggestionDTO);
 		return result;
 	}
@@ -55,7 +55,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public int suggestCommentCount() {
 		int result = this.suggestionMapper.suggestCommentCount();
-		log.info("getSuggestListCount for serviceImpl{}", result);
+		log.info("getSuggestListCount from serviceImpl{}", result);
 		return result;
 	}
 

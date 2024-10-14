@@ -85,9 +85,9 @@ public class RegisterController {
 		log.info("result = {} ", result);
 		try {
 			if (result >= 1) {
-				session.setAttribute("message", "회원가입에 성공하였습니다.");
+				session.setAttribute("message", "회원 가입에 성공하였습니다.");
 			} else {
-				session.setAttribute("message", "회원가입에 실패하였습니다.");
+				session.setAttribute("message", "회원 가입에 실패하였습니다.");
 			}
 			return "redirect:/resultPage";
 		} catch (Exception e) {

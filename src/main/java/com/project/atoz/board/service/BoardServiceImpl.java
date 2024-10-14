@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int insertBoard(BoardDTO board, List<String> afterList) throws Exception {
-		log.info("여기까지는 오나?");
+		log.info("여기 까지는 오나?");
 		board.setContent(StringUtils.escapeDollorSign(board.getContent()));
 		int result = 0;
 
@@ -55,38 +55,28 @@ public class BoardServiceImpl implements BoardService {
 			fileNoList.add(this.fileMapper.getFileNoKey(fileKeyList));
 		}
 		result += boardMapper.insertBoard(board);
-		// 최근에 작업했던(auto_increment값 가져오기)
+		// 최근 작업한 (auto_increment 가져오기)
 		int selectKey = this.fileMapper.getSelectKey();
 		log.info("selectKey = {}", selectKey);
 
+		return fileList(result, fileNoList, selectKey, board.getCategoryNo(), this.fileMapper, board);
+	}
+
+	public static int fileList(int result, List<Integer> fileNoList, int selectKey, Integer categoryNo, FileMapper fileMapper, BoardDTO board) {
 		for (Integer fileNo : fileNoList) {
 			FilesDTO filesDTO = new FilesDTO();
 			filesDTO.setFile_no(fileNo);
 			filesDTO.setPost_no(selectKey);
-			filesDTO.setCategory_no(board.getCategoryNo());
-			result += this.fileMapper.updateFileInfo(filesDTO);
+			filesDTO.setCategory_no(categoryNo);
+			result += fileMapper.updateFileInfo(filesDTO);
 		}
 		return result;
-		// result += boardMapper.insertBoard(board);
-		// return result;
 	}
 
 	@Override
 	public int updateBoardByIdNBno(BoardDTO board) throws Exception {
 		board.setContent(StringUtils.escapeDollorSign(board.getContent()));
 		int result = boardMapper.updateBoardByIdNBno(board);
-		return result;
-	}
-
-	@Override
-	public int deleteForAdmin(int id) throws Exception {
-		int result = boardMapper.deleteForAdmin(id);
-		return result;
-	}
-
-	@Override
-	public int deleteAll() throws Exception {
-		int result = boardMapper.deleteAll();
 		return result;
 	}
 

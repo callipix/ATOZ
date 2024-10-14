@@ -9,8 +9,6 @@ import com.project.atoz.dto.CommentDTO;
 @Mapper
 public interface CommentMapper {
 
-	// int deleteAllComment(int bno);
-
 	int commentCount(int bno);
 
 	int deleteComment(Integer cno, String commenter);

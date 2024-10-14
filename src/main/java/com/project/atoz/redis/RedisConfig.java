@@ -34,12 +34,12 @@ public class RedisConfig {
 	}
 
 	/**
-	 * RedisTemplate : Redis에 데이터를 읽고 쓰기 위한 주요 템플릿 클래스
-	 * ConnectionFactory 설정 : 위에서 생성한 redisConnectionFactory를 사용하여 Redis와의 연결 설정
-	 * key-value 직렬화 설정 : 키-해시키, 해시 값 모두를 StringRedisSerializer로 직렬화 하여 Redis에 저장하거나 읽어올때 문자열 형식으로 처리
-	 * → Redis와의 데이터 직렬화 및 역직렬화 관리
-	 * Redis에 key-value 저장소 작업을 수행할 수 있도록 하는 인터페이스로 사용
-	 * @param redisConnectionFactory 위에서 생성된 연결객체
+	 * RedisTemplate : Redis 데이터를 읽고 쓰기 위한 주요 템플릿 클래스
+	 * ConnectionFactory 설정 : 위에서 생성한 redisConnectionFactory 사용하여 Redis 연결 설정
+	 * key-value 직렬화 설정 : 키-해시키, 해시 값 모두를 StringRedisSerializer로 직렬화 하여 Redis 저장하거나 읽어올 때 문자열 처리
+	 * → Redis 데이터 직렬화 및 역직렬화 관리
+	 * Redis key-value 저장소 작업을 수행할 수 있도록 하는 인터페이스로 사용
+	 * @param redisConnectionFactory 위에서 생성된 연결 객체
 	 * @return
 	 */
 	@Bean
@@ -53,11 +53,11 @@ public class RedisConfig {
 	}
 
 	/**
-	 * Spring의 캐시추상화를 사용하여 Redis를 캐시 스토어로 사용하는 캐시 관리자를 제공
-	 * RedisCacheManagerBuilder : redisConnectionFactory를 사용하여 Redis와의 연결 설정
+	 * Spring 캐시 추상화를 사용하여 Redis 캐시 스토어로 사용하는 캐시 관리자를 제공
+	 * RedisCacheManagerBuilder : redisConnectionFactory 사용하여 Redis 연결 설정
 	 * RedisCacheConfiguration : 기본 캐시 설정 지정
-	 * - 값 직렬화 : GenericJackson2JsonRedisSerializer를 사용하여 캐시된 데이터를 JSON 형식으로 직렬화
-	 * TTL(Time to Live) : 캐시항목의 기본 TTL을 설정(여기선 5분 설정)
+	 * - 값 직렬화 : GenericJackson2JsonRedisSerializer 사용하여 캐시된 데이터를 JSON 형식으로 직렬화
+	 * TTL(Time to Live) : 캐시 항목의 기본 TATTLE 설정(여기선 30분 설정)
 	 * @param redisConnectionFactory 위에서 생성된 연결 객체
 	 * @return
 	 */

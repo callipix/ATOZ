@@ -48,8 +48,7 @@ public class NoticeController {
 
 	@Timer
 	@GetMapping("/{page}")
-	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) throws
-		InterruptedException {
+	public ResponseEntity<Object> findByPage(HttpServletRequest request, @PathVariable("page") Integer page) {
 		List<NoticeDTO> noticeDTO = noticeService.findByPage(request, page);
 		return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
 	}

@@ -38,11 +38,11 @@ public class CustomLogoutFilter extends GenericFilterBean {
 		IOException,
 		ServletException {
 
-		//path and method verify
+		// path and method verify
 		String requestUri = request.getRequestURI();
 		log.info("requestUri = {}", requestUri);
 		if (!requestUri.matches("^\\/logout$")) {
-			log.info("로그아웃 경로가 아니면 해당 필터는 종료");
+			log.info("logout 경로와 다르면 해당 필터 종료");
 			filterChain.doFilter(request, response);
 			return;
 		}
@@ -78,7 +78,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
 			return;
 		}
 
-		// 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
+		// 토큰이 refresh 인지 확인 (발급시 페이로드에 명시)
 		String category = jwtUtil.getCategory(refresh);
 		if (!category.equals("refresh")) {
 			//response status code
@@ -86,7 +86,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
 			return;
 		}
 
-		// DB에 저장되어 있는지 확인
+		// DB에 저장 되어 있는지 확인
 		Boolean isExist = refreshMapper.existsByRefreshToken(refresh);
 		if (!isExist) {
 			//response status code
@@ -95,11 +95,11 @@ public class CustomLogoutFilter extends GenericFilterBean {
 			return;
 		}
 
-		// 로그아웃 진행
-		// Refresh 토큰 DB에서 제거
+		// logout 진행
+		// Refresh 토큰 DB 제거
 		refreshMapper.deleteByRefreshToken(refresh);
 
-		//Refresh 토큰 Cookie 값 0
+		//Refresh 토큰 Cookie 제거
 		Cookie cookie = new Cookie("refresh", null);
 		cookie.setMaxAge(0);
 		cookie.setPath("/");

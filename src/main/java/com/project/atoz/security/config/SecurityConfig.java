@@ -49,7 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EnableWebMvc
 @Configuration
-@EnableWebSecurity    // non-Boot 에서는 @EnableWebSecurity 어노테이션 추가해도 web.xml에 반드시 필터 추가 해줘야 작동한다.
+@EnableWebSecurity    // non-Boot 에서는 @EnableWebSecurity 어노테이션 추가 해도 web.xml에 반드시 필터 추가 해줘야 작동
 @RequiredArgsConstructor
 @MapperScan("com.project.atoz.security.jwt.mapper")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -95,16 +95,16 @@ public class SecurityConfig {
 		http.cors().configurationSource(source);
 		/** CORS 설정 끝 */
 
-		/** CSRF 설정 : 비활성화 */
+		/** CSRF 설정 : 비 활성화 */
 		http.csrf(AbstractHttpConfigurer::disable);
 
-		/** 폼 로그인 : 비활성화 */
+		/** 폼 로그인 : 비 활성화 */
 		http.formLogin().disable();
 
-		/** HTTP Basic 인증 : 비활성화(기존 : 요청 헤더에 사용자명 + 비밀번호 포함 인증) */
+		/** HTTP Basic 인증 : 비 활성화(기존 : 요청 헤더에 사용자명 + 비밀번호 포함 인증) */
 		http.httpBasic().disable();
 
-		/** 특정 URL에 대한 접근 권한 설정 */
+		/** 특정 URL 접근 권한 설정 */
 		http.authorizeHttpRequests((auth) -> auth
 			.requestMatchers("/js/**").permitAll()
 			.requestMatchers("/css/**").permitAll()

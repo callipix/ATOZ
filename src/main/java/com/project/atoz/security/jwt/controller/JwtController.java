@@ -187,7 +187,7 @@ public class JwtController {
 	@PostMapping("/logout")
 	public String logout() {
 
-		log.info("logout시 CustomLogoutFilter에 의해 처리되어서 여기에 안와야 정상");
+		log.info("logout → CustomLogoutFilter 에서 처리 되니까 여기에 안와야 정상");
 
 		return "logout?";
 	}

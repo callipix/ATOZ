@@ -116,7 +116,7 @@ public class CommentController {
 		List<CommentDTO> list = null;
 		try {
 			list = this.commentService.getCommentForBoard(bno);
-			// 댓글리스트 정상적으로 로드 : http 상태코드 200으로 설정
+			// 댓글 리스트 정상적으로 로드 : http 상태코드 200으로 설정
 			m.addAttribute("list", list);
 			return new ResponseEntity<List<CommentDTO>>(list, HttpStatus.OK);
 		} catch (Exception e) {

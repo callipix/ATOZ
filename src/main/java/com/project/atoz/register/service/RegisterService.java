@@ -11,6 +11,4 @@ public interface RegisterService {
 
 	int insertUser(RegisterDTO registerDTO) throws Exception;
 
-	UserDTO findByEmail(String email);
-
 }

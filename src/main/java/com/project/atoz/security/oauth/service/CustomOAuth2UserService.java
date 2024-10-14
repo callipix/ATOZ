@@ -30,15 +30,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
+		OAuth2User oAuth2User = super.loadUser(userRequest); // google 회원 프로필 조회
 
-		log.info("소셜 로그인시 여기 타는거 확인");
+		log.info("소셜 로그인 시 여기 타는거 확인");
 		return processOAuth2User(userRequest, oAuth2User);
 	}
 
 	private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 
-		// Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
+		// Attribute 파싱해 공통 객체로 묶는다. 관리가 편함.
 		OAuth2UserInfo oAuth2UserInfo = null;
 		if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
 			log.info("구글 로그인 요청");

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -54,7 +53,7 @@ public class ErrorBoardController {
 	public String write(Model model) {
 		model.addAttribute("mode", "new");
 		log.info("model.getAttribute(\"mode\") = {}", model.getAttribute("mode"));
-		return "errorBoard/write";
+		return "/errorBoard/write";
 	}
 
 	@PostMapping("/write")
@@ -94,7 +93,7 @@ public class ErrorBoardController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(ErrorBoardDTO errorBoardDTO, @RequestParam List<String> afterList, SearchCondition sc,
+	public String modify(ErrorBoardDTO errorBoardDTO, @RequestParam List<String> afterList,
 		RedirectAttributes ratts, Model model, HttpSession session) {
 		String writer = (String)session.getAttribute("id");
 		errorBoardDTO.setWriter(writer);
@@ -161,7 +160,7 @@ public class ErrorBoardController {
 	}
 
 	@GetMapping("/list")
-	public String getBoardList(Model m, SearchCondition sc, HttpServletRequest request) {
+	public String getBoardList(Model m, SearchCondition sc) {
 
 		try {
 			int totalCnt = this.errorBoardService.getSearchResultCount(sc);

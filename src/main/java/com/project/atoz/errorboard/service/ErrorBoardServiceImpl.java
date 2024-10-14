@@ -37,7 +37,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 
 		int result = errorBoardMapper.insert(errorBoardDTO);
 
-		// 최근에 작업했던(auto_increment값 가져오기)
+		// 최근 작업한 auto increment 값 가져오기
 		int selectKey = this.fileMapper.getSelectKey();
 
 		for (Integer fileNo : fileNoList) {
@@ -66,7 +66,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 	public ErrorBoardDTO getErrorBoardByErrBno(int errBno) {
 		// 특정 게시글 조회
 		ErrorBoardDTO errorBoardDTO = this.errorBoardMapper.getErrorBoardByErrBno(errBno);
-		// 게시글을 조회하면 조회수 증가
+		// 게시글 조회시 조회수 증가
 		errorBoardMapper.increaseViewCount(errBno);
 		return errorBoardDTO;
 	}
@@ -77,7 +77,7 @@ public class ErrorBoardServiceImpl implements ErrorBoardService {
 		log.info("errBno = {}", errBno);
 		// 게시글 삭제
 		int result = errorBoardMapper.delete(errBno, writer);
-		log.info("게시글 삭제 결과 1 나와야함 = {}", result);
+		log.info("게시글 삭제 결과 1 나와야 = {}", result);
 		return result;
 	}
 

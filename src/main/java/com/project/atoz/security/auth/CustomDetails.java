@@ -17,14 +17,14 @@ import lombok.Getter;
 @NoArgsConstructor
 public class CustomDetails implements UserDetails, OAuth2User {
 
-	private UserDTO user;  // 컴포지션
+	private UserDTO user;
 	private Map<String, Object> attributes;
 
 	public CustomDetails(UserDTO user){
 		this.user = user;
     }
 
-	// OAuth2.0 로그인시 사용
+	// OAuth2.0 로그인 시 사용
 	public CustomDetails(UserDTO user, Map<String, Object> attributes){
 		this.user = user;
 		this.attributes = attributes;
@@ -39,7 +39,7 @@ public class CustomDetails implements UserDetails, OAuth2User {
 		return attributes;
 	}
 
-	// 해당 User의 권한을 리턴하는 메서드
+	// 해당 User 권한 리턴 메서드
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -75,8 +75,6 @@ public class CustomDetails implements UserDetails, OAuth2User {
 
 	@Override
 	public boolean isEnabled() {
-		// 우리 사이트에서 1년동안 회원이 로그인을 하지않으면 휴면 계정으로 전환하기로 함!
-		// 현재시간 - 로그인 시간 => 1년 초과시 return false;
 		return true;
 	}
 
