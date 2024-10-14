@@ -86,6 +86,44 @@
     </div>
   </details>
 <br>
+<h3>2. 성능 측정 및 부하 테스트 </h3>
+<h6>
+        다음과 같은 절차를 통해 대용량 트래픽 환경에서의 쿼리 성능과 부하를 체계적으로 평가하고자 했습니다.
+</h6>
+  <div class="section">
+    <div class="content">
+        <strong>1. 대용량 트래픽 환경 구성</strong><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>목적</strong>: 실제 서비스 경험 부족으로 인해, 대용량 트래픽 환경을 구성하기 위해 더미 데이터를 생성<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>데이터 생성</strong>: DBMS 프로시저를 통해 500만 건의 더미 데이터 생성<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;- <strong>쿼리 성능 측정</strong>: 전체 데이터 중 마지막 50건을 조회하는 쿼리의 성능을 측정<br>
+    </div>
+</div>
+<br>
+<div class="section">
+    <strong>2. 부하 테스트</strong><br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 도구</strong>: nGrinder를 사용하여 가상 사용자 환경을 구성<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 환경</strong>: Vultr에서 구축한 서버에서 테스트 실행<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>AOP 적용</strong>: 커스텀 어노테이션을 통해 응답 시간을 측정<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 방법</strong>:<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 50회씩 10번, 총 500번의 테스트를 수행하여 평균 응답 시간 산출<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 가상 사용자 100명을 가정하고, 1분간 요청을 보내어 부하 테스트 진행<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 각 테스트 후 평균 수치 산출<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>결과</strong>:<br>
+</div>
+<br>
+<div class="section">
+    <strong>3. 성능 개선</strong><br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 도구</strong>: nGrinder를 사용하여 가상 사용자 환경을 구성<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 환경</strong>: Vultr에서 구축한 서버에서 테스트 실행<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>AOP 적용</strong>: 커스텀 어노테이션을 통해 응답 시간을 측정<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;- <strong>테스트 방법</strong>:<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• 50회씩 10번, 총 500번의 테스트를 수행하여 평균 응답 시간 산출<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 가상 사용자 100명을 가정하고, 1분간 요청을 보내어 부하 테스트 진행<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;• 각 테스트 후 평균 수치 산출<br>
+</div>
+<h5>테스트 서버 사양 및 성능지표 용어</h5>
+  <img style="width:60%" src="https://github.com/user-attachments/assets/00e8f9b4-1258-494e-8b84-1d20a9cf04d0">
+
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
 </div>
